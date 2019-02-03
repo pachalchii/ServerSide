@@ -6,7 +6,9 @@ var router = express.Router();
 
 // get app information
 router.get('/city', function (req, res) {
-    cities.findAll().then(cities => res.json(cities))
+    cities.findAll().then(cities => {
+       return res.json(cities)
+    });
 });
 
 
