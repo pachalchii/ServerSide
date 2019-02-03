@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Seller , customer } = require('./../sequelize');
+const { Seller , customer , sequelize} = require('./../sequelize');
 const multer = require("multer");
 var path = require('path');
 const fs = require("fs");
 const http = require("http");
 var md5 = require('md5');
+const Op = sequelize.Op;
+var jwt = require('jwt-simple');
 
+const JWT_SECRET= '755Amirr2205';
 const myVars = require('./../Util/myVars');
 const myFunction = require('./../Util/myFunctions');
 
@@ -30,6 +33,7 @@ router.post('/register',upload.single("image"), (req, res) => {
             var role = req.body.role;
             switch (role) {
                 case "customer":
+
                     var image ;
                     if (req.file != null){
                         const handleError = (err, res) => {
@@ -60,24 +64,36 @@ router.post('/register',upload.single("image"), (req, res) => {
                     }else{
                         image = "notSetYet";
                     }
-                    var customerr = {
-                        birth_date:req.body.birth_date,
-                        company_name:req.body.company_name,
-                        enabled:true,
-                        family_name:req.body.family_name,
-                        image:image,
-                        name:req.body.name,
-                        phone_number:req.body.phone_number,
-                        password:md5(req.body.password),
-                        point:req.body.point,
-                        registration_date_time:req.body.registration_date_time,
-                        theme:req.body.theme,
-                        username:req.body.username,
-                        cityid:req.body.cityid
+                    sequelize.transaction().then(function(t) {
+                        customer.create({
+                            birth_date:req.body.birth_date,
+                            company_name:req.body.company_name,
+                            enabled:true,
+                            status:true,
+                            family_name:req.body.family_name,
+                            image:image,
+                            name:req.body.name,
+                            phone_number:req.body.phone_number,
+                            password:md5(req.body.password),
+                            point:req.body.point,
+                            registration_date_time:req.body.registration_date_time,
+                            theme:req.body.theme,
+                            username:req.body.username,
+                            cityid:req.body.cityid
 
-                    };
-                    customer.create(customerr)
-                        .catch (e => {return res.status(500).json({"message":"user signUped before"})})
+                        }, {
+                            transaction: t
+                        }).then(function() {
+                            t.commit();
+                            return res.status(200).json()
+
+                        }).catch(function(error) {
+                            console.log(error);
+                            t.rollback();
+                            return res.status(400).json({"message":"user signUped before"})
+                        });
+                    });
+
 
                     break;
                 case "seller":
@@ -95,21 +111,98 @@ router.post('/register',upload.single("image"), (req, res) => {
 
 });
 
-/*//login
+//login
 router.post('/login', (req, res) => {
-    try{  if (req.body.role == null){
+
+    try{
+
+        if (req.body.role == null){
         return res.status(400).json({"message":"role parameter not recieved"});
     }else {
+
         var role = req.body.role;
         myFunction.loginInfoCheck(req,res);
 
         switch (role) {
             case "customer":
-                customer.findAll({
-                    where: {
-                        [Op.or]: [{phone_number: req.body.phone_number}, {password: md5(req.body.password)}]
-                    }
-                }).then(customer => {res.status(200).json(customer)});
+                if (req.body.phone_number != null){
+                    customer.findAll({
+                        where: {
+                            phone_number: req.body.phone_number, password: md5(req.body.password)
+                        }
+                    }).then(customer => {
+                        if (customer[0] != undefined){
+                            var payload = { phone_number: customer.phone_number,
+                                password: customer.password,
+                                random:Math.random()};
+
+
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+                            res.status(200).json({"data":{
+
+                                    birth_date:customer.birth_date,
+                                    company_name:customer.company_name,
+                                    enabled:customer.enabled,
+                                    status:customer.status,
+                                    family_name:customer.family_name,
+                                    image:customer.image,
+                                    name:customer.name,
+                                    phone_number:customer.phone_number,
+                                    point:customer.point,
+                                    registration_date_time:customer.registration_date_time,
+                                    theme:customer.theme,
+                                    username:customer.username,
+                                    cityid:customer.cityid,
+                                    token:token                 }})
+                        } else {
+                            return res.status(404).json();
+                        }
+
+
+
+                    });
+                } else {
+                    customer.findAll({
+                        where: {
+                            username: req.body.username, password: md5(req.body.password)
+                        }
+                    }).then(customer => {
+                        if (customer[0] != undefined)
+                        {
+                            var payload = { phone_number: customer.phone_number,
+                                password: customer.password,
+                                random:Math.random()};
+
+
+
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+                            res.status(200).json({"data":{
+
+                                    birth_date:customer.birth_date,
+                                    company_name:customer.company_name,
+                                    enabled:customer.enabled,
+                                    status:customer.status,
+                                    family_name:customer.family_name,
+                                    image:customer.image,
+                                    name:customer.name,
+                                    phone_number:customer.phone_number,
+                                    point:customer.point,
+                                    registration_date_time:customer.registration_date_time,
+                                    theme:customer.theme,
+                                    username:customer.username,
+                                    cityid:customer.cityid,
+                                    token:token                 }})
+                        } else {
+                            return res.status(404).json();
+
+                        }
+
+
+                    });
+                }
+
                 break;
             case "seller":
                 return res.status(400).json({"message":"comming soon"});
@@ -125,7 +218,7 @@ router.post('/login', (req, res) => {
     return res.status(500).json({"message":"Oops! Something went wrong!"})
 }
 
-});*/
+});
 
 module.exports = router;
 

@@ -134,13 +134,18 @@ function registerInfoCheck (req , res){
 
 function loginInfoCheck (req , res){
     if (
-        req.body.password == null ||
-        req.body.phone_number == null
+        req.body.password == null || (req.body.phone_number == null && req.body.username == null)
 
     ){
         res.status(400).json({message : "request body does not have all neccesery variables"});
         return false;
-    }else return !(!checkPhone(req, res) || !checkPassword(req, res));
+    }else
+        {
+            if (req.body.phone_number != null) {
+                checkPhone(req,res);
+            }
+            checkPassword(req,res)
+        };
 
 }
 
@@ -151,4 +156,4 @@ module.exports = {
     registerInfoCheck
     ,fillDataBase
 };
-
+exports.fillDataBase = fillDataBase();

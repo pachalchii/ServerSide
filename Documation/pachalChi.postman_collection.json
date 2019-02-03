@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "fa8f190b-4b55-41a2-a439-dd76ce063f0a",
+		"name": "pachalChi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "application",
+			"item": [
+				{
+					"name": "get information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/application/city",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"application",
+								"city"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "role",
+									"value": "customer",
+									"type": "text"
+								},
+								{
+									"key": "cityid",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "username3awd2",
+									"type": "text"
+								},
+								{
+									"key": "theme",
+									"value": "theme",
+									"type": "text"
+								},
+								{
+									"key": "registration_date_time",
+									"value": "registration_date_time",
+									"type": "text"
+								},
+								{
+									"key": "point",
+									"value": "point",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "09122492592",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "name",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"value": "image",
+									"type": "text"
+								},
+								{
+									"key": "family_name",
+									"value": "family_name",
+									"type": "text"
+								},
+								{
+									"key": "company_name",
+									"value": "company_name",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "birth_date",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"role\":\"customer\",\n\t\"username\":\"username3awd\",\n\t\"password\":\"password\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b862c73b-caad-4729-bcd6-f73cb4f05b48",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7975b3ab-cab9-48fd-bd4c-56a7c9233493",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "f9ef2bf8-2199-425e-8153-60b494d35a62",
+			"key": "baseUrl",
+			"value": "http://localhost:4040",
+			"type": "string"
+		}
+	]
+}

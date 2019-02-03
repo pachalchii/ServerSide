@@ -65,6 +65,7 @@ sequelize.sync({ force: false })
   });
 
 module.exports = {
+    sequelize,
     Seller,cities,addresses,car,chat,customer,orderNazarSanji,orderPardakht,orderProduct,pachalChiRoles,productGroups,
     sellerOperator,products,sellerPhoneNumber,sellerProducts,sellerType,sellerWareHouse,support,takhfifProduct,transportation,unit
 };
