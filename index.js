@@ -1,29 +1,21 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const {Seller} = require('./sequelize')
-const myVars = require('./Util/myVars')
+const express = require('express');
+const bodyParser = require('body-parser');
+const {Seller} = require('./sequelize');
+const myVars = require('./Util/myVars');
+const myFunctions = require('./Util/myFunctions');
 
-const app = express()
-app.use(bodyParser.json())
-
-
-
-
-// create a user
-app.post('/api/users', (req, res) => {
-
-    Seller.create(req.body)
-        .then(user => res.json(user))
-});
+const app = express();
+app.use(bodyParser.json());
 
 
+var appController = require('./Service/AppController');
+var customerController = require('./Service/CustomerController');
 
-// get all users
-app.get('/api/users', (req, res) => {
-    Seller.findAll().then(users => res.json(users))
-});
+myFunctions.fillDataBase;
 
 
+app.use('/application', appController);
+app.use('/customer', customerController);
 
 
 const port = 7070;
