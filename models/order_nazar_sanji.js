@@ -4,9 +4,9 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('order_nazar_sanji', {
     id: {
       type: DataTypes.INTEGER(11),
-        autoIncrement: true,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     pachal_chi: {
       type: DataTypes.BOOLEAN,

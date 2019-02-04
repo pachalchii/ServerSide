@@ -4,9 +4,9 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('order_pardakht', {
     id: {
       type: DataTypes.INTEGER(11),
-        autoIncrement: true,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     code_peygiri: {
       type: DataTypes.STRING(200),

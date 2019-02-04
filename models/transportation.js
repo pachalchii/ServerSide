@@ -4,9 +4,9 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('transportation', {
     id: {
       type: DataTypes.INTEGER(11),
-        autoIncrement: true,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     air_conditionar: {
       type: DataTypes.BOOLEAN,

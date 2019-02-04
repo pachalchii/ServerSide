@@ -4,9 +4,9 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('addresses', {
     id: {
       type: DataTypes.INTEGER(11),
-        autoIncrement: true,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     complete_address_description: {
       type: DataTypes.STRING(300),

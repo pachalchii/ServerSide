@@ -4,9 +4,9 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('support', {
     id: {
       type: DataTypes.INTEGER(11),
-        autoIncrement: true,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     family_name: {
       type: DataTypes.STRING(50),

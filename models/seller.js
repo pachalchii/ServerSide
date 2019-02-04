@@ -4,9 +4,9 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('seller', {
     id: {
       type: DataTypes.INTEGER(11),
-        autoIncrement: true,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     company_name: {
       type: DataTypes.STRING(50),
@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     logo_image: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(200),
       allowNull: false
     },
     owner_family_name: {

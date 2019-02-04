@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Feb 04, 2019 at 04:17 PM
+-- Generation Time: Feb 04, 2019 at 10:29 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -76,7 +76,7 @@ CREATE TABLE `customer` (
   `company_name` varchar(50) DEFAULT NULL,
   `enabled` bit(1) DEFAULT NULL,
   `family_name` varchar(50) NOT NULL,
-  `image` varchar(50) DEFAULT NULL,
+  `image` varchar(200) DEFAULT NULL,
   `name` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `phone_number` varchar(50) NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE `seller` (
   `enabled` int(11) DEFAULT NULL,
   `established_date` varchar(50) DEFAULT NULL,
   `google_map_address_link` varchar(300) DEFAULT NULL,
-  `logo_image` varchar(50) NOT NULL,
+  `logo_image` varchar(200) NOT NULL,
   `owner_family_name` varchar(50) NOT NULL,
   `owner_name` varchar(50) NOT NULL,
   `owner_phone_number` varchar(50) NOT NULL,
@@ -539,11 +539,6 @@ ALTER TABLE `car_model`
 ALTER TABLE `chat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `cities`
---
-ALTER TABLE `cities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
@@ -574,11 +569,6 @@ ALTER TABLE `pachal_chi_roles`
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `product_groups`
---
-ALTER TABLE `product_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `seller`
 --
 ALTER TABLE `seller`
@@ -597,11 +587,6 @@ ALTER TABLE `seller_phone_number`
 -- AUTO_INCREMENT for table `seller_products`
 --
 ALTER TABLE `seller_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `seller_type`
---
-ALTER TABLE `seller_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `seller_ware_house`

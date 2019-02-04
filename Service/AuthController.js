@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Seller , customer , sequelize , sellerPhoneNumber} = require('./../sequelize');
+const { Seller , customer , sequelize , sellerPhoneNumber , transportation} = require('./../sequelize');
 const multer = require("multer");
 var path = require('path');
 const fs = require("fs");
@@ -20,6 +20,21 @@ const handleError = (err, res) => {
 };
 
 var router = express.Router();
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
+// function to create file from base64 encoded string
+function base64_decode(base64str, file) {
+    // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+    var bitmap = new Buffer(base64str, 'base64');
+    // write buffer to file
+    fs.writeFileSync(file, bitmap);
+    console.log('******** File created from base64 encoded string ********');
+}
 
 // sign up
 const upload = multer({
@@ -176,7 +191,6 @@ router.post('/login', (req, res) => {
     }else {
 
         var role = req.body.role;
-        console.log(role)
         switch (role) {
             case "customer":
                 myFunction.loginInfoCheck(req,res,role);
@@ -191,8 +205,11 @@ router.post('/login', (req, res) => {
                                 password: customer[0].password,
                                 random:Math.random()};
 
-
+                            var base64str="not Found";
                             var token = jwt.encode(payload, JWT_SECRET);
+                            if (customer[0].image !="notSetYet"){
+                                base64str = base64_encode(customer[0].image);
+                            }
 
                             res.status(200).json({"data":{
 
@@ -201,7 +218,7 @@ router.post('/login', (req, res) => {
                                     enabled:customer[0].enabled,
                                     status:customer[0].status,
                                     family_name:customer[0].family_name,
-                                    image:customer[0].image,
+                                    image: base64str,
                                     name:customer[0].name,
                                     phone_number:customer[0].phone_number,
                                     point:customer[0].point,
@@ -231,8 +248,11 @@ router.post('/login', (req, res) => {
 
 
 
+                            var base64str="not Found";
                             var token = jwt.encode(payload, JWT_SECRET);
-
+                            if (customer[0].image !="notSetYet"){
+                                base64str = base64_encode(customer[0].image);
+                            }
                             res.status(200).json({"data":{
 
                                     birth_date:customer[0].birth_date,
@@ -240,7 +260,7 @@ router.post('/login', (req, res) => {
                                     enabled:customer[0].enabled,
                                     status:customer[0].status,
                                     family_name:customer[0].family_name,
-                                    image:customer[0].image,
+                                    image:base64str,
                                     name:customer[0].name,
                                     phone_number:customer[0].phone_number,
                                     point:customer[0].point,
@@ -264,17 +284,20 @@ router.post('/login', (req, res) => {
                 if (req.body.phone_number != null){
                     Seller.findAll({
                         where: {
-                            phone_number: req.body.phone_number, password: md5(req.body.password)
+                            owner_phone_number: req.body.phone_number, password: md5(req.body.password)
                         }
                     }).then(seller => {
                         if (seller[0] != undefined){
-                            var payload = { phone_number: seller[0].phone_number,
+                            var payload = { owner_phone_number: seller[0].phone_number,
                                 password: seller[0].password,
                                 random:Math.random()};
 
 
+                            var base64str="not Found";
                             var token = jwt.encode(payload, JWT_SECRET);
-
+                            if (seller[0].image !="notSetYet"){
+                                base64str = base64_encode(seller[0].image);
+                            }
                             res.status(200).json({"data":{
 
                                     id:seller[0].phone_numberid,
@@ -284,7 +307,7 @@ router.post('/login', (req, res) => {
                                     point:seller[0].point,
                                     registration_date_time:seller[0].registration_date_time,
                                     google_map_address_link:seller[0].google_map_address_link,
-                                    logo_image:seller[0].logo_image,
+                                    logo_image:base64str,
                                     owner_family_name:seller[0].owner_family_name,
                                     owner_name:seller[0].owner_name,
                                     password:seller[0].password,
@@ -315,8 +338,11 @@ router.post('/login', (req, res) => {
 
 
 
+                            var base64str="not Found";
                             var token = jwt.encode(payload, JWT_SECRET);
-
+                            if (seller[0].image !="notSetYet"){
+                                base64str = base64_encode(seller[0].image);
+                            }
                             res.status(200).json({"data":{
 
                                     id:seller[0].phone_numberid,
@@ -326,7 +352,7 @@ router.post('/login', (req, res) => {
                                     point:seller[0].point,
                                     registration_date_time:seller[0].registration_date_time,
                                     google_map_address_link:seller[0].google_map_address_link,
-                                    logo_image:seller[0].logo_image,
+                                    logo_image:base64str,
                                     owner_family_name:seller[0].owner_family_name,
                                     owner_name:seller[0].owner_name,
                                     password:seller[0].password,
@@ -346,7 +372,94 @@ router.post('/login', (req, res) => {
                     });
                 }
             break;
+            case "transportation":
 
+                myFunction.loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
+                if (req.body.phone_number != null){
+                    transportation.findAll({
+                        where: {
+                            phone_number: req.body.phone_number, password: md5(req.body.password)
+                        }
+                    }).then(trans => {
+                        if (trans[0] != undefined){
+                            var payload = { phone_number: seller[0].phone_number,
+                                password: trans[0].password,
+                                random:Math.random()};
+
+
+                            var base64str="not Found";
+                            var token = jwt.encode(payload, JWT_SECRET);
+                            if (trans[0].image !="notSetYet"){
+                                base64str = base64_encode(trans[0].image);
+                            }
+                            res.status(200).json({"data":{
+
+                                    id:trans[0].phone_numberid,
+                                    air_conditionar:trans[0].air_conditionar,
+                                    color:trans[0].color,
+                                    description:trans[0].description,
+                                    family_name:trans[0].family_name,
+                                    image:base64str,
+                                    name:trans[0].name,
+                                    pelak_number:trans[0].pelak_number,
+                                    phone_number:trans[0].phone_number,
+                                    point:trans[0].point,
+                                    username:trans[0].username,
+                                    modelid:trans[0].modelid,
+                                    ware_houseid:trans[0].ware_houseid,
+                                    token:token               }})
+                        } else {
+                            return res.status(404).json();
+                        }
+
+
+
+                    });
+                } else {
+                    Seller.findAll({
+                        where: {
+                            username: req.body.username, password: md5(req.body.password)
+                        }
+                    }).then(trans => {
+                        if (trans[0] != undefined)
+                        {
+                            var payload = { phone_number: trans[0].phone_number,
+                                password: trans[0].password,
+                                random:Math.random()};
+
+
+
+                            var base64str="not Found";
+                            var token = jwt.encode(payload, JWT_SECRET);
+                            if (trans[0].image !="notSetYet"){
+                                base64str = base64_encode(trans[0].image);
+                            }
+                            res.status(200).json({"data":{
+
+                                    id:trans[0].phone_numberid,
+                                    air_conditionar:trans[0].air_conditionar,
+                                    color:trans[0].color,
+                                    description:trans[0].description,
+                                    family_name:trans[0].family_name,
+                                    image:base64str,
+                                    name:trans[0].name,
+                                    pelak_number:trans[0].pelak_number,
+                                    phone_number:trans[0].phone_number,
+                                    point:trans[0].point,
+                                    username:trans[0].username,
+                                    modelid:trans[0].modelid,
+                                    ware_houseid:trans[0].ware_houseid,
+                                    token:token
+                                }})
+                        } else {
+                            return res.status(404).json();
+
+                        }
+
+
+                    });
+                }
+                break;
             default: return res.status(404).json({"message":"wrong role name"})
         }
 
