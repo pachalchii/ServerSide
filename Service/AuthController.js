@@ -176,10 +176,10 @@ router.post('/login', (req, res) => {
     }else {
 
         var role = req.body.role;
-        myFunction.loginInfoCheck(req,res);
-
+        console.log(role)
         switch (role) {
             case "customer":
+                myFunction.loginInfoCheck(req,res,role);
                 if (req.body.phone_number != null){
                     customer.findAll({
                         where: {
@@ -187,8 +187,8 @@ router.post('/login', (req, res) => {
                         }
                     }).then(customer => {
                         if (customer[0] != undefined){
-                            var payload = { phone_number: customer.phone_number,
-                                password: customer.password,
+                            var payload = { phone_number: customer[0].phone_number,
+                                password: customer[0].password,
                                 random:Math.random()};
 
 
@@ -196,19 +196,19 @@ router.post('/login', (req, res) => {
 
                             res.status(200).json({"data":{
 
-                                    birth_date:customer.birth_date,
-                                    company_name:customer.company_name,
-                                    enabled:customer.enabled,
-                                    status:customer.status,
-                                    family_name:customer.family_name,
-                                    image:customer.image,
-                                    name:customer.name,
-                                    phone_number:customer.phone_number,
-                                    point:customer.point,
-                                    registration_date_time:customer.registration_date_time,
-                                    theme:customer.theme,
-                                    username:customer.username,
-                                    cityid:customer.cityid,
+                                    birth_date:customer[0].birth_date,
+                                    company_name:customer[0].company_name,
+                                    enabled:customer[0].enabled,
+                                    status:customer[0].status,
+                                    family_name:customer[0].family_name,
+                                    image:customer[0].image,
+                                    name:customer[0].name,
+                                    phone_number:customer[0].phone_number,
+                                    point:customer[0].point,
+                                    registration_date_time:customer[0].registration_date_time,
+                                    theme:customer[0].theme,
+                                    username:customer[0].username,
+                                    cityid:customer[0].cityid,
                                     token:token                 }})
                         } else {
                             return res.status(404).json();
@@ -225,8 +225,8 @@ router.post('/login', (req, res) => {
                     }).then(customer => {
                         if (customer[0] != undefined)
                         {
-                            var payload = { phone_number: customer.phone_number,
-                                password: customer.password,
+                            var payload = { phone_number: customer[0].phone_number,
+                                password: customer[0].password,
                                 random:Math.random()};
 
 
@@ -235,19 +235,19 @@ router.post('/login', (req, res) => {
 
                             res.status(200).json({"data":{
 
-                                    birth_date:customer.birth_date,
-                                    company_name:customer.company_name,
-                                    enabled:customer.enabled,
-                                    status:customer.status,
-                                    family_name:customer.family_name,
-                                    image:customer.image,
-                                    name:customer.name,
-                                    phone_number:customer.phone_number,
-                                    point:customer.point,
-                                    registration_date_time:customer.registration_date_time,
-                                    theme:customer.theme,
-                                    username:customer.username,
-                                    cityid:customer.cityid,
+                                    birth_date:customer[0].birth_date,
+                                    company_name:customer[0].company_name,
+                                    enabled:customer[0].enabled,
+                                    status:customer[0].status,
+                                    family_name:customer[0].family_name,
+                                    image:customer[0].image,
+                                    name:customer[0].name,
+                                    phone_number:customer[0].phone_number,
+                                    point:customer[0].point,
+                                    registration_date_time:customer[0].registration_date_time,
+                                    theme:customer[0].theme,
+                                    username:customer[0].username,
+                                    cityid:customer[0].cityid,
                                     token:token                 }})
                         } else {
                             return res.status(404).json();
@@ -260,8 +260,93 @@ router.post('/login', (req, res) => {
 
                 break;
             case "seller":
-                return res.status(400).json({"message":"comming soon"});
-                break;
+                myFunction.loginInfoCheck(req,res,role);
+                if (req.body.phone_number != null){
+                    Seller.findAll({
+                        where: {
+                            phone_number: req.body.phone_number, password: md5(req.body.password)
+                        }
+                    }).then(seller => {
+                        if (seller[0] != undefined){
+                            var payload = { phone_number: seller[0].phone_number,
+                                password: seller[0].password,
+                                random:Math.random()};
+
+
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+                            res.status(200).json({"data":{
+
+                                    id:seller[0].phone_numberid,
+                                    company_name:seller[0].company_name,
+                                    complete_address_description:seller[0].complete_address_description,
+                                    enabled:seller[0].enabled,
+                                    point:seller[0].point,
+                                    registration_date_time:seller[0].registration_date_time,
+                                    google_map_address_link:seller[0].google_map_address_link,
+                                    logo_image:seller[0].logo_image,
+                                    owner_family_name:seller[0].owner_family_name,
+                                    owner_name:seller[0].owner_name,
+                                    password:seller[0].password,
+                                    owner_phone_number:seller[0].owner_phone_number,
+                                    username:seller[0].username,
+                                    company_address_cityid:seller[0].company_address_cityid,
+                                    phone_numberid:seller[0].phone_numberid,
+                                    typeid:seller[0].typeid,
+                                    token:token               }})
+                        } else {
+                            return res.status(404).json();
+                        }
+
+
+
+                    });
+                } else {
+                    Seller.findAll({
+                        where: {
+                            username: req.body.username, password: md5(req.body.password)
+                        }
+                    }).then(seller => {
+                        if (seller[0] != undefined)
+                        {
+                            var payload = { phone_number: seller[0].phone_number,
+                                password: seller[0].password,
+                                random:Math.random()};
+
+
+
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+                            res.status(200).json({"data":{
+
+                                    id:seller[0].phone_numberid,
+                                    company_name:seller[0].company_name,
+                                    complete_address_description:seller[0].complete_address_description,
+                                    enabled:seller[0].enabled,
+                                    point:seller[0].point,
+                                    registration_date_time:seller[0].registration_date_time,
+                                    google_map_address_link:seller[0].google_map_address_link,
+                                    logo_image:seller[0].logo_image,
+                                    owner_family_name:seller[0].owner_family_name,
+                                    owner_name:seller[0].owner_name,
+                                    password:seller[0].password,
+                                    owner_phone_number:seller[0].owner_phone_number,
+                                    username:seller[0].username,
+                                    company_address_cityid:seller[0].company_address_cityid,
+                                    phone_numberid:seller[0].phone_numberid,
+                                    typeid:seller[0].typeid,
+                                    token:token
+                                                    }})
+                        } else {
+                            return res.status(404).json();
+
+                        }
+
+
+                    });
+                }
+            break;
+
             default: return res.status(404).json({"message":"wrong role name"})
         }
 

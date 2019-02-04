@@ -2,37 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documation/pachalChi.postman_collection.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Service/AuthController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Util/myFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/Util/myFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Util/myVars.js" beforeDir="false" afterPath="$PROJECT_DIR$/Util/myVars.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataBase/export.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dataBase/export.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/addresses.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/addresses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/car_model.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/car_model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/cities.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/cities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/customer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/order_nazar_sanji.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/order_nazar_sanji.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/order_pardakht.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/order_pardakht.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/order_product.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/order_product.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/pachal_chi_roles.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/pachal_chi_roles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/product_groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/product_groups.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/seller.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/seller_operator.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_operator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/seller_phone_number.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_phone_number.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/seller_products.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/seller_type.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_type.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/seller_ware_house.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_ware_house.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/support.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/takhfif_product.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/takhfif_product.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/transportation.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/transportation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/unit.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/unit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sequelize.js" beforeDir="false" afterPath="$PROJECT_DIR$/sequelize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/09903933686.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/image.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,14 +50,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="6272" />
+          <entry key="js" value="6416" />
           <entry key="json" value="158" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="158" />
-          <entry key="JavaScript" value="6272" />
+          <entry key="JavaScript" value="6416" />
         </counts>
       </usages-collector>
     </session>
@@ -96,11 +67,9 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Service/AuthController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
+            <state relative-caret-position="236">
+              <caret line="249" column="54" selection-start-line="249" selection-start-column="54" selection-end-line="249" selection-end-column="54" />
               <folding>
-                <element signature="e#900#6671#0" />
-                <element signature="e#6719#10827#0" />
                 <element signature="e#10886#12372#0" />
               </folding>
             </state>
@@ -111,7 +80,7 @@
         <entry file="file://$PROJECT_DIR$/Service/CustomerController.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -119,8 +88,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="50" column="15" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
+            <state relative-caret-position="275">
+              <caret line="197" column="22" lean-forward="true" selection-start-line="197" selection-start-column="22" selection-end-line="197" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -310,6 +279,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Documation" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/users/coustomer" />
     </key>
@@ -404,18 +376,18 @@
       <workItem from="1549190652054" duration="2110000" />
       <workItem from="1549193226483" duration="25769000" />
       <workItem from="1549288028026" duration="2337000" />
-      <workItem from="1549290395551" duration="3389000" />
+      <workItem from="1549290395551" duration="4141000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52946000" />
+    <option name="totallyTimeSpent" value="53698000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -430,7 +402,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49928468" visible="true" weight="0.48886138" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49928468" visible="true" weight="0.48886138" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5007153" side_tool="true" weight="0.32920793" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -742,13 +714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Service/CustomerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataBase/export.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
@@ -756,23 +721,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="50" column="15" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Documation/pachalChi.postman_collection.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="197" column="22" lean-forward="true" selection-start-line="197" selection-start-column="22" selection-end-line="197" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Service/CustomerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Service/AuthController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
+        <state relative-caret-position="236">
+          <caret line="249" column="54" selection-start-line="249" selection-start-column="54" selection-end-line="249" selection-end-column="54" />
           <folding>
-            <element signature="e#900#6671#0" />
-            <element signature="e#6719#10827#0" />
             <element signature="e#10886#12372#0" />
           </folding>
         </state>

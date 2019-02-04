@@ -178,20 +178,39 @@ function registerInfoCheck (req , res , role){
 
 }
 
-function loginInfoCheck (req , res){
-    if (
-        req.body.password == null || (req.body.phone_number == null && req.body.username == null)
+function loginInfoCheck (req , res , role){
+    switch (role) {
+        case "customer":
+            if (
+                req.body.password == null || (req.body.phone_number == null && req.body.username == null)
 
-    ){
-        res.status(400).json({message : "request body does not have all neccesery variables"});
-        return false;
-    }else
-        {
-            if (req.body.phone_number != null) {
-                checkPhone(req,res);
-            }
-            checkPassword(req,res)
-        };
+            ){
+                res.status(400).json({message : "request body does not have all neccesery variables"});
+                return false;
+            }else
+            {
+                if (req.body.phone_number != null) {
+                    checkPhone(req,res);
+                }
+                checkPassword(req,res)
+            };
+            break;
+        case "seller":
+            if (
+                req.body.password == null || (req.body.phone_number == null && req.body.username == null)
+
+            ){
+                res.status(400).json({message : "request body does not have all neccesery variables"});
+                return false;
+            }else
+            {
+                if (req.body.phone_number != null) {
+                    checkPhone(req,res);
+                }
+                checkPassword(req,res)
+            };
+    }
+
 
 }
 
