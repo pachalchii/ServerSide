@@ -8,9 +8,10 @@ const app = express();
 app.use(bodyParser.json());
 
 
-var appController = require('./Service/AppController');
-var customerController = require('./Service/CustomerController');
-var AuthController = require('./Service/AuthController');
+var appController = require('./Controller/AppController');
+var customerController = require('./Controller/CustomerController');
+var AuthController = require('./Controller/AuthController');
+var SellerController = require('./Controller/SellerController');
 
 
 
@@ -18,10 +19,12 @@ var AuthController = require('./Service/AuthController');
 app.use('/application', appController);
 app.use('/customer', customerController);
 app.use('/Auth', AuthController);
+app.use('/seller', SellerController);
 
 
 
-const port = 4040;
+
+const port = 3030;
 app.listen(port, () => {
     console.log( myVars.colors.bg.Green ,  'Node Server listening on port ~~> ' ,myVars.colors.Reset , myVars.colors.fg.Blue + port ,  myVars.colors.Reset);
 });

@@ -89,6 +89,7 @@ router.post('/register',upload.single("image"), (req, res) => {
                             name:req.body.name,
                             phone_number:req.body.phone_number,
                             password:md5(req.body.password),
+                            established_date:req.body.established_date,
                             point:0,
                             registration_date_time:req.body.registration_date_time,
                             theme:req.body.theme,
