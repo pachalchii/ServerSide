@@ -36,7 +36,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "register",
+					"name": "register ( customer )",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -57,7 +57,7 @@
 								},
 								{
 									"key": "cityid",
-									"value": "0",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -73,11 +73,6 @@
 								{
 									"key": "registration_date_time",
 									"value": "registration_date_time",
-									"type": "text"
-								},
-								{
-									"key": "point",
-									"value": "point",
 									"type": "text"
 								},
 								{
@@ -163,6 +158,140 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "register ( Seller )",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "role",
+									"value": "seller",
+									"type": "text"
+								},
+								{
+									"key": "company_name",
+									"value": "company_name",
+									"type": "text"
+								},
+								{
+									"key": "complete_address_description",
+									"value": "complete_address_description",
+									"type": "text"
+								},
+								{
+									"key": "established_date",
+									"value": "established_date",
+									"type": "text"
+								},
+								{
+									"key": "google_map_address_link",
+									"value": "google_map_address_link",
+									"type": "text"
+								},
+								{
+									"key": "owner_family_name",
+									"value": "owner_family_name",
+									"type": "text"
+								},
+								{
+									"key": "owner_name",
+									"value": "owner_name",
+									"type": "text"
+								},
+								{
+									"key": "owner_phone_number",
+									"value": "owner_phone_number",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "username",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "company_address_cityid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "phone_numberid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "typeid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": ""
+								},
+								{
+									"key": "registration_date_time",
+									"value": "registration_date_time",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add PhoneNumber",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone_number1\":\"09903933686\",\n\t\"phone_number2\":\"09903933687\",\n\t\"phone_number3\":\"09903933688\",\n\t\"phone_number4\":\"09903933689\",\n\t\t\"phone_number5\":\"09903933683\"\n\n\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Auth/phoneNumber",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"phoneNumber"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -191,7 +320,7 @@
 	],
 	"variable": [
 		{
-			"id": "f9ef2bf8-2199-425e-8153-60b494d35a62",
+			"id": "50b5b934-8716-4476-ba5b-9fc8db461fc0",
 			"key": "baseUrl",
 			"value": "http://localhost:4040",
 			"type": "string"

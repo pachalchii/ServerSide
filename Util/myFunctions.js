@@ -1,7 +1,7 @@
-const { cities } = require('./../sequelize');
+const { cities , sellerType } = require('./../sequelize');
 const express = require('express');
 const bodyParser = require('body-parser');
-const myVars = require('./../Util/myVars');
+const {colors} = require('./../Util/myVars');
 
 const PHONENUMBER_REGEX = "^(\\+98|0)?9\\d{9}$" ;
 const PASSWORD_REGEX = "(?=.{8,})" ;
@@ -17,7 +17,7 @@ function isEmptyObject(obj) {
     return true;
 }
 function fillDataBase() {
-    var city = [  { id:0 , name:"آذربایجان شرقی" },
+    var city = [
                     { id:1 , name:"آذربایجان شرقی" },
                     { id:2 , name:"اردبیل" },
                     { id:3 , name:"اصفهان" },
@@ -47,14 +47,12 @@ function fillDataBase() {
                     { id:27 , name:"مرکزی" },
                     { id:28 , name:"هرمزگان" },
                     { id:29 , name:"همدان" },
-                    { id:30 , name:"یزد" }
+                    { id:30 , name:"یزد" },
+        { id:31 , name:"آذربایجان شرقی" }
 
 
     ];
-
-        city.forEach(insert);
-
-    function insert(value, index, array) {
+    function insertCities(value, index, array) {
         cities.create(
             {
 
@@ -63,8 +61,37 @@ function fillDataBase() {
             }
         ).catch(err=>{console.log(err)});
     }
-    console.log( myVars.colors.bg.Green ,"import demo data done successfuly" ,  myVars.colors.Reset)
+    function insertTypes(value, index, array) {
+        sellerType.create(
+            {
 
+                id: index,
+                type:value.type
+            }
+        ).catch(err=>{console.log(err)});
+    }
+    cities.findAll().then(cities => {
+        if (cities[0] == undefined){
+            city.forEach(insertCities);
+            console.log( colors.bg.Green ,"import  city demo data done successfuly" ,  colors.Reset);
+        } else {
+            console.log( colors.bg.Red ,"import city demo data canceled ." ,  colors.Reset);
+        }
+    });
+
+    var type = [
+        { id:1 , type:"شرکت اصلی" },
+        { id:2 , type:"نماینده فروش" },
+
+                     ];
+    sellerType.findAll().then(sellerType => {
+        if (sellerType[0] == undefined){
+            type.forEach(insertTypes);
+            console.log( colors.bg.Green ,"import  SellerType demo data done successfuly" ,  colors.Reset);
+        } else {
+            console.log( colors.bg.Red ,"import SellerType demo data canceled ." ,  colors.Reset);
+        }
+    });
 
 
 }
@@ -113,22 +140,41 @@ function checkUserName(req , res ) {
 
 }
 
-function registerInfoCheck (req , res){
-    if (req.body.birth_date == null ||
-        req.body.company_name == null ||
-        req.body.family_name == null ||
-        req.body.name == null ||
-        req.body.password == null ||
-        req.body.phone_number == null ||
-        req.body.point == null ||
-        req.body.registration_date_time == null ||
-        req.body.theme == null ||
-        req.body.username == null ||
-        req.body.cityid == null
-                ){
-        res.status(400).json({message : "request body does not have all neccesery variables"});
-        return false;
-    }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+function registerInfoCheck (req , res , role){
+    switch (role) {
+        case "customer":
+            if (req.body.birth_date == null ||
+                req.body.company_name == null ||
+                req.body.family_name == null ||
+                req.body.name == null ||
+                req.body.password == null ||
+                req.body.phone_number == null ||
+                req.body.registration_date_time == null ||
+                req.body.theme == null ||
+                req.body.username == null ||
+                req.body.cityid == null
+            ){
+                res.status(400).json({message : "request body does not have all neccesery variables"});
+                return false;
+            }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+        case "seller":
+            if (req.body.company_name == null ||
+                req.body.complete_address_description == null ||
+                req.body.google_map_address_link == null ||
+                req.body.owner_family_name == null ||
+                req.body.owner_name == null ||
+                req.body.owner_phone_number == null ||
+                req.body.username == null ||
+                req.body.password == null ||
+                req.body.company_address_cityid == null ||
+                req.body.phone_numberid == null ||
+                req.body.typeid == null
+            ){
+                res.status(400).json({message : "request body does not have all neccesery variables"});
+                return false;
+            }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+    }
+
 
 }
 
@@ -156,4 +202,3 @@ module.exports = {
     registerInfoCheck
     ,fillDataBase
 };
-exports.fillDataBase = fillDataBase();

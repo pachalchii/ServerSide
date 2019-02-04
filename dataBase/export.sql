@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Feb 03, 2019 at 10:42 PM
+-- Generation Time: Feb 04, 2019 at 04:17 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -50,7 +50,7 @@ CREATE TABLE `chat` (
   `id` int(11) NOT NULL,
   `date_time_send` varchar(50) DEFAULT NULL,
   `message` varchar(300) NOT NULL,
-  `seen_status` tinyint(1) DEFAULT NULL
+  `seen_status` bit(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -64,43 +64,6 @@ CREATE TABLE `cities` (
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `cities`
---
-
-INSERT INTO `cities` (`id`, `name`) VALUES
-(0, 'آذربایجان شرقی'),
-(1, 'آذربایجان شرقی'),
-(2, 'اردبیل'),
-(3, 'اصفهان'),
-(4, 'البرز'),
-(5, 'ایلام'),
-(6, 'بوشهر'),
-(7, 'تهران'),
-(8, 'چهارمحال و بختیاری'),
-(9, 'خراسان جنوبی'),
-(10, 'خراسان رضوی'),
-(11, 'خراسان شمالی'),
-(12, 'خوزستان'),
-(13, 'زنجان'),
-(14, 'سمنان'),
-(15, 'سیستان و بلوچستان'),
-(16, 'فارس'),
-(17, 'قزوین'),
-(18, 'قم'),
-(19, 'کردستان'),
-(20, 'کرمان'),
-(21, 'کرمانشاه'),
-(22, 'کهگیلویه و بویراحمد'),
-(23, 'گلستان'),
-(24, 'گیلان'),
-(25, 'لرستان'),
-(26, 'مازندران'),
-(27, 'مرکزی'),
-(28, 'هرمزگان'),
-(29, 'همدان'),
-(30, 'یزد');
-
 -- --------------------------------------------------------
 
 --
@@ -111,7 +74,7 @@ CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `birth_date` varchar(50) DEFAULT NULL,
   `company_name` varchar(50) DEFAULT NULL,
-  `enabled` tinyint(1) DEFAULT NULL,
+  `enabled` bit(1) DEFAULT NULL,
   `family_name` varchar(50) NOT NULL,
   `image` varchar(50) DEFAULT NULL,
   `name` varchar(50) NOT NULL,
@@ -119,7 +82,7 @@ CREATE TABLE `customer` (
   `phone_number` varchar(50) NOT NULL,
   `point` int(11) DEFAULT NULL,
   `registration_date_time` varchar(50) NOT NULL,
-  `status` tinyint(1) DEFAULT NULL,
+  `status` bit(1) DEFAULT NULL,
   `theme` varchar(10) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `cityid` int(11) DEFAULT NULL
@@ -133,11 +96,11 @@ CREATE TABLE `customer` (
 
 CREATE TABLE `order_nazar_sanji` (
   `id` int(11) NOT NULL,
-  `pachal_chi` tinyint(1) DEFAULT NULL,
-  `seller` tinyint(1) DEFAULT NULL,
-  `seller_operator` tinyint(1) DEFAULT NULL,
-  `support` tinyint(1) DEFAULT NULL,
-  `transportar` tinyint(1) DEFAULT NULL
+  `pachal_chi` bit(1) DEFAULT NULL,
+  `seller` bit(1) DEFAULT NULL,
+  `seller_operator` bit(1) DEFAULT NULL,
+  `support` bit(1) DEFAULT NULL,
+  `transportar` bit(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -161,13 +124,13 @@ CREATE TABLE `order_pardakht` (
 
 CREATE TABLE `order_product` (
   `id` int(11) NOT NULL,
-  `customer_status` tinyint(1) DEFAULT NULL,
-  `seller_operator_status` tinyint(1) DEFAULT NULL,
+  `customer_status` bit(1) DEFAULT NULL,
+  `seller_operator_status` bit(1) DEFAULT NULL,
   `supply` varchar(50) NOT NULL,
-  `takhfif` tinyint(1) NOT NULL,
-  `transportar_status` tinyint(1) DEFAULT NULL,
+  `takhfif` bit(1) NOT NULL,
+  `transportar_status` bit(1) DEFAULT NULL,
   `trasnportar_current_location` varchar(300) DEFAULT NULL,
-  `ware_house_status` tinyint(1) DEFAULT NULL,
+  `ware_house_status` bit(1) DEFAULT NULL,
   `orderid` int(11) DEFAULT NULL,
   `seller_operatorid` int(11) DEFAULT NULL,
   `ware_houseid` int(11) DEFAULT NULL,
@@ -252,7 +215,7 @@ CREATE TABLE `seller_operator` (
   `password` varchar(50) NOT NULL,
   `phone_number` varchar(50) DEFAULT NULL,
   `point` int(11) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
+  `status` bit(1) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `sellerid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -318,7 +281,7 @@ CREATE TABLE `seller_ware_house` (
   `password` varchar(50) NOT NULL,
   `phone_number` varchar(50) NOT NULL,
   `point` int(11) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
+  `status` bit(1) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `ware_house_complete_address_description` varchar(300) DEFAULT NULL,
   `ware_house_google_map_address_link` varchar(300) NOT NULL,
@@ -338,7 +301,7 @@ CREATE TABLE `support` (
   `image` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `status` tinyint(1) DEFAULT NULL,
+  `status` bit(1) DEFAULT NULL,
   `username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -351,10 +314,10 @@ CREATE TABLE `support` (
 CREATE TABLE `takhfif_product` (
   `id` int(11) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
-  `enable` tinyint(1) DEFAULT NULL,
+  `enable` bit(1) DEFAULT NULL,
   `finish` varchar(50) NOT NULL,
   `image` varchar(50) DEFAULT NULL,
-  `pachal_chi_status` tinyint(1) DEFAULT NULL,
+  `pachal_chi_status` bit(1) DEFAULT NULL,
   `percentage` int(11) NOT NULL,
   `price_after` varchar(50) NOT NULL,
   `price_before` varchar(50) NOT NULL,
@@ -374,7 +337,7 @@ CREATE TABLE `takhfif_product` (
 
 CREATE TABLE `transportation` (
   `id` int(11) NOT NULL,
-  `air_conditionar` tinyint(1) DEFAULT NULL,
+  `air_conditionar` bit(1) DEFAULT NULL,
   `birthdate` varchar(50) DEFAULT NULL,
   `color` varchar(50) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
@@ -385,7 +348,7 @@ CREATE TABLE `transportation` (
   `pelak_number` varchar(50) NOT NULL,
   `phone_number` varchar(50) NOT NULL,
   `point` int(11) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
+  `status` bit(1) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `modelid` int(11) NOT NULL,
   `ware_houseid` int(11) NOT NULL
@@ -411,14 +374,14 @@ CREATE TABLE `unit` (
 --
 ALTER TABLE `addresses`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customerid` (`customerid`);
+  ADD KEY `FK9dief65fg5h7flob5f42xxyir` (`customerid`);
 
 --
 -- Indexes for table `car_model`
 --
 ALTER TABLE `car_model`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `parentid` (`parentid`);
+  ADD KEY `FKbaxljox4ssxqe2itmjvksko74` (`parentid`);
 
 --
 -- Indexes for table `chat`
@@ -437,9 +400,7 @@ ALTER TABLE `cities`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `phone_number` (`phone_number`),
-  ADD KEY `cityid` (`cityid`);
+  ADD KEY `FKl4ve9n23365ev3dg020wh1lm5` (`cityid`);
 
 --
 -- Indexes for table `order_nazar_sanji`
@@ -458,10 +419,10 @@ ALTER TABLE `order_pardakht`
 --
 ALTER TABLE `order_product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `seller_operatorid` (`seller_operatorid`),
-  ADD KEY `ware_houseid` (`ware_houseid`),
-  ADD KEY `productid` (`productid`),
-  ADD KEY `transportarid` (`transportarid`);
+  ADD KEY `FKfnqo97whxu3au5j74rujjkcg3` (`seller_operatorid`),
+  ADD KEY `FKgem07ahg33al08727eca7srsi` (`ware_houseid`),
+  ADD KEY `FKrxjqyt0lr6fuffuki6udr2fj1` (`productid`),
+  ADD KEY `FK98g2fq7cu90pqg14wim08j6lg` (`transportarid`);
 
 --
 -- Indexes for table `pachal_chi_roles`
@@ -474,31 +435,31 @@ ALTER TABLE `pachal_chi_roles`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `groupid` (`groupid`);
+  ADD KEY `FKi6n9yj7p2ge4iwtn1y4favixn` (`groupid`);
 
 --
 -- Indexes for table `product_groups`
 --
 ALTER TABLE `product_groups`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `parentid` (`parentid`);
+  ADD KEY `FKnc6ytea50q24bq6q1m7vtnhcw` (`parentid`);
 
 --
 -- Indexes for table `seller`
 --
 ALTER TABLE `seller`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `company_address_cityid` (`company_address_cityid`),
-  ADD KEY `seller_parentid` (`seller_parentid`),
-  ADD KEY `phone_numberid` (`phone_numberid`),
-  ADD KEY `typeid` (`typeid`);
+  ADD KEY `FK1mw8nt7eck09j4iugtgyhedp3` (`company_address_cityid`),
+  ADD KEY `FKgaiy0hqrawmb1eiq2p7re1mrk` (`seller_parentid`),
+  ADD KEY `FK1hfun1q7sq3k0fmjyk0i5uftr` (`phone_numberid`),
+  ADD KEY `FK2uxhl29jg9d24w9u078ksluo3` (`typeid`);
 
 --
 -- Indexes for table `seller_operator`
 --
 ALTER TABLE `seller_operator`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `sellerid` (`sellerid`);
+  ADD KEY `FK8kcikjgyoxkpdwwol2dufpfwq` (`sellerid`);
 
 --
 -- Indexes for table `seller_phone_number`
@@ -511,9 +472,9 @@ ALTER TABLE `seller_phone_number`
 --
 ALTER TABLE `seller_products`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `productid` (`productid`),
-  ADD KEY `sellerid` (`sellerid`),
-  ADD KEY `unitid` (`unitid`);
+  ADD KEY `FKiok0ou6e2heihjna56sbaix22` (`productid`),
+  ADD KEY `FKqcd850pcdjlju3kk0jb3h1jju` (`sellerid`),
+  ADD KEY `FK10ixcmxx1bofwxfgb9mq63j0i` (`unitid`);
 
 --
 -- Indexes for table `seller_type`
@@ -526,8 +487,8 @@ ALTER TABLE `seller_type`
 --
 ALTER TABLE `seller_ware_house`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `ware_house_address_cityid` (`ware_house_address_cityid`),
-  ADD KEY `sellerid` (`sellerid`);
+  ADD KEY `FKhtm0ui810hyu1xmb1bbq0nv7o` (`ware_house_address_cityid`),
+  ADD KEY `FK6u07h19i3bqx6uc4nprpewkx8` (`sellerid`);
 
 --
 -- Indexes for table `support`
@@ -540,17 +501,17 @@ ALTER TABLE `support`
 --
 ALTER TABLE `takhfif_product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `productid` (`productid`),
-  ADD KEY `sellerid` (`sellerid`),
-  ADD KEY `unitid` (`unitid`);
+  ADD KEY `FKqem13fmkw46u8bilgujcsyipy` (`productid`),
+  ADD KEY `FK5w90y8ngr9ptuginimv0v5kft` (`sellerid`),
+  ADD KEY `FKlmmg2aqefseuogr8bougxrntc` (`unitid`);
 
 --
 -- Indexes for table `transportation`
 --
 ALTER TABLE `transportation`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `modelid` (`modelid`),
-  ADD KEY `ware_houseid` (`ware_houseid`);
+  ADD KEY `FKmm5813g5r499vashw0rxtpc5f` (`modelid`),
+  ADD KEY `FKdh7m0nvtqjxhnbtw0yi28eff6` (`ware_houseid`);
 
 --
 -- Indexes for table `unit`
@@ -563,10 +524,110 @@ ALTER TABLE `unit`
 --
 
 --
+-- AUTO_INCREMENT for table `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `car_model`
+--
+ALTER TABLE `car_model`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `chat`
+--
+ALTER TABLE `chat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `cities`
+--
+ALTER TABLE `cities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `order_nazar_sanji`
+--
+ALTER TABLE `order_nazar_sanji`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `order_pardakht`
+--
+ALTER TABLE `order_pardakht`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `order_product`
+--
+ALTER TABLE `order_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `pachal_chi_roles`
+--
+ALTER TABLE `pachal_chi_roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `product_groups`
+--
+ALTER TABLE `product_groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `seller`
+--
+ALTER TABLE `seller`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `seller_operator`
+--
+ALTER TABLE `seller_operator`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `seller_phone_number`
+--
+ALTER TABLE `seller_phone_number`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `seller_products`
+--
+ALTER TABLE `seller_products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `seller_type`
+--
+ALTER TABLE `seller_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `seller_ware_house`
+--
+ALTER TABLE `seller_ware_house`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `support`
+--
+ALTER TABLE `support`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `takhfif_product`
+--
+ALTER TABLE `takhfif_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `transportation`
+--
+ALTER TABLE `transportation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `unit`
+--
+ALTER TABLE `unit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
@@ -575,82 +636,82 @@ ALTER TABLE `customer`
 -- Constraints for table `addresses`
 --
 ALTER TABLE `addresses`
-  ADD CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`);
+  ADD CONSTRAINT `FK9dief65fg5h7flob5f42xxyir` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`);
 
 --
 -- Constraints for table `car_model`
 --
 ALTER TABLE `car_model`
-  ADD CONSTRAINT `car_model_ibfk_1` FOREIGN KEY (`parentid`) REFERENCES `car_model` (`id`);
+  ADD CONSTRAINT `FKbaxljox4ssxqe2itmjvksko74` FOREIGN KEY (`parentid`) REFERENCES `car_model` (`id`);
 
 --
 -- Constraints for table `customer`
 --
 ALTER TABLE `customer`
-  ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`cityid`) REFERENCES `cities` (`id`);
+  ADD CONSTRAINT `FKl4ve9n23365ev3dg020wh1lm5` FOREIGN KEY (`cityid`) REFERENCES `cities` (`id`);
 
 --
 -- Constraints for table `order_product`
 --
 ALTER TABLE `order_product`
-  ADD CONSTRAINT `order_product_ibfk_1` FOREIGN KEY (`seller_operatorid`) REFERENCES `seller_operator` (`id`),
-  ADD CONSTRAINT `order_product_ibfk_2` FOREIGN KEY (`ware_houseid`) REFERENCES `seller_ware_house` (`id`),
-  ADD CONSTRAINT `order_product_ibfk_3` FOREIGN KEY (`productid`) REFERENCES `takhfif_product` (`id`),
-  ADD CONSTRAINT `order_product_ibfk_4` FOREIGN KEY (`transportarid`) REFERENCES `transportation` (`id`);
+  ADD CONSTRAINT `FK98g2fq7cu90pqg14wim08j6lg` FOREIGN KEY (`transportarid`) REFERENCES `transportation` (`id`),
+  ADD CONSTRAINT `FKfnqo97whxu3au5j74rujjkcg3` FOREIGN KEY (`seller_operatorid`) REFERENCES `seller_operator` (`id`),
+  ADD CONSTRAINT `FKgem07ahg33al08727eca7srsi` FOREIGN KEY (`ware_houseid`) REFERENCES `seller_ware_house` (`id`),
+  ADD CONSTRAINT `FKrxjqyt0lr6fuffuki6udr2fj1` FOREIGN KEY (`productid`) REFERENCES `takhfif_product` (`id`);
 
 --
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`groupid`) REFERENCES `product_groups` (`id`);
+  ADD CONSTRAINT `FKi6n9yj7p2ge4iwtn1y4favixn` FOREIGN KEY (`groupid`) REFERENCES `product_groups` (`id`);
 
 --
 -- Constraints for table `product_groups`
 --
 ALTER TABLE `product_groups`
-  ADD CONSTRAINT `product_groups_ibfk_1` FOREIGN KEY (`parentid`) REFERENCES `product_groups` (`id`);
+  ADD CONSTRAINT `FKnc6ytea50q24bq6q1m7vtnhcw` FOREIGN KEY (`parentid`) REFERENCES `product_groups` (`id`);
 
 --
 -- Constraints for table `seller`
 --
 ALTER TABLE `seller`
-  ADD CONSTRAINT `seller_ibfk_1` FOREIGN KEY (`company_address_cityid`) REFERENCES `cities` (`id`),
-  ADD CONSTRAINT `seller_ibfk_2` FOREIGN KEY (`seller_parentid`) REFERENCES `seller` (`id`),
-  ADD CONSTRAINT `seller_ibfk_3` FOREIGN KEY (`phone_numberid`) REFERENCES `seller_phone_number` (`id`),
-  ADD CONSTRAINT `seller_ibfk_4` FOREIGN KEY (`typeid`) REFERENCES `seller_type` (`id`);
+  ADD CONSTRAINT `FK1hfun1q7sq3k0fmjyk0i5uftr` FOREIGN KEY (`phone_numberid`) REFERENCES `seller_phone_number` (`id`),
+  ADD CONSTRAINT `FK1mw8nt7eck09j4iugtgyhedp3` FOREIGN KEY (`company_address_cityid`) REFERENCES `cities` (`id`),
+  ADD CONSTRAINT `FK2uxhl29jg9d24w9u078ksluo3` FOREIGN KEY (`typeid`) REFERENCES `seller_type` (`id`),
+  ADD CONSTRAINT `FKgaiy0hqrawmb1eiq2p7re1mrk` FOREIGN KEY (`seller_parentid`) REFERENCES `seller` (`id`);
 
 --
 -- Constraints for table `seller_operator`
 --
 ALTER TABLE `seller_operator`
-  ADD CONSTRAINT `seller_operator_ibfk_1` FOREIGN KEY (`sellerid`) REFERENCES `seller` (`id`);
+  ADD CONSTRAINT `FK8kcikjgyoxkpdwwol2dufpfwq` FOREIGN KEY (`sellerid`) REFERENCES `seller` (`id`);
 
 --
 -- Constraints for table `seller_products`
 --
 ALTER TABLE `seller_products`
-  ADD CONSTRAINT `seller_products_ibfk_1` FOREIGN KEY (`productid`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `seller_products_ibfk_2` FOREIGN KEY (`sellerid`) REFERENCES `seller` (`id`),
-  ADD CONSTRAINT `seller_products_ibfk_3` FOREIGN KEY (`unitid`) REFERENCES `unit` (`id`);
+  ADD CONSTRAINT `FK10ixcmxx1bofwxfgb9mq63j0i` FOREIGN KEY (`unitid`) REFERENCES `unit` (`id`),
+  ADD CONSTRAINT `FKiok0ou6e2heihjna56sbaix22` FOREIGN KEY (`productid`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `FKqcd850pcdjlju3kk0jb3h1jju` FOREIGN KEY (`sellerid`) REFERENCES `seller` (`id`);
 
 --
 -- Constraints for table `seller_ware_house`
 --
 ALTER TABLE `seller_ware_house`
-  ADD CONSTRAINT `seller_ware_house_ibfk_1` FOREIGN KEY (`ware_house_address_cityid`) REFERENCES `cities` (`id`),
-  ADD CONSTRAINT `seller_ware_house_ibfk_2` FOREIGN KEY (`sellerid`) REFERENCES `seller` (`id`);
+  ADD CONSTRAINT `FK6u07h19i3bqx6uc4nprpewkx8` FOREIGN KEY (`sellerid`) REFERENCES `seller` (`id`),
+  ADD CONSTRAINT `FKhtm0ui810hyu1xmb1bbq0nv7o` FOREIGN KEY (`ware_house_address_cityid`) REFERENCES `cities` (`id`);
 
 --
 -- Constraints for table `takhfif_product`
 --
 ALTER TABLE `takhfif_product`
-  ADD CONSTRAINT `takhfif_product_ibfk_1` FOREIGN KEY (`productid`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `takhfif_product_ibfk_2` FOREIGN KEY (`sellerid`) REFERENCES `seller` (`id`),
-  ADD CONSTRAINT `takhfif_product_ibfk_3` FOREIGN KEY (`unitid`) REFERENCES `unit` (`id`);
+  ADD CONSTRAINT `FK5w90y8ngr9ptuginimv0v5kft` FOREIGN KEY (`sellerid`) REFERENCES `seller` (`id`),
+  ADD CONSTRAINT `FKlmmg2aqefseuogr8bougxrntc` FOREIGN KEY (`unitid`) REFERENCES `unit` (`id`),
+  ADD CONSTRAINT `FKqem13fmkw46u8bilgujcsyipy` FOREIGN KEY (`productid`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `transportation`
 --
 ALTER TABLE `transportation`
-  ADD CONSTRAINT `transportation_ibfk_1` FOREIGN KEY (`modelid`) REFERENCES `car_model` (`id`),
-  ADD CONSTRAINT `transportation_ibfk_2` FOREIGN KEY (`ware_houseid`) REFERENCES `seller_ware_house` (`id`);
+  ADD CONSTRAINT `FKdh7m0nvtqjxhnbtw0yi28eff6` FOREIGN KEY (`ware_houseid`) REFERENCES `seller_ware_house` (`id`),
+  ADD CONSTRAINT `FKmm5813g5r499vashw0rxtpc5f` FOREIGN KEY (`modelid`) REFERENCES `car_model` (`id`);

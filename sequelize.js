@@ -22,7 +22,7 @@ const takhfifProductModel = require('./models/takhfif_product');
 const transportationModel = require('./models/transportation');
 const unitModel = require('./models/unit');
 
-const myVars = require('./Util/myVars');
+const {colors} = require('./Util/myVars');
 
 
 const sequelize = new Sequelize('pachalChi', 'root', '755amir2205', {
@@ -61,7 +61,7 @@ const unit= unitModel(sequelize, Sequelize);
 
 sequelize.sync({ force: false })
   .then(() => {
-      console.log(myVars.colors.bg.Green ,`Configing DataBase done successfully .`,  myVars.colors.Reset)
+      console.log(colors.bg.Green ,`Configing DataBase done successfully .`,  colors.Reset)
   });
 
 module.exports = {

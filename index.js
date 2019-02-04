@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {Seller} = require('./sequelize');
 const myVars = require('./Util/myVars');
-const myFunctions = require('./Util/myFunctions');
+const {fillDataBase} = require('./Util/myFunctions');
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,4 +26,4 @@ app.listen(port, () => {
     console.log( myVars.colors.bg.Green ,  'Node Server listening on port ~~> ' ,myVars.colors.Reset , myVars.colors.fg.Blue + port ,  myVars.colors.Reset);
 });
 
-myFunctions.fillDataBase();
+fillDataBase();

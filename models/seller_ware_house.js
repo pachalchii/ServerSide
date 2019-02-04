@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('seller_ware_house', {
     id: {
       type: DataTypes.INTEGER(11),
+        autoIncrement: true,
       allowNull: false,
       primaryKey: true
     },

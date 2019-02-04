@@ -30,4 +30,6 @@ const colors = {
     }
 };
 
-exports.colors = colors;
+module.exports = {
+    colors
+}

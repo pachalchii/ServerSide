@@ -3,12 +3,36 @@
   <component name="ChangeListManager">
     <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/pachalChi.postman_collection.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Service/AuthController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Util/myFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/Util/myFunctions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Util/myVars.js" beforeDir="false" afterPath="$PROJECT_DIR$/Util/myVars.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataBase/export.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dataBase/export.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/addresses.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/addresses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/car_model.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/car_model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cities.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/cities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/customer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/order_nazar_sanji.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/order_nazar_sanji.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/order_pardakht.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/order_pardakht.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/order_product.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/order_product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/pachal_chi_roles.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/pachal_chi_roles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/product_groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/product_groups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/seller.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/seller_operator.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_operator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/seller_phone_number.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_phone_number.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/seller_products.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/seller_type.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_type.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/seller_ware_house.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/seller_ware_house.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/takhfif_product.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/takhfif_product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/transportation.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/transportation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/unit.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/unit.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sequelize.js" beforeDir="false" afterPath="$PROJECT_DIR$/sequelize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/09903933686.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/image.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,133 +44,74 @@
     <session id="-940091515">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
-          <entry key="project.open.time.1" value="2" />
+          <entry key="project.closed" value="12" />
+          <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="3" />
+          <entry key="project.open.time.7" value="4" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="11" />
+          <entry key="project.opened" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="106" />
-          <entry key="json" value="11" />
+          <entry key="js" value="139" />
+          <entry key="json" value="12" />
           <entry key="log" value="1" />
           <entry key="md" value="2" />
           <entry key="pachalChiDb/MyChatRoom/users" value="1" />
           <entry key="pachalChiDb/pachalChi/users" value="6" />
           <entry key="png" value="1" />
-          <entry key="sql" value="1" />
+          <entry key="sql" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="1" />
-          <entry key="JSON" value="11" />
-          <entry key="JavaScript" value="105" />
+          <entry key="JSON" value="12" />
+          <entry key="JavaScript" value="138" />
           <entry key="MONGO" value="7" />
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="SQL" value="1" />
+          <entry key="SQL" value="2" />
           <entry key="UML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="5320" />
+          <entry key="js" value="6272" />
           <entry key="json" value="158" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="158" />
-          <entry key="JavaScript" value="5320" />
+          <entry key="JavaScript" value="6272" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sequelize.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="915">
-              <caret line="61" column="29" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Service/AuthController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="198" lean-forward="true" selection-start-line="198" selection-end-line="198" />
+            <state relative-caret-position="166">
+              <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
+              <folding>
+                <element signature="e#900#6671#0" />
+                <element signature="e#6719#10827#0" />
+                <element signature="e#10886#12372#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Service/AppController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/customer.js">
+        <entry file="file://$PROJECT_DIR$/Service/CustomerController.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/unit.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/seller_type.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/seller_operator.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -154,8 +119,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="143" column="34" selection-start-line="143" selection-start-column="34" selection-end-line="143" selection-end-column="34" />
+            <state relative-caret-position="186">
+              <caret line="50" column="15" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -184,9 +149,17 @@
       <find>آذربایجان شرقی</find>
       <find>var_d</find>
       <find>Oops</find>
+      <find>fillDataBase</find>
+      <find>exports.</find>
+      <find>myVa</find>
+      <find>myVars</find>
+      <find>type: DataTypes.INTEGER(11),</find>
+      <find>id: {       type: DataTypes.INTEGER(11),</find>
+      <find>id\: \{\n      type\: DataTypes\.INTEGER\(11\)\,</find>
     </findStrings>
     <replaceStrings>
       <replace />
+      <replace>type: DataTypes.INTEGER(11),         autoIncrement: true,</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/node_modules</dir>
@@ -218,17 +191,36 @@
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/config.json" />
-        <option value="$PROJECT_DIR$/Util/myVars.js" />
-        <option value="$PROJECT_DIR$/models/seller.js" />
         <option value="$PROJECT_DIR$/Service/CoustomerController.js" />
         <option value="$PROJECT_DIR$/Util/myExports.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/Service/CustomerController.js" />
         <option value="$PROJECT_DIR$/Service/AppController.js" />
-        <option value="$PROJECT_DIR$/models/customer.js" />
-        <option value="$PROJECT_DIR$/sequelize.js" />
-        <option value="$PROJECT_DIR$/dataBase/export.sql" />
         <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/Util/myVars.js" />
+        <option value="$PROJECT_DIR$/sequelize.js" />
+        <option value="$PROJECT_DIR$/models/customer.js" />
+        <option value="$PROJECT_DIR$/models/addresses.js" />
+        <option value="$PROJECT_DIR$/models/car_model.js" />
+        <option value="$PROJECT_DIR$/models/chat.js" />
+        <option value="$PROJECT_DIR$/models/cities.js" />
+        <option value="$PROJECT_DIR$/models/order_nazar_sanji.js" />
+        <option value="$PROJECT_DIR$/models/order_pardakht.js" />
+        <option value="$PROJECT_DIR$/models/order_product.js" />
+        <option value="$PROJECT_DIR$/models/pachal_chi_roles.js" />
+        <option value="$PROJECT_DIR$/models/product_groups.js" />
+        <option value="$PROJECT_DIR$/models/products.js" />
+        <option value="$PROJECT_DIR$/models/seller.js" />
+        <option value="$PROJECT_DIR$/models/seller_operator.js" />
+        <option value="$PROJECT_DIR$/models/seller_phone_number.js" />
+        <option value="$PROJECT_DIR$/models/seller_products.js" />
+        <option value="$PROJECT_DIR$/models/seller_type.js" />
+        <option value="$PROJECT_DIR$/models/seller_ware_house.js" />
+        <option value="$PROJECT_DIR$/models/support.js" />
+        <option value="$PROJECT_DIR$/models/takhfif_product.js" />
+        <option value="$PROJECT_DIR$/models/transportation.js" />
+        <option value="$PROJECT_DIR$/models/unit.js" />
+        <option value="$PROJECT_DIR$/dataBase/export.sql" />
         <option value="$PROJECT_DIR$/Util/myFunctions.js" />
         <option value="$PROJECT_DIR$/Service/AuthController.js" />
       </list>
@@ -260,12 +252,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
             <path>
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="dataBase" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -285,13 +283,18 @@
             <path>
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="uploads" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="seller" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="Util" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
@@ -399,18 +402,20 @@
       <workItem from="1549095734959" duration="1817000" />
       <workItem from="1549111793953" duration="3848000" />
       <workItem from="1549190652054" duration="2110000" />
-      <workItem from="1549193226483" duration="25042000" />
+      <workItem from="1549193226483" duration="25769000" />
+      <workItem from="1549288028026" duration="2337000" />
+      <workItem from="1549290395551" duration="3389000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46493000" />
+    <option name="totallyTimeSpent" value="52946000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -419,13 +424,13 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32920793" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.35767326" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.35767326" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39975247" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49928468" weight="0.19183168" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49928468" visible="true" weight="0.48886138" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5007153" side_tool="true" weight="0.32920793" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -448,35 +453,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="uml://JavaScript-modules-diagram//Users/macbook/Desktop/Projects/pachalChi/server.js">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JavaScript-modules-diagram</ID>
-          <OriginalElement>$PROJECT_DIR$/server.js</OriginalElement>
-          <nodes>
-            <node x="" y="">$PROJECT_DIR$/_helpers/error-handler.js</node>
-            <node x="" y="">$PROJECT_DIR$/node_modules/cors/lib/index.js</node>
-            <node x="" y="">$PROJECT_DIR$/_helpers/jwt.js</node>
-            <node x="" y="">$PROJECT_DIR$/node_modules/rootpath/pathSetup.js</node>
-            <node x="" y="">$PROJECT_DIR$/server.js#bodyParser#118;/Users/macbook/Desktop/Projects/pachalChi/server.js#cors#88;/Users/macbook/Desktop/Projects/pachalChi/server.js#errorHandler#198;/Users/macbook/Desktop/Projects/pachalChi/server.js#express#29;/Users/macbook/Desktop/Projects/pachalChi/server.js#jwt#161;/Users/macbook/Desktop/Projects/pachalChi/server.js#pathSetup.js#0;/Users/macbook/Desktop/Projects/pachalChi/server.js#users.controller.js#431;</node>
-            <node x="" y="">$PROJECT_DIR$/users/users.controller.js</node>
-            <node x="" y="">body-parser</node>
-            <node x="" y="">express</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="290.0" y="241.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>All</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>Details</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/node_modules/mongodb/README.md" />
-    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/model.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/mquery/test/collection/node.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/connection.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/mongoose/node_modules/mongodb/lib/db.js" />
@@ -498,62 +474,6 @@
     <entry file="file://$PROJECT_DIR$/users/coustomer/coustomer.controller.js" />
     <entry file="file://$PROJECT_DIR$/_helpers/db.js" />
     <entry file="file://$PROJECT_DIR$/users/coustomer/coustomer.service.js" />
-    <entry file="file://$PROJECT_DIR$/models/addresses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/car_model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="35" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="35" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/chat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/order_pardakht.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/products.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/seller_products.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -561,47 +481,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Util/myExports.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/cities.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="6" lean-forward="true" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Util/myVars.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Service/CustomerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/seller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="13" column="32" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Util/myExports.js" />
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="268">
@@ -609,9 +489,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/uploads/image.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/uploads/image.png" />
     <entry file="file://$PROJECT_DIR$/node_modules/express/lib/response.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -626,41 +504,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/customer.js">
+    <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="420">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/unit.js">
+    <entry file="file://$PROJECT_DIR$/Util/myVars.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="495">
+          <caret line="33" column="10" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/seller_type.js">
+    <entry file="file://$PROJECT_DIR$/sequelize.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/seller_operator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="-14">
+          <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -671,38 +532,249 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sequelize.js">
+    <entry file="file://$PROJECT_DIR$/models/addresses.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="915">
-          <caret line="61" column="29" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/car_model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/cities.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/customer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="34" lean-forward="true" selection-start-line="5" selection-start-column="34" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/order_nazar_sanji.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/order_pardakht.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/order_product.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/pachal_chi_roles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/product_groups.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/products.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/seller_products.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/seller_type.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/seller_ware_house.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/takhfif_product.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/transportation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/unit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/support.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/seller_phone_number.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/seller_operator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/seller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Service/CustomerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dataBase/export.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="656" lean-forward="true" selection-start-line="656" selection-end-line="656" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+        <state relative-caret-position="328">
+          <caret line="717" lean-forward="true" selection-start-line="717" selection-end-line="717" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="143" column="34" selection-start-line="143" selection-start-column="34" selection-end-line="143" selection-end-column="34" />
+        <state relative-caret-position="186">
+          <caret line="50" column="15" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Documation/pachalChi.postman_collection.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/Service/AuthController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="198" lean-forward="true" selection-start-line="198" selection-end-line="198" />
+        <state relative-caret-position="166">
+          <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
+          <folding>
+            <element signature="e#900#6671#0" />
+            <element signature="e#6719#10827#0" />
+            <element signature="e#10886#12372#0" />
+          </folding>
         </state>
       </provider>
     </entry>
