@@ -9,7 +9,7 @@
 			"name": "application",
 			"item": [
 				{
-					"name": "get information",
+					"name": "get cityList",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -25,6 +25,28 @@
 							"path": [
 								"application",
 								"city"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get seller type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/application/sellerType",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"application",
+								"sellerType"
 							]
 						}
 					},
@@ -62,7 +84,7 @@
 								},
 								{
 									"key": "username",
-									"value": "username3awd2",
+									"value": "awdawd",
 									"type": "text"
 								},
 								{
@@ -77,22 +99,17 @@
 								},
 								{
 									"key": "phone_number",
-									"value": "09122492592",
+									"value": "09122292594",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "password",
+									"value": "password1",
 									"type": "text"
 								},
 								{
 									"key": "name",
 									"value": "name",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"value": "image",
 									"type": "text"
 								},
 								{
@@ -144,7 +161,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"role\":\"customer\",\n\t\"username\":\"username3awd\",\n\t\"password\":\"password\"\n}"
+							"raw": "{\n\t\"role\":\"customer\",\n\t\"phone_number\":\"09122292594\",\n\t\"password\":\"password1\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/Auth/login",
@@ -216,12 +233,12 @@
 								},
 								{
 									"key": "username",
-									"value": "username",
+									"value": "username11awdad",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "password",
+									"value": "password1aawddw",
 									"type": "text"
 								},
 								{
@@ -247,6 +264,11 @@
 								{
 									"key": "registration_date_time",
 									"value": "registration_date_time",
+									"type": "text"
+								},
+								{
+									"key": "established_date",
+									"value": "132132",
 									"type": "text"
 								}
 							]
@@ -294,6 +316,39 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "seller",
+			"item": [
+				{
+					"name": "get seller(company) list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIwOTEyMjI5MjU5NCIsInBhc3N3b3JkIjoiN2M2YTE4MGIzNjg5NmEwYThjMDI3ODdlZWFmYjBlNGMiLCJyYW5kb20iOjAuMjQ0MzcwMTcwNzQ0NjczMDR9.fKDeYsfl5nXDFJerZPccupnJxUL3TIb_RIkOpAU4OSg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -320,9 +375,9 @@
 	],
 	"variable": [
 		{
-			"id": "50b5b934-8716-4476-ba5b-9fc8db461fc0",
+			"id": "90023088-24b6-4c9c-9d06-11206018f93b",
 			"key": "baseUrl",
-			"value": "http://localhost:4040",
+			"value": "http://localhost:2020",
 			"type": "string"
 		}
 	]

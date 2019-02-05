@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {Seller , cities} = require('./../sequelize');
+const {Seller , cities , sellerType} = require('./../sequelize');
 const {colors} = require('./../Util/myVars');
 var router = express.Router();
 
@@ -10,7 +10,11 @@ router.get('/city', function (req, res) {
        return res.json(cities)
     });
 });
-
+router.get('/sellerType', function (req, res) {
+    sellerType.findAll().then(sellertype => {
+        return res.json(sellertype)
+    });
+});
 
 module.exports = router;
 
