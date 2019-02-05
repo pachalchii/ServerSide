@@ -1,11 +1,8 @@
 const { cities , sellerType , productGroups} = require('./../sequelize');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {colors} = require('./../Util/myVars');
+const {colors , PHONENUMBER_REGEX , PASSWORD_REGEX , USERNAME_REGEX } = require('./../Util/myVars');
 
-const PHONENUMBER_REGEX = "^(\\+98|0)?9\\d{9}$" ;
-const PASSWORD_REGEX = "(?=.{8,})" ;
-const USERNAME_REGEX ="^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
 
 
 function isEmptyObject(obj) {

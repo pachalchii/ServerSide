@@ -30,6 +30,15 @@ const colors = {
     }
 };
 
+const JWT_SECRET = "755Amirr2205";
+const PHONENUMBER_REGEX = "^(\\+98|0)?9\\d{9}$" ;
+const PASSWORD_REGEX = "(?=.{8,})" ;
+const USERNAME_REGEX ="^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
+
 module.exports = {
-    colors
-}
+    colors,
+    JWT_SECRET,
+    PASSWORD_REGEX,
+    PHONENUMBER_REGEX,
+    USERNAME_REGEX
+};

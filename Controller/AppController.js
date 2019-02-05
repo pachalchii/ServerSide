@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {Seller , cities} = require('./../sequelize');
-const myVars = require('./../Util/myVars');
+const {colors} = require('./../Util/myVars');
 var router = express.Router();
 
 // get app information

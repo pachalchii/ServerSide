@@ -24,7 +24,7 @@ app.use('/seller', SellerController);
 
 
 
-const port = 3030;
+const port = 2020;
 app.listen(port, () => {
     console.log( myVars.colors.bg.Green ,  'Node Server listening on port ~~> ' ,myVars.colors.Reset , myVars.colors.fg.Blue + port ,  myVars.colors.Reset);
 });

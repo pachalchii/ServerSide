@@ -8,9 +8,7 @@ const http = require("http");
 var md5 = require('md5');
 const Op = sequelize.Op;
 var jwt = require('jwt-simple');
-
-const JWT_SECRET= '755Amirr2205';
-const {colors} = require('./../Util/myVars');
+const {colors ,JWT_SECRET} = require('./../Util/myVars');
 const myFunction = require('./../Util/myFunctions');
 const handleError = (err, res) => {
     res
