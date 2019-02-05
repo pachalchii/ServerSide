@@ -161,7 +161,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"role\":\"wareHouse\",\n\t\"phone_number\":\"09903933686\",\n\t\"password\":\"password\"\n}"
+							"raw": "{\n\t\"role\":\"transportation\",\n\t\"phone_number\":\"09903933686\",\n\t\"password\":\"password\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/Auth/login",
@@ -319,13 +319,7 @@
 					"name": "get seller(company) list",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIwOTEyMjI5MjU5NCIsInBhc3N3b3JkIjoiN2M2YTE4MGIzNjg5NmEwYThjMDI3ODdlZWFmYjBlNGMiLCJyYW5kb20iOjAuMjQ0MzcwMTcwNzQ0NjczMDR9.fKDeYsfl5nXDFJerZPccupnJxUL3TIb_RIkOpAU4OSg",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -338,6 +332,76 @@
 							"path": [
 								"seller",
 								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transportation",
+			"item": [
+				{
+					"name": "get all product order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIwOTkwMzkzMzY4NiIsInBhc3N3b3JkIjoiNWY0ZGNjM2I1YWE3NjVkNjFkODMyN2RlYjg4MmNmOTkiLCJyYW5kb20iOjAuODM1ODI4NzYyNzI4Mzg0Mn0.IvWQb0qUx4xu16H-4oiGbXka73RvgrVSPezbAXI8T-c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transportation/order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transportation",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tahvile dadan order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIwOTkwMzkzMzY4NiIsInBhc3N3b3JkIjoiNWY0ZGNjM2I1YWE3NjVkNjFkODMyN2RlYjg4MmNmOTkiLCJyYW5kb20iOjAuODM1ODI4NzYyNzI4Mzg0Mn0.IvWQb0qUx4xu16H-4oiGbXka73RvgrVSPezbAXI8T-c",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"2\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transportation/order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transportation",
+								"order"
 							]
 						}
 					},
@@ -370,7 +434,7 @@
 	],
 	"variable": [
 		{
-			"id": "1da3664b-c133-4dec-b71c-2912b421acfd",
+			"id": "a6c3c7e5-f153-43bf-9399-3f118b3d6cc1",
 			"key": "baseUrl",
 			"value": "http://localhost:2020",
 			"type": "string"

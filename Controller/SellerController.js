@@ -27,102 +27,30 @@ function base64_decode(base64str, file) {
 
 
 router.get('/list', (req, res) => {
+    var final = [];
 
-    if (req.headers['token'] != null) {
-
+    function testFunction(value, index, array) {
+        var base64str="not Found";
         try {
-            var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
-            if (decodedJWT.password == null || (decodedJWT.username && decodedJWT.phone_number)) {
-                res.status(400).json({message: "expired token"});
-            } else {
-                if (decodedJWT.username != null) {
-                    customer.findAll({
-                        where: {
-                            username: decodedJWT.username, password: decodedJWT.password
-                        }
-                    }).then(customer => {
-                        var final = [];
+            base64str = base64_encode(value.logo_image);
 
-                        function testFunction(value, index, array) {
-                            var base64str="not Found";
-                            try {
-                                base64str = base64_encode(value.logo_image);
-
-                            }catch (e) {
-                                base64str = "not Found";
-
-                            }
-
-                            final[index] = {
-                                name:value.company_name,
-                                image:base64str
-                            }
-                        }
-
-                        if (customer[0] != undefined) {
-                            Seller.findAll().then(seller => {
-                                if (seller[0] != undefined){
-                                    seller.forEach(testFunction);
-
-                                }
-
-                                res.json(final);
-                            })
-                        }else {
-                            res.status(400).json({"message":"expired token"});
-                        }
-                    });
-                } else {
-                    customer.findAll({
-                        where: {
-                            phone_number: decodedJWT.phone_number, password: decodedJWT.password
-                        }
-                    }).then(customer => {
-                        var final = [];
-
-                        function testFunction(value, index, array) {
-                            var base64str="not Found";
-                            try {
-                                base64str = base64_encode(value.logo_image);
-
-                            }catch (e) {
-                                base64str = "not Found";
-
-                            }
-                            final[index] = {
-                                name:value.company_name,
-                                image:base64str
-                            }
-                        }
-
-                        if (customer[0] != undefined) {
-                            Seller.findAll().then(seller => {
-                                if (seller[0] != undefined){
-                                    seller.forEach(testFunction);
-
-                                }
-                                res.json(final);
-                            })
-                        }else {
-                            res.status(400).json({"message":"expired token"});
-                        }
-                    });
-                }
-
-            }
-        } catch(err) {
-            console.log(err)
-            res.status(400).json({"message":"expired token"});
+        }catch (e) {
+            base64str = "not Found";
 
         }
 
-
-
-
-
-    } else {
-        res.status(400).json({"message": "token not found in body"});
+        final[index] = {
+            name:value.company_name,
+            image:base64str
+        }
     }
+    Seller.findAll().then(seller => {
+        if (seller[0] != undefined){
+            seller.forEach(testFunction);
+
+        }
+        res.json(final);
+    });
 
 
 });
