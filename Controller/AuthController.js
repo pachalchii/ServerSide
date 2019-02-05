@@ -203,12 +203,16 @@ router.post('/login', (req, res) => {
                             var payload = { phone_number: customer[0].phone_number,
                                 password: customer[0].password,
                                 random:Math.random()};
-
                             var base64str="not Found";
-                            var token = jwt.encode(payload, JWT_SECRET);
-                            if (customer[0].image !="notSetYet"){
+                            try {
                                 base64str = base64_encode(customer[0].image);
+
+                            }catch (e) {
+                                base64str = "not Found";
+
                             }
+                            var token = jwt.encode(payload, JWT_SECRET);
+
 
                             res.status(200).json({"data":{
 
@@ -248,10 +252,16 @@ router.post('/login', (req, res) => {
 
 
                             var base64str="not Found";
-                            var token = jwt.encode(payload, JWT_SECRET);
-                            if (customer[0].image !="notSetYet"){
+                            try {
                                 base64str = base64_encode(customer[0].image);
+
+                            }catch (e) {
+                                base64str = "not Found";
+
                             }
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+
                             res.status(200).json({"data":{
 
                                     birth_date:customer[0].birth_date,
@@ -293,10 +303,16 @@ router.post('/login', (req, res) => {
 
 
                             var base64str="not Found";
-                            var token = jwt.encode(payload, JWT_SECRET);
-                            if (seller[0].image !="notSetYet"){
+                            try {
                                 base64str = base64_encode(seller[0].image);
+
+                            }catch (e) {
+                                base64str = "not Found";
+
                             }
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+
                             res.status(200).json({"data":{
 
                                     id:seller[0].phone_numberid,
@@ -338,10 +354,16 @@ router.post('/login', (req, res) => {
 
 
                             var base64str="not Found";
-                            var token = jwt.encode(payload, JWT_SECRET);
-                            if (seller[0].image !="notSetYet"){
+                            try {
                                 base64str = base64_encode(seller[0].image);
+
+                            }catch (e) {
+                                base64str = "not Found";
+
                             }
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+
                             res.status(200).json({"data":{
 
                                     id:seller[0].phone_numberid,
@@ -387,10 +409,16 @@ router.post('/login', (req, res) => {
 
 
                             var base64str="not Found";
-                            var token = jwt.encode(payload, JWT_SECRET);
-                            if (trans[0].image !="notSetYet"){
+                            try {
                                 base64str = base64_encode(trans[0].image);
+
+                            }catch (e) {
+                                base64str = "not Found";
+
                             }
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+
                             res.status(200).json({"data":{
 
                                     id:trans[0].phone_numberid,
@@ -429,10 +457,16 @@ router.post('/login', (req, res) => {
 
 
                             var base64str="not Found";
-                            var token = jwt.encode(payload, JWT_SECRET);
-                            if (trans[0].image !="notSetYet"){
+                            try {
                                 base64str = base64_encode(trans[0].image);
+
+                            }catch (e) {
+                                base64str = "not Found";
+
                             }
+                            var token = jwt.encode(payload, JWT_SECRET);
+
+
                             res.status(200).json({"data":{
 
                                     id:trans[0].phone_numberid,
