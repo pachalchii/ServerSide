@@ -161,7 +161,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"role\":\"customer\",\n\t\"phone_number\":\"09122292594\",\n\t\"password\":\"password1\"\n}"
+							"raw": "{\n\t\"role\":\"wareHouse\",\n\t\"phone_number\":\"09903933686\",\n\t\"password\":\"password\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/Auth/login",
@@ -370,7 +370,7 @@
 	],
 	"variable": [
 		{
-			"id": "4e865b02-64c3-45f8-a0aa-efb2a02f80a4",
+			"id": "1da3664b-c133-4dec-b71c-2912b421acfd",
 			"key": "baseUrl",
 			"value": "http://localhost:2020",
 			"type": "string"

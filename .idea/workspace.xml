@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Controller/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AuthController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Util/myFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/Util/myFunctions.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +27,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="167" />
-          <entry key="json" value="16" />
+          <entry key="json" value="18" />
           <entry key="log" value="1" />
           <entry key="md" value="2" />
           <entry key="pachalChiDb/MyChatRoom/users" value="1" />
@@ -40,7 +39,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="2" />
-          <entry key="JSON" value="16" />
+          <entry key="JSON" value="18" />
           <entry key="JavaScript" value="166" />
           <entry key="MONGO" value="7" />
           <entry key="PLAIN_TEXT" value="3" />
@@ -50,7 +49,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="8424" />
+          <entry key="js" value="8516" />
           <entry key="json" value="158" />
           <entry key="sql" value="2" />
         </counts>
@@ -58,7 +57,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="158" />
-          <entry key="JavaScript" value="8424" />
+          <entry key="JavaScript" value="8516" />
           <entry key="SQL" value="2" />
         </counts>
       </usages-collector>
@@ -78,12 +77,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controller/AuthController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="752">
-              <caret line="153" column="36" selection-start-line="153" selection-start-column="36" selection-end-line="153" selection-end-column="36" />
+            <state relative-caret-position="291">
+              <caret line="495" column="27" selection-start-line="495" selection-start-column="18" selection-end-line="495" selection-end-column="27" />
               <folding>
                 <element signature="n#!!block;n#base64_decode#0" />
                 <element signature="e#1354#1472#0" />
-                <element signature="e#7517#20934#0" />
+                <element signature="e#1537#7469#0" />
+                <element signature="e#7729#11848#0" />
+                <element signature="e#11861#16646#0" />
+                <element signature="e#16659#20737#0" />
+                <element signature="e#21174#26038#0" />
+                <element signature="e#26051#30914#0" />
                 <element signature="e#20993#22472#0" />
               </folding>
             </state>
@@ -102,8 +106,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="344" column="48" selection-start-line="344" selection-start-column="48" selection-end-line="344" selection-end-column="48" />
+            <state relative-caret-position="164">
+              <caret line="353" column="9" selection-start-line="353" selection-start-column="9" selection-end-line="353" selection-end-column="9" />
               <folding>
                 <element signature="n#!!block;n#isEmptyObject#0" />
                 <element signature="n#!!block;n#insertCities#0" />
@@ -424,18 +428,18 @@
       <workItem from="1549288028026" duration="2337000" />
       <workItem from="1549290395551" duration="11204000" />
       <workItem from="1549314194916" duration="71000" />
-      <workItem from="1549314268255" duration="9650000" />
+      <workItem from="1549314268255" duration="10691000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70482000" />
+    <option name="totallyTimeSpent" value="71523000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -450,7 +454,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49928468" visible="true" weight="0.32673267" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49928468" visible="true" weight="0.32673267" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5007153" side_tool="true" weight="0.32920793" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -740,15 +744,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Documation/pachalChi.postman_collection.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-148">
+        <state relative-caret-position="15">
           <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="344" column="48" selection-start-line="344" selection-start-column="48" selection-end-line="344" selection-end-column="48" />
+        <state relative-caret-position="164">
+          <caret line="353" column="9" selection-start-line="353" selection-start-column="9" selection-end-line="353" selection-end-column="9" />
           <folding>
             <element signature="n#!!block;n#isEmptyObject#0" />
             <element signature="n#!!block;n#insertCities#0" />
@@ -769,12 +773,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controller/AuthController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="752">
-          <caret line="153" column="36" selection-start-line="153" selection-start-column="36" selection-end-line="153" selection-end-column="36" />
+        <state relative-caret-position="291">
+          <caret line="495" column="27" selection-start-line="495" selection-start-column="18" selection-end-line="495" selection-end-column="27" />
           <folding>
             <element signature="n#!!block;n#base64_decode#0" />
             <element signature="e#1354#1472#0" />
-            <element signature="e#7517#20934#0" />
+            <element signature="e#1537#7469#0" />
+            <element signature="e#7729#11848#0" />
+            <element signature="e#11861#16646#0" />
+            <element signature="e#16659#20737#0" />
+            <element signature="e#21174#26038#0" />
+            <element signature="e#26051#30914#0" />
             <element signature="e#20993#22472#0" />
           </folding>
         </state>
