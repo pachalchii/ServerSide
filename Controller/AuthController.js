@@ -151,7 +151,7 @@ router.post('/register',upload.single("image"), (req, res) => {
                             username:req.body.username,
                             company_address_cityid:req.body.company_address_cityid,
                             phone_numberid:req.body.phone_numberid,
-                            typeid:req.body.typeid
+                            typeid:0
 
                         }, {
                             transaction: t

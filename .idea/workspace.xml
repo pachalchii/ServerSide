@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Controller/AppController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AppController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documation/pachalChi.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/pachalChi.postman_collection.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AuthController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Util/myFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/Util/myFunctions.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +28,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="167" />
-          <entry key="json" value="13" />
+          <entry key="json" value="16" />
           <entry key="log" value="1" />
           <entry key="md" value="2" />
           <entry key="pachalChiDb/MyChatRoom/users" value="1" />
@@ -40,7 +40,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="2" />
-          <entry key="JSON" value="13" />
+          <entry key="JSON" value="16" />
           <entry key="JavaScript" value="166" />
           <entry key="MONGO" value="7" />
           <entry key="PLAIN_TEXT" value="3" />
@@ -50,7 +50,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="8414" />
+          <entry key="js" value="8424" />
           <entry key="json" value="158" />
           <entry key="sql" value="2" />
         </counts>
@@ -58,7 +58,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="158" />
-          <entry key="JavaScript" value="8414" />
+          <entry key="JavaScript" value="8424" />
           <entry key="SQL" value="2" />
         </counts>
       </usages-collector>
@@ -75,29 +75,26 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controller/AuthController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="537" column="38" lean-forward="true" selection-start-line="537" selection-start-column="38" selection-end-line="537" selection-end-column="38" />
+            <state relative-caret-position="752">
+              <caret line="153" column="36" selection-start-line="153" selection-start-column="36" selection-end-line="153" selection-end-column="36" />
               <folding>
                 <element signature="n#!!block;n#base64_decode#0" />
                 <element signature="e#1354#1472#0" />
+                <element signature="e#7517#20934#0" />
+                <element signature="e#20993#22472#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Documation/pachalChi.postman_collection.json">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controller/AppController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+            <state relative-caret-position="225">
+              <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -105,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+            <state relative-caret-position="271">
+              <caret line="344" column="48" selection-start-line="344" selection-start-column="48" selection-end-line="344" selection-end-column="48" />
               <folding>
                 <element signature="n#!!block;n#isEmptyObject#0" />
                 <element signature="n#!!block;n#insertCities#0" />
@@ -114,7 +111,6 @@
                 <element signature="n#!!block;n#insertProductsGroup#0" />
                 <element signature="e#992#1092#0" />
                 <element signature="e#1176#2676#0" />
-                <element signature="e#3039#3141#0" />
               </folding>
             </state>
           </provider>
@@ -252,12 +248,12 @@
         <option value="$PROJECT_DIR$/dataBase/export.sql" />
         <option value="$PROJECT_DIR$/Controller/CustomerController.js" />
         <option value="$PROJECT_DIR$/sequelize.js" />
-        <option value="$PROJECT_DIR$/Util/myFunctions.js" />
         <option value="$PROJECT_DIR$/Util/myVars.js" />
         <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/Controller/SellerController.js" />
-        <option value="$PROJECT_DIR$/Controller/AuthController.js" />
         <option value="$PROJECT_DIR$/Controller/AppController.js" />
+        <option value="$PROJECT_DIR$/Util/myFunctions.js" />
+        <option value="$PROJECT_DIR$/Controller/AuthController.js" />
       </list>
     </option>
   </component>
@@ -428,12 +424,12 @@
       <workItem from="1549288028026" duration="2337000" />
       <workItem from="1549290395551" duration="11204000" />
       <workItem from="1549314194916" duration="71000" />
-      <workItem from="1549314268255" duration="9109000" />
+      <workItem from="1549314268255" duration="9650000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69941000" />
+    <option name="totallyTimeSpent" value="70482000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -732,22 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!block;n#isEmptyObject#0" />
-            <element signature="n#!!block;n#insertCities#0" />
-            <element signature="e#623#686#0" />
-            <element signature="n#!!block;n#insertProductsGroup#0" />
-            <element signature="e#992#1092#0" />
-            <element signature="e#1176#2676#0" />
-            <element signature="e#3039#3141#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Controller/SellerController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="274">
@@ -758,24 +738,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/AuthController.js">
+    <entry file="file://$PROJECT_DIR$/Documation/pachalChi.postman_collection.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="537" column="38" lean-forward="true" selection-start-line="537" selection-start-column="38" selection-end-line="537" selection-end-column="38" />
+        <state relative-caret-position="-148">
+          <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Util/myFunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="344" column="48" selection-start-line="344" selection-start-column="48" selection-end-line="344" selection-end-column="48" />
           <folding>
-            <element signature="n#!!block;n#base64_decode#0" />
-            <element signature="e#1354#1472#0" />
+            <element signature="n#!!block;n#isEmptyObject#0" />
+            <element signature="n#!!block;n#insertCities#0" />
+            <element signature="e#623#686#0" />
+            <element signature="n#!!block;n#insertProductsGroup#0" />
+            <element signature="e#992#1092#0" />
+            <element signature="e#1176#2676#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Documation/pachalChi.postman_collection.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Controller/AppController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+        <state relative-caret-position="225">
+          <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/AuthController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="752">
+          <caret line="153" column="36" selection-start-line="153" selection-start-column="36" selection-end-line="153" selection-end-column="36" />
+          <folding>
+            <element signature="n#!!block;n#base64_decode#0" />
+            <element signature="e#1354#1472#0" />
+            <element signature="e#7517#20934#0" />
+            <element signature="e#20993#22472#0" />
+          </folding>
         </state>
       </provider>
     </entry>

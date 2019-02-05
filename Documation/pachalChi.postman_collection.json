@@ -252,11 +252,6 @@
 									"type": "text"
 								},
 								{
-									"key": "typeid",
-									"value": "1",
-									"type": "text"
-								},
-								{
 									"key": "image",
 									"type": "file",
 									"src": ""
@@ -375,7 +370,7 @@
 	],
 	"variable": [
 		{
-			"id": "90023088-24b6-4c9c-9d06-11206018f93b",
+			"id": "4e865b02-64c3-45f8-a0aa-efb2a02f80a4",
 			"key": "baseUrl",
 			"value": "http://localhost:2020",
 			"type": "string"

@@ -90,9 +90,9 @@ function fillDataBase() {
 
     var type = [
         { id:1 , type:"شرکت اصلی" },
-        { id:2 , type:"نماینده فروش" },
+        { id:2 , type:"نماینده فروش" }
 
-                     ];
+    ];
     sellerType.findAll().then(sellerType => {
         if (sellerType[0] == undefined){
             type.forEach(insertTypes);
@@ -342,9 +342,7 @@ function registerInfoCheck (req , res , role){
                 req.body.username == null ||
                 req.body.password == null ||
                 req.body.company_address_cityid == null ||
-                req.body.phone_numberid == null ||
-                req.body.typeid == null
-            ){
+                req.body.phone_numberid == null ){
                 res.status(400).json({message : "request body does not have all neccesery variables"});
                 return false;
             }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
