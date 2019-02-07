@@ -6,5 +6,18 @@ const {colors} = require('./../Util/myVars');
 var router = express.Router();
 
 
+
+router.post('/payment' , (req,res)=>{});
+
+router.get('/order' , (req,res)=>{} );
+
+router.get('/orders' , (req,res)=>{} );
+
+
+
+
+
+
+
 module.exports = router;
 

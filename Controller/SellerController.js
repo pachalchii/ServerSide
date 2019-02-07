@@ -44,7 +44,11 @@ router.get('/list', (req, res) => {
             image:base64str
         }
     }
-    Seller.findAll().then(seller => {
+    Seller.findAll({
+        where :{
+            typeid :0
+        }
+    }).then(seller => {
         if (seller[0] != undefined){
             seller.forEach(testFunction);
 
