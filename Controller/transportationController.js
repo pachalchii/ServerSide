@@ -69,7 +69,7 @@ router.get('/order' , ( req , res )=>{
 
 
     } else {
-        res.status(400).json({"message": "token not found in body"});
+        res.status(400).json({"message": "token not found in header"});
     }
 
                                         });
@@ -163,7 +163,7 @@ router.post('/order',(req,res)=>{
 
 
     } else {
-        res.status(400).json({"message": "token not found in body"});
+        res.status(400).json({"message": "token not found in header"});
     }
 
 

@@ -18,7 +18,6 @@ router.get('/sellerType', function (req, res) {
     });
 });
 
-
 router.get('/category/productGroup', function (req, res) {
     productGroups.findAll().then(productGroups => {
             res.json(productGroups);
@@ -49,6 +48,12 @@ router.get('/product', function (req, res) {
         });
     }
 });
+
+
+
+
+
+
 
 
 module.exports = router;

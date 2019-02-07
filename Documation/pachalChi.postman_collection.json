@@ -51,6 +51,117 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get productGroup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/application/category/productGroup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"application",
+								"category",
+								"productGroup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get products list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"2\"\n\t\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/application/category/productGroup/product",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"application",
+								"category",
+								"productGroup",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all sellers product from a category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"2\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/application/product",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"application",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get seller(company) list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"list"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -161,7 +272,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"role\":\"transportation\",\n\t\"phone_number\":\"09903933686\",\n\t\"password\":\"password\"\n}"
+							"raw": "{\n\t\"role\":\"seller\",\n\t\"username\":\"username11awdad\",\n\t\"password\":\"password1aawddw\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/Auth/login",
@@ -207,11 +318,6 @@
 									"type": "text"
 								},
 								{
-									"key": "established_date",
-									"value": "established_date",
-									"type": "text"
-								},
-								{
 									"key": "google_map_address_link",
 									"value": "google_map_address_link",
 									"type": "text"
@@ -243,7 +349,7 @@
 								},
 								{
 									"key": "company_address_cityid",
-									"value": "1",
+									"value": "2",
 									"type": "text"
 								},
 								{
@@ -309,6 +415,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "forgetpassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\t\"role\":\"transportation\",\n\t\"phone_number\":\"09903933686\"\n\t\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Auth/forgetPassword",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"forgetPassword"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -316,22 +451,127 @@
 			"name": "seller",
 			"item": [
 				{
-					"name": "get seller(company) list",
+					"name": "get all subTypes",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuMTQxMTU1Mjc3NDM2MTcyNH0.LR3DIAU5JM9axpFxax4YIt4hw1Q-Fb4rxjC5Wy4YQ9c",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/seller/list",
+							"raw": "{{baseUrl}}/seller/Subtypes",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"seller",
-								"list"
+								"Subtypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add roles",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuNjM4OTI2NDQ1NTM4MDM5OX0.cuEPqZKVAmXCnj9OlZMwMrdrNsLRmYkEk-ehNTQh2_s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "role",
+									"value": "transportation",
+									"type": "text"
+								},
+								{
+									"key": "air_conditionar",
+									"value": "air_conditionar",
+									"type": "text"
+								},
+								{
+									"key": "birthdate",
+									"value": "birthdate",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "color",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "description",
+									"type": "text"
+								},
+								{
+									"key": "family_name",
+									"value": "family_name",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": ""
+								},
+								{
+									"key": "name",
+									"value": "name",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "pelak_number",
+									"value": "pelak_number",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "09903933686",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "username123",
+									"type": "text"
+								},
+								{
+									"key": "modelid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "ware_houseid",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/addRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"addRole"
 							]
 						}
 					},
@@ -372,11 +612,8 @@
 				},
 				{
 					"name": "tahvile dadan order",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "token",
@@ -392,7 +629,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":\"2\"\n}"
+							"raw": "{\n\t\"id\":\"5\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/transportation/order",
@@ -434,9 +671,9 @@
 	],
 	"variable": [
 		{
-			"id": "a6c3c7e5-f153-43bf-9399-3f118b3d6cc1",
+			"id": "ae0dbce9-cd56-4681-8d45-a8fdea189108",
 			"key": "baseUrl",
-			"value": "http://localhost:2020",
+			"value": "http://localhost:1010",
 			"type": "string"
 		}
 	]

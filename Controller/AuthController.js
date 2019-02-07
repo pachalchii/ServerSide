@@ -151,7 +151,7 @@ router.post('/register',upload.single("image"), (req, res) => {
                             username:req.body.username,
                             company_address_cityid:req.body.company_address_cityid,
                             phone_numberid:req.body.phone_numberid,
-                            typeid:0
+                            typeid:1
 
                         }, {
                             transaction: t
@@ -297,7 +297,7 @@ router.post('/login', (req, res) => {
                         }
                     }).then(seller => {
                         if (seller[0] != undefined){
-                            var payload = { owner_phone_number: seller[0].phone_number,
+                            var payload = { owner_phone_number: seller[0].owner_phone_number,
                                 password: seller[0].password,
                                 random:Math.random()};
 
@@ -347,7 +347,7 @@ router.post('/login', (req, res) => {
                     }).then(seller => {
                         if (seller[0] != undefined)
                         {
-                            var payload = { phone_number: seller[0].phone_number,
+                            var payload = { username: seller[0].username,
                                 password: seller[0].password,
                                 random:Math.random()};
 
@@ -746,6 +746,12 @@ router.post('/phoneNumber',(req,res) => {
     }  catch (e) {
     return res.status(500).json({"message":"Oops! Something went wrong!"})
 }
+});
+
+
+//forget password
+router.post('/forgetPassword',(req,res)=>{
+     return res.status(200);
 });
 
 module.exports = router;

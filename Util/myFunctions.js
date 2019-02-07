@@ -338,6 +338,7 @@ function checkPhone(req , res ) {
     }
 
 }
+
 function checkPassword(req , res ) {
     if (req.body.password != null ){
         var pattern  = new RegExp(PASSWORD_REGEX);
@@ -385,6 +386,8 @@ function registerInfoCheck (req , res , role){
                 res.status(400).json({message : "request body does not have all neccesery variables"});
                 return false;
             }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+            break;
+
         case "seller":
             if (req.body.company_name == null ||
                 req.body.complete_address_description == null ||
@@ -399,6 +402,7 @@ function registerInfoCheck (req , res , role){
                 res.status(400).json({message : "request body does not have all neccesery variables"});
                 return false;
             }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+            break;
     }
 
 
@@ -435,7 +439,86 @@ function loginInfoCheck (req , res , role){
                 }
                 checkPassword(req,res)
             };
+            break;
+
     }
+
+
+}
+
+function addRoleInfoCheck (req , res , role) {
+    switch (role) {
+
+        case "seller":
+            if (req.body.company_name == null ||
+                req.body.complete_address_description == null ||
+                req.body.google_map_address_link == null ||
+                req.body.owner_family_name == null ||
+                req.body.owner_name == null ||
+                req.body.owner_phone_number == null ||
+                req.body.username == null ||
+                req.body.password == null ||
+                req.body.company_address_cityid == null ||
+                req.body.phone_numberid == null ){
+                res.status(400).json({message : "request body does not have all neccesery variables"});
+                return false;
+            }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+            break;
+        case "transportation":
+            if (req.body.air_conditionar == null ||
+                req.body.birthdate == null ||
+                req.body.color == null ||
+                req.body.description == null ||
+                req.body.family_name == null ||
+                req.body.name == null ||
+                req.body.password == null ||
+                req.body.pelak_number == null ||
+                req.body.phone_number == null ||
+                req.body.username == null ||
+                req.body.modelid == null ||
+                req.body.ware_houseid == null
+                        ){
+                res.status(400).json({message : "request body does not have all neccesery variables"});
+                return false;
+            }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+
+            break;
+        case "wareHouse":
+
+            if (req.body. agent_family_name  == null ||
+                req.body.agent_name == null ||
+                req.body.birthdate == null ||
+                req.body.cell_phone_number == null ||
+                req.body.password == null ||
+                req.body.phone_number == null ||
+                req.body.username == null ||
+                req.body.ware_house_complete_address_description == null ||
+                req.body.ware_house_google_map_address_link == null ||
+                req.body.ware_house_address_cityidIndex == null ||
+                req.body.selleridIndex == null ){
+                res.status(400).json({message : "request body does not have all neccesery variables"});
+                return false;
+            }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+
+            break;
+        case "operator" :
+            if (req.body.birthdate == null ||
+                req.body.family_name == null ||
+                req.body.name == null ||
+                req.body.password == null ||
+                req.body.phone_number == null ||
+                req.body.username == null ||
+                req.body.selleridIndex == null
+            ){
+                res.status(400).json({message : "request body does not have all neccesery variables"});
+                return false;
+            }else return !(!checkUserName(req,res) || !checkPhone(req, res) || !checkPassword(req, res));
+
+            break;
+
+        default : return res.status(404).json({"message":"invalid role type"});
+    }
+
 
 
 }
@@ -446,4 +529,5 @@ module.exports = {
     loginInfoCheck,
     registerInfoCheck
     ,fillDataBase
+    ,addRoleInfoCheck
 };
