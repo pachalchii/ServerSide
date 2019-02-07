@@ -26,7 +26,7 @@ app.use('/transportation',transportationController);
 
 
 
-const port = 2020;
+const port = 1010;
 app.listen(port, () => {
     console.log( myVars.colors.bg.Green ,  'Node Server listening on port ~~> ' ,myVars.colors.Reset , myVars.colors.fg.Blue + port ,  myVars.colors.Reset);
 });
