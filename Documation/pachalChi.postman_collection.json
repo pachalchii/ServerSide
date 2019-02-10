@@ -162,6 +162,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get units",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/application/unit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"application",
+								"unit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get car models",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/application/carModel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"application",
+								"carModel"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -576,6 +620,144 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "add products",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuOTI5NzMzMTQzNTMyNzg5MX0.kNqr7JDQXDiM5X9hoA89D1LlPkoEHcoG2Uj29jx1K0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": ""
+								},
+								{
+									"key": "description",
+									"value": "description",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "price_date_time",
+									"value": "price_date_time",
+									"type": "text"
+								},
+								{
+									"key": "supply_of_product",
+									"value": "supply_of_product",
+									"type": "text"
+								},
+								{
+									"key": "unit_of_product",
+									"value": "unit_of_product",
+									"type": "text"
+								},
+								{
+									"key": "productid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "unitid",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/product",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit products",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuOTI5NzMzMTQzNTMyNzg5MX0.kNqr7JDQXDiM5X9hoA89D1LlPkoEHcoG2Uj29jx1K0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "sellerproductid",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "321",
+									"type": "text"
+								},
+								{
+									"key": "price_date_time",
+									"value": "234234",
+									"type": "text"
+								},
+								{
+									"key": "supply_of_product",
+									"value": "2434",
+									"type": "text"
+								},
+								{
+									"key": "unit_of_product",
+									"value": "1311",
+									"type": "text"
+								},
+								{
+									"key": "productid",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "unitid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "124124",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/product",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"product"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -671,7 +853,7 @@
 	],
 	"variable": [
 		{
-			"id": "ae0dbce9-cd56-4681-8d45-a8fdea189108",
+			"id": "3b67c2ec-3db2-4231-8d03-8e6c06a2945d",
 			"key": "baseUrl",
 			"value": "http://localhost:1010",
 			"type": "string"

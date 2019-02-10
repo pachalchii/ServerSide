@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {Seller , cities , sellerType , productGroups , products , sellerProducts} = require('./../sequelize');
+const {Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('./../sequelize');
 const {colors} = require('./../Util/myVars');
 var router = express.Router();
 
@@ -49,10 +49,17 @@ router.get('/product', function (req, res) {
     }
 });
 
+router.get('/unit', function (req, res) {
+    unit.findAll().then(unit => {
+        return res.json(unit)
+    });
+});
 
-
-
-
+router.get('/carModel', function (req, res) {
+    car.findAll().then(car => {
+        return res.json(car)
+    });
+});
 
 
 

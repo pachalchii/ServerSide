@@ -1,4 +1,4 @@
-const { cities , sellerType , productGroups , products} = require('./../sequelize');
+const { cities , sellerType , productGroups , products , unit , car} = require('./../sequelize');
 const express = require('express');
 const bodyParser = require('body-parser');
 const {colors , PHONENUMBER_REGEX , PASSWORD_REGEX , USERNAME_REGEX } = require('./../Util/myVars');
@@ -51,6 +51,25 @@ function insertProducts(value, index, array) {
         }
     ).catch(err=>{console.log(err)});
 }
+function insertUnits(value, index, array) {
+    unit.create(
+        {
+            id: value.id,
+            unit_name:value.unit_name
+        }
+    ).catch(err=>{console.log(err)});
+}
+function insertCarModels(value, index, array) {
+    unit.create(
+        {
+            id: value.id,
+            name:value.name,
+            parentid:value.parentid
+        }
+    ).catch(err=>{console.log(err)});
+}
+
+
 
 
 function fillDataBase() {
@@ -110,6 +129,43 @@ function fillDataBase() {
             console.log( colors.bg.Green ,"import  SellerType demo data done successfuly" ,  colors.Reset);
         } else {
             console.log( colors.bg.Red ,"import SellerType demo data canceled ." ,  colors.Reset);
+        }
+    });
+    var carModelvar= [
+        {id:1 , name: "نیسان" , parentid:null},
+        {id:2 , name: "پیکان وانت" , parentid:null},
+        {id:3 , name: "نیسان یخچال دار" , parentid:null},
+        {id:4 , name: "پراید وانت" , parentid:null},
+        {id:5 , name: "پرشیا وانت" , parentid:null},
+        {id:6 , name: "کامیون یخچال دار" , parentid:null}
+    ];
+    car.findAll().then(car => {
+        if (car[0] == undefined){
+            carModelvar.forEach(insertUnits);
+            console.log( colors.bg.Green ,"import  car model demo data done successfuly" ,  colors.Reset);
+        } else {
+            console.log( colors.bg.Red ,"import car model demo data canceled ." ,  colors.Reset);
+        }
+    });
+
+    var unitvar =[
+        {id:1 , unit_name : "گرم"},
+        {id:2 , unit_name : "کیلو گرم"},
+        {id:3 , unit_name : "تن"},
+        {id:4 , unit_name : "پوند"},
+        {id:5 , unit_name : "میکرو گرم"},
+        {id:6 , unit_name : "اونس"},
+        {id:7 , unit_name : "مثقال"},
+        {id:8 , unit_name : "سیر"},
+        {id:9 , unit_name : "چارک"},
+
+    ];
+    unit.findAll().then(unit => {
+        if (unit[0] == undefined){
+            unitvar.forEach(insertUnits);
+            console.log( colors.bg.Green ,"import unit demo data done successfuly" ,  colors.Reset);
+        } else {
+            console.log( colors.bg.Red ,"import unit demo data canceled ." ,  colors.Reset);
         }
     });
 

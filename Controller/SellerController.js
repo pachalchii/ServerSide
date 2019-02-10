@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {Seller, customer , sellerWareHouse , sellerOperator , transportation ,sequelize } = require('./../sequelize');
+const {Seller, sellerProducts , sellerWareHouse , sellerOperator , transportation ,sequelize , products ,unit } = require('./../sequelize');
 var jwt = require('jwt-simple');
 var md5 = require('md5');
 const myFunction = require('./../Util/myFunctions');
@@ -12,14 +12,16 @@ var router = express.Router();
 var path = require('path');
 const fs = require("fs");
 const http = require("http");
+const upload = multer({
+    dest: "./../uploads"
+    // you might also want to set some limits: https://github.com/expressjs/multer#limits
+});
 function base64_encode(file) {
     // read binary data
     var bitmap = fs.readFileSync(file);
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');
 }
-
-// function to create file from base64 encoded string
 function base64_decode(base64str, file) {
     // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
     var bitmap = new Buffer(base64str, 'base64');
@@ -62,12 +64,6 @@ router.get('/list', (req, res) => {
 
 });
 
-
-
-const upload = multer({
-    dest: "./../uploads"
-    // you might also want to set some limits: https://github.com/expressjs/multer#limits
-});
 router.post('/addRole',upload.single("image"),(req,res)=>{
 
 
@@ -608,6 +604,428 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
 
 
 });
+
+router.post('/product' , upload.single("image") , (req,res)=>{
+    if (req.headers['token'] != null) {
+
+        try {
+            var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
+            if (decodedJWT.password == null || (decodedJWT.username && decodedJWT.phone_number)) {
+                res.status(400).json({message: "expired token"});
+            } else {
+                if (decodedJWT.username != null) {
+                    Seller.findAll({
+                        where: {
+                            username: decodedJWT.username, password: decodedJWT.password
+                        }
+                    }).then(Seller => {
+
+                        if (Seller[0] != undefined) {
+
+                            if (req.file != null){
+                            const tempPath = req.file.path;
+                            const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + ".png");
+                            image = targetPath;
+                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+                                fs.rename(tempPath, targetPath, err => {
+                                    if (err) return handleError(err, res);
+                                });
+                            } else {
+                                fs.unlink(tempPath, err => {
+                                    if (err) return handleError(err, res);
+
+                                    return res
+                                        .status(403)
+                                        .contentType("text/plain")
+                                        .end("Only .png files are allowed!");
+                                });
+                            }
+
+                        } else {
+                            image = "notSetYet";
+                        }
+
+                        if (req.body.description == null ||
+                            req.body.price == null ||
+                            req.body.price_date_time == null ||
+                            req.body.supply_of_product == null ||
+                            req.body.unit_of_product == null ||
+                            req.body.productid == null ||
+                            req.body.unitid == null
+                        ) {
+                            res.status(400).json({"message": "not enough parameter"});
+                        } else {
+                            products.findAll({where: {id : req.body.productid}}).then(
+                                products=>{
+                                    if (products[0] != undefined){
+                                        unit.findAll({where:{id:req.body.unitid}}).then(unit=>{
+                                            if (unit[0] == undefined){
+                                                return res.status(404).json();
+
+                                            }
+                                        })
+                                    } else {
+                                        return res.status(404).json();
+                                    }
+                                }
+                            );
+                            sellerProducts.create({
+                                description: req.body.description,
+                                image: image,
+                                price: req.body.price,
+                                price_date_time: req.body.price_date_time,
+                                supply_of_product: req.body.supply_of_product,
+                                unit_of_product: req.body.unit_of_product,
+                                productid: req.body.productid,
+                                sellerid: Seller[0].id,
+                                unitid: req.body.unitid
+
+                            });
+                            return res.status(200);
+
+
+                        }
+
+                      }else {
+                            res.status(400).json({"message":"expired token"});
+                        }
+                    });
+                } else {
+                    Seller.findAll({
+                        where: {
+                            owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
+                        }
+                    }).then(Seller => {
+
+                        if (Seller[0] != undefined) {
+
+                                if (req.file != null){
+                                    const tempPath = req.file.path;
+                                    const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + ".png");
+                                    image = targetPath;
+                                    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+                                        fs.rename(tempPath, targetPath, err => {
+                                            if (err) return handleError(err, res);
+                                        });
+                                    } else {
+                                        fs.unlink(tempPath, err => {
+                                            if (err) return handleError(err, res);
+
+                                            return res
+                                                .status(403)
+                                                .contentType("text/plain")
+                                                .end("Only .png files are allowed!");
+                                        });
+                                    }
+
+                                } else {
+                                    image = "notSetYet";
+                                }
+
+                                if (req.body.description == null ||
+                                    req.body.price == null ||
+                                    req.body.price_date_time == null ||
+                                    req.body.supply_of_product == null ||
+                                    req.body.unit_of_product == null ||
+                                    req.body.productid == null ||
+                                    req.body.unitid == null
+                                ) {
+                                    res.status(400).json({"message": "not enough parameter"});
+                                } else {
+
+                                    products.findAll({where: {id : req.body.productid}}).then(
+                                        products=>{
+                                            console.log("slm")
+                                            if (products[0] != undefined){
+                                                unit.findAll({where:{id:req.body.unitid}}).then(unit=>{
+                                                    if (unit[0] == undefined){
+                                                        return res.status(404).json();
+
+                                                    }
+                                                })
+                                            } else {
+                                                return res.status(404).json();
+                                            }
+                                        }
+                                    );
+                                    sellerProducts.create({
+                                        description: req.body.description,
+                                        image: image,
+                                        price: req.body.price,
+                                        price_date_time: req.body.price_date_time,
+                                        supply_of_product: req.body.supply_of_product,
+                                        unit_of_product: req.body.unit_of_product,
+                                        productid: req.body.productid,
+                                        sellerid: Seller[0].id,
+                                        unitid: req.body.unitid
+
+                                    });
+                                    return res.status(200).json();
+
+
+
+                                }
+
+
+
+
+
+
+                        }else {
+                            res.status(400).json({"message":"expired token"});
+                        }
+                    });
+                }
+
+            }
+        } catch(err) {
+            console.log(err);
+            res.status(400).json({"message":"expired token"});
+
+        }
+
+
+
+
+
+    } else {
+        res.status(400).json({"message": "token not found in header"});
+    }
+
+} );
+
+router.put('/product' , upload.single("image") , (req,res)=>{
+    if (req.headers['token'] != null) {
+
+        try {
+            var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
+            if (decodedJWT.password == null || (decodedJWT.username && decodedJWT.phone_number)) {
+                res.status(400).json({message: "expired token"});
+            } else {
+                if (decodedJWT.username != null) {
+                    Seller.findAll({
+                        where: {
+                            username: decodedJWT.username, password: decodedJWT.password
+                        }
+                    }).then(Seller => {
+
+                        if (Seller[0] != undefined) {
+
+
+
+                            if (req.body.sellerproductid == null ||
+                                req.body.description == null ||
+                                req.body.price == null ||
+                                req.body.price_date_time == null ||
+                                req.body.supply_of_product == null ||
+                                req.body.unit_of_product == null ||
+                                req.body.productid == null ||
+                                req.body.unitid == null
+                            ) {
+                                res.status(400).json({"message": "not enough parameter"});
+                            } else {
+                                sellerProducts.findAll({where:{id:req.body.sellerproductid}}).then(
+                                    sellerproductid=>{
+                                        if (sellerproductid[0] == undefined){
+                                            return res.status(404).json();
+                                        } else {
+
+                                            if (req.file != null){
+                                                const tempPath = req.file.path;
+                                                const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + ".png");
+                                                image = targetPath;
+                                                if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+                                                    fs.rename(tempPath, targetPath, err => {
+                                                        if (err) return handleError(err, res);
+                                                    });
+                                                } else {
+                                                    fs.unlink(tempPath, err => {
+                                                        if (err) return handleError(err, res);
+
+                                                        return res
+                                                            .status(403)
+                                                            .contentType("text/plain")
+                                                            .end("Only .png files are allowed!");
+                                                    });
+                                                }
+
+                                            } else {
+                                                image =sellerproductid[0].image ;
+                                            }
+
+                                            products.findAll({where: {id : req.body.productid}}).then(
+                                                products=>{
+                                                    if (products[0] != undefined){
+                                                        unit.findAll({where:{id:req.body.unitid}}).then(unit=>{
+                                                            if (unit[0] == undefined){
+                                                                return res.status(404).json();
+
+                                                            }
+                                                        })
+                                                    } else {
+                                                        return res.status(404).json();
+                                                    }
+                                                }
+                                            );
+                                            sellerProducts.update({
+                                                description: req.body.description,
+                                                image: image,
+                                                price: req.body.price,
+                                                price_date_time: req.body.price_date_time,
+                                                supply_of_product: req.body.supply_of_product,
+                                                unit_of_product: req.body.unit_of_product,
+                                                productid: req.body.productid,
+                                                sellerid: Seller[0].id,
+                                                unitid: req.body.unitid
+                                            } , {where:{
+                                                    id:sellerproductid[0].id
+                                                }}   );
+                                            return res.status(200).json();
+
+
+
+
+
+
+                                        }
+                                    }
+                                );
+
+
+
+
+
+
+                            }
+
+
+
+
+
+                        }else {
+                            res.status(400).json({"message":"expired token"});
+                        }
+                    });
+                } else {
+                    Seller.findAll({
+                        where: {
+                            owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
+                        }
+                    }).then(Seller => {
+
+                            if (Seller[0] != undefined) {
+
+
+                                if (req.body.sellerproductid == null ||
+                                    req.body.description == null ||
+                                    req.body.price == null ||
+                                    req.body.price_date_time == null ||
+                                    req.body.supply_of_product == null ||
+                                    req.body.unit_of_product == null ||
+                                    req.body.productid == null ||
+                                    req.body.unitid == null
+                                ) {
+                                    res.status(400).json({"message": "not enough parameter"});
+                                } else {
+                                    sellerProducts.findAll({where:{id:req.body.sellerproductid}}).then(
+                                        sellerproductid=>{
+                                            if (sellerproductid[0] == undefined){
+                                                return res.status(404).json();
+                                            } else {
+
+                                                if (req.file != null){
+                                                    const tempPath = req.file.path;
+                                                    const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + ".png");
+                                                    image = targetPath;
+                                                    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+                                                        fs.rename(tempPath, targetPath, err => {
+                                                            if (err) return handleError(err, res);
+                                                        });
+                                                    } else {
+                                                        fs.unlink(tempPath, err => {
+                                                            if (err) return handleError(err, res);
+
+                                                            return res
+                                                                .status(403)
+                                                                .contentType("text/plain")
+                                                                .end("Only .png files are allowed!");
+                                                        });
+                                                    }
+
+                                                } else {
+                                                    image =sellerproductid[0].image ;
+                                                }
+
+                                                products.findAll({where: {id : req.body.productid}}).then(
+                                                    products=>{
+                                                        if (products[0] != undefined){
+                                                            unit.findAll({where:{id:req.body.unitid}}).then(unit=>{
+                                                                if (unit[0] == undefined){
+                                                                    return res.status(404).json();
+
+                                                                }
+                                                            })
+                                                        } else {
+                                                            return res.status(404).json();
+                                                        }
+                                                    }
+                                                );
+
+                                                sellerProducts.update({
+                                                    description: req.body.description,
+                                                    image: image,
+                                                    price: req.body.price,
+                                                    price_date_time: req.body.price_date_time,
+                                                    supply_of_product: req.body.supply_of_product,
+                                                    unit_of_product: req.body.unit_of_product,
+                                                    productid: req.body.productid,
+                                                    sellerid: Seller[0].id,
+                                                    unitid: req.body.unitid
+                                                } , {where:{
+                                                        id:sellerproductid[0].id
+                                                    }}   );
+                                                return res.status(200).json();
+
+
+
+
+
+
+                                            }
+                                        }
+                                    );
+
+
+
+
+
+
+                                }
+
+                            }else {
+                                res.status(400).json({"message":"expired token"});
+                            }
+
+                    });
+                }
+
+            }
+        } catch(err) {
+            console.log(err);
+            res.status(400).json({"message":"expired token"});
+
+        }
+
+
+
+
+
+    } else {
+        res.status(400).json({"message": "token not found in header"});
+    }
+
+} );
+
 
 router.get('/Subtypes' , (req,res)=>{
     if (req.headers['token'] != null) {
