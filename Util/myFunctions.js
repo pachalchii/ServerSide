@@ -60,7 +60,7 @@ function insertUnits(value, index, array) {
     ).catch(err=>{console.log(err)});
 }
 function insertCarModels(value, index, array) {
-    unit.create(
+    car.create(
         {
             id: value.id,
             name:value.name,
@@ -141,7 +141,7 @@ function fillDataBase() {
     ];
     car.findAll().then(car => {
         if (car[0] == undefined){
-            carModelvar.forEach(insertUnits);
+            carModelvar.forEach(insertCarModels);
             console.log( colors.bg.Green ,"import  car model demo data done successfuly" ,  colors.Reset);
         } else {
             console.log( colors.bg.Red ,"import car model demo data canceled ." ,  colors.Reset);

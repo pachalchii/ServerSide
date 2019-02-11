@@ -51,7 +51,7 @@ router.get('/list', (req, res) => {
     }
     Seller.findAll({
         where :{
-            typeid :0
+            typeid :1
         }
     }).then(seller => {
         if (seller[0] != undefined){
@@ -93,22 +93,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                         if (req.file != null){
 
                                             const tempPath = req.file.path;
-                                            const targetPath = path.join(__dirname, "./../uploads/seller/"+req.body.username+".png");
+                                            const targetPath = path.join(__dirname, "./../uploads/seller/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                                             image = targetPath;
-                                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                 fs.rename(tempPath, targetPath, err => {
                                                     if (err) return handleError(err, res);
                                                 });
-                                            } else {
-                                                fs.unlink(tempPath, err => {
-                                                    if (err) return handleError(err, res);
 
-                                                    return res
-                                                        .status(403)
-                                                        .contentType("text/plain")
-                                                        .end("Only .png files are allowed!");
-                                                });
-                                            }
 
                                         }else{
                                             image = "notSetYet";
@@ -151,22 +141,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                         if (req.file != null){
 
                                             const tempPath = req.file.path;
-                                            const targetPath = path.join(__dirname, "./../uploads/transportation/"+req.body.username+".png");
+                                            const targetPath = path.join(__dirname, "./../uploads/transportation/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                                             image = targetPath;
-                                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                 fs.rename(tempPath, targetPath, err => {
                                                     if (err) return handleError(err, res);
                                                 });
-                                            } else {
-                                                fs.unlink(tempPath, err => {
-                                                    if (err) return handleError(err, res);
 
-                                                    return res
-                                                        .status(403)
-                                                        .contentType("text/plain")
-                                                        .end("Only .png files are allowed!");
-                                                });
-                                            }
 
                                         }else{
                                             image = "notSetYet";
@@ -207,22 +187,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                         if (req.file != null){
 
                                             const tempPath = req.file.path;
-                                            const targetPath = path.join(__dirname, "./../uploads/wareHouse/"+req.body.username+".png");
+                                            const targetPath = path.join(__dirname, "./../uploads/wareHouse/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                                             image = targetPath;
-                                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                 fs.rename(tempPath, targetPath, err => {
                                                     if (err) return handleError(err, res);
                                                 });
-                                            } else {
-                                                fs.unlink(tempPath, err => {
-                                                    if (err) return handleError(err, res);
 
-                                                    return res
-                                                        .status(403)
-                                                        .contentType("text/plain")
-                                                        .end("Only .png files are allowed!");
-                                                });
-                                            }
 
                                         }else{
                                             image = "notSetYet";
@@ -264,22 +234,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                         if (req.file != null){
 
                                             const tempPath = req.file.path;
-                                            const targetPath = path.join(__dirname, "./../uploads/operator/"+req.body.username+".png");
+                                            const targetPath = path.join(__dirname, "./../uploads/operator/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                                             image = targetPath;
-                                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                 fs.rename(tempPath, targetPath, err => {
                                                     if (err) return handleError(err, res);
                                                 });
-                                            } else {
-                                                fs.unlink(tempPath, err => {
-                                                    if (err) return handleError(err, res);
 
-                                                    return res
-                                                        .status(403)
-                                                        .contentType("text/plain")
-                                                        .end("Only .png files are allowed!");
-                                                });
-                                            }
 
                                         }else{
                                             image = "notSetYet";
@@ -344,22 +304,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                         if (req.file != null){
 
                                             const tempPath = req.file.path;
-                                            const targetPath = path.join(__dirname, "./../uploads/seller/"+req.body.username+".png");
+                                            const targetPath = path.join(__dirname, "./../uploads/seller/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                                             image = targetPath;
-                                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                 fs.rename(tempPath, targetPath, err => {
                                                     if (err) return handleError(err, res);
                                                 });
-                                            } else {
-                                                fs.unlink(tempPath, err => {
-                                                    if (err) return handleError(err, res);
 
-                                                    return res
-                                                        .status(403)
-                                                        .contentType("text/plain")
-                                                        .end("Only .png files are allowed!");
-                                                });
-                                            }
 
                                         }else{
                                             image = "notSetYet";
@@ -402,22 +352,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                         if (req.file != null){
 
                                             const tempPath = req.file.path;
-                                            const targetPath = path.join(__dirname, "./../uploads/transportation/"+req.body.username+".png");
+                                            const targetPath = path.join(__dirname, "./../uploads/transportation/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                                             image = targetPath;
-                                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                 fs.rename(tempPath, targetPath, err => {
                                                     if (err) return handleError(err, res);
                                                 });
-                                            } else {
-                                                fs.unlink(tempPath, err => {
-                                                    if (err) return handleError(err, res);
 
-                                                    return res
-                                                        .status(403)
-                                                        .contentType("text/plain")
-                                                        .end("Only .png files are allowed!");
-                                                });
-                                            }
 
                                         }else{
                                             image = "notSetYet";
@@ -458,22 +398,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                         if (req.file != null){
 
                                             const tempPath = req.file.path;
-                                            const targetPath = path.join(__dirname, "./../uploads/wareHouse/"+req.body.username+".png");
+                                            const targetPath = path.join(__dirname, "./../uploads/wareHouse/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                                             image = targetPath;
-                                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                 fs.rename(tempPath, targetPath, err => {
                                                     if (err) return handleError(err, res);
                                                 });
-                                            } else {
-                                                fs.unlink(tempPath, err => {
-                                                    if (err) return handleError(err, res);
 
-                                                    return res
-                                                        .status(403)
-                                                        .contentType("text/plain")
-                                                        .end("Only .png files are allowed!");
-                                                });
-                                            }
 
                                         }else{
                                             image = "notSetYet";
@@ -515,22 +445,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                         if (req.file != null){
 
                                             const tempPath = req.file.path;
-                                            const targetPath = path.join(__dirname, "./../uploads/operator/"+req.body.username+".png");
+                                            const targetPath = path.join(__dirname, "./../uploads/operator/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                                             image = targetPath;
-                                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                 fs.rename(tempPath, targetPath, err => {
                                                     if (err) return handleError(err, res);
                                                 });
-                                            } else {
-                                                fs.unlink(tempPath, err => {
-                                                    if (err) return handleError(err, res);
 
-                                                    return res
-                                                        .status(403)
-                                                        .contentType("text/plain")
-                                                        .end("Only .png files are allowed!");
-                                                });
-                                            }
 
                                         }else{
                                             image = "notSetYet";
@@ -624,22 +544,12 @@ router.post('/product' , upload.single("image") , (req,res)=>{
 
                             if (req.file != null){
                             const tempPath = req.file.path;
-                            const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + ".png");
+                            const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
                             image = targetPath;
-                            if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                 fs.rename(tempPath, targetPath, err => {
                                     if (err) return handleError(err, res);
                                 });
-                            } else {
-                                fs.unlink(tempPath, err => {
-                                    if (err) return handleError(err, res);
 
-                                    return res
-                                        .status(403)
-                                        .contentType("text/plain")
-                                        .end("Only .png files are allowed!");
-                                });
-                            }
 
                         } else {
                             image = "notSetYet";
@@ -681,7 +591,7 @@ router.post('/product' , upload.single("image") , (req,res)=>{
                                 unitid: req.body.unitid
 
                             });
-                            return res.status(200);
+                            return res.status(200).json();
 
 
                         }
@@ -701,22 +611,12 @@ router.post('/product' , upload.single("image") , (req,res)=>{
 
                                 if (req.file != null){
                                     const tempPath = req.file.path;
-                                    const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + ".png");
+                                    const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
                                     image = targetPath;
-                                    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                         fs.rename(tempPath, targetPath, err => {
                                             if (err) return handleError(err, res);
                                         });
-                                    } else {
-                                        fs.unlink(tempPath, err => {
-                                            if (err) return handleError(err, res);
 
-                                            return res
-                                                .status(403)
-                                                .contentType("text/plain")
-                                                .end("Only .png files are allowed!");
-                                        });
-                                    }
 
                                 } else {
                                     image = "notSetYet";
@@ -832,22 +732,12 @@ router.put('/product' , upload.single("image") , (req,res)=>{
 
                                             if (req.file != null){
                                                 const tempPath = req.file.path;
-                                                const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + ".png");
+                                                const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
                                                 image = targetPath;
-                                                if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                     fs.rename(tempPath, targetPath, err => {
                                                         if (err) return handleError(err, res);
                                                     });
-                                                } else {
-                                                    fs.unlink(tempPath, err => {
-                                                        if (err) return handleError(err, res);
 
-                                                        return res
-                                                            .status(403)
-                                                            .contentType("text/plain")
-                                                            .end("Only .png files are allowed!");
-                                                    });
-                                                }
 
                                             } else {
                                                 image =sellerproductid[0].image ;
@@ -935,22 +825,12 @@ router.put('/product' , upload.single("image") , (req,res)=>{
 
                                                 if (req.file != null){
                                                     const tempPath = req.file.path;
-                                                    const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + ".png");
+                                                    const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() +path.extname(req.file.originalname).toLowerCase());
                                                     image = targetPath;
-                                                    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                                                         fs.rename(tempPath, targetPath, err => {
                                                             if (err) return handleError(err, res);
                                                         });
-                                                    } else {
-                                                        fs.unlink(tempPath, err => {
-                                                            if (err) return handleError(err, res);
 
-                                                            return res
-                                                                .status(403)
-                                                                .contentType("text/plain")
-                                                                .end("Only .png files are allowed!");
-                                                        });
-                                                    }
 
                                                 } else {
                                                     image =sellerproductid[0].image ;
@@ -1025,6 +905,110 @@ router.put('/product' , upload.single("image") , (req,res)=>{
     }
 
 } );
+
+router.get('/product' , (req,res)=>{
+    if (req.headers['token'] != null) {
+
+        function getallproducts(value, index, array) {
+            var base64str="not Found";
+            try {
+                base64str = base64_encode(value.image);
+
+            }catch (e) {
+                base64str = "not Found";
+
+            }
+
+            final[index] = {
+                id:value.id,
+                description:value.description,
+                price:value.price,
+                price_date_time:value.price_date_time,
+                supply_of_product:value.supply_of_product,
+                unit_of_product:value.unit_of_product,
+                productid:value.productid,
+                sellerid:value.sellerid,
+                unitid:value.unitid,
+                image:base64str
+            }
+        }
+        try {
+            var final = [];
+            var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
+            if (decodedJWT.password == null || (decodedJWT.username && decodedJWT.phone_number)) {
+                res.status(400).json({message: "expired token"});
+            } else {
+                if (decodedJWT.username != null) {
+                    Seller.findAll({
+                        where: {
+                            username: decodedJWT.username, password: decodedJWT.password
+                        }
+                    }).then(Seller => {
+
+                        if (Seller[0] != undefined) {
+
+                        sellerProducts.findAll(
+                            {where:{
+                                sellerid:Seller[0].id
+                                }}
+                        ).then( sellerProducts=>{
+                            if (sellerProducts[0] != undefined){
+                                sellerProducts.forEach(getallproducts)
+                                return res.json(final);
+
+                            } else {return res.status(404).json();}
+                            }
+                        );
+
+                        }else {
+                            res.status(400).json({"message":"expired token"});
+                        }
+                    });
+                } else {
+                    Seller.findAll({
+                        where: {
+                            owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
+                        }
+                    }).then(Seller => {
+
+                        if (Seller[0] != undefined) {
+
+                            sellerProducts.findAll(
+                                {where:{
+                                        sellerid:Seller[0].id
+                                    }}
+                            ).then( sellerProducts=>{
+                                if (sellerProducts[0] != undefined){
+                                    sellerProducts.forEach(getallproducts)
+                                    return res.json(final);
+
+                                } else {return res.status(404).json();}                                }
+                            );
+
+                        }else {
+                            res.status(400).json({"message":"expired token"});
+                        }
+
+                    });
+                }
+
+            }
+        } catch(err) {
+            console.log(err);
+            res.status(400).json({"message":"expired token"});
+
+        }
+
+
+
+
+
+    } else {
+        res.status(400).json({"message": "token not found in header"});
+    }
+
+} );
+
 
 
 router.get('/Subtypes' , (req,res)=>{

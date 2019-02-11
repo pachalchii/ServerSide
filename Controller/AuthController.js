@@ -53,22 +53,12 @@ router.post('/register',upload.single("image"), (req, res) => {
                     if (req.file != null){
 
                         const tempPath = req.file.path;
-                        const targetPath = path.join(__dirname, "./../uploads/customer/"+req.body.username+".png");
+                        const targetPath = path.join(__dirname, "./../uploads/customer/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                         image = targetPath;
-                        if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                             fs.rename(tempPath, targetPath, err => {
                                 if (err) return handleError(err, res);
                             });
-                        } else {
-                            fs.unlink(tempPath, err => {
-                                if (err) return handleError(err, res);
 
-                                return res
-                                    .status(403)
-                                    .contentType("text/plain")
-                                    .end("Only .png files are allowed!");
-                            });
-                        }
 
                     }else{
                         image = "notSetYet";
@@ -110,22 +100,12 @@ router.post('/register',upload.single("image"), (req, res) => {
                     myFunction.registerInfoCheck(req,res,role);
                     if (req.file != null){
                         const tempPath = req.file.path;
-                        const targetPath = path.join(__dirname, "./../uploads/seller/"+req.body.username+".png");
+                        const targetPath = path.join(__dirname, "./../uploads/seller/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                         image = targetPath;
-                        if (path.extname(req.file.originalname).toLowerCase() === ".png") {
                             fs.rename(tempPath, targetPath, err => {
                                 if (err) return handleError(err, res);
                             });
-                        } else {
-                            fs.unlink(tempPath, err => {
-                                if (err) return handleError(err, res);
 
-                                return res
-                                    .status(403)
-                                    .contentType("text/plain")
-                                    .end("Only .png files are allowed!");
-                            });
-                        }
 
                     }else{
                         image = "notSetYet";
@@ -214,11 +194,11 @@ router.post('/login', (req, res) => {
                             res.status(200).json({"data":{
 
                                     birth_date:customer[0].birth_date,
+                                    image:base64str,
                                     company_name:customer[0].company_name,
                                     enabled:customer[0].enabled,
                                     status:customer[0].status,
                                     family_name:customer[0].family_name,
-                                    image: base64str,
                                     name:customer[0].name,
                                     phone_number:customer[0].phone_number,
                                     point:customer[0].point,

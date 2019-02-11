@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Feb 04, 2019 at 10:29 PM
+-- Generation Time: Feb 10, 2019 at 12:25 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -244,7 +244,7 @@ CREATE TABLE `seller_phone_number` (
 CREATE TABLE `seller_products` (
   `id` int(11) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
-  `image` varchar(50) DEFAULT NULL,
+  `image` varchar(200) DEFAULT NULL,
   `price` varchar(50) NOT NULL,
   `price_date_time` varchar(50) NOT NULL,
   `supply_of_product` varchar(50) DEFAULT NULL,

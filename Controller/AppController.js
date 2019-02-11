@@ -25,7 +25,7 @@ router.get('/category/productGroup', function (req, res) {
         });
 });
 
-router.get('/category/productGroup/product', function (req, res) {
+router.post('/category/productGroup/product', function (req, res) {
     if (req.body.id == null){res.status(400).json({"message":"id not found"});}else {
         products.findAll({where: {
             groupid: req.body.id
@@ -37,7 +37,7 @@ router.get('/category/productGroup/product', function (req, res) {
 
 });
 
-router.get('/product', function (req, res) {
+router.post('/product', function (req, res) {
 
     if (req.body.id == null){res.status(400).json({"message":"id not found"});}else {
         sellerProducts.findAll({where: {
