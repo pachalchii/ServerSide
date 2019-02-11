@@ -4,11 +4,6 @@
     <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/AppController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AppController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AuthController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/SellerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/SellerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documation/pachalChi.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/pachalChi.postman_collection.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Util/myFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/Util/myFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataBase/export.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dataBase/export.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -83,26 +78,29 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="48" />
+          <entry key="jpg" value="1" />
+          <entry key="js" value="50" />
           <entry key="json" value="7" />
+          <entry key="png" value="2" />
           <entry key="sql" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="Image" value="3" />
           <entry key="JSON" value="7" />
-          <entry key="JavaScript" value="48" />
+          <entry key="JavaScript" value="50" />
           <entry key="SQL" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="4070" />
+          <entry key="js" value="4213" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="4070" />
+          <entry key="JavaScript" value="4213" />
         </counts>
       </usages-collector>
     </session>
@@ -112,8 +110,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controller/SellerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="734" column="131" lean-forward="true" selection-start-line="734" selection-start-column="131" selection-end-line="734" selection-end-column="180" />
+            <state relative-caret-position="48">
+              <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="50" selection-end-column="5" />
               <folding>
                 <element signature="n#!!block;n#base64_encode#0" />
                 <element signature="n#!!block;n#base64_decode#0" />
@@ -122,11 +120,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controller/AuthController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="670" column="30" selection-start-line="670" selection-start-column="30" selection-end-line="670" selection-end-column="30" />
+            <state relative-caret-position="113">
+              <caret line="23" selection-start-line="23" selection-end-line="36" />
               <folding>
                 <element signature="e#565#677#0" />
                 <element signature="e#701#819#0" />
@@ -134,6 +132,20 @@
                 <element signature="n#!!block;n#base64_decode#0" />
                 <element signature="e#30116#31595#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/uploads/seller/username11awdad.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Controller/CustomerController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
@@ -164,11 +176,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controller/AppController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="37" column="3" lean-forward="true" selection-start-line="37" selection-start-column="3" selection-end-line="37" selection-end-column="3" />
+            <state relative-caret-position="221">
+              <caret line="67" selection-start-line="67" selection-end-line="67" />
+              <folding>
+                <element signature="n#!!block;n#base64_encode#0" />
+                <element signature="n#!!block;n#base64_decode#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -193,7 +209,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MongoClient.connect</find>
       <find>username</find>
       <find>hash</find>
       <find>users</find>
@@ -223,6 +238,7 @@
       <find>tran</find>
       <find>groupId</find>
       <find>token not found in body</find>
+      <find>/Auth/register</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -294,13 +310,13 @@
         <option value="$PROJECT_DIR$/Util/myVars.js" />
         <option value="$PROJECT_DIR$/Controller/transportationController.js" />
         <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/Controller/CustomerController.js" />
         <option value="$PROJECT_DIR$/dataBase/export.sql" />
         <option value="$PROJECT_DIR$/sequelize.js" />
         <option value="$PROJECT_DIR$/Util/myFunctions.js" />
-        <option value="$PROJECT_DIR$/Controller/AppController.js" />
         <option value="$PROJECT_DIR$/Controller/SellerController.js" />
         <option value="$PROJECT_DIR$/Controller/AuthController.js" />
+        <option value="$PROJECT_DIR$/Controller/CustomerController.js" />
+        <option value="$PROJECT_DIR$/Controller/AppController.js" />
       </list>
     </option>
   </component>
@@ -361,6 +377,18 @@
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="uploads" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="uploads" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="products" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="uploads" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="seller" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -492,15 +520,16 @@
       <workItem from="1549393510896" duration="3130000" />
       <workItem from="1549474671136" duration="2490000" />
       <workItem from="1549539591348" duration="8018000" />
-      <workItem from="1549788422851" duration="8372000" />
+      <workItem from="1549788422851" duration="9818000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93603000" />
+    <option name="totallyTimeSpent" value="95049000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -543,8 +572,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/_helpers/jwt.js" />
-    <entry file="file://$PROJECT_DIR$/_helpers/error-handler.js" />
     <entry file="file://$PROJECT_DIR$/users/coustomer/coustomer.model.js" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/amir-vatani.log" />
@@ -783,31 +810,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/bluebird/js/release/async.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/CustomerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="23" column="41" lean-forward="true" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Documation/pachalChi.postman_collection.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="36" selection-start-line="36" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/AppController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="37" column="3" lean-forward="true" selection-start-line="37" selection-start-column="3" selection-end-line="37" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -818,10 +824,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/uploads/seller/username11awdad.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/Controller/SellerController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="734" column="131" lean-forward="true" selection-start-line="734" selection-start-column="131" selection-end-line="734" selection-end-column="180" />
+        <state relative-caret-position="48">
+          <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="50" selection-end-column="5" />
           <folding>
             <element signature="n#!!block;n#base64_encode#0" />
             <element signature="n#!!block;n#base64_decode#0" />
@@ -829,16 +838,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/bluebird/js/release/async.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uploads/products/0.730334062284079.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/Controller/AuthController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="670" column="30" selection-start-line="670" selection-start-column="30" selection-end-line="670" selection-end-column="30" />
+        <state relative-caret-position="113">
+          <caret line="23" selection-start-line="23" selection-end-line="36" />
           <folding>
             <element signature="e#565#677#0" />
             <element signature="e#701#819#0" />
             <element signature="n#!!block;n#base64_encode#0" />
             <element signature="n#!!block;n#base64_decode#0" />
             <element signature="e#30116#31595#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/CustomerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/AppController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
+          <folding>
+            <element signature="n#!!block;n#base64_encode#0" />
+            <element signature="n#!!block;n#base64_decode#0" />
           </folding>
         </state>
       </provider>
