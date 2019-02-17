@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { customer } = require('./../sequelize');
-
-const {colors} = require('./../Util/myVars');
 var router = express.Router();
+/*********************************************/
+const {colors} = require('../Util/myVars');
+const { customer } = require('../../sequelize');
+
 
 
 

@@ -1,3 +1,5 @@
+const multer = require("multer");
+
 const colors = {
     Reset: "\x1b[0m",
     Bright: "\x1b[1m",
@@ -31,14 +33,30 @@ const colors = {
 };
 
 const JWT_SECRET = "755Amirr2205";
+
 const PHONENUMBER_REGEX = "^(\\+98|0)?9\\d{9}$" ;
+
 const PASSWORD_REGEX = "(?=.{8,})" ;
+
 const USERNAME_REGEX ="^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
+
+const upload = multer({
+    dest: "./../uploads"
+});
+
+const handleError = (err, res) => {
+    res
+        .status(500)
+        .contentType("text/plain")
+        .end("Oops! Something went wrong!");
+};
 
 module.exports = {
     colors,
     JWT_SECRET,
     PASSWORD_REGEX,
     PHONENUMBER_REGEX,
-    USERNAME_REGEX
+    USERNAME_REGEX,
+    upload,
+    handleError
 };

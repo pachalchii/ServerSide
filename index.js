@@ -1,18 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {Seller} = require('./sequelize');
-const myVars = require('./Util/myVars');
-const {fillDataBase} = require('./Util/myFunctions');
+const myVars = require('./src/Util/myVars');
+const {fillDataBase} = require('./src/Util/myFunctions');
 
 const app = express();
 app.use(bodyParser.json());
 
 
-var appController = require('./Controller/AppController');
-var customerController = require('./Controller/CustomerController');
-var AuthController = require('./Controller/AuthController');
-var SellerController = require('./Controller/SellerController');
-var transportationController = require('./Controller/transportationController');
+var appController = require('./src/Controller/AppController');
+var customerController = require('./src/Controller/CustomerController');
+var AuthController = require('./src/Controller/AuthController');
+var SellerController = require('./src/Controller/SellerController');
+var transportationController = require('./src/Controller/transportationController');
 
 
 

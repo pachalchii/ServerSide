@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Seller , transportation ,orderProduct } = require('./../sequelize');
-var jwt = require('jwt-simple');
-const {JWT_SECRET} = require('./../Util/myVars');
-
-const {colors} = require('./../Util/myVars');
 var router = express.Router();
+/*********************************************/
+const { Seller , transportation ,orderProduct } = require('../../sequelize');
+const {JWT_SECRET , colors} = require('../Util/myVars');
+/*********************************************/
+var jwt = require('jwt-simple');
 
 router.get('/order' , ( req , res )=>{
     if (req.headers['token'] != null) {

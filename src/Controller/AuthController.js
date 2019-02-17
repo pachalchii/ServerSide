@@ -1,6 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('./../sequelize');
+var router = express.Router();
+/*********************************************/
+const { Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
+const {  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
+const {colors ,JWT_SECRET , upload ,handleError } = require('../Util/myVars');
+/*********************************************/
 const multer = require("multer");
 var path = require('path');
 const fs = require("fs");
@@ -8,32 +13,10 @@ const http = require("http");
 var md5 = require('md5');
 const Op = sequelize.Op;
 var jwt = require('jwt-simple');
-const {colors ,JWT_SECRET} = require('./../Util/myVars');
-const myFunction = require('./../Util/myFunctions');
-const handleError = (err, res) => {
-    res
-        .status(500)
-        .contentType("text/plain")
-        .end("Oops! Something went wrong!");
-};
-const upload = multer({
-    dest: "./../uploads"
-    // you might also want to set some limits: https://github.com/expressjs/multer#limits
-});
-var router = express.Router();
-function base64_encode(file) {
-    // read binary data
-    var bitmap = fs.readFileSync(file);
-    // convert binary data to base64 encoded string
-    return new Buffer(bitmap).toString('base64');
-}
-function base64_decode(base64str, file) {
-    // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-    var bitmap = new Buffer(base64str, 'base64');
-    // write buffer to file
-    fs.writeFileSync(file, bitmap);
-    console.log('******** File created from base64 encoded string ********');
-}
+/*********************************************/
+
+
+
 
 // sign up
 router.post('/register',upload.single("image"), (req, res) => {
@@ -49,7 +32,7 @@ router.post('/register',upload.single("image"), (req, res) => {
             var image ;
             switch (role) {
                 case "customer":
-                    myFunction.registerInfoCheck(req,res,role);
+                    registerInfoCheck(req,res,role);
                     if (req.file != null){
 
                         const tempPath = req.file.path;
@@ -97,7 +80,7 @@ router.post('/register',upload.single("image"), (req, res) => {
 
                     break;
                 case "seller":
-                    myFunction.registerInfoCheck(req,res,role);
+                    registerInfoCheck(req,res,role);
                     if (req.file != null){
                         const tempPath = req.file.path;
                         const targetPath = path.join(__dirname, "./../uploads/seller/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
@@ -169,7 +152,7 @@ router.post('/login', (req, res) => {
         var role = req.body.role;
         switch (role) {
             case "customer":
-                myFunction.loginInfoCheck(req,res,role);
+                loginInfoCheck(req,res,role);
                 if (req.body.phone_number != null){
                     customer.findAll({
                         where: {
@@ -266,7 +249,7 @@ router.post('/login', (req, res) => {
 
                 break;
             case "seller":
-                myFunction.loginInfoCheck(req,res,role);
+                loginInfoCheck(req,res,role);
                 if (req.body.phone_number != null){
                     Seller.findAll({
                         where: {
@@ -372,7 +355,7 @@ router.post('/login', (req, res) => {
             break;
             case "transportation":
 
-                myFunction.loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
+                loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
                 if (req.body.phone_number != null){
                     transportation.findAll({
                         where: {
@@ -472,7 +455,7 @@ router.post('/login', (req, res) => {
                 break;
             case "wareHouse":
 
-                myFunction.loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
+                loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
                 if (req.body.phone_number != null){
                     sellerWareHouse.findAll({
                         where: {
@@ -573,7 +556,7 @@ router.post('/login', (req, res) => {
                 }
                 break;
             case "operator":
-                myFunction.loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
+                loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
                 if (req.body.phone_number != null){
                     sellerOperator.findAll({
                         where: {

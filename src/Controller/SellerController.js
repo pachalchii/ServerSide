@@ -1,34 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {Seller, sellerProducts , sellerWareHouse , sellerOperator , transportation ,sequelize , products ,unit } = require('./../sequelize');
+var router = express.Router();
+/*********************************************/
+const {base64_encode , addRoleInfoCheck} = require('../Util/myFunctions');
+const {colors, JWT_SECRET , upload } = require('../Util/myVars');
+const {Seller, sellerProducts , sellerWareHouse , sellerOperator , transportation ,sequelize , products ,unit } = require('../../sequelize');
+/*********************************************/
 var jwt = require('jwt-simple');
 var md5 = require('md5');
-const myFunction = require('./../Util/myFunctions');
 const multer = require("multer");
-
-
-const {colors, JWT_SECRET} = require('./../Util/myVars');
-var router = express.Router();
 var path = require('path');
 const fs = require("fs");
 const http = require("http");
-const upload = multer({
-    dest: "./../uploads"
-    // you might also want to set some limits: https://github.com/expressjs/multer#limits
-});
-function base64_encode(file) {
-    // read binary data
-    var bitmap = fs.readFileSync(file);
-    // convert binary data to base64 encoded string
-    return new Buffer(bitmap).toString('base64');
-}
-function base64_decode(base64str, file) {
-    // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-    var bitmap = new Buffer(base64str, 'base64');
-    // write buffer to file
-    fs.writeFileSync(file, bitmap);
-    console.log('******** File created from base64 encoded string ********');
-}
 
 
 router.get('/list', (req, res) => {
@@ -86,7 +69,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
 
 
                             if (req.body.role != null){
-                                myFunction.addRoleInfoCheck(req,res,req.body.role)
+                                addRoleInfoCheck(req,res,req.body.role)
                                 switch (req.body.role) {
 
                                     case "seller":
@@ -297,7 +280,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                         if (seller[0] != undefined) {
 
                             if (req.body.role != null){
-                                myFunction.addRoleInfoCheck(req,res)
+                                addRoleInfoCheck(req,res)
                                 switch (role) {
 
                                     case "seller":

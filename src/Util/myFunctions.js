@@ -1,18 +1,25 @@
-const { cities , sellerType , productGroups , products , unit , car} = require('./../sequelize');
+const { cities , sellerType , productGroups , products , unit , car} = require('../../sequelize');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {colors , PHONENUMBER_REGEX , PASSWORD_REGEX , USERNAME_REGEX } = require('./../Util/myVars');
+const {colors , PHONENUMBER_REGEX , PASSWORD_REGEX , USERNAME_REGEX } = require('./myVars');
 
 
 
-function isEmptyObject(obj) {
-    for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-            return false;
-        }
-    }
-    return true;
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
 }
+
+function base64_decode(base64str, file) {
+    // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+    var bitmap = new Buffer(base64str, 'base64');
+    // write buffer to file
+    fs.writeFileSync(file, bitmap);
+    console.log('******** File created from base64 encoded string ********');
+}
+
 function insertCities(value, index, array) {
     cities.create(
         {
@@ -22,6 +29,7 @@ function insertCities(value, index, array) {
         }
     ).catch(err=>{console.log(err)});
 }
+
 function insertTypes(value, index, array) {
     sellerType.create(
         {
@@ -31,6 +39,7 @@ function insertTypes(value, index, array) {
         }
     ).catch(err=>{console.log(err)});
 }
+
 function insertProductsGroup(value, index, array) {
     productGroups.create(
         {
@@ -41,6 +50,7 @@ function insertProductsGroup(value, index, array) {
         }
     ).catch(err=>{console.log(err)});
 }
+
 function insertProducts(value, index, array) {
     products.create(
         {
@@ -51,6 +61,7 @@ function insertProducts(value, index, array) {
         }
     ).catch(err=>{console.log(err)});
 }
+
 function insertUnits(value, index, array) {
     unit.create(
         {
@@ -59,6 +70,7 @@ function insertUnits(value, index, array) {
         }
     ).catch(err=>{console.log(err)});
 }
+
 function insertCarModels(value, index, array) {
     car.create(
         {
@@ -68,9 +80,6 @@ function insertCarModels(value, index, array) {
         }
     ).catch(err=>{console.log(err)});
 }
-
-
-
 
 function fillDataBase() {
 
@@ -581,9 +590,13 @@ function addRoleInfoCheck (req , res , role) {
 
 
 
+
 module.exports = {
     loginInfoCheck,
     registerInfoCheck
     ,fillDataBase
     ,addRoleInfoCheck
+    ,base64_decode
+    ,base64_encode
+
 };
