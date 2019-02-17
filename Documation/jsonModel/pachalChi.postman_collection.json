@@ -18,12 +18,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/application/city",
+							"raw": "{{baseUrl}}/application/AppInfoGetter/city",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"application",
+								"AppInfoGetter",
 								"city"
 							]
 						}
@@ -40,12 +41,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/application/sellerType",
+							"raw": "{{baseUrl}}/application/AppInfoGetter/sellerType",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"application",
+								"AppInfoGetter",
 								"sellerType"
 							]
 						}
@@ -62,13 +64,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/application/category/productGroup",
+							"raw": "{{baseUrl}}/application/AppInfoGetter/productGroup",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"application",
-								"category",
+								"AppInfoGetter",
 								"productGroup"
 							]
 						}
@@ -95,15 +97,20 @@
 							"raw": "{\n\t\"id\":\"2\"\n\t\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/application/category/productGroup/product",
+							"raw": "{{baseUrl}}/application/AppInfoGetter/moreproductGroup?id=127",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"application",
-								"category",
-								"productGroup",
-								"product"
+								"AppInfoGetter",
+								"moreproductGroup"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "127"
+								}
 							]
 						}
 					},
@@ -126,16 +133,23 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":\"2\"\n}"
+							"raw": "{\n\t\"id\":\"3\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/application/product",
+							"raw": "{{baseUrl}}/application/AppInfoGetter/product?id=2",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"application",
+								"AppInfoGetter",
 								"product"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -173,12 +187,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/application/unit",
+							"raw": "{{baseUrl}}/application/AppInfoGetter/unit",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"application",
+								"AppInfoGetter",
 								"unit"
 							]
 						}
@@ -195,12 +210,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/application/carModel",
+							"raw": "{{baseUrl}}/application/AppInfoGetter/carModel",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"application",
+								"AppInfoGetter",
 								"carModel"
 							]
 						}
@@ -398,7 +414,7 @@
 								},
 								{
 									"key": "phone_numberid",
-									"value": "1",
+									"value": "2",
 									"type": "text"
 								},
 								{
@@ -628,7 +644,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuODc3MjI2NzYzODk4NTY3Nn0.VlhKxZdEUrBZbOT5eeRWwnZbewRypnBubVoVVr6nLd8",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuOTI3NTcwNDk0NjQ0MTI1fQ.XvWxk8Rx99gx1cFcBJ-3q61dI8LFj8haLXk_6rRaZpM",
 								"type": "text"
 							}
 						],
@@ -881,7 +897,7 @@
 	],
 	"variable": [
 		{
-			"id": "ce994d0b-ad6e-461d-8e51-b7b5450b5c75",
+			"id": "af8786a3-905e-44e7-8fd7-e3ece98a1906",
 			"key": "baseUrl",
 			"value": "http://localhost:1010",
 			"type": "string"

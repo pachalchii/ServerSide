@@ -992,8 +992,6 @@ router.get('/product' , (req,res)=>{
 
 } );
 
-
-
 router.get('/Subtypes' , (req,res)=>{
     if (req.headers['token'] != null) {
 
