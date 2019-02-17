@@ -33,7 +33,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     phone_number: {
-      type: DataTypes.STRING(50),
+        unique: true,
+
+        type: DataTypes.STRING(50),
       allowNull: false
     },
     point: {
@@ -45,7 +47,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     username: {
-      type: DataTypes.STRING(50),
+        unique: true,
+
+        type: DataTypes.STRING(50),
       allowNull: false
     },
     ware_house_complete_address_description: {

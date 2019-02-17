@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const { Seller , transportation ,orderProduct } = require('../../sequelize');
-const {JWT_SECRET , colors} = require('../Util/myVars');
+const {loggerinfo ,JWT_SECRET , colors} = require('../Util/myVars');
+const {response , isThisArrayEmpty} = require("../Util/myFunctions");
 /*********************************************/
 var jwt = require('jwt-simple');
 
@@ -22,13 +23,15 @@ router.get('/order' , ( req , res )=>{
                         }
                     }).then(tran => {
 
-                        if (tran[0] != undefined) {
+                        if (!isThisArrayEmpty(tran)) {
                             orderProduct.findAll({
                                 where: {
                                     transportarid:tran[0].id
                                 }
                             }).then(orderProduct => {
-                                res.json(orderProduct);
+                                response(res,orderProduct).then(
+                                    loggerinfo.info(req.connection.remoteAddress + "transportation with id : "+tran[0].id+" get all his/her order" )
+                            );
 
                             })
                         }else {
@@ -42,14 +45,16 @@ router.get('/order' , ( req , res )=>{
                         }
                     }).then(tran => {
 
-                        if (tran[0] != undefined) {
+                        if (!isThisArrayEmpty(tran)) {
                             orderProduct.findAll({
                                 where: {
                                     transportarid:tran[0].id
                                 }
                             }).then(orderProduct => {
-                                res.json(orderProduct);
 
+                                response(res,orderProduct).then(
+                                    loggerinfo.info(req.connection.remoteAddress + "transportation with id : "+tran[0].id+" get all his/her order" )
+                                );
                             })
                         }else {
                             res.status(400).json({"message":"expired token"});
@@ -59,7 +64,7 @@ router.get('/order' , ( req , res )=>{
 
             }
         } catch(err) {
-            console.log(err)
+            console.log(err);
             res.status(400).json({"message":"expired token"});
 
         }
@@ -91,16 +96,18 @@ router.post('/order',(req,res)=>{
                         }
                     }).then(tran => {
 
-                        if (tran[0] != undefined) {
+                        if (!isThisArrayEmpty(tran)) {
                            if (req.body.id == null ){
                                res.status(400).json({"message":"not enough parameter"});
                            } else {
                                orderProduct.findAll({where:{
                                    id:req.body.id
                                    }}).then(order =>{
-                                       if (order[0] != undefined){
-                                           if (order[0].transportarid == tran[0].id){
-                                               order[0].update({transportar_status: true}).then(res.status(200));
+                                       if (!isThisArrayEmpty(order)){
+                                           if (order[0].transportarid === tran[0].id){
+                                               order[0].update({transportar_status: true}).then(
+                                                   response(res,undefined).then(loggerinfo.info(req.connection.remoteAddress + "transportation with id : "+tran[0].id +" change product status with id : "+order[0].id))
+                                               );
                                            } else {
                                                res.status(400).json({"message":"in mahsol baraye in ranande nemibashad"});
                                            }                                       }else {
@@ -124,15 +131,15 @@ router.post('/order',(req,res)=>{
                         }
                     }).then(tran => {
 
-                        if (tran[0] != undefined) {
+                        if (!isThisArrayEmpty(tran)) {
                             if (req.body.id == null ){
                                 res.status(400).json({"message":"not enough parameter"});
                             } else {
                                 orderProduct.findAll({where:{
                                         id:req.body.id
                                     }}).then(order =>{
-                                    if (order[0] != undefined){
-                                        if (order[0].transportarid == tran[0].id){
+                                    if (!isThisArrayEmpty(tran)){
+                                        if (order[0].transportarid === tran[0].id){
                                             order[0].update({transportar_status: true}).then(res.status(200));
                                         } else {
                                             res.status(400).json({"message":"in mahsol baraye in ranande nemibashad"});
@@ -153,7 +160,7 @@ router.post('/order',(req,res)=>{
 
             }
         } catch(err) {
-            console.log(err)
+
             res.status(400).json({"message":"expired token"});
 
         }

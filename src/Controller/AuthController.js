@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const { Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
-const {  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
-const {colors ,JWT_SECRET , upload ,handleError } = require('../Util/myVars');
+const { response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
+const {colors ,JWT_SECRET , upload ,handleError , loggerinfo } = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
 var path = require('path');
@@ -68,7 +68,9 @@ router.post('/register',upload.single("image"), (req, res) => {
                             transaction: t
                         }).then(function() {
                             t.commit();
-                            return res.status(200).json()
+                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.phone_number +" phone number");
+                            return res.status(200).json();
+
 
                         }).catch(function(error) {
                             console.log(error);
@@ -117,6 +119,7 @@ router.post('/register',upload.single("image"), (req, res) => {
                             transaction: t
                         }).then(function() {
                             t.commit();
+                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.phone_numberid +" phone_numberid");
                             return res.status(200).json()
 
                         }).catch(function(error) {
@@ -159,7 +162,7 @@ router.post('/login', (req, res) => {
                             phone_number: req.body.phone_number, password: md5(req.body.password)
                         }
                     }).then(customer => {
-                        if (customer[0] != undefined){
+                        if (!isThisArrayEmpty(customer)){
                             var payload = { phone_number: customer[0].phone_number,
                                 password: customer[0].password,
                                 random:Math.random()};
@@ -173,8 +176,7 @@ router.post('/login', (req, res) => {
                             }
                             var token = jwt.encode(payload, JWT_SECRET);
 
-
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     birth_date:customer[0].birth_date,
                                     image:base64str,
@@ -189,7 +191,10 @@ router.post('/login', (req, res) => {
                                     theme:customer[0].theme,
                                     username:customer[0].username,
                                     cityid:customer[0].cityid,
-                                    token:token                 }})
+                                    token:token                 }}).then(
+                                loggerinfo.info(req.connection.remoteAddress + " login as customer with "+customer[0].phone_number +" phone number")
+                            );
+
                         } else {
                             return res.status(404).json();
                         }
@@ -203,7 +208,7 @@ router.post('/login', (req, res) => {
                             username: req.body.username, password: md5(req.body.password)
                         }
                     }).then(customer => {
-                        if (customer[0] != undefined)
+                        if (!isThisArrayEmpty(customer))
                         {
                             var payload = { phone_number: customer[0].phone_number,
                                 password: customer[0].password,
@@ -221,15 +226,14 @@ router.post('/login', (req, res) => {
                             }
                             var token = jwt.encode(payload, JWT_SECRET);
 
-
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     birth_date:customer[0].birth_date,
+                                    image:base64str,
                                     company_name:customer[0].company_name,
                                     enabled:customer[0].enabled,
                                     status:customer[0].status,
                                     family_name:customer[0].family_name,
-                                    image:base64str,
                                     name:customer[0].name,
                                     phone_number:customer[0].phone_number,
                                     point:customer[0].point,
@@ -237,7 +241,10 @@ router.post('/login', (req, res) => {
                                     theme:customer[0].theme,
                                     username:customer[0].username,
                                     cityid:customer[0].cityid,
-                                    token:token                 }})
+                                    token:token                 }}).then(
+                                loggerinfo.info(req.connection.remoteAddress + " login as customer with "+customer[0].phone_number +" phone number")
+                            );
+
                         } else {
                             return res.status(404).json();
 
@@ -256,7 +263,7 @@ router.post('/login', (req, res) => {
                             owner_phone_number: req.body.phone_number, password: md5(req.body.password)
                         }
                     }).then(seller => {
-                        if (seller[0] != undefined){
+                        if (!isThisArrayEmpty(seller)){
                             var payload = { owner_phone_number: seller[0].owner_phone_number,
                                 password: seller[0].password,
                                 random:Math.random()};
@@ -272,8 +279,7 @@ router.post('/login', (req, res) => {
                             }
                             var token = jwt.encode(payload, JWT_SECRET);
 
-
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     id:seller[0].phone_numberid,
                                     company_name:seller[0].company_name,
@@ -291,7 +297,9 @@ router.post('/login', (req, res) => {
                                     company_address_cityid:seller[0].company_address_cityid,
                                     phone_numberid:seller[0].phone_numberid,
                                     typeid:seller[0].typeid,
-                                    token:token               }})
+                                    token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as seller with "+seller[0].phone_numberid+" phone number"));
+
+
                         } else {
                             return res.status(404).json();
                         }
@@ -305,7 +313,7 @@ router.post('/login', (req, res) => {
                             username: req.body.username, password: md5(req.body.password)
                         }
                     }).then(seller => {
-                        if (seller[0] != undefined)
+                        if (!isThisArrayEmpty(seller))
                         {
                             var payload = { username: seller[0].username,
                                 password: seller[0].password,
@@ -324,7 +332,7 @@ router.post('/login', (req, res) => {
                             var token = jwt.encode(payload, JWT_SECRET);
 
 
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     id:seller[0].phone_numberid,
                                     company_name:seller[0].company_name,
@@ -342,8 +350,8 @@ router.post('/login', (req, res) => {
                                     company_address_cityid:seller[0].company_address_cityid,
                                     phone_numberid:seller[0].phone_numberid,
                                     typeid:seller[0].typeid,
-                                    token:token
-                                                    }})
+                                    token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as seller with "+seller[0].phone_numberid+" phone number"));
+
                         } else {
                             return res.status(404).json();
 
@@ -362,7 +370,7 @@ router.post('/login', (req, res) => {
                             phone_number: req.body.phone_number, password: md5(req.body.password)
                         }
                     }).then(trans => {
-                        if (trans[0] != undefined){
+                        if (!isThisArrayEmpty(trans)){
                             var payload = { phone_number: trans[0].phone_number,
                                 password: trans[0].password,
                                 random:Math.random()};
@@ -378,8 +386,7 @@ router.post('/login', (req, res) => {
                             }
                             var token = jwt.encode(payload, JWT_SECRET);
 
-
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     id:trans[0].phone_numberid,
                                     air_conditionar:trans[0].air_conditionar,
@@ -394,7 +401,8 @@ router.post('/login', (req, res) => {
                                     username:trans[0].username,
                                     modelid:trans[0].modelid,
                                     ware_houseid:trans[0].ware_houseid,
-                                    token:token               }})
+                                    token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as transportation with "+trans[0].phone_number+" phone number"));
+
                         } else {
                             return res.status(404).json();
                         }
@@ -408,7 +416,7 @@ router.post('/login', (req, res) => {
                             username: req.body.username, password: md5(req.body.password)
                         }
                     }).then(trans => {
-                        if (trans[0] != undefined)
+                        if (!isThisArrayEmpty(trans))
                         {
                             var payload = { phone_number: trans[0].phone_number,
                                 password: trans[0].password,
@@ -427,7 +435,7 @@ router.post('/login', (req, res) => {
                             var token = jwt.encode(payload, JWT_SECRET);
 
 
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     id:trans[0].phone_numberid,
                                     air_conditionar:trans[0].air_conditionar,
@@ -442,8 +450,8 @@ router.post('/login', (req, res) => {
                                     username:trans[0].username,
                                     modelid:trans[0].modelid,
                                     ware_houseid:trans[0].ware_houseid,
-                                    token:token
-                                }})
+                                    token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as transportation with "+trans[0].phone_number+" phone number"));
+
                         } else {
                             return res.status(404).json();
 
@@ -462,7 +470,7 @@ router.post('/login', (req, res) => {
                             phone_number: req.body.phone_number, password: md5(req.body.password)
                         }
                     }).then(wareHouse => {
-                        if (wareHouse[0] != undefined){
+                        if (!isThisArrayEmpty(wareHouse)){
                             var payload = { phone_number: wareHouse[0].phone_number,
                                 password: wareHouse[0].password,
                                 random:Math.random()};
@@ -478,8 +486,7 @@ router.post('/login', (req, res) => {
                             }
                             var token = jwt.encode(payload, JWT_SECRET);
 
-
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     id:wareHouse[0].phone_numberid,
                                     agent_family_name :wareHouse[0].agent_family_name ,
@@ -495,7 +502,7 @@ router.post('/login', (req, res) => {
                                     ware_house_google_map_address_link:wareHouse[0].ware_house_google_map_address_link,
                                     ware_house_address_cityidIndex :wareHouse[0]. ware_house_address_cityidIndex ,
                                     selleridIndex:wareHouse[0].selleridIndex,
-                                    token:token        }})
+                                    token:token        }}).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with "+wareHouse[0].phone_number+" phone number"));
                         } else {
                             return res.status(404).json();
                         }
@@ -509,7 +516,7 @@ router.post('/login', (req, res) => {
                             username: req.body.username, password: md5(req.body.password)
                         }
                     }).then(wareHouse => {
-                        if (wareHouse[0] != undefined)
+                        if (!isThisArrayEmpty(wareHouse))
                         {
                             var payload = { phone_number: wareHouse[0].phone_number,
                                 password: wareHouse[0].password,
@@ -528,7 +535,7 @@ router.post('/login', (req, res) => {
                             var token = jwt.encode(payload, JWT_SECRET);
 
 
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     id:wareHouse[0].phone_numberid,
                                     agent_family_name :wareHouse[0].agent_family_name ,
@@ -544,8 +551,8 @@ router.post('/login', (req, res) => {
                                     ware_house_google_map_address_link:wareHouse[0].ware_house_google_map_address_link,
                                     ware_house_address_cityidIndex :wareHouse[0]. ware_house_address_cityidIndex ,
                                     selleridIndex:wareHouse[0].selleridIndex,
-                                    token:token
-                                }})
+                                    token:token        }}).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with "+wareHouse[0].phone_number+" phone number"));
+
                         } else {
                             return res.status(404).json();
 
@@ -563,7 +570,7 @@ router.post('/login', (req, res) => {
                             phone_number: req.body.phone_number, password: md5(req.body.password)
                         }
                     }).then(operator => {
-                        if (operator[0] != undefined){
+                        if (!isThisArrayEmpty(operator)){
                             var payload = { phone_number: operator[0].phone_number,
                                 password: operator[0].password,
                                 random:Math.random()};
@@ -579,8 +586,7 @@ router.post('/login', (req, res) => {
                             }
                             var token = jwt.encode(payload, JWT_SECRET);
 
-
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     id:operator[0].phone_numberid,
                                     family_name :operator[0].family_name ,
@@ -594,7 +600,7 @@ router.post('/login', (req, res) => {
                                     token:token
 
 
-                                }})
+                                }}).then(loggerinfo.info(req.connection.remoteAddress + " login as operator with "+operator[0].phone_number + " phone number"));
                         } else {
                             return res.status(404).json();
                         }
@@ -608,7 +614,7 @@ router.post('/login', (req, res) => {
                             username: req.body.username, password: md5(req.body.password)
                         }
                     }).then(operator => {
-                        if (operator[0] != undefined)
+                        if (!isThisArrayEmpty(operator))
                         {
                             var payload = { phone_number: operator[0].phone_number,
                                 password: operator[0].password,
@@ -627,7 +633,7 @@ router.post('/login', (req, res) => {
                             var token = jwt.encode(payload, JWT_SECRET);
 
 
-                            res.status(200).json({"data":{
+                            response(res,{"data":{
 
                                     id:operator[0].phone_numberid,
                                     family_name :operator[0].family_name ,
@@ -640,7 +646,9 @@ router.post('/login', (req, res) => {
                                     selleridIndex:operator[0].selleridIndex,
                                     token:token
 
-                                }})
+
+                                }}).then(loggerinfo.info(req.connection.remoteAddress + " login as operator with "+operator[0].phone_number + " phone number"));
+
                         } else {
                             return res.status(404).json();
 
@@ -691,7 +699,7 @@ router.post('/phoneNumber',(req,res) => {
                 transaction: t
             }).then(savedNumber => {
                 t.commit();
-                return res.status(200).json({"data":{"id":savedNumber.id}})
+                response(res,{"data":{"id":savedNumber.id}}).then(loggerinfo.info(req.connection.remoteAddress + " add a group of phone number with "+ savedNumber.id));
 
             }).catch(function(error) {
                 console.log(error);

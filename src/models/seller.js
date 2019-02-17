@@ -57,7 +57,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     username: {
-      type: DataTypes.STRING(50),
+        unique: true,
+
+        type: DataTypes.STRING(50),
       allowNull: false
     },
     company_address_cityid: {
@@ -77,7 +79,9 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     phone_numberid: {
-      type: DataTypes.INTEGER(11),
+        unique: true,
+
+        type: DataTypes.INTEGER(11),
       allowNull: true,
       references: {
         model: 'seller_phone_number',

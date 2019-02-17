@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {base64_encode , addRoleInfoCheck} = require('../Util/myFunctions');
-const {colors, JWT_SECRET , upload } = require('../Util/myVars');
+const {response , isThisArrayEmpty ,base64_encode , addRoleInfoCheck} = require('../Util/myFunctions');
+const {loggerinfo , colors, JWT_SECRET , upload } = require('../Util/myVars');
 const {Seller, sellerProducts , sellerWareHouse , sellerOperator , transportation ,sequelize , products ,unit } = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
@@ -15,6 +15,10 @@ const http = require("http");
 
 
 router.get('/list', (req, res) => {
+    if (req.query.cityId == null){
+        return res.status(400).json({"message":"cityId not found"});
+    }
+
     var final = [];
 
     function testFunction(value, index, array) {
@@ -34,14 +38,17 @@ router.get('/list', (req, res) => {
     }
     Seller.findAll({
         where :{
-            typeid :1
+            typeid :1,
+            company_address_cityid:req.params.cityId
         }
     }).then(seller => {
-        if (seller[0] != undefined){
+        if (!isThisArrayEmpty(seller)){
             seller.forEach(testFunction);
 
         }
-        res.json(final);
+        response(res,final).then(
+            loggerinfo.info(req.connection.remoteAddress + " get seller list")
+        );
     });
 
 
@@ -64,12 +71,12 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                         }
                     }).then(seller => {
 
-                        if (seller[0] != undefined) {
+                        if (!isThisArrayEmpty(seller)) {
 
 
 
                             if (req.body.role != null){
-                                addRoleInfoCheck(req,res,req.body.role)
+                                addRoleInfoCheck(req,res,req.body.role);
                                 switch (req.body.role) {
 
                                     case "seller":
@@ -109,7 +116,9 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 transaction: t
                                             }).then(function() {
                                                 t.commit();
-                                                return res.status(200).json()
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "a seller added by "+ req.body.phone_numberid +" phoneNumberid")
+                                            );
 
                                             }).catch(function(error) {
                                                 console.log(error);
@@ -155,7 +164,9 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 transaction: t
                                             }).then(function() {
                                                 t.commit();
-                                                return res.status(200).json()
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "a transportation added by "+ req.body.phone_number +" phoneNumber")
+                                            );
 
                                             }).catch(function(error) {
                                                 console.log(error);
@@ -201,8 +212,9 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 transaction: t
                                             }).then(function() {
                                                 t.commit();
-                                                return res.status(200).json()
-
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "a wareHouse added by "+ req.body.phone_number +" phoneNumber")
+                                                );
                                             }).catch(function(error) {
                                                 console.log(error);
                                                 t.rollback();
@@ -244,8 +256,9 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 transaction: t
                                             }).then(function() {
                                                 t.commit();
-                                                return res.status(200).json()
-
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "a operator added by "+ req.body.phone_number +" phoneNumber")
+                                                );
                                             }).catch(function(error) {
                                                 console.log(error);
                                                 t.rollback();
@@ -277,10 +290,10 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                         }
                     }).then(seller => {
 
-                        if (seller[0] != undefined) {
+                        if (!isThisArrayEmpty(seller)) {
 
                             if (req.body.role != null){
-                                addRoleInfoCheck(req,res)
+                                addRoleInfoCheck(req,res);
                                 switch (role) {
 
                                     case "seller":
@@ -319,8 +332,10 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                             }, {
                                                 transaction: t
                                             }).then(function() {
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "a seller added by "+ req.body.phone_numberid +" phoneNumberid")
+                                                );
                                                 t.commit();
-                                                return res.status(200).json()
 
                                             }).catch(function(error) {
                                                 console.log(error);
@@ -366,10 +381,11 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 transaction: t
                                             }).then(function() {
                                                 t.commit();
-                                                return res.status(200).json()
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "a transportation added by "+ req.body.phone_numberid +" phoneNumberid")
+                                                );
 
                                             }).catch(function(error) {
-                                                console.log(error);
                                                 t.rollback();
                                                 return res.status(400).json({"message":"transportation signUped before"})
                                             });
@@ -412,7 +428,9 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 transaction: t
                                             }).then(function() {
                                                 t.commit();
-                                                return res.status(200).json()
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "a wareHouse added by "+ req.body.phone_numberid +" phoneNumberid")
+                                                );
 
                                             }).catch(function(error) {
                                                 console.log(error);
@@ -455,7 +473,9 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 transaction: t
                                             }).then(function() {
                                                 t.commit();
-                                                return res.status(200).json()
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "a operator added by "+ req.body.phone_numberid +" phoneNumberid")
+                                                );
 
                                             }).catch(function(error) {
                                                 console.log(error);
@@ -523,7 +543,7 @@ router.post('/product' , upload.single("image") , (req,res)=>{
                         }
                     }).then(Seller => {
 
-                        if (Seller[0] != undefined) {
+                        if (!isThisArrayEmpty(Seller)) {
 
                             if (req.file != null){
                             const tempPath = req.file.path;
@@ -550,9 +570,9 @@ router.post('/product' , upload.single("image") , (req,res)=>{
                         } else {
                             products.findAll({where: {id : req.body.productid}}).then(
                                 products=>{
-                                    if (products[0] != undefined){
+                                    if (!isThisArrayEmpty(products)){
                                         unit.findAll({where:{id:req.body.unitid}}).then(unit=>{
-                                            if (unit[0] == undefined){
+                                            if (isThisArrayEmpty(unit)){
                                                 return res.status(404).json();
 
                                             }
@@ -590,7 +610,7 @@ router.post('/product' , upload.single("image") , (req,res)=>{
                         }
                     }).then(Seller => {
 
-                        if (Seller[0] != undefined) {
+                        if (!isThisArrayEmpty(Seller)) {
 
                                 if (req.file != null){
                                     const tempPath = req.file.path;
@@ -618,10 +638,9 @@ router.post('/product' , upload.single("image") , (req,res)=>{
 
                                     products.findAll({where: {id : req.body.productid}}).then(
                                         products=>{
-                                            console.log("slm")
-                                            if (products[0] != undefined){
+                                            if (!isThisArrayEmpty(products)){
                                                 unit.findAll({where:{id:req.body.unitid}}).then(unit=>{
-                                                    if (unit[0] == undefined){
+                                                    if (isThisArrayEmpty(unit)){
                                                         return res.status(404).json();
 
                                                     }
@@ -692,7 +711,7 @@ router.put('/product' , upload.single("image") , (req,res)=>{
                         }
                     }).then(Seller => {
 
-                        if (Seller[0] != undefined) {
+                        if (!isThisArrayEmpty(Seller)) {
 
 
 
@@ -709,7 +728,7 @@ router.put('/product' , upload.single("image") , (req,res)=>{
                             } else {
                                 sellerProducts.findAll({where:{id:req.body.sellerproductid}}).then(
                                     sellerproductid=>{
-                                        if (sellerproductid[0] == undefined){
+                                        if (isThisArrayEmpty(sellerproductid)){
                                             return res.status(404).json();
                                         } else {
 
@@ -728,9 +747,9 @@ router.put('/product' , upload.single("image") , (req,res)=>{
 
                                             products.findAll({where: {id : req.body.productid}}).then(
                                                 products=>{
-                                                    if (products[0] != undefined){
+                                                    if (!isThisArrayEmpty(products)){
                                                         unit.findAll({where:{id:req.body.unitid}}).then(unit=>{
-                                                            if (unit[0] == undefined){
+                                                            if (isThisArrayEmpty(unit)){
                                                                 return res.status(404).json();
 
                                                             }
@@ -753,8 +772,9 @@ router.put('/product' , upload.single("image") , (req,res)=>{
                                             } , {where:{
                                                     id:sellerproductid[0].id
                                                 }}   );
-                                            return res.status(200).json();
-
+                                            response(res,undefined).then(
+                                                loggerinfo.info(req.connection.remoteAddress + "seller with id : "+Seller[0].id +" edit product with productid :"+sellerproductid[0])
+                                            )
 
 
 
@@ -786,7 +806,7 @@ router.put('/product' , upload.single("image") , (req,res)=>{
                         }
                     }).then(Seller => {
 
-                            if (Seller[0] != undefined) {
+                            if (!isThisArrayEmpty(Seller)) {
 
 
                                 if (req.body.sellerproductid == null ||
@@ -802,7 +822,7 @@ router.put('/product' , upload.single("image") , (req,res)=>{
                                 } else {
                                     sellerProducts.findAll({where:{id:req.body.sellerproductid}}).then(
                                         sellerproductid=>{
-                                            if (sellerproductid[0] == undefined){
+                                            if (isThisArrayEmpty(sellerproductid)){
                                                 return res.status(404).json();
                                             } else {
 
@@ -821,9 +841,9 @@ router.put('/product' , upload.single("image") , (req,res)=>{
 
                                                 products.findAll({where: {id : req.body.productid}}).then(
                                                     products=>{
-                                                        if (products[0] != undefined){
+                                                        if (!isThisArrayEmpty(products)){
                                                             unit.findAll({where:{id:req.body.unitid}}).then(unit=>{
-                                                                if (unit[0] == undefined){
+                                                                if (isThisArrayEmpty(unit)){
                                                                     return res.status(404).json();
 
                                                                 }
@@ -847,7 +867,9 @@ router.put('/product' , upload.single("image") , (req,res)=>{
                                                 } , {where:{
                                                         id:sellerproductid[0].id
                                                     }}   );
-                                                return res.status(200).json();
+                                                response(res,undefined).then(
+                                                    loggerinfo.info(req.connection.remoteAddress + "seller with id : "+Seller[0].id +" edit product with productid :"+sellerproductid[0])
+                                                )
 
 
 
@@ -928,16 +950,18 @@ router.get('/product' , (req,res)=>{
                         }
                     }).then(Seller => {
 
-                        if (Seller[0] != undefined) {
+                        if (!isThisArrayEmpty(Seller)) {
 
                         sellerProducts.findAll(
                             {where:{
                                 sellerid:Seller[0].id
                                 }}
                         ).then( sellerProducts=>{
-                            if (sellerProducts[0] != undefined){
-                                sellerProducts.forEach(getallproducts)
-                                return res.json(final);
+                            if (!isThisArrayEmpty(sellerProducts)){
+                                sellerProducts.forEach(getallproducts);
+                                response(res,final).then(
+                                    loggerinfo.info(req.connection.remoteAddress +"seller with id : "+Seller[0].id+" get all his/her products ")
+                                )
 
                             } else {return res.status(404).json();}
                             }
@@ -954,16 +978,18 @@ router.get('/product' , (req,res)=>{
                         }
                     }).then(Seller => {
 
-                        if (Seller[0] != undefined) {
+                        if (!isThisArrayEmpty(Seller)) {
 
                             sellerProducts.findAll(
                                 {where:{
                                         sellerid:Seller[0].id
                                     }}
                             ).then( sellerProducts=>{
-                                if (sellerProducts[0] != undefined){
-                                    sellerProducts.forEach(getallproducts)
-                                    return res.json(final);
+                                if (!isThisArrayEmpty(sellerProducts)){
+                                    sellerProducts.forEach(getallproducts);
+                                    response(res,final).then(
+                                        loggerinfo.info(req.connection.remoteAddress +"seller with id : "+Seller[0].id+" get all his/her products ")
+                                    )
 
                                 } else {return res.status(404).json();}                                }
                             );
@@ -1007,36 +1033,7 @@ router.get('/Subtypes' , (req,res)=>{
                         }
                     }).then(seller => {
 
-                        if (seller[0] != undefined) {
-
-                            sellerWareHouse.findAll({where :{
-                                sellerid : seller[0].id
-                                }}).then(wareHouses=>{
-                                sellerOperator.findAll({where :{
-                                        sellerid : seller[0].id
-                                    }}).then(sellerOperator=>{
-
-                                    return res.json({
-                                        wareHouse: wareHouses ,
-                                        operator: sellerOperator
-                                    });
-
-                                });
-                            });
-
-
-                        }else {
-                            res.status(400).json({"message":"expired token"});
-                        }
-                    });
-                } else {
-                    Seller.findAll({
-                        where: {
-                            owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
-                        }
-                    }).then(seller => {
-
-                        if (seller[0] != undefined) {
+                        if (!isThisArrayEmpty(seller)) {
 
                             sellerWareHouse.findAll({where :{
                                     sellerid : seller[0].id
@@ -1056,11 +1053,53 @@ router.get('/Subtypes' , (req,res)=>{
                                 tranlist = transportation;
                             });
 
-                            return res.json({
+                            response(res,{
                                 wareHouse:{ wareHouselist },
                                 operator:{ operatorlist },
                                 transportation: { tranlist }
+                            }).then(
+                                loggerinfo.info(req.connection.remoteAddress + "seller with id : "+ seller[0].id+ "get all his/her subtypes")
+                            );
+
+
+                        }else {
+                            res.status(400).json({"message":"expired token"});
+                        }
+                    });
+                } else {
+                    Seller.findAll({
+                        where: {
+                            owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
+                        }
+                    }).then(seller => {
+
+                        if (!isThisArrayEmpty(seller)) {
+
+                            sellerWareHouse.findAll({where :{
+                                    sellerid : seller[0].id
+                                }}).then(wareHouses=>{
+                                wareHouselist = wareHouses;
                             });
+
+                            sellerOperator.findAll({where :{
+                                    sellerid : seller[0].id
+                                }}).then(sellerOperator=>{
+                                operatorlist = sellerOperator;
+                            });
+
+                            transportation.findAll({where :{
+                                    sellerid : seller[0].id
+                                }}).then(transportation=>{
+                                tranlist = transportation;
+                            });
+
+                            response(res,{
+                                wareHouse:{ wareHouselist },
+                                operator:{ operatorlist },
+                                transportation: { tranlist }
+                            }).then(
+                                loggerinfo.info(req.connection.remoteAddress + "seller with id : "+ seller[0].id+ "get all his/her subtypes")
+                            );
 
 
 

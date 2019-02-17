@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('../../sequelize');
-const {colors} = require('../Util/myVars');
+const {colors , loggerinfo} = require('../Util/myVars');
+const {response , isThisArrayEmpty } = require("../Util/myFunctions");
 var path = require('path');
 const fs = require("fs");
 /*********************************************/
@@ -13,15 +14,22 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
     switch (req.params.type) {
         case "city":
             cities.findAll().then(cities => {
-                return res.json(cities)
-            }); break;
+                response(res,cities).then(
+                    loggerinfo.info(req.connection.remoteAddress + " get city list")
+            );
+            });
+            break;
         case "sellerType":
             sellerType.findAll().then(sellertype => {
-                return res.json(sellertype)
+                response(res,sellertype).then(
+                    loggerinfo.info(req.connection.remoteAddress + " get seller type list")
+                );
             }); break;
         case "productGroup"  :
             productGroups.findAll().then(productGroups => {
-                res.json(productGroups);
+                response(res,productGroups).then(
+                    loggerinfo.info(req.connection.remoteAddress + " get productGroup list")
+                );
 
             });break;
         case "moreproductGroup" :
@@ -29,7 +37,9 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
                 products.findAll({where: {
                         groupid: req.body.id
                     }}).then(products => {
-                    res.json(products);
+                    response(res,products).then(
+                        loggerinfo.info(req.connection.remoteAddress + " get productGroup detail list")
+                    );
 
                 });
             }break;
@@ -64,22 +74,28 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
                             image:base64str
                         }
                     }
-                    if (products[0] != undefined){
+                    if (!isThisArrayEmpty(products)){
                         products.forEach(testFunction2);
                     } else {return res.status(404).json();}
-                    res.json(final);
+                    response(res,final).then(
+                        loggerinfo.info(req.connection.remoteAddress + " get products list")
+                    );
 
                 });
             } break;
 
         case "unit":
             unit.findAll().then(unit => {
-                return res.json(unit)
+                response(res,unit).then(
+                    loggerinfo.info(req.connection.remoteAddress + " get unit list")
+                );
             }); break;
 
         case "carModel":
             car.findAll().then(car => {
-                return res.json(car)
+                response(res,car).then(
+                    loggerinfo.info(req.connection.remoteAddress + " get car list")
+                );
             });
             break;
 

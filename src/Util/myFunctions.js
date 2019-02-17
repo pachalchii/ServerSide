@@ -5,6 +5,18 @@ const {colors , PHONENUMBER_REGEX , PASSWORD_REGEX , USERNAME_REGEX } = require(
 
 
 
+function response(res , json) {
+
+        return new Promise(resolve => {
+            if (json == undefined) {
+                return res.status(200).json();
+            }else {
+                return res.json(json);
+            }
+                resolve();
+        });
+}
+
 function base64_encode(file) {
     // read binary data
     var bitmap = fs.readFileSync(file);
@@ -119,7 +131,7 @@ function fillDataBase() {
 
     ];
     cities.findAll().then(cities => {
-        if (cities[0] == undefined){
+        if (cities[0] === undefined){
             city.forEach(insertCities);
             console.log( colors.bg.Green ,"import  city demo data done successfuly" ,  colors.Reset);
         } else {
@@ -133,7 +145,7 @@ function fillDataBase() {
 
     ];
     sellerType.findAll().then(sellerType => {
-        if (sellerType[0] == undefined){
+        if (sellerType[0] === undefined){
             type.forEach(insertTypes);
             console.log( colors.bg.Green ,"import  SellerType demo data done successfuly" ,  colors.Reset);
         } else {
@@ -149,7 +161,7 @@ function fillDataBase() {
         {id:6 , name: "کامیون یخچال دار" , parentid:null}
     ];
     car.findAll().then(car => {
-        if (car[0] == undefined){
+        if (car[0] === undefined){
             carModelvar.forEach(insertCarModels);
             console.log( colors.bg.Green ,"import  car model demo data done successfuly" ,  colors.Reset);
         } else {
@@ -170,7 +182,7 @@ function fillDataBase() {
 
     ];
     unit.findAll().then(unit => {
-        if (unit[0] == undefined){
+        if (unit[0] === undefined){
             unitvar.forEach(insertUnits);
             console.log( colors.bg.Green ,"import unit demo data done successfuly" ,  colors.Reset);
         } else {
@@ -222,7 +234,7 @@ function fillDataBase() {
 
     ];
     productGroups.findAll().then(productsgroup => {
-        if (productsgroup[0] == undefined){
+        if (productsgroup[0] === undefined){
             productsGroupvar.forEach(insertProductsGroup);
             console.log( colors.bg.Green ,"import  products Group demo data done successfuly" ,  colors.Reset);
         } else {
@@ -375,7 +387,7 @@ function fillDataBase() {
         {id:154 , name:"غذاهای آماده" , groupid:150}
     ];
     products.findAll().then(products=>{
-        if (products[0] == undefined){
+        if (products[0] === undefined){
             productsvar.forEach(insertProducts);
             console.log( colors.bg.Green ,"import  products  demo data done successfuly" ,  colors.Reset);
         } else {
@@ -386,6 +398,11 @@ function fillDataBase() {
 
 
 
+
+}
+
+function isThisArrayEmpty(array) {
+    return array[0] === undefined;
 
 }
 
@@ -598,5 +615,7 @@ module.exports = {
     ,addRoleInfoCheck
     ,base64_decode
     ,base64_encode
+    ,isThisArrayEmpty
+    ,response
 
 };
