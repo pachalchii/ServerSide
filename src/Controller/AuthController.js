@@ -73,7 +73,7 @@ router.post('/register',upload.single("image"), (req, res) => {
 
 
                         }).catch(function(error) {
-                            console.log(error);
+                            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                             t.rollback();
                             return res.status(400).json({"message":"customer signUped before"})
                         });
@@ -123,7 +123,7 @@ router.post('/register',upload.single("image"), (req, res) => {
                             return res.status(200).json()
 
                         }).catch(function(error) {
-                            console.log(error);
+                            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                             t.rollback();
                             return res.status(400).json({"message":"seller signUped before"})
                         });
@@ -136,6 +136,7 @@ router.post('/register',upload.single("image"), (req, res) => {
 
         }
     }catch (e) {
+        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + e);
         return res.status(500).json({"message":"Oops! Something went wrong!"})
     }
 
@@ -667,6 +668,7 @@ router.post('/login', (req, res) => {
     }
 
     }catch (e) {
+        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + e);
     return res.status(500).json({"message":"Oops! Something went wrong!"})
 }
 
@@ -702,7 +704,7 @@ router.post('/phoneNumber',(req,res) => {
                 response(res,{"data":{"id":savedNumber.id}}).then(loggerinfo.info(req.connection.remoteAddress + " add a group of phone number with "+ savedNumber.id));
 
             }).catch(function(error) {
-                console.log(error);
+                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                 t.rollback();
                 return res.status(500).json({"message":"Oops! Something went wrong!"})
             });
@@ -712,6 +714,7 @@ router.post('/phoneNumber',(req,res) => {
 
 
     }  catch (e) {
+        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + e);
     return res.status(500).json({"message":"Oops! Something went wrong!"})
 }
 });

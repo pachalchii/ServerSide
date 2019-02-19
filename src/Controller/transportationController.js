@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const { Seller , transportation ,orderProduct } = require('../../sequelize');
-const {loggerinfo ,JWT_SECRET , colors} = require('../Util/myVars');
+const {loggererror , loggerinfo ,JWT_SECRET , colors} = require('../Util/myVars');
 const {response , isThisArrayEmpty} = require("../Util/myFunctions");
 /*********************************************/
 var jwt = require('jwt-simple');
@@ -64,7 +64,7 @@ router.get('/order' , ( req , res )=>{
 
             }
         } catch(err) {
-            console.log(err);
+            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
             res.status(400).json({"message":"expired token"});
 
         }
@@ -160,7 +160,7 @@ router.post('/order',(req,res)=>{
 
             }
         } catch(err) {
-
+            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
             res.status(400).json({"message":"expired token"});
 
         }

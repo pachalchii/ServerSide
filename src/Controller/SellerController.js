@@ -121,7 +121,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                             );
 
                                             }).catch(function(error) {
-                                                console.log(error);
+                                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                                                 t.rollback();
                                                 return res.status(400).json({"message":"seller signUped before"})
                                             });
@@ -169,7 +169,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                             );
 
                                             }).catch(function(error) {
-                                                console.log(error);
+                                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                                                 t.rollback();
                                                 return res.status(400).json({"message":"transportation signUped before"})
                                             });
@@ -216,7 +216,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                     loggerinfo.info(req.connection.remoteAddress + "a wareHouse added by "+ req.body.phone_number +" phoneNumber")
                                                 );
                                             }).catch(function(error) {
-                                                console.log(error);
+                                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                                                 t.rollback();
                                                 return res.status(400).json({"message":"wareHouse signUped before"})
                                             });
@@ -260,7 +260,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                     loggerinfo.info(req.connection.remoteAddress + "a operator added by "+ req.body.phone_number +" phoneNumber")
                                                 );
                                             }).catch(function(error) {
-                                                console.log(error);
+                                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                                                 t.rollback();
                                                 return res.status(400).json({"message":"wareHouse signUped before"})
                                             });
@@ -338,7 +338,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 t.commit();
 
                                             }).catch(function(error) {
-                                                console.log(error);
+                                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                                                 t.rollback();
                                                 return res.status(400).json({"message":"seller signUped before"})
                                             });
@@ -433,7 +433,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 );
 
                                             }).catch(function(error) {
-                                                console.log(error);
+                                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                                                 t.rollback();
                                                 return res.status(400).json({"message":"wareHouse signUped before"})
                                             });
@@ -478,7 +478,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
                                                 );
 
                                             }).catch(function(error) {
-                                                console.log(error);
+                                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                                                 t.rollback();
                                                 return res.status(400).json({"message":"wareHouse signUped before"})
                                             });
@@ -504,7 +504,7 @@ router.post('/addRole',upload.single("image"),(req,res)=>{
 
             }
         } catch(err) {
-            console.log(err);
+            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
             res.status(400).json({"message":"expired token"});
 
         }
@@ -681,7 +681,7 @@ router.post('/product' , upload.single("image") , (req,res)=>{
 
             }
         } catch(err) {
-            console.log(err);
+            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
             res.status(400).json({"message":"expired token"});
 
         }
@@ -896,7 +896,7 @@ router.put('/product' , upload.single("image") , (req,res)=>{
 
             }
         } catch(err) {
-            console.log(err);
+            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
             res.status(400).json({"message":"expired token"});
 
         }
@@ -1003,7 +1003,7 @@ router.get('/product' , (req,res)=>{
 
             }
         } catch(err) {
-            console.log(err);
+            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
             res.status(400).json({"message":"expired token"});
 
         }
@@ -1111,7 +1111,7 @@ router.get('/Subtypes' , (req,res)=>{
 
             }
         } catch(err) {
-            console.log(err);
+            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
             res.status(400).json({"message":"expired token"});
 
         }
