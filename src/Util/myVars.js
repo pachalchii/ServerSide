@@ -22,7 +22,6 @@ var loggerinfo = log4js.getLogger('info'); // initialize the var to use.
 
 
 
-
 const colors = {
     Reset: "\x1b[0m",
     Bright: "\x1b[1m",

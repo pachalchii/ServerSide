@@ -1,7 +1,7 @@
 const {cities, sellerType, productGroups, products, unit, car} = require('../../sequelize');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
+const { application ,Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
 const {loggererror , loggerinfo ,colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
 var jwt = require('jwt-simple');
 
@@ -397,6 +397,16 @@ function fillDataBase() {
             console.log(colors.bg.Green, "import  products  demo data done successfuly", colors.Reset);
         } else {
             console.log(colors.bg.Red, "import  products  demo data canceled .", colors.Reset);
+        }
+    });
+
+    application.findAll().then(app => {
+        if (app[0] === undefined) {
+            application.create({"clientVersion":"1.0.0"}).then(
+                console.log(colors.bg.Green, "import  app  demo data done successfuly", colors.Reset)
+        );
+        } else {
+            console.log(colors.bg.Red, "import  app  demo data canceled .", colors.Reset);
         }
     });
 

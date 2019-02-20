@@ -21,6 +21,8 @@ const supportModel = require('./src/models/support');
 const takhfifProductModel = require('./src/models/takhfif_product');
 const transportationModel = require('./src/models/transportation');
 const unitModel = require('./src/models/unit');
+const applicationModel = require('./src/models/application');
+
 
 const {colors , databaseStatus} = require('./src/Util/myVars');
 
@@ -57,6 +59,7 @@ const support = supportModel(sequelize, Sequelize);
 const takhfifProduct = takhfifProductModel(sequelize, Sequelize);
 const transportation = transportationModel(sequelize, Sequelize);
 const unit= unitModel(sequelize, Sequelize);
+const application = applicationModel(sequelize,Sequelize);
 
 
 sequelize.sync({ force: databaseStatus })
@@ -69,7 +72,7 @@ sequelize.sync({ force: databaseStatus })
   });
 
 module.exports = {
-    sequelize,
+    sequelize,application,
     Seller,cities,addresses,car,chat,customer,orderNazarSanji,orderPardakht,orderProduct,pachalChiRoles,productGroups,
     sellerOperator,products,sellerPhoneNumber,sellerProducts,sellerType,sellerWareHouse,support,takhfifProduct,transportation,unit
 };

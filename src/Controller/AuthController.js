@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const { Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
-const { response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
+const { application,support , Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
+const {checkToken, response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
 const {loggererror, colors ,JWT_SECRET , upload ,handleError , loggerinfo } = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
@@ -18,7 +18,6 @@ var jwt = require('jwt-simple');
 
 
 
-// sign up
 router.post('/register',upload.single("image"), (req, res) => {
 
     try{
@@ -158,7 +157,6 @@ router.post('/register',upload.single("image"), (req, res) => {
 
 });
 
-//login
 router.post('/login', (req, res) => {
 
     try{
@@ -688,7 +686,6 @@ router.post('/login', (req, res) => {
 
 });
 
-//phone number
 router.post('/phoneNumber',(req,res) => {
     try {
         var numberOne = "notSetYet";
@@ -733,10 +730,97 @@ router.post('/phoneNumber',(req,res) => {
 }
 });
 
-
-//forget password
 router.post('/forgetPassword',(req,res)=>{
      return res.status(200);
+});
+
+router.post('/tokenCheck',(req,res)=>{
+    if (req.body.role ==  null)
+    {
+        return res.status(400).json({"message":"role parameter not found"});
+    }
+    if (req.body.clientVersion ==  null)
+    {
+        return res.status(400).json({"message":"clientVersion parameter not found"});
+    }
+    var searchQuery = checkToken(req,res,req.body.role);
+    switch (req.body.role) {
+        case "seller":
+            Seller.findAll(searchQuery).then(seller => {
+                if (isThisArrayEmpty(seller)) {
+
+                    return res.status(400).json({"message":"expired token"});
+
+                }else {
+                    application.findAll().then(
+                        app=>{
+                            if (req.body.clientVersion == app[0].clientVersion) {
+                                return res.json({"data":{"forceUpdate":false}});
+                            }else {
+                                return res.json({"data":{"forceUpdate":true}});
+                            }
+                        }
+                    );
+                }
+            });
+            break;
+        case "customer":
+            customer.findAll(searchQuery).then(customer => {
+                if (isThisArrayEmpty(customer)) {
+
+                    return res.status(400).json({"message":"expired token"});
+
+                }else {
+                    return res.json();
+                }
+            });
+            break;
+        case "operator":
+            sellerOperator.findAll(searchQuery).then(operator => {
+                if (isThisArrayEmpty(operator)) {
+
+                    return res.status(400).json({"message":"expired token"});
+
+                }else {
+                    return res.json();
+                }
+            });
+            break;
+        case "wareHouse":
+            sellerWareHouse.findAll(searchQuery).then(sellerWareHouse => {
+                if (isThisArrayEmpty(sellerWareHouse)) {
+
+                    return res.status(400).json({"message":"expired token"});
+
+                }else {
+                    return res.json();
+                }
+            });
+            break;
+        case "support":
+            support.findAll(searchQuery).then(support => {
+                if (isThisArrayEmpty(support)) {
+
+                    return res.status(400).json({"message":"expired token"});
+
+                }else {
+                    return res.json();
+                }
+            });
+            break;
+        case "transportation":
+            transportation.findAll(searchQuery).then(transportation => {
+                if (isThisArrayEmpty(transportation)) {
+
+                    return res.status(400).json({"message":"expired token"});
+
+                }else {
+                    return res.json();
+                }
+            });
+            break;
+    }
+
 });
 
 module.exports = router;
