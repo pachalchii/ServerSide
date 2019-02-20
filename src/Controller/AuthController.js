@@ -4,7 +4,7 @@ var router = express.Router();
 /*********************************************/
 const { Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
 const { response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
-const {colors ,JWT_SECRET , upload ,handleError , loggerinfo } = require('../Util/myVars');
+const {loggererror, colors ,JWT_SECRET , upload ,handleError , loggerinfo } = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
 var path = require('path');
@@ -75,8 +75,14 @@ router.post('/register',upload.single("image"), (req, res) => {
                         }).catch(function(error) {
                             loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                             t.rollback();
-                            return res.status(400).json({"message":"customer signUped before"})
-                        });
+                            if (error.parent.errno === 1062)
+                            {
+                                return res.status(400).json({"message":"customer signUped before"})
+                            }
+                            else {
+                                return res.status(400).json({"message":"Oops! Something went wrong!"})
+
+                            }                        });
                     });
 
 
@@ -123,9 +129,17 @@ router.post('/register',upload.single("image"), (req, res) => {
                             return res.status(200).json()
 
                         }).catch(function(error) {
-                            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
+                            loggererror.info(req.connection.remoteAddress +  "cause this erorr : " + error);
                             t.rollback();
-                            return res.status(400).json({"message":"seller signUped before"})
+                            if (error.parent.errno === 1062)
+                            {
+                                return res.status(400).json({"message":"seller signUped before"})
+                            }
+                            else {
+                                console.log(error)
+                                return res.status(400).json({"message":"Oops! Something went wrong!"})
+
+                            }
                         });
                     });
 

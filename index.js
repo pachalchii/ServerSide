@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {Seller} = require('./sequelize');
-const myVars = require('./src/Util/myVars');
+const {colors,databaseStatus} = require('./src/Util/myVars');
 const {fillDataBase} = require('./src/Util/myFunctions');
 
 const app = express();
@@ -28,9 +28,13 @@ app.use('/transportation',transportationController);
 
 const port = 1010;
 app.listen(port, () => {
-    console.log( myVars.colors.bg.Green ,  'Node Server listening on port ~~> ' ,myVars.colors.Reset , myVars.colors.fg.Blue + port ,  myVars.colors.Reset);
+    console.log( colors.bg.Green ,  'Node Server listening on port ~~> ' ,colors.Reset , colors.fg.Blue + port ,  colors.Reset);
+    if (databaseStatus){
+        console.log( colors.bg.Yellow , "for importing demo content make databaseStatus false after refreshing database ." ,  colors.Reset);
+    } else {
+        fillDataBase();
+    }
 });
 
-fillDataBase();
 
 //todo alert uniqe alert

@@ -4,26 +4,21 @@ var log4js = require('log4js'); // include log4js
 
 log4js.configure({
     appenders: {
-        out: { type: 'console' },
-        task: { type: 'dateFile', filename: 'logs/task',"pattern":"-dd.log", alwaysIncludePattern:true },
-        result: { type: 'dateFile', filename: 'logs/result',"pattern":"-dd.log", alwaysIncludePattern:true},
-        error: { type: 'dateFile', filename: 'logs/error', "pattern":"-dd.log",alwaysIncludePattern:true},
-        default: { type: 'dateFile', filename: 'logs/default', "pattern":"-dd.log",alwaysIncludePattern:true},
-        rate: { type: 'dateFile', filename: 'logs/rate', "pattern":"-dd.log",alwaysIncludePattern:true}
+        error: { type: 'dateFile', filename: 'logs/error/error', "pattern":"dd-mm-yy.log",alwaysIncludePattern:true},
+        default: { type: 'dateFile', filename: 'logs/default/default', "pattern":"dd-mm-yy.log",alwaysIncludePattern:true},
+        info: { type: 'dateFile', filename: 'logs/info/info', "pattern":"dd-mm-yy.log",alwaysIncludePattern:true},
+
     },
     categories: {
-        default: { appenders: ['out','default'], level: 'info' },
-        task: { appenders: ['task'], level: 'info'},
-        result: { appenders: ['result'], level: 'info' },
-        error: { appenders: ['error'], level: 'error' },
-        rate: { appenders: ['rate'], level: 'info' }
+        default: { appenders: ['default'], level: 'info' },
+        info: { appenders: ['info'], level: 'info' },
+        error: { appenders: ['error'], level: 'error' }
     } }
 );
 
 
+var loggererror = log4js.getLogger('info'); // initialize the var to use.
 var loggerinfo = log4js.getLogger('info'); // initialize the var to use.
-var loggererror = log4js.getLogger('error'); // initialize the var to use.
-var loggerdebug = log4js.getLogger('debug'); // initialize the var to use.
 
 
 
@@ -79,7 +74,10 @@ const handleError = (err, res) => {
         .end("Oops! Something went wrong!");
 };
 
+const databaseStatus = false;
+
 module.exports = {
+    databaseStatus,
     colors,
     JWT_SECRET,
     PASSWORD_REGEX,
@@ -87,7 +85,6 @@ module.exports = {
     USERNAME_REGEX,
     upload,
     handleError,
-    loggerdebug,
     loggererror,
     loggerinfo
 };

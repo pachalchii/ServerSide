@@ -22,7 +22,7 @@ const takhfifProductModel = require('./src/models/takhfif_product');
 const transportationModel = require('./src/models/transportation');
 const unitModel = require('./src/models/unit');
 
-const {colors} = require('./src/Util/myVars');
+const {colors , databaseStatus} = require('./src/Util/myVars');
 
 
 const sequelize = new Sequelize('pachalChi', 'root', '755amir2205', {
@@ -59,9 +59,13 @@ const transportation = transportationModel(sequelize, Sequelize);
 const unit= unitModel(sequelize, Sequelize);
 
 
-sequelize.sync({ force: false })
+sequelize.sync({ force: databaseStatus })
   .then(() => {
-      console.log(colors.bg.Green ,`Configing DataBase done successfully .`,  colors.Reset)
+      if (databaseStatus){
+          console.log(colors.bg.Green ,`DataBase droped and create again successfully .`,  colors.Reset)
+      } else {
+          console.log(colors.bg.Yellow ,`DataBase service is up without any Change successfully .`,  colors.Reset)
+      }
   });
 
 module.exports = {
