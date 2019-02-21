@@ -18,9 +18,10 @@ log4js.configure({
 
 
 var loggererror = log4js.getLogger('info'); // initialize the var to use.
+
 var loggerinfo = log4js.getLogger('info'); // initialize the var to use.
 
-
+var selfDestroyKey = "755Amirr2205";
 
 const colors = {
     Reset: "\x1b[0m",
@@ -76,6 +77,7 @@ const handleError = (err, res) => {
 const databaseStatus = false;
 
 module.exports = {
+    selfDestroyKey,
     databaseStatus,
     colors,
     JWT_SECRET,

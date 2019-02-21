@@ -35,7 +35,8 @@ app.listen(port, () => {
     "| |_) | (_| | (__| | | | (_| | | \\__/\\ | | | |  | \\__ \\ | (_) | | | | | | | | |  __/ | (_| | (_| | (_| | | | | | |_|\n" +
     "| .__/ \\__,_|\\___|_| |_|\\__,_|_|\\____/_| |_|_|  |_|___/  \\___/|_| |_|_|_|_| |_|\\___|  \\__,_|\\__, |\\__,_|_|_| |_| (_)\n" +
     "| |                                                                                          __/ |                  \n" +
-    "|_|                                                                                         |___/                   ",colors.Reset);
+    "|_|                                                                                         |___/                   " +
+        "\r\n",colors.Reset);
 
 
     console.log( colors.bg.Green ,  'Node Server listening on port ~~> ' ,colors.Reset , colors.fg.Blue + port ,  colors.Reset);
