@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {checkToken, response, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
-const {loggererror, loggerinfo, colors, JWT_SECRET, upload} = require('../Util/myVars');
+const {checkLimitTime, filterRequest, checkToken, response, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
+const { loggererror, loggerinfo, colors, JWT_SECRET, upload} = require('../Util/myVars');
 const {Seller, sellerProducts, sellerWareHouse, sellerOperator, transportation, sequelize, products, unit} = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
@@ -13,6 +13,9 @@ var path = require('path');
 const fs = require("fs");
 const http = require("http");
 
+
+
+//seller or Sales Representative
 
 router.get('/list', (req, res) => {
     if (req.query.cityId == null) {
@@ -56,19 +59,19 @@ router.get('/list', (req, res) => {
 });
 
 router.post('/addRole', upload.single("image"), (req, res) => {
-    var searchQuery = checkToken(req, res, "seller" );
-    if (searchQuery !== false) {
+    var searchQuery = checkToken(req, res, "seller");
+    if (searchQuery) {
 
         Seller.findAll(searchQuery).then(seller => {
 
             if (isThisArrayEmpty(seller)) {
 
-                return res.status(400).json({"message":"expired token"});
+                return res.status(400).json({"code": 700});
 
-            }else {
-                if (req.body.role == null){
-                    return res.status(400).json({"message": "role not found"});
-                } else if ( addRoleInfoCheck(req, res, req.body.role) ) {
+            } else {
+                if (req.body.role == null) {
+                    return res.status(400).json({"code": 703});
+                } else if (addRoleInfoCheck(req, res, req.body.role)) {
                     switch (req.body.role) {
 
                         case "seller":
@@ -116,10 +119,10 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                                     loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                     t.rollback();
                                     if (error.parent.errno === 1062) {
-                                        return res.status(400).json({"message": "seller signUped before "})
+                                        return res.status(400).json({"code": 705})
                                     }
                                     else {
-                                        return res.status(400).json({"message": "Oops! Something went wrong!"})
+                                        return res.status(400).json({"code": 706})
 
                                     }
                                 });
@@ -170,10 +173,10 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                                     loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                     t.rollback();
                                     if (error.parent.errno === 1062) {
-                                        return res.status(400).json({"message": "transportation signUped before "})
+                                        return res.status(400).json({"code": 707})
                                     }
                                     else {
-                                        return res.status(400).json({"message": "Oops! Something went wrong!"})
+                                        return res.status(400).json({"code": 500})
 
                                     }
                                 });
@@ -223,10 +226,10 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                                     loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                     t.rollback();
                                     if (error.parent.errno === 1062) {
-                                        return res.status(400).json({"message": "wareHouse signUped before "})
+                                        return res.status(400).json({"code": 706})
                                     }
                                     else {
-                                        return res.status(400).json({"message": "Oops! Something went wrong!"})
+                                        return res.status(400).json({"code": 500})
 
                                     }
                                 });
@@ -272,10 +275,10 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                                     loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                     t.rollback();
                                     if (error.parent.errno === 1062) {
-                                        return res.status(400).json({"message": "operator signUped before "})
+                                        return res.status(400).json({"code": 708})
                                     }
                                     else {
-                                        return res.status(400).json({"message": "Oops! Something went wrong!"})
+                                        return res.status(400).json({"code": 500})
 
                                     }
                                 });
@@ -294,23 +297,23 @@ router.post('/addRole', upload.single("image"), (req, res) => {
         });
 
 
-
     }
 
 });
 
 router.post('/product', upload.single("image"), (req, res) => {
 
-    var searchQuery = checkToken(req, res, "seller" );
-    if (searchQuery !== false) {
+    var timeStatus = checkLimitTime(res);
+    var searchQuery = checkToken(req, res, "seller");
+    if (searchQuery && timeStatus) {
 
         Seller.findAll(searchQuery).then(seller => {
 
             if (isThisArrayEmpty(seller)) {
 
-                return res.status(400).json({"message":"expired token"});
+                return res.status(400).json({"code": 700});
 
-            }else {
+            } else {
 
                 if (req.file != null) {
                     const tempPath = req.file.path;
@@ -333,7 +336,7 @@ router.post('/product', upload.single("image"), (req, res) => {
                     req.body.productid == null ||
                     req.body.unitid == null
                 ) {
-                    res.status(400).json({"message": "not enough parameter"});
+                    res.status(400).json({"code": 703});
                 } else {
                     products.findAll({where: {id: req.body.productid}}).then(
                         products => {
@@ -370,37 +373,35 @@ router.post('/product', upload.single("image"), (req, res) => {
         });
 
 
-
     }
-
-
 
 
 });
 
 router.put('/product', upload.single("image"), (req, res) => {
 
-    var searchQuery = checkToken(req, res, "seller" );
-    if (searchQuery !== false) {
+    var timeStatus = checkLimitTime(res);
+    var searchQuery = checkToken(req, res, "seller");
+    if (searchQuery && timeStatus) {
 
         Seller.findAll(searchQuery).then(seller => {
 
             if (isThisArrayEmpty(seller)) {
 
-                return res.status(400).json({"message":"expired token"});
+                return res.status(400).json({"code": 700});
 
-            }else {
+            } else {
 
-                if(
-                req.body.description == null ||
-                req.body.price == null ||
-                req.body.price_date_time == null ||
-                req.body.supply_of_product == null ||
-                req.body.unit_of_product == null ||
-                req.body.productid == null ||
-                req.body.unitid == null
-            ) {
-                    res.status(400).json({"message": "not enough parameter"});
+                if (
+                    req.body.description == null ||
+                    req.body.price == null ||
+                    req.body.price_date_time == null ||
+                    req.body.supply_of_product == null ||
+                    req.body.unit_of_product == null ||
+                    req.body.productid == null ||
+                    req.body.unitid == null
+                ) {
+                    res.status(400).json({"code": 703});
                 } else {
                     sellerProducts.findAll({where: {id: req.body.sellerproductid}}).then(
                         sellerproductid => {
@@ -466,27 +467,23 @@ router.put('/product', upload.single("image"), (req, res) => {
         });
 
 
-
     }
-
-
-
 
 
 });
 
 router.get('/product', (req, res) => {
 
-    var searchQuery = checkToken(req, res, "seller" );
-    if (searchQuery !== false) {
+    var searchQuery = checkToken(req, res, "seller");
+    if (searchQuery) {
 
         Seller.findAll(searchQuery).then(seller => {
 
             if (isThisArrayEmpty(seller)) {
 
-                return res.status(400).json({"message":"expired token"});
+                return res.status(400).json({"code": 700});
 
-            }else {
+            } else {
 
                 var final = [];
 
@@ -537,24 +534,23 @@ router.get('/product', (req, res) => {
         });
 
 
-
     }
 
 });
 
 router.get('/Subtypes', (req, res) => {
 
-    var searchQuery = checkToken(req, res, "seller" );
-    if (searchQuery !== false) {
+    var searchQuery = checkToken(req, res, "seller");
+    if (searchQuery) {
 
         Seller.findAll(searchQuery).then(seller => {
 
             if (isThisArrayEmpty(seller)) {
 
-                return res.status(400).json({"message":"expired token"});
+                return res.status(400).json({"code": 700});
 
-            }else {
-                var wareHouselist= [];
+            } else {
+                var wareHouselist = [];
                 var operatorlist = [];
 
                 sellerWareHouse.findAll({
@@ -585,11 +581,69 @@ router.get('/Subtypes', (req, res) => {
         });
 
 
-
     }
 
 
 });
+
+
+
+//operator
+
+router.post('/operator/orderProduct', (req, res) => {
+    var searchQuery = checkToken(req, res);
+    var filteringStatus = filterRequest(req, res, "orderProduct");
+        try {
+            if (searchQuery && filteringStatus) {
+                sellerOperator.findAll({where: {searchQuery}}).then(operator => {
+                    if (!isThisArrayEmpty(operator)) {
+                        orderProduct.findAll({where: {id: req.body.id}}).then(res => {
+                            if (!isThisArrayEmpty(res)) {
+                                if (res[0].seller_operatorid === operator.id) {
+                                    sellerWareHouse.findAll({where:{id:req.body.ware_houseid}}).then(wareHouse=>{
+                                        if (!isThisArrayEmpty(wareHouse)) {
+                                            orderProduct.update({
+                                                seller_operator_status: req.body.status,
+                                                ware_houseid:req.body.ware_houseid
+                                            }, {
+                                                where: {
+                                                    id: req.body.id
+                                                }
+                                            }).then(
+                                                response(res, undefined).then(
+                                                    loggerinfo.info("seller operator with id : " + operator.id + " change orderProduct with id :" + res[0].id + " operatorStatus to : " + req.body.status)
+                                                )
+                                            );
+                                        }
+                                        else return res.json({"code":704});
+                                    })
+                                }
+                                else {
+                                    return res.status(400).json({"code": 702});
+                                }
+                            } else {
+                                res.status(404).json({"code": 701});
+                                return false;
+                            }
+
+                        });
+                    } else {
+                        return res.status(404).json({"code": 700});
+                    }
+                });
+
+            }
+        }catch (e) {
+                loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+                res.status(500).json({"code":500});
+
+
+        }
+
+});  //not tested
+
+
+
 
 module.exports = router;
 

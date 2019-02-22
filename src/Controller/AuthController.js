@@ -135,7 +135,7 @@ router.post('/register',upload.single("image"), (req, res) => {
                                 return res.status(400).json({"message":"seller signUped before"})
                             }
                             else {
-                                console.log(error)
+                                console.log(error);
                                 return res.status(400).json({"message":"Oops! Something went wrong!"})
 
                             }
@@ -162,7 +162,7 @@ router.post('/login', (req, res) => {
     try{
 
         if (req.body.role == null){
-        return res.status(400).json({"message":"role parameter not recieved"});
+        return res.status(400).json({"code":703});
     }else {
 
         var role = req.body.role;
@@ -510,7 +510,6 @@ router.post('/login', (req, res) => {
                                     phone_number:wareHouse[0].phone_number,
                                     point :wareHouse[0].point ,
                                     username:wareHouse[0].username,
-                                    point:wareHouse[0].point,
                                     ware_house_complete_address_description:wareHouse[0].ware_house_complete_address_description,
                                     ware_house_google_map_address_link:wareHouse[0].ware_house_google_map_address_link,
                                     ware_house_address_cityidIndex :wareHouse[0]. ware_house_address_cityidIndex ,
@@ -557,7 +556,6 @@ router.post('/login', (req, res) => {
                                     cell_phone_number :wareHouse[0].cell_phone_number ,
                                     image:base64str,
                                     phone_number:wareHouse[0].phone_number,
-                                    point :wareHouse[0].point ,
                                     username:wareHouse[0].username,
                                     point:wareHouse[0].point,
                                     ware_house_complete_address_description:wareHouse[0].ware_house_complete_address_description,
@@ -717,7 +715,7 @@ router.post('/phoneNumber',(req,res) => {
             }).catch(function(error) {
                 loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
                 t.rollback();
-                return res.status(500).json({"message":"Oops! Something went wrong!"})
+                return res.status(500).json({"code":500})
             });
         });
 
@@ -726,7 +724,7 @@ router.post('/phoneNumber',(req,res) => {
 
     }  catch (e) {
         loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + e);
-    return res.status(500).json({"message":"Oops! Something went wrong!"})
+    return res.status(500).json({"code":500})
 }
 });
 
@@ -737,11 +735,11 @@ router.post('/forgetPassword',(req,res)=>{
 router.post('/tokenCheck',(req,res)=>{
     if (req.body.role ==  null)
     {
-        return res.status(400).json({"message":"role parameter not found"});
+        return res.status(400).json({"code":703});
     }
     if (req.body.clientVersion ==  null)
     {
-        return res.status(400).json({"message":"clientVersion parameter not found"});
+        return res.status(400).json({"code":703});
     }
     var searchQuery = checkToken(req,res,req.body.role);
     switch (req.body.role) {
@@ -749,12 +747,12 @@ router.post('/tokenCheck',(req,res)=>{
             Seller.findAll(searchQuery).then(seller => {
                 if (isThisArrayEmpty(seller)) {
 
-                    return res.status(400).json({"message":"expired token"});
+                    return res.status(400).json({"code":700});
 
                 }else {
                     application.findAll().then(
                         app=>{
-                            if (req.body.clientVersion == app[0].clientVersion) {
+                            if (req.body.clientVersion === app[0].clientVersion) {
                                 return res.json({"data":{"forceUpdate":false}});
                             }else {
                                 return res.json({"data":{"forceUpdate":true}});
@@ -768,7 +766,7 @@ router.post('/tokenCheck',(req,res)=>{
             customer.findAll(searchQuery).then(customer => {
                 if (isThisArrayEmpty(customer)) {
 
-                    return res.status(400).json({"message":"expired token"});
+                    return res.status(400).json({"code":700});
 
                 }else {
                     return res.json();
@@ -779,7 +777,7 @@ router.post('/tokenCheck',(req,res)=>{
             sellerOperator.findAll(searchQuery).then(operator => {
                 if (isThisArrayEmpty(operator)) {
 
-                    return res.status(400).json({"message":"expired token"});
+                    return res.status(400).json({"code":700});
 
                 }else {
                     return res.json();
@@ -790,7 +788,7 @@ router.post('/tokenCheck',(req,res)=>{
             sellerWareHouse.findAll(searchQuery).then(sellerWareHouse => {
                 if (isThisArrayEmpty(sellerWareHouse)) {
 
-                    return res.status(400).json({"message":"expired token"});
+                    return res.status(400).json({"code":700});
 
                 }else {
                     return res.json();
@@ -801,7 +799,7 @@ router.post('/tokenCheck',(req,res)=>{
             support.findAll(searchQuery).then(support => {
                 if (isThisArrayEmpty(support)) {
 
-                    return res.status(400).json({"message":"expired token"});
+                    return res.status(400).json({"code":700});
 
                 }else {
                     return res.json();
@@ -812,7 +810,7 @@ router.post('/tokenCheck',(req,res)=>{
             transportation.findAll(searchQuery).then(transportation => {
                 if (isThisArrayEmpty(transportation)) {
 
-                    return res.status(400).json({"message":"expired token"});
+                    return res.status(400).json({"code":700});
 
                 }else {
                     return res.json();

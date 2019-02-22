@@ -1,8 +1,6 @@
 const {cities, sellerType, productGroups, products, unit, car} = require('../../sequelize');
-const express = require('express');
-const bodyParser = require('body-parser');
-const { application ,Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
-const {loggererror , loggerinfo ,colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
+const { orderProduct ,application } = require('../../sequelize');
+const {loggererror  ,colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
 var jwt = require('jwt-simple');
 
 
@@ -423,7 +421,7 @@ function checkPhone(req, res) {
         var pattern = new RegExp(PHONENUMBER_REGEX);
         var status = pattern.test(req.body.phone_number);
         if (!status) {
-            res.status(400).json({message: "phone number is not in valid form "});
+            res.status(400).json({"code":711});
             return false;
         }
         return true;
@@ -438,7 +436,7 @@ function checkPassword(req, res) {
         var pattern = new RegExp(PASSWORD_REGEX);
         var status = pattern.test(req.body.password);
         if (!status) {
-            res.status(400).json({message: "password valid form is The string must be eight characters or longer"});
+            res.status(400).json({"code": 712});
             return false;
         }
         return true;
@@ -453,7 +451,7 @@ function checkUserName(req, res) {
         var pattern = new RegExp(USERNAME_REGEX);
         var status = pattern.test(req.body.password);
         if (!status) {
-            res.status(400).json({message: "username is not valid "});
+            res.status(400).json({"code": 713});
             return false;
         }
         return true;
@@ -477,7 +475,7 @@ function registerInfoCheck(req, res, role) {
                 req.body.username == null ||
                 req.body.cityid == null
             ) {
-                res.status(400).json({message: "request body does not have all neccesery variables"});
+                res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
             break;
@@ -493,7 +491,7 @@ function registerInfoCheck(req, res, role) {
                 req.body.password == null ||
                 req.body.company_address_cityid == null ||
                 req.body.phone_numberid == null) {
-                res.status(400).json({message: "request body does not have all neccesery variables"});
+                res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
             break;
@@ -509,7 +507,7 @@ function loginInfoCheck(req, res, role) {
                 req.body.password == null || (req.body.phone_number == null && req.body.username == null)
 
             ) {
-                res.status(400).json({message: "request body does not have all neccesery variables"});
+                res.status(400).json({"code": 703});
                 return false;
             } else {
                 if (req.body.phone_number != null) {
@@ -524,7 +522,7 @@ function loginInfoCheck(req, res, role) {
                 req.body.password == null || (req.body.phone_number == null && req.body.username == null)
 
             ) {
-                res.status(400).json({message: "request body does not have all neccesery variables"});
+                res.status(400).json({"code": 703});
                 return false;
             } else {
                 if (req.body.phone_number != null) {
@@ -554,7 +552,7 @@ function addRoleInfoCheck(req, res, role) {
                 req.body.password == null ||
                 req.body.company_address_cityid == null ||
                 req.body.phone_numberid == null) {
-                res.status(400).json({message: "request body does not have all neccesery variables"});
+                res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
             break;
@@ -572,7 +570,7 @@ function addRoleInfoCheck(req, res, role) {
                 req.body.modelid == null ||
                 req.body.ware_houseid == null
             ) {
-                res.status(400).json({message: "request body does not have all neccesery variables"});
+                res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
 
@@ -590,7 +588,7 @@ function addRoleInfoCheck(req, res, role) {
                 req.body.ware_house_google_map_address_link == null ||
                 req.body.ware_house_address_cityidIndex == null ||
                 req.body.selleridIndex == null) {
-                res.status(400).json({message: "request body does not have all neccesery variables"});
+                res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
 
@@ -604,7 +602,7 @@ function addRoleInfoCheck(req, res, role) {
                 req.body.username == null ||
                 req.body.selleridIndex == null
             ) {
-                res.status(400).json({message: "request body does not have all neccesery variables"});
+                res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
 
@@ -617,7 +615,7 @@ function addRoleInfoCheck(req, res, role) {
 
 }
 
-  function checkToken(req, res, role ) {
+function checkToken(req, res ) {
 
         if (req.headers['token'] != null) {
             try{
@@ -636,11 +634,21 @@ function addRoleInfoCheck(req, res, role) {
                             }
                         };
                     }else {
-                        searchQuery = {
-                            where: {
-                                owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
-                            }
-                        };
+                        try {
+                            searchQuery = {
+                                where: {
+                                    phone_number: decodedJWT.phone_number, password: decodedJWT.password
+                                }
+                            };
+                        }catch (e) {
+                            searchQuery = {
+                                where: {
+                                    owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
+                                }
+                            };
+
+                        }
+
                     }
                    return searchQuery;
 
@@ -660,14 +668,43 @@ function addRoleInfoCheck(req, res, role) {
 
 
         } else {
-              res.status(400).json({"message": "token not found in header"});
+            res.status(400).json({"code": 703});
               return false;
         }
 
 }
 
+function filterRequest(req,res,type){
+    switch (type) {
+        case "orderProduct":
+            if (req.body.id == null || req.body.status == null){res.status(400).json({"code": 703}); return false;}
+            if (req.body.status){
+                if (req.body.ware_houseid == null){
+                    res.status(404).json({"code":703});
+                    return false;
+                }
+            } 
+            break;
+
+
+        default : console.log("wrong type parameter")
+    }
+}
+
+function checkLimitTime(res){
+    var date = new Date();
+    var current_hour = date.getHours();
+    if(!(20<=current_hour<=22)){
+        res.status(404).json({"code":714});
+        return false;
+    }else {
+        return true;
+    }
+}
 
 module.exports = {
+    checkLimitTime,
+    filterRequest,
     checkToken,
     loginInfoCheck,
     registerInfoCheck

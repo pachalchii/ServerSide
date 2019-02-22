@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {Seller} = require('./sequelize');
-const {colors,databaseStatus} = require('./src/Util/myVars');
+const {spinnersCollection,colors,databaseStatus} = require('./src/Util/myVars');
 const {fillDataBase} = require('./src/Util/myFunctions');
+var Spinner = require('cli-spinner').Spinner;
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,9 +26,25 @@ app.use('/transportation',transportationController);
 
 
 
+app.get('/', function(req, res){
+    res.send('pachalChi server is running ...');
+});
 
-const port = 1010;
+
+
+var port = process.env.PORT || 1010;
+
+var twirlTimer = (function() {
+    var P = ["\\", "|", "/", "-"];
+    var x = 0;
+    return setInterval(function() {
+        process.stdout.write("\r" + P[x++]);
+        x &= 3;
+    }, 250);
+})();
+
 app.listen(port, () => {
+    console.log(process.env.PORT)
     console.log(colors.fg.Green , "                  _           _ _____ _     _    _                   _ _                                _         _ \n" +
     "                 | |         | /  __ \\ |   (_)  (_)                 | (_)                              (_)       | |\n" +
     " _ __   __ _  ___| |__   __ _| | /  \\/ |__  _    _ ___    ___  _ __ | |_ _ __   ___    __ _  __ _  __ _ _ _ __   | |\n" +
@@ -38,14 +55,19 @@ app.listen(port, () => {
     "|_|                                                                                         |___/                   " +
         "\r\n",colors.Reset);
 
-
-    console.log( colors.bg.Green ,  'Node Server listening on port ~~> ' ,colors.Reset , colors.fg.Blue + port ,  colors.Reset);
+console.log(colors.bg.Black , colors.fg.White , "server timeZone : " + new Date().toString() ,  colors.Reset);
+console.log(colors.bg.Green ,  'Node Server listening on port '+port ,  colors.Reset);
     if (databaseStatus){
         console.log( colors.bg.Yellow , "for importing demo content make databaseStatus false after refreshing database ." ,  colors.Reset);
     } else {
         fillDataBase();
     }
+
+
+
+
+
+
 });
 
 
-//todo alert uniqe alert

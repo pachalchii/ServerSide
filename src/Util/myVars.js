@@ -1,5 +1,5 @@
 const multer = require("multer");
-
+var Pusher = require('pusher');
 var log4js = require('log4js'); // include log4js
 
 log4js.configure({
@@ -13,9 +13,14 @@ log4js.configure({
         default: { appenders: ['default'], level: 'info' },
         info: { appenders: ['info'], level: 'info' },
         error: { appenders: ['error'], level: 'error' }
-    } }
-);
+    } });
 
+var pusher = new Pusher({
+    appId: 719640 ,
+    key: "df6e40d402010a993107" ,
+    secret:  "fcea536f8bbf208aa730" ,
+    cluster: "us2",
+});
 
 var loggererror = log4js.getLogger('info'); // initialize the var to use.
 
@@ -76,7 +81,66 @@ const handleError = (err, res) => {
 
 const databaseStatus = false;
 
+const statusCodes ={
+    700:{
+        message:"نشست حساب کاربری شما منقضی شده است ."
+    }
+    ,
+    500:{
+        message:"مشكلي در سمت سرور برنامه رخ داده است ، لطفا بعدا تلاش كنيد"
+    }
+    ,
+    701:{
+        message:"سفارش مربوطه با اطلاعات فرستاده شده يافت نشد"
+    }
+    ,
+    702:{
+        message:"اين سفارش خريد مربوط به حساب شما نميباشد"
+    },
+    703:{
+        message:"بعضي از پارامتر هاي لازم براي انجام فرايند ارسال نشده است"
+    },
+    704:{
+        message:"مسئول انبار با اين مشخصات يافت نشد"
+    },
+    705:{
+        message:"فروشنده مورد نظر قبلا ثبت شده است"
+    },
+    706:{
+        message:"اين مسئول انبار قبلا در سيستم ثبت شده است"
+    },
+    707:{
+        message:"اين مسئول حمل و نقل قبلا در سيستم ثبت شده است"
+    },
+    708:{
+        message:"اين اپراتور فروش قبلا در سيستم ثبت شده است"
+    },
+    709:{
+        message:"اين محصول براي اين راننده نميباشد"
+    },
+    710:{
+        message:"درخواست مورد نظر يافت نشد"
+    },
+    711:{
+        message:"شماره وارد شده در فرمت مناسبی نمیباشد"
+    },
+    712:{
+        message:"پسورد وارد شده در فرمت مناسبی نمیباشد"
+    },
+    713:{
+        message:"نام کاربری وارد شده در فرمت مناسبی نمیباشد"
+    },
+    714:{
+        message:"فروشنده عزيز لطفا بين ساعات ٨ تا ١٠ تلاش فرماييد"
+    }
+
+
+
+};
+
+
 module.exports = {
+    statusCodes,
     selfDestroyKey,
     databaseStatus,
     colors,
