@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const { Seller , transportation ,orderProduct } = require('../../sequelize');
-const {loggererror , loggerinfo ,JWT_SECRET , colors} = require('../Util/myVars');
+const {upload,loggererror , loggerinfo ,JWT_SECRET , colors} = require('../Util/myVars');
 const {response , isThisArrayEmpty} = require("../Util/myFunctions");
 /*********************************************/
 var jwt = require('jwt-simple');

@@ -69,7 +69,7 @@ const PASSWORD_REGEX = "(?=.{8,})" ;
 const USERNAME_REGEX ="^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
 
 const upload = multer({
-    dest: "./../uploads"
+    dest: "./tempUploads"
 });
 
 const handleError = (err, res) => {
@@ -137,6 +137,9 @@ const statusCodes ={
 
 
 };
+
+
+
 
 
 module.exports = {

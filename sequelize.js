@@ -71,6 +71,8 @@ sequelize.sync({ force: databaseStatus })
       }
   });
 
+
+
 module.exports = {
     sequelize,application,
     Seller,cities,addresses,car,chat,customer,orderNazarSanji,orderPardakht,orderProduct,pachalChiRoles,productGroups,

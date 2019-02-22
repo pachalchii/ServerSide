@@ -4,7 +4,7 @@ var router = express.Router();
 /*********************************************/
 const { application,support , Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
 const {checkToken, response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
-const {loggererror, colors ,JWT_SECRET , upload ,handleError , loggerinfo } = require('../Util/myVars');
+const {upload,loggererror, colors ,JWT_SECRET  ,handleError , loggerinfo } = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
 var path = require('path');
@@ -35,11 +35,22 @@ router.post('/register',upload.single("image"), (req, res) => {
                     if (req.file != null){
 
                         const tempPath = req.file.path;
-                        const targetPath = path.join(__dirname, "./../uploads/customer/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
+                        const targetPath = path.join(__dirname, "./../../uploads/customer/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                         image = targetPath;
+                        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                             fs.rename(tempPath, targetPath, err => {
                                 if (err) return handleError(err, res);
                             });
+                        } else {
+                            fs.unlink(tempPath, err => {
+                                if (err) return handleError(err, res);
+
+                                return res
+                                    .status(403)
+                                    .contentType("text/plain")
+                                    .end("this format of image is not under support");
+                            });
+                        }
 
 
                     }else{
@@ -89,13 +100,25 @@ router.post('/register',upload.single("image"), (req, res) => {
                 case "seller":
                     registerInfoCheck(req,res,role);
                     if (req.file != null){
-                        const tempPath = req.file.path;
-                        const targetPath = path.join(__dirname, "./../uploads/seller/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
+                        const tempPath =req.file.path;
+                        const targetPath = path.join(__dirname, "./../../uploads/seller/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
                         image = targetPath;
+
+                        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                             fs.rename(tempPath, targetPath, err => {
                                 if (err) return handleError(err, res);
-                            });
 
+                            });
+                        } else {
+                            fs.unlink(tempPath, err => {
+                                if (err) return handleError(err, res);
+
+                                res
+                                    .status(403)
+                                    .contentType("text/plain")
+                                    .end("this format of image is not under support");
+                            });
+                        }
 
                     }else{
                         image = "notSetYet";
@@ -150,6 +173,7 @@ router.post('/register',upload.single("image"), (req, res) => {
         }
     }catch (e) {
         loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + e);
+        console.log(e)
         return res.status(500).json({"message":"Oops! Something went wrong!"})
     }
 
@@ -424,7 +448,7 @@ router.post('/login', (req, res) => {
 
                     });
                 } else {
-                    Seller.findAll({
+                    transportation.findAll({
                         where: {
                             username: req.body.username, password: md5(req.body.password)
                         }

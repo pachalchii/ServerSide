@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {colors} = require('../Util/myVars');
+const {upload,colors} = require('../Util/myVars');
 const { customer } = require('../../sequelize');
 
 

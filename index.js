@@ -1,9 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {Seller} = require('./sequelize');
-const {spinnersCollection,colors,databaseStatus} = require('./src/Util/myVars');
-const {fillDataBase} = require('./src/Util/myFunctions');
-var Spinner = require('cli-spinner').Spinner;
+const {colors,databaseStatus} = require('./src/Util/myVars');
+const {smsHandler,fillDataBase} = require('./src/Util/myFunctions');
 
 const app = express();
 app.use(bodyParser.json());
@@ -63,7 +61,7 @@ console.log(colors.bg.Green ,  'Node Server listening on port '+port ,  colors.R
         fillDataBase();
     }
 
-
+smsHandler("slm in yek test ast","09903933686");
 
 
 

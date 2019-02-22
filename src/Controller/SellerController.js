@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {checkLimitTime, filterRequest, checkToken, response, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
-const { loggererror, loggerinfo, colors, JWT_SECRET, upload} = require('../Util/myVars');
+const {loggererror, loggerinfo, colors, JWT_SECRET, upload} = require('../Util/myVars');
 const {Seller, sellerProducts, sellerWareHouse, sellerOperator, transportation, sequelize, products, unit} = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
@@ -78,11 +78,23 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
-                                const targetPath = path.join(__dirname, "./../uploads/seller/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
+                                const targetPath = path.join(__dirname, "./../../uploads/seller/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
                                 image = targetPath;
-                                fs.rename(tempPath, targetPath, err => {
-                                    if (err) return handleError(err, res);
-                                });
+                                if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                                    fs.rename(tempPath, targetPath, err => {
+                                        if (err) return handleError(err, res);
+                                    });
+                                } else {
+                                    fs.unlink(tempPath, err => {
+                                        if (err) return handleError(err, res);
+
+                                        return res
+                                            .status(403)
+                                            .contentType("text/plain")
+                                            .end("this format of image is not under support");
+                                    });
+                                }
+
 
 
                             } else {
@@ -134,12 +146,22 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
-                                const targetPath = path.join(__dirname, "./../uploads/transportation/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
+                                const targetPath = path.join(__dirname, "./../../uploads/transportation/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
                                 image = targetPath;
-                                fs.rename(tempPath, targetPath, err => {
-                                    if (err) return handleError(err, res);
-                                });
+                                if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                                    fs.rename(tempPath, targetPath, err => {
+                                        if (err) return handleError(err, res);
+                                    });
+                                } else {
+                                    fs.unlink(tempPath, err => {
+                                        if (err) return handleError(err, res);
 
+                                        return res
+                                            .status(403)
+                                            .contentType("text/plain")
+                                            .end("this format of image is not under support");
+                                    });
+                                }
 
                             } else {
                                 image = "notSetYet";
@@ -188,11 +210,22 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
-                                const targetPath = path.join(__dirname, "./../uploads/wareHouse/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
+                                const targetPath = path.join(__dirname, "./../../uploads/wareHouse/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
                                 image = targetPath;
-                                fs.rename(tempPath, targetPath, err => {
-                                    if (err) return handleError(err, res);
-                                });
+                                if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                                    fs.rename(tempPath, targetPath, err => {
+                                        if (err) return handleError(err, res);
+                                    });
+                                } else {
+                                    fs.unlink(tempPath, err => {
+                                        if (err) return handleError(err, res);
+
+                                        return res
+                                            .status(403)
+                                            .contentType("text/plain")
+                                            .end("this format of image is not under support");
+                                    });
+                                }
 
 
                             } else {
@@ -241,11 +274,22 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
-                                const targetPath = path.join(__dirname, "./../uploads/operator/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
+                                const targetPath = path.join(__dirname, "./../../uploads/operator/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
                                 image = targetPath;
-                                fs.rename(tempPath, targetPath, err => {
-                                    if (err) return handleError(err, res);
-                                });
+                                if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                                    fs.rename(tempPath, targetPath, err => {
+                                        if (err) return handleError(err, res);
+                                    });
+                                } else {
+                                    fs.unlink(tempPath, err => {
+                                        if (err) return handleError(err, res);
+
+                                        return res
+                                            .status(403)
+                                            .contentType("text/plain")
+                                            .end("this format of image is not under support");
+                                    });
+                                }
 
 
                             } else {
@@ -317,12 +361,22 @@ router.post('/product', upload.single("image"), (req, res) => {
 
                 if (req.file != null) {
                     const tempPath = req.file.path;
-                    const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
+                    const targetPath = path.join(__dirname, "./../../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
                     image = targetPath;
-                    fs.rename(tempPath, targetPath, err => {
-                        if (err) return handleError(err, res);
-                    });
+                    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                        fs.rename(tempPath, targetPath, err => {
+                            if (err) return handleError(err, res);
+                        });
+                    } else {
+                        fs.unlink(tempPath, err => {
+                            if (err) return handleError(err, res);
 
+                            return res
+                                .status(403)
+                                .contentType("text/plain")
+                                .end("this format of image is not under support");
+                        });
+                    }
 
                 } else {
                     image = "notSetYet";
@@ -411,11 +465,22 @@ router.put('/product', upload.single("image"), (req, res) => {
 
                                 if (req.file != null) {
                                     const tempPath = req.file.path;
-                                    const targetPath = path.join(__dirname, "./../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
+                                    const targetPath = path.join(__dirname, "./../../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
                                     image = targetPath;
-                                    fs.rename(tempPath, targetPath, err => {
-                                        if (err) return handleError(err, res);
-                                    });
+                                    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                                        fs.rename(tempPath, targetPath, err => {
+                                            if (err) return handleError(err, res);
+                                        });
+                                    } else {
+                                        fs.unlink(tempPath, err => {
+                                            if (err) return handleError(err, res);
+
+                                            return res
+                                                .status(403)
+                                                .contentType("text/plain")
+                                                .end("this format of image is not under support");
+                                        });
+                                    }
 
 
                                 } else {

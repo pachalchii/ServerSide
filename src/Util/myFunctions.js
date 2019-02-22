@@ -2,8 +2,18 @@ const {cities, sellerType, productGroups, products, unit, car} = require('../../
 const { orderProduct ,application } = require('../../sequelize');
 const {loggererror  ,colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
 var jwt = require('jwt-simple');
+var Kavenegar = require('kavenegar');
 
 
+function smsHandler(message,phone) {
+    var api = Kavenegar.KavenegarApi({apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'});
+    api.Send({
+        message: message,
+        sender: "10004346",
+        receptor: phone
+    });
+    
+}
 function response(res, json) {
 
     return new Promise(resolve => {
@@ -703,6 +713,7 @@ function checkLimitTime(res){
 }
 
 module.exports = {
+    smsHandler,
     checkLimitTime,
     filterRequest,
     checkToken,
