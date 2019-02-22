@@ -33,7 +33,14 @@ app.get('/', function(req, res){
 var port = process.env.PORT || 1010;
 
 var twirlTimer = (function() {
-    var P = ["\\", "|", "/", "-"];
+    var P = [
+        "▹▹▹▹▹",
+        "▸▹▹▹▹",
+        "▹▸▹▹▹",
+        "▹▹▸▹▹",
+        "▹▹▹▸▹",
+        "▹▹▹▹▸"
+    ];
     var x = 0;
     return setInterval(function() {
         process.stdout.write("\r" + P[x++]);
@@ -42,7 +49,7 @@ var twirlTimer = (function() {
 })();
 
 app.listen(port, () => {
-    console.log(process.env.PORT)
+    console.log(process.env.PORT);
     console.log(colors.fg.Green , "                  _           _ _____ _     _    _                   _ _                                _         _ \n" +
     "                 | |         | /  __ \\ |   (_)  (_)                 | (_)                              (_)       | |\n" +
     " _ __   __ _  ___| |__   __ _| | /  \\/ |__  _    _ ___    ___  _ __ | |_ _ __   ___    __ _  __ _  __ _ _ _ __   | |\n" +
@@ -61,7 +68,6 @@ console.log(colors.bg.Green ,  'Node Server listening on port '+port ,  colors.R
         fillDataBase();
     }
 
-smsHandler("slm in yek test ast","09903933686");
 
 
 

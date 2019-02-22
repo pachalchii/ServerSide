@@ -2,13 +2,13 @@
 
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('application', {
-        ID: {
+        id: {
             type: DataTypes.INTEGER(11),
             allowNull: false,
             primaryKey: true,      autoIncrement: true
 
         },
-        ClientVersion: {
+        clientVersion: {
             type: DataTypes.STRING(50),
             allowNull: false
         }

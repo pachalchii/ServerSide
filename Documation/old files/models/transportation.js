@@ -1,15 +1,27 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('seller_operator', {
+  return sequelize.define('transportation', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
+    air_conditionar: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
     birthdate: {
       type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    color: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     family_name: {
@@ -17,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     image: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     name: {
@@ -28,11 +40,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: false
     },
+    pelak_number: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
     phone_number: {
         unique: true,
-
         type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: false
     },
     point: {
       type: DataTypes.INTEGER(11),
@@ -43,20 +58,28 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     username: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
         unique: true,
 
-        type: DataTypes.STRING(50),
-      allowNull: false
     },
-    sellerid: {
+    modelid: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
-        model: 'seller',
-        key: 'id'
+        model: 'car_model',
+        key: 'ID'
+      }
+    },
+    ware_houseid: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      references: {
+        model: 'seller_ware_house',
+        key: 'ID'
       }
     }
   }, {
-    tableName: 'seller_operator'
+    tableName: 'transportation'
   });
 };

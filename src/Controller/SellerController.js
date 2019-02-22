@@ -18,7 +18,7 @@ const http = require("http");
 //seller or Sales Representative
 
 router.get('/list', (req, res) => {
-    if (req.query.cityId == null) {
+    if (req.query.CityID == null) {
         return res.status(400).json({"message": "cityId not found"});
     }
 
@@ -27,7 +27,7 @@ router.get('/list', (req, res) => {
     function testFunction(value, index, array) {
         var base64str = "not Found";
         try {
-            base64str = base64_encode(value.logo_image);
+            base64str = base64_encode(value.LogoImage);
 
         } catch (e) {
             base64str = "not Found";
@@ -35,15 +35,15 @@ router.get('/list', (req, res) => {
         }
 
         final[index] = {
-            name: value.company_name,
-            image: base64str
+            Name: value.CompanyName,
+            Image: base64str
         }
     }
 
     Seller.findAll({
         where: {
-            typeid: 1,
-            company_address_cityid: req.params.cityId
+            TypeID: 1,
+            CompanyAddressCityID: req.params.CityID
         }
     }).then(seller => {
         if (!isThisArrayEmpty(seller)) {
@@ -58,7 +58,7 @@ router.get('/list', (req, res) => {
 
 });
 
-router.post('/addRole', upload.single("image"), (req, res) => {
+router.post('/addRole', upload.single("Image"), (req, res) => {
     var searchQuery = checkToken(req, res, "seller");
     if (searchQuery) {
 
@@ -69,16 +69,16 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                 return res.status(400).json({"code": 700});
 
             } else {
-                if (req.body.role == null) {
+                if (req.body.Role == null) {
                     return res.status(400).json({"code": 703});
-                } else if (addRoleInfoCheck(req, res, req.body.role)) {
-                    switch (req.body.role) {
+                } else if (addRoleInfoCheck(req, res, req.body.Role)) {
+                    switch (req.body.Role) {
 
                         case "seller":
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
-                                const targetPath = path.join(__dirname, "./../../uploads/seller/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
+                                const targetPath = path.join(__dirname, "./../../uploads/seller/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
                                 image = targetPath;
                                 if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                     fs.rename(tempPath, targetPath, err => {
@@ -102,22 +102,22 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             }
                             sequelize.transaction().then(function (t) {
                                 Seller.create({
-                                    id: req.body.phone_numberid,
-                                    company_name: req.body.company_name,
-                                    complete_address_description: req.body.complete_address_description,
-                                    enabled: true,
-                                    point: 0,
-                                    registration_date_time: req.body.registration_date_time,
-                                    google_map_address_link: req.body.google_map_address_link,
-                                    logo_image: image,
-                                    owner_family_name: req.body.owner_family_name,
-                                    owner_name: req.body.owner_name,
-                                    password: md5(req.body.password),
-                                    owner_phone_number: req.body.owner_phone_number,
-                                    username: req.body.username,
-                                    company_address_cityid: req.body.company_address_cityid,
-                                    phone_numberid: req.body.phone_numberid,
-                                    typeid: 2
+                                    ID: req.body.PhoneNumberID,
+                                    CompanyName: req.body.CompanyName,
+                                    CompleteAddressDescription: req.body.CompleteAddressDescription,
+                                    Enable: true,
+                                    Point: 0,
+                                    RegistrationDateTime: req.body.RegistrationDateTime,
+                                    GoogleMapAddressLink: req.body.GoogleMapAddressLink,
+                                    LogoImage: image,
+                                    OwnerFamilyName: req.body.OwnerFamilyName,
+                                    OwnerName: req.body.OwnerName,
+                                    Password: md5(req.body.Password),
+                                    OwnerPhoneNumber: req.body.OwnerPhoneNumber,
+                                    Username: req.body.Username,
+                                    CompanyAddressCityID: req.body.CompanyAddressCityID,
+                                    PhoneNumberID: req.body.PhoneNumberID,
+                                    TypeID: 2
 
                                 }, {
                                     transaction: t
@@ -146,7 +146,7 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
-                                const targetPath = path.join(__dirname, "./../../uploads/transportation/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
+                                const targetPath = path.join(__dirname, "./../../uploads/transportation/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
                                 image = targetPath;
                                 if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                     fs.rename(tempPath, targetPath, err => {
@@ -168,27 +168,27 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             }
                             sequelize.transaction().then(function (t) {
                                 transportation.create({
-                                    air_conditionar: req.body.air_conditionar,
-                                    birthdate: req.body.birthdate,
-                                    color: req.body.color,
-                                    description: req.body.description,
-                                    family_name: req.body.family_name,
-                                    name: req.body.name,
-                                    image: image,
-                                    pelak_number: req.body.pelak_number,
-                                    phone_number: req.body.phone_number,
-                                    password: md5(req.body.password),
-                                    status: true,
-                                    username: req.body.username,
-                                    modelid: req.body.modelid,
-                                    ware_houseid: req.body.ware_houseid
+                                    AirConditionar: req.body.AirConditionar,
+                                    BirthDate: req.body.BirthDate,
+                                    Color: req.body.Color,
+                                    Description: req.body.Description,
+                                    FamilyName: req.body.FamilyName,
+                                    Name: req.body.Name,
+                                    Image: image,
+                                    PelakNumber: req.body.PelakNumber,
+                                    PhoneNumber: req.body.PhoneNumber,
+                                    Password: md5(req.body.Password),
+                                    Status: true,
+                                    Username: req.body.Username,
+                                    ModelID: req.body.ModelID,
+                                    WareHouseID: req.body.WareHouseID
 
                                 }, {
                                     transaction: t
                                 }).then(function () {
                                     t.commit();
                                     response(res, undefined).then(
-                                        loggerinfo.info(req.connection.remoteAddress + "a transportation added by " + req.body.phone_number + " phoneNumber")
+                                        loggerinfo.info(req.connection.remoteAddress + "a transportation added by " + req.body.PhoneNumber + " phoneNumber")
                                     );
 
                                 }).catch(function (error) {
@@ -210,7 +210,7 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
-                                const targetPath = path.join(__dirname, "./../../uploads/wareHouse/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
+                                const targetPath = path.join(__dirname, "./../../uploads/wareHouse/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
                                 image = targetPath;
                                 if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                     fs.rename(tempPath, targetPath, err => {
@@ -233,27 +233,27 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             }
                             sequelize.transaction().then(function (t) {
                                 transportation.create({
-                                    agent_family_name: req.body.agent_family_name,
-                                    agent_name: req.body.agent_name,
-                                    birthdate: req.body.birthdate,
-                                    cell_phone_number: req.body.cell_phone_number,
-                                    image: image,
-                                    password: md5(req.body.password),
-                                    phone_number: phone_number,
-                                    point: 0,
-                                    status: true,
-                                    username: username,
-                                    ware_house_complete_address_description: req.body.ware_house_complete_address_description,
-                                    ware_house_google_map_address_link: req.body.ware_house_google_map_address_link,
-                                    ware_house_address_cityid: req.body.ware_house_address_cityid,
-                                    sellerid: req.body.sellerid
+                                    AgentFamilyName: req.body.AgentFamilyName,
+                                    AgentName: req.body.AgentName,
+                                    BirthDate: req.body.BirthDate,
+                                    CellPhoneNumber: req.body.CellPhoneNumber,
+                                    Image: image,
+                                    Password: md5(req.body.Password),
+                                    PhoneNumber: req.body.PhoneNumber,
+                                    Point: 0,
+                                    Status: true,
+                                    Username: req.body.Username,
+                                    WareHouseCompleteAddressDescription: req.body.WareHouseCompleteAddressDescription,
+                                    WareHouseGoogleMapAddressLink: req.body.WareHouseGoogleMapAddressLink,
+                                    WareHouseAddressCityID: req.body.WareHouseAddressCityID,
+                                    SellerID: req.body.SellerID
 
                                 }, {
                                     transaction: t
                                 }).then(function () {
                                     t.commit();
                                     response(res, undefined).then(
-                                        loggerinfo.info(req.connection.remoteAddress + "a wareHouse added by " + req.body.phone_number + " phoneNumber")
+                                        loggerinfo.info(req.connection.remoteAddress + "a wareHouse added by " + req.body.PhoneNumber + " phoneNumber")
                                     );
                                 }).catch(function (error) {
                                     loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
@@ -274,7 +274,7 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
-                                const targetPath = path.join(__dirname, "./../../uploads/operator/" + req.body.username + path.extname(req.file.originalname).toLowerCase());
+                                const targetPath = path.join(__dirname, "./../../uploads/operator/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
                                 image = targetPath;
                                 if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                     fs.rename(tempPath, targetPath, err => {
@@ -297,23 +297,23 @@ router.post('/addRole', upload.single("image"), (req, res) => {
                             }
                             sequelize.transaction().then(function (t) {
                                 transportation.create({
-                                    birthdate: req.body.birthdate,
-                                    family_name: req.body.family_name,
-                                    image: image,
-                                    name: req.body.name,
-                                    password: md5(req.body.password),
-                                    phone_number: phone_number,
-                                    point: 0,
-                                    status: true,
-                                    username: username,
-                                    sellerid: req.body.sellerid
+                                    BirthDate: req.body.BirthDate,
+                                    FamilyName: req.body.FamilyName,
+                                    Image: image,
+                                    Name: req.body.Name,
+                                    Password: md5(req.body.Password),
+                                    PhoneNumber: req.body.PhoneNumber,
+                                    Point: 0,
+                                    Status: true,
+                                    Username: req.body.Username,
+                                    SellerID: req.body.SellerID
 
                                 }, {
                                     transaction: t
                                 }).then(function () {
                                     t.commit();
                                     response(res, undefined).then(
-                                        loggerinfo.info(req.connection.remoteAddress + "a operator added by " + req.body.phone_number + " phoneNumber")
+                                        loggerinfo.info(req.connection.remoteAddress + "a operator added by " + req.body.PhoneNumber + " phoneNumber")
                                     );
                                 }).catch(function (error) {
                                     loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
@@ -345,7 +345,7 @@ router.post('/addRole', upload.single("image"), (req, res) => {
 
 });
 
-router.post('/product', upload.single("image"), (req, res) => {
+router.post('/product', upload.single("Image"), (req, res) => {
 
     var timeStatus = checkLimitTime(res);
     var searchQuery = checkToken(req, res, "seller");
@@ -382,20 +382,20 @@ router.post('/product', upload.single("image"), (req, res) => {
                     image = "notSetYet";
                 }
 
-                if (req.body.description == null ||
-                    req.body.price == null ||
-                    req.body.price_date_time == null ||
-                    req.body.supply_of_product == null ||
-                    req.body.unit_of_product == null ||
-                    req.body.productid == null ||
-                    req.body.unitid == null
+                if (req.body.Description == null ||
+                    req.body.Price == null ||
+                    req.body.PriceDateTime == null ||
+                    req.body.SupplyOFProduct == null ||
+                    req.body.UnitOfProduct == null ||
+                    req.body.ProductID == null ||
+                    req.body.UnitID == null
                 ) {
                     res.status(400).json({"code": 703});
                 } else {
-                    products.findAll({where: {id: req.body.productid}}).then(
+                    products.findAll({where: {id: req.body.ProductID}}).then(
                         products => {
                             if (!isThisArrayEmpty(products)) {
-                                unit.findAll({where: {id: req.body.unitid}}).then(unit => {
+                                unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
                                     if (isThisArrayEmpty(unit)) {
                                         return res.status(404).json();
 
@@ -407,15 +407,15 @@ router.post('/product', upload.single("image"), (req, res) => {
                         }
                     );
                     sellerProducts.create({
-                        description: req.body.description,
-                        image: image,
-                        price: req.body.price,
-                        price_date_time: req.body.price_date_time,
-                        supply_of_product: req.body.supply_of_product,
-                        unit_of_product: req.body.unit_of_product,
-                        productid: req.body.productid,
-                        sellerid: seller[0].id,
-                        unitid: req.body.unitid
+                        Description: req.body.Description,
+                        Image: image,
+                        Price: req.body.Price,
+                        PriceDateTime: req.body.PriceDateTime,
+                        SupplyOFProduct: req.body.SupplyOFProduct,
+                        UnitOfProduct: req.body.UnitOfProduct,
+                        ProductID: req.body.ProductID,
+                        SellerID: seller[0].ID,
+                        UnitID: req.body.UnitID
 
                     });
                     return res.status(200).json();
@@ -432,7 +432,7 @@ router.post('/product', upload.single("image"), (req, res) => {
 
 });
 
-router.put('/product', upload.single("image"), (req, res) => {
+router.put('/product', upload.single("Image"), (req, res) => {
 
     var timeStatus = checkLimitTime(res);
     var searchQuery = checkToken(req, res, "seller");
@@ -447,17 +447,18 @@ router.put('/product', upload.single("image"), (req, res) => {
             } else {
 
                 if (
-                    req.body.description == null ||
-                    req.body.price == null ||
-                    req.body.price_date_time == null ||
-                    req.body.supply_of_product == null ||
-                    req.body.unit_of_product == null ||
-                    req.body.productid == null ||
-                    req.body.unitid == null
+                    req.body.SellerProductID == null ||
+                    req.body.Description == null ||
+                    req.body.Price == null ||
+                    req.body.PriceDateTime == null ||
+                    req.body.SupplyOFProduct == null ||
+                    req.body.UnitOfProduct == null ||
+                    req.body.ProductID == null ||
+                    req.body.UnitID == null
                 ) {
                     res.status(400).json({"code": 703});
                 } else {
-                    sellerProducts.findAll({where: {id: req.body.sellerproductid}}).then(
+                    sellerProducts.findAll({where: {ID: req.body.SellerProductID}}).then(
                         sellerproductid => {
                             if (isThisArrayEmpty(sellerproductid)) {
                                 return res.status(404).json();
@@ -484,13 +485,13 @@ router.put('/product', upload.single("image"), (req, res) => {
 
 
                                 } else {
-                                    image = sellerproductid[0].image;
+                                    image = sellerproductid[0].Image;
                                 }
 
-                                products.findAll({where: {id: req.body.productid}}).then(
+                                products.findAll({where: {ID: req.body.ProductID}}).then(
                                     products => {
                                         if (!isThisArrayEmpty(products)) {
-                                            unit.findAll({where: {id: req.body.unitid}}).then(unit => {
+                                            unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
                                                 if (isThisArrayEmpty(unit)) {
                                                     return res.status(404).json();
 
@@ -502,22 +503,22 @@ router.put('/product', upload.single("image"), (req, res) => {
                                     }
                                 );
                                 sellerProducts.update({
-                                    description: req.body.description,
-                                    image: image,
-                                    price: req.body.price,
-                                    price_date_time: req.body.price_date_time,
-                                    supply_of_product: req.body.supply_of_product,
-                                    unit_of_product: req.body.unit_of_product,
-                                    productid: req.body.productid,
-                                    sellerid: seller[0].id,
-                                    unitid: req.body.unitid
+                                    Description: req.body.Description,
+                                    Image: image,
+                                    Price: req.body.Price,
+                                    PriceDateTime: req.body.PriceDateTime,
+                                    SupplyOFProduct: req.body.SupplyOFProduct,
+                                    UnitOfProduct: req.body.UnitOfProduct,
+                                    ProductID: req.body.ProductID,
+                                    SellerID: seller[0].ID,
+                                    UnitID: req.body.UnitID
                                 }, {
                                     where: {
-                                        id: sellerproductid[0].id
+                                        ID: sellerproductid[0].ID
                                     }
                                 });
                                 response(res, undefined).then(
-                                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].id + " edit product with productid :" + sellerproductid[0])
+                                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " edit product with productid :" + sellerproductid[0])
                                 )
 
 
@@ -555,7 +556,7 @@ router.get('/product', (req, res) => {
                 function getallproducts(value, index, array) {
                     var base64str = "not Found";
                     try {
-                        base64str = base64_encode(value.image);
+                        base64str = base64_encode(value.Image);
 
                     } catch (e) {
                         base64str = "not Found";
@@ -563,30 +564,30 @@ router.get('/product', (req, res) => {
                     }
 
                     final[index] = {
-                        id: value.id,
-                        description: value.description,
-                        price: value.price,
-                        price_date_time: value.price_date_time,
-                        supply_of_product: value.supply_of_product,
-                        unit_of_product: value.unit_of_product,
-                        productid: value.productid,
-                        sellerid: value.sellerid,
-                        unitid: value.unitid,
-                        image: base64str
+                        ID: value.ID,
+                        Description: value.Description,
+                        Price: value.Price,
+                        PriceDateTime: value.PriceDateTime,
+                        SupplyOFProduct: value.SupplyOFProduct,
+                        UnitOFProduct: value.UnitOFProduct,
+                        ProductID: value.ProductID,
+                        SellerID: value.SellerID,
+                        UnitID: value.UnitID,
+                        Image: base64str
                     }
                 }
 
                 sellerProducts.findAll(
                     {
                         where: {
-                            sellerid: seller[0].id
+                            SellerID: seller[0].ID
                         }
                     }
                 ).then(sellerProducts => {
                         if (!isThisArrayEmpty(sellerProducts)) {
                             sellerProducts.forEach(getallproducts);
                             response(res, final).then(
-                                loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].id + " get all his/her products ")
+                                loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " get all his/her products ")
                             )
 
                         } else {
@@ -620,7 +621,7 @@ router.get('/Subtypes', (req, res) => {
 
                 sellerWareHouse.findAll({
                     where: {
-                        sellerid: seller[0].id
+                        SellerID: seller[0].ID
                     }
                 }).then(wareHouses => {
                     wareHouselist = wareHouses;
@@ -628,17 +629,17 @@ router.get('/Subtypes', (req, res) => {
 
                 sellerOperator.findAll({
                     where: {
-                        sellerid: seller[0].id
+                        SellerID: seller[0].ID
                     }
                 }).then(sellerOperator => {
                     operatorlist = sellerOperator;
                 });
 
                 response(res, {
-                    wareHouse: {wareHouselist},
-                    operator: {operatorlist}
+                    WareHouse: {wareHouselist},
+                    Operator: {operatorlist}
                 }).then(
-                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].id + "get all his/her subtypes")
+                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].Id + "get all his/her subtypes")
                 );
 
 
@@ -662,21 +663,21 @@ router.post('/operator/orderProduct', (req, res) => {
             if (searchQuery && filteringStatus) {
                 sellerOperator.findAll({where: {searchQuery}}).then(operator => {
                     if (!isThisArrayEmpty(operator)) {
-                        orderProduct.findAll({where: {id: req.body.id}}).then(res => {
+                        orderProduct.findAll({where: {ID: req.body.ID}}).then(res => {
                             if (!isThisArrayEmpty(res)) {
-                                if (res[0].seller_operatorid === operator.id) {
-                                    sellerWareHouse.findAll({where:{id:req.body.ware_houseid}}).then(wareHouse=>{
+                                if (res[0].SellerOperatorID === operator.ID) {
+                                    sellerWareHouse.findAll({where:{ID:req.body.WareHouseID}}).then(wareHouse=>{
                                         if (!isThisArrayEmpty(wareHouse)) {
                                             orderProduct.update({
-                                                seller_operator_status: req.body.status,
-                                                ware_houseid:req.body.ware_houseid
+                                                SellerOperatorStatus: req.body.Status,
+                                                WareHouseID:req.body.WareHouseID
                                             }, {
                                                 where: {
-                                                    id: req.body.id
+                                                    ID: req.body.ID
                                                 }
                                             }).then(
                                                 response(res, undefined).then(
-                                                    loggerinfo.info("seller operator with id : " + operator.id + " change orderProduct with id :" + res[0].id + " operatorStatus to : " + req.body.status)
+                                                    loggerinfo.info("seller operator with id : " + operator.ID + " change orderProduct with id :" + res[0].ID + " operatorStatus to : " + req.body.Status)
                                                 )
                                             );
                                         }

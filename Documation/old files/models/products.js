@@ -1,26 +1,26 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Products', {
-    ID: {
-      type: DataTypes.INTEGER,
+  return sequelize.define('products', {
+    id: {
+      type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    Name: {
-      type: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING(50),
       allowNull: false
     },
-    GroupID: {
-      type: DataTypes.INTEGER,
+    groupid: {
+      type: DataTypes.INTEGER(11),
       allowNull: true,
       references: {
-        model: 'ProductGroups',
+        model: 'product_groups',
         key: 'ID'
       }
     }
   }, {
-    tableName: 'Products'
+    tableName: 'products'
   });
 };

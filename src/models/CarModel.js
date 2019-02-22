@@ -1,22 +1,26 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Cities', {
-    ID: {
+  return sequelize.define('CarModel', {
+      ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    Name: {
+      Name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    ParentID: {
+      ParentID: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'CarModel',
+        key: 'ID'
+      }
     }
   }, {
-    tableName: 'Cities'
+    tableName: 'CarModel'
   });
 };

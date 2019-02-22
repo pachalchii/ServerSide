@@ -1,18 +1,17 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('unit', {
-    id: {
-      type: DataTypes.INTEGER(11),
+  return sequelize.define('Unit', {
+    ID: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      primaryKey: true
     },
-    unit_name: {
-      type: DataTypes.STRING(50),
+    UnitName: {
+      type: DataTypes.STRING,
       allowNull: false
     }
   }, {
-    tableName: 'unit'
+    tableName: 'Unit'
   });
 };

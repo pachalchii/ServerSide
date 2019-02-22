@@ -18,16 +18,16 @@ var jwt = require('jwt-simple');
 
 
 
-router.post('/register',upload.single("image"), (req, res) => {
+router.post('/register',upload.single("Image"), (req, res) => {
 
     try{
 
-        if (req.body.role == null){
+        if (req.body.Role == null){
             return res.status(400).json({"message":"role parameter not recieved"});
         }else {
 
 
-            var role = req.body.role;
+            var role = req.body.Role;
             var image ;
             switch (role) {
                 case "customer":
@@ -35,7 +35,7 @@ router.post('/register',upload.single("image"), (req, res) => {
                     if (req.file != null){
 
                         const tempPath = req.file.path;
-                        const targetPath = path.join(__dirname, "./../../uploads/customer/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
+                        const targetPath = path.join(__dirname, "./../../uploads/customer/"+req.body.Username+path.extname(req.file.originalname).toLowerCase());
                         image = targetPath;
                         if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                             fs.rename(tempPath, targetPath, err => {
@@ -58,27 +58,27 @@ router.post('/register',upload.single("image"), (req, res) => {
                     }
                     sequelize.transaction().then(function(t) {
                         customer.create({
-                            birth_date:req.body.birth_date,
-                            company_name:req.body.company_name,
-                            enabled:true,
-                            status:true,
-                            family_name:req.body.family_name,
-                            image:image,
-                            name:req.body.name,
-                            phone_number:req.body.phone_number,
-                            password:md5(req.body.password),
-                            established_date:req.body.established_date,
-                            point:0,
-                            registration_date_time:req.body.registration_date_time,
-                            theme:req.body.theme,
-                            username:req.body.username,
-                            cityid:req.body.cityid
+                            BirthDate:req.body.BirthDate,
+                            CompanyName:req.body.CompanyName,
+                            Enable:true,
+                            Status:true,
+                            FamilyName:req.body.FamilyName,
+                            Image:image,
+                            Name:req.body.name,
+                            PhoneNumber:req.body.PhoneNumber,
+                            Password:md5(req.body.password),
+                            EstablishedDate:req.body.EstablishedDate,
+                            Point:0,
+                            RegistrationDateTime:req.body.RegistrationDateTime,
+                            Theme:req.body.Theme,
+                            Username:req.body.Username,
+                            CityID:req.body.CityID
 
                         }, {
                             transaction: t
                         }).then(function() {
                             t.commit();
-                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.phone_number +" phone number");
+                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumber +" phone number");
                             return res.status(200).json();
 
 
@@ -101,7 +101,7 @@ router.post('/register',upload.single("image"), (req, res) => {
                     registerInfoCheck(req,res,role);
                     if (req.file != null){
                         const tempPath =req.file.path;
-                        const targetPath = path.join(__dirname, "./../../uploads/seller/"+req.body.username+path.extname(req.file.originalname).toLowerCase());
+                        const targetPath = path.join(__dirname, "./../../uploads/seller/"+req.body.Username+path.extname(req.file.originalname).toLowerCase());
                         image = targetPath;
 
                         if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
@@ -126,28 +126,28 @@ router.post('/register',upload.single("image"), (req, res) => {
 
                     sequelize.transaction().then(function(t) {
                         Seller.create({
-                            id:req.body.phone_numberid,
-                            company_name:req.body.company_name,
-                            complete_address_description:req.body.complete_address_description,
-                            enabled:true,
-                            point:0,
-                            registration_date_time:req.body.registration_date_time,
-                            google_map_address_link:req.body.google_map_address_link,
-                            logo_image:image,
-                            owner_family_name:req.body.owner_family_name,
-                            owner_name:req.body.owner_name,
-                            password:md5(req.body.password),
-                            owner_phone_number:req.body.owner_phone_number,
-                            username:req.body.username,
-                            company_address_cityid:req.body.company_address_cityid,
-                            phone_numberid:req.body.phone_numberid,
-                            typeid:1
+                            ID:req.body.PhoneNumberID,
+                            CompanyName:req.body.CompanyName,
+                            CompleteAddressDescription:req.body.CompleteAddressDescription,
+                            Enable:true,
+                            Point:0,
+                            RegistrationDateTime:req.body.RegistrationDateTime,
+                            GoogleMapAddressLink:req.body.GoogleMapAddressLink,
+                            LogoImage:image,
+                            OwnerFamilyName:req.body.OwnerFamilyName,
+                            OwnerName:req.body.OwnerName,
+                            Password:md5(req.body.Password),
+                            OwnerPhoneNumber:req.body.OwnerPhoneNumber,
+                            Username:req.body.Username,
+                            CompanyAddressCityID:req.body.CompanyAddressCityID,
+                            PhoneNumberID:req.body.PhoneNumberID,
+                            TypeID:1
 
                         }, {
                             transaction: t
                         }).then(function() {
                             t.commit();
-                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.phone_numberid +" phone_numberid");
+                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumberID +" phone_numberid");
                             return res.status(200).json()
 
                         }).catch(function(error) {
@@ -173,7 +173,6 @@ router.post('/register',upload.single("image"), (req, res) => {
         }
     }catch (e) {
         loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + e);
-        console.log(e)
         return res.status(500).json({"message":"Oops! Something went wrong!"})
     }
 
@@ -185,27 +184,27 @@ router.post('/login', (req, res) => {
 
     try{
 
-        if (req.body.role == null){
+        if (req.body.Role == null){
         return res.status(400).json({"code":703});
     }else {
 
-        var role = req.body.role;
+        var role = req.body.Role;
         switch (role) {
             case "customer":
                 loginInfoCheck(req,res,role);
-                if (req.body.phone_number != null){
+                if (req.body.PhoneNumber != null){
                     customer.findAll({
                         where: {
-                            phone_number: req.body.phone_number, password: md5(req.body.password)
+                            PhoneNumber: req.body.PhoneNumber, password: md5(req.body.Password)
                         }
                     }).then(customer => {
                         if (!isThisArrayEmpty(customer)){
-                            var payload = { phone_number: customer[0].phone_number,
-                                password: customer[0].password,
+                            var payload = { PhoneNumber: customer[0].PhoneNumber,
+                                Password: customer[0].Password,
                                 random:Math.random()};
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(customer[0].image);
+                                base64str = base64_encode(customer[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -215,21 +214,21 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    birth_date:customer[0].birth_date,
-                                    image:base64str,
-                                    company_name:customer[0].company_name,
-                                    enabled:customer[0].enabled,
-                                    status:customer[0].status,
-                                    family_name:customer[0].family_name,
-                                    name:customer[0].name,
-                                    phone_number:customer[0].phone_number,
-                                    point:customer[0].point,
-                                    registration_date_time:customer[0].registration_date_time,
-                                    theme:customer[0].theme,
-                                    username:customer[0].username,
-                                    cityid:customer[0].cityid,
-                                    token:token                 }}).then(
-                                loggerinfo.info(req.connection.remoteAddress + " login as customer with "+customer[0].phone_number +" phone number")
+                                    BirthDate:customer[0].BirthDate,
+                                    Image:base64str,
+                                    CompanyName:customer[0].CompanyName,
+                                    Enable:customer[0].Enable,
+                                    Status:customer[0].Status,
+                                    FamilyName:customer[0].FamilyName,
+                                    Name:customer[0].Name,
+                                    PhoneNumbero:customer[0].PhoneNumber,
+                                    Point:customer[0].Point,
+                                    RegistrationDateTime:customer[0].RegistrationDateTime,
+                                    Theme:customer[0].Theme,
+                                    Username:customer[0].Username,
+                                    CityID:customer[0].CityID,
+                                    Token:token                 }}).then(
+                                loggerinfo.info(req.connection.remoteAddress + " login as customer with "+customer[0].PhoneNumber +" phone number")
                             );
 
                         } else {
@@ -242,20 +241,20 @@ router.post('/login', (req, res) => {
                 } else {
                     customer.findAll({
                         where: {
-                            username: req.body.username, password: md5(req.body.password)
+                            Username: req.body.Username, Password: md5(req.body.Password)
                         }
                     }).then(customer => {
                         if (!isThisArrayEmpty(customer))
                         {
-                            var payload = { phone_number: customer[0].phone_number,
-                                password: customer[0].password,
+                            var payload = { PhoneNumber: customer[0].PhoneNumber,
+                                Password: customer[0].Password,
                                 random:Math.random()};
 
 
 
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(customer[0].image);
+                                base64str = base64_encode(customer[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -265,21 +264,21 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    birth_date:customer[0].birth_date,
-                                    image:base64str,
-                                    company_name:customer[0].company_name,
-                                    enabled:customer[0].enabled,
-                                    status:customer[0].status,
-                                    family_name:customer[0].family_name,
-                                    name:customer[0].name,
-                                    phone_number:customer[0].phone_number,
-                                    point:customer[0].point,
-                                    registration_date_time:customer[0].registration_date_time,
-                                    theme:customer[0].theme,
-                                    username:customer[0].username,
-                                    cityid:customer[0].cityid,
-                                    token:token                 }}).then(
-                                loggerinfo.info(req.connection.remoteAddress + " login as customer with "+customer[0].phone_number +" phone number")
+                                    BirthDate:customer[0].BirthDate,
+                                    Image:base64str,
+                                    CompanyName:customer[0].CompanyName,
+                                    Enable:customer[0].Enable,
+                                    Status:customer[0].Status,
+                                    FamilyName:customer[0].FamilyName,
+                                    Name:customer[0].Name,
+                                    PhoneNumber:customer[0].PhoneNumber,
+                                    Point:customer[0].Point,
+                                    RegistrationDateTime:customer[0].RegistrationDateTime,
+                                    Theme:customer[0].Theme,
+                                    Username:customer[0].Username,
+                                    CityID:customer[0].CityID,
+                                    Token:token                 }}).then(
+                                loggerinfo.info(req.connection.remoteAddress + " login as customer with "+customer[0].PhoneNumber +" phone number")
                             );
 
                         } else {
@@ -294,15 +293,15 @@ router.post('/login', (req, res) => {
                 break;
             case "seller":
                 loginInfoCheck(req,res,role);
-                if (req.body.phone_number != null){
+                if (req.body.PhoneNumber != null){
                     Seller.findAll({
                         where: {
-                            owner_phone_number: req.body.phone_number, password: md5(req.body.password)
+                            OwnerPhoneNumber: req.body.PhoneNumber, password: md5(req.body.Password)
                         }
                     }).then(seller => {
                         if (!isThisArrayEmpty(seller)){
-                            var payload = { owner_phone_number: seller[0].owner_phone_number,
-                                password: seller[0].password,
+                            var payload = { OwnerPhoneNumber: seller[0].OwnerPhoneNumber,
+                                Password: seller[0].Password,
                                 random:Math.random()};
 
 
@@ -318,23 +317,23 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    id:seller[0].phone_numberid,
-                                    company_name:seller[0].company_name,
-                                    complete_address_description:seller[0].complete_address_description,
-                                    enabled:seller[0].enabled,
-                                    point:seller[0].point,
-                                    registration_date_time:seller[0].registration_date_time,
-                                    google_map_address_link:seller[0].google_map_address_link,
-                                    logo_image:base64str,
-                                    owner_family_name:seller[0].owner_family_name,
-                                    owner_name:seller[0].owner_name,
-                                    password:seller[0].password,
-                                    owner_phone_number:seller[0].owner_phone_number,
-                                    username:seller[0].username,
-                                    company_address_cityid:seller[0].company_address_cityid,
-                                    phone_numberid:seller[0].phone_numberid,
-                                    typeid:seller[0].typeid,
-                                    token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as seller with "+seller[0].phone_numberid+" phone number"));
+                                    ID:seller[0].PhoneNumberID,
+                                    CompanyName:seller[0].CompanyName,
+                                    CompleteAddressDescription:seller[0].CompleteAddressDescription,
+                                    Enable:seller[0].Enable,
+                                    Point:seller[0].Point,
+                                    RegistrationDateTime:seller[0].RegistrationDateTime,
+                                    GoogleMapAddressLink:seller[0].GoogleMapAddressLink,
+                                    LogoImage:base64str,
+                                    OwnerFamilyName:seller[0].OwnerFamilyName,
+                                    OwnerName:seller[0].OwnerName,
+                                    Password:seller[0].Password,
+                                    OwnerPhoneNumber:seller[0].OwnerPhoneNumber,
+                                    Username:seller[0].Username,
+                                    CompanyAddressCityID:seller[0].CompanyAddressCityID,
+                                    PhoneNumberID:seller[0].PhoneNumberID,
+                                    TypeID:seller[0].TypeID,
+                                    Token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as seller with "+seller[0].PhoneNumberID+" phone number"));
 
 
                         } else {
@@ -347,20 +346,20 @@ router.post('/login', (req, res) => {
                 } else {
                     Seller.findAll({
                         where: {
-                            username: req.body.username, password: md5(req.body.password)
+                            Username: req.body.Username, Password: md5(req.body.Password)
                         }
                     }).then(seller => {
                         if (!isThisArrayEmpty(seller))
                         {
-                            var payload = { username: seller[0].username,
-                                password: seller[0].password,
+                            var payload = { Username: seller[0].Username,
+                                Password: seller[0].Password,
                                 random:Math.random()};
 
 
 
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(seller[0].image);
+                                base64str = base64_encode(seller[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -371,23 +370,23 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    id:seller[0].phone_numberid,
-                                    company_name:seller[0].company_name,
-                                    complete_address_description:seller[0].complete_address_description,
-                                    enabled:seller[0].enabled,
-                                    point:seller[0].point,
-                                    registration_date_time:seller[0].registration_date_time,
-                                    google_map_address_link:seller[0].google_map_address_link,
-                                    logo_image:base64str,
-                                    owner_family_name:seller[0].owner_family_name,
-                                    owner_name:seller[0].owner_name,
-                                    password:seller[0].password,
-                                    owner_phone_number:seller[0].owner_phone_number,
-                                    username:seller[0].username,
-                                    company_address_cityid:seller[0].company_address_cityid,
-                                    phone_numberid:seller[0].phone_numberid,
-                                    typeid:seller[0].typeid,
-                                    token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as seller with "+seller[0].phone_numberid+" phone number"));
+                                    ID:seller[0].PhoneNumberID,
+                                    CompanyName:seller[0].CompanyName,
+                                    CompleteAddressDescriptionp:seller[0].CompleteAddressDescriptionp,
+                                    Enable:seller[0].Enable,
+                                    Point:seller[0].Point,
+                                    RegistrationDateTime:seller[0].RegistrationDateTime,
+                                    GoogleMapAddressLink:seller[0].GoogleMapAddressLink,
+                                    LogoImage:base64str,
+                                    OwnerFamilyName:seller[0].OwnerFamilyName,
+                                    OwnerName:seller[0].OwnerName,
+                                    Password:seller[0].Password,
+                                    OwnerPhoneNumber:seller[0].OwnerPhoneNumber,
+                                    Username:seller[0].Username,
+                                    CompanyAddressCityID:seller[0].CompanyAddressCityID,
+                                    PhoneNumberID:seller[0].PhoneNumberID,
+                                    TypeID:seller[0].TypeID,
+                                    Token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as seller with "+seller[0].PhoneNumberID+" phone number"));
 
                         } else {
                             return res.status(404).json();
@@ -401,21 +400,21 @@ router.post('/login', (req, res) => {
             case "transportation":
 
                 loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
-                if (req.body.phone_number != null){
+                if (req.body.PhoneNumber != null){
                     transportation.findAll({
                         where: {
-                            phone_number: req.body.phone_number, password: md5(req.body.password)
+                            PhoneNumber: req.body.PhoneNumber, Password: md5(req.body.Password)
                         }
                     }).then(trans => {
                         if (!isThisArrayEmpty(trans)){
-                            var payload = { phone_number: trans[0].phone_number,
+                            var payload = { PhoneNumber: trans[0].PhoneNumber,
                                 password: trans[0].password,
                                 random:Math.random()};
 
 
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(trans[0].image);
+                                base64str = base64_encode(trans[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -425,20 +424,20 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    id:trans[0].phone_numberid,
-                                    air_conditionar:trans[0].air_conditionar,
-                                    color:trans[0].color,
-                                    description:trans[0].description,
-                                    family_name:trans[0].family_name,
-                                    image:base64str,
-                                    name:trans[0].name,
-                                    pelak_number:trans[0].pelak_number,
-                                    phone_number:trans[0].phone_number,
-                                    point:trans[0].point,
-                                    username:trans[0].username,
-                                    modelid:trans[0].modelid,
-                                    ware_houseid:trans[0].ware_houseid,
-                                    token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as transportation with "+trans[0].phone_number+" phone number"));
+                                    ID:trans[0].PhoneNumberID,
+                                    AirConditionar:trans[0].AirConditionar,
+                                    Color:trans[0].Color,
+                                    Description:trans[0].Description,
+                                    FamilyName:trans[0].FamilyName,
+                                    Image:base64str,
+                                    Name:trans[0].Name,
+                                    PelakNumber:trans[0].PelakNumber,
+                                    PhoneNumber:trans[0].PhoneNumber,
+                                    Point:trans[0].Point,
+                                    Username:trans[0].Username,
+                                    ModelID:trans[0].ModelID,
+                                    WareHouseID:trans[0].WareHouseID,
+                                    Token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as transportation with "+trans[0].PhoneNumber+" phone number"));
 
                         } else {
                             return res.status(404).json();
@@ -450,20 +449,20 @@ router.post('/login', (req, res) => {
                 } else {
                     transportation.findAll({
                         where: {
-                            username: req.body.username, password: md5(req.body.password)
+                            Username: req.body.Username, Password: md5(req.body.Password)
                         }
                     }).then(trans => {
                         if (!isThisArrayEmpty(trans))
                         {
-                            var payload = { phone_number: trans[0].phone_number,
-                                password: trans[0].password,
+                            var payload = { PhoneNumber: trans[0].PhoneNumber,
+                                Password: trans[0].Password,
                                 random:Math.random()};
 
 
 
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(trans[0].image);
+                                base64str = base64_encode(trans[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -474,20 +473,20 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    id:trans[0].phone_numberid,
-                                    air_conditionar:trans[0].air_conditionar,
-                                    color:trans[0].color,
-                                    description:trans[0].description,
-                                    family_name:trans[0].family_name,
-                                    image:base64str,
-                                    name:trans[0].name,
-                                    pelak_number:trans[0].pelak_number,
-                                    phone_number:trans[0].phone_number,
-                                    point:trans[0].point,
-                                    username:trans[0].username,
-                                    modelid:trans[0].modelid,
-                                    ware_houseid:trans[0].ware_houseid,
-                                    token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as transportation with "+trans[0].phone_number+" phone number"));
+                                    ID:trans[0].PhoneNumberID,
+                                    AirConditionar:trans[0].AirConditionar,
+                                    Color:trans[0].Color,
+                                    Description:trans[0].Description,
+                                    FamilyName:trans[0].FamilyName,
+                                    Image:base64str,
+                                    Name:trans[0].Name,
+                                    PelakNumber:trans[0].PelakNumber,
+                                    PhoneNumber:trans[0].PhoneNumber,
+                                    Point:trans[0].Point,
+                                    Username:trans[0].Username,
+                                    ModelID:trans[0].ModelID,
+                                    WareHouseID:trans[0].WareHouseID,
+                                    Token:token               }}).then(loggerinfo.info(req.connection.remoteAddress + " login as transportation with "+trans[0].PhoneNumber+" phone number"));
 
                         } else {
                             return res.status(404).json();
@@ -501,21 +500,21 @@ router.post('/login', (req, res) => {
             case "wareHouse":
 
                 loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
-                if (req.body.phone_number != null){
+                if (req.body.PhoneNumber != null){
                     sellerWareHouse.findAll({
                         where: {
-                            phone_number: req.body.phone_number, password: md5(req.body.password)
+                            PhoneNumberID: req.body.PhoneNumber, password: md5(req.body.Password)
                         }
                     }).then(wareHouse => {
                         if (!isThisArrayEmpty(wareHouse)){
-                            var payload = { phone_number: wareHouse[0].phone_number,
-                                password: wareHouse[0].password,
+                            var payload = { PhoneNumber: wareHouse[0].PhoneNumber,
+                                Password: wareHouse[0].Password,
                                 random:Math.random()};
 
 
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(wareHouse[0].image);
+                                base64str = base64_encode(wareHouse[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -525,20 +524,20 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    id:wareHouse[0].phone_numberid,
-                                    agent_family_name :wareHouse[0].agent_family_name ,
-                                    agent_name :wareHouse[0].agent_name ,
-                                    birthdate :wareHouse[0].birthdate ,
-                                    cell_phone_number :wareHouse[0].cell_phone_number ,
-                                    image:base64str,
-                                    phone_number:wareHouse[0].phone_number,
-                                    point :wareHouse[0].point ,
-                                    username:wareHouse[0].username,
-                                    ware_house_complete_address_description:wareHouse[0].ware_house_complete_address_description,
-                                    ware_house_google_map_address_link:wareHouse[0].ware_house_google_map_address_link,
-                                    ware_house_address_cityidIndex :wareHouse[0]. ware_house_address_cityidIndex ,
-                                    selleridIndex:wareHouse[0].selleridIndex,
-                                    token:token        }}).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with "+wareHouse[0].phone_number+" phone number"));
+                                    ID:wareHouse[0].PhoneNumberID,
+                                    AgentFamilyName :wareHouse[0].AgentFamilyName ,
+                                    AgentName :wareHouse[0].AgentName ,
+                                    BirthDate :wareHouse[0].BirthDate ,
+                                    CellPhoneNumber :wareHouse[0].CellPhoneNumber ,
+                                    Image:base64str,
+                                    PhoneNumberID:wareHouse[0].PhoneNumber,
+                                    Point :wareHouse[0].Point ,
+                                    Username:wareHouse[0].Username,
+                                    WareHouseCompleteAddressDescriptione:wareHouse[0].WareHouseCompleteAddressDescriptione,
+                                    WareHouseGoogleMapAddressLink:wareHouse[0].WareHouseGoogleMapAddressLink,
+                                    WareHouseAddressCityID :wareHouse[0]. WareHouseAddressCityID ,
+                                    SellerIDr:wareHouse[0].SellerID,
+                                    Token:token        }}).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with "+wareHouse[0].PhoneNumber+" phone number"));
                         } else {
                             return res.status(404).json();
                         }
@@ -549,20 +548,20 @@ router.post('/login', (req, res) => {
                 } else {
                     sellerWareHouse.findAll({
                         where: {
-                            username: req.body.username, password: md5(req.body.password)
+                            Username: req.body.Username, password: md5(req.body.Password)
                         }
                     }).then(wareHouse => {
                         if (!isThisArrayEmpty(wareHouse))
                         {
-                            var payload = { phone_number: wareHouse[0].phone_number,
-                                password: wareHouse[0].password,
+                            var payload = { PhoneNumberID: wareHouse[0].PhoneNumber,
+                                Password: wareHouse[0].Password,
                                 random:Math.random()};
 
 
 
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(wareHouse[0].image);
+                                base64str = base64_encode(wareHouse[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -573,20 +572,20 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    id:wareHouse[0].phone_numberid,
-                                    agent_family_name :wareHouse[0].agent_family_name ,
-                                    agent_name :wareHouse[0].agent_name ,
-                                    birthdate :wareHouse[0].birthdate ,
-                                    cell_phone_number :wareHouse[0].cell_phone_number ,
-                                    image:base64str,
-                                    phone_number:wareHouse[0].phone_number,
-                                    username:wareHouse[0].username,
-                                    point:wareHouse[0].point,
-                                    ware_house_complete_address_description:wareHouse[0].ware_house_complete_address_description,
-                                    ware_house_google_map_address_link:wareHouse[0].ware_house_google_map_address_link,
-                                    ware_house_address_cityidIndex :wareHouse[0]. ware_house_address_cityidIndex ,
-                                    selleridIndex:wareHouse[0].selleridIndex,
-                                    token:token        }}).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with "+wareHouse[0].phone_number+" phone number"));
+                                    ID:wareHouse[0].PhoneNumberID,
+                                    AgentFamilyName :wareHouse[0].AgentFamilyName ,
+                                    AgentName :wareHouse[0].AgentName ,
+                                    BirthDate :wareHouse[0].BirthDate ,
+                                    CellPhoneNumber :wareHouse[0].CellPhoneNumber ,
+                                    Image:base64str,
+                                    PhoneNumber:wareHouse[0].PhoneNumber,
+                                    Username:wareHouse[0].Username,
+                                    Point:wareHouse[0].Point,
+                                    WareHouseCompleteAddressDescription:wareHouse[0].WareHouseCompleteAddressDescription,
+                                    WareHouseGoogleMapAddressLink:wareHouse[0].WareHouseGoogleMapAddressLink,
+                                    WareHouseAddressCityID :wareHouse[0]. WareHouseAddressCityID ,
+                                    SellerID:wareHouse[0].SellerID,
+                                    token:token        }}).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with "+wareHouse[0].PhoneNumber+" phone number"));
 
                         } else {
                             return res.status(404).json();
@@ -599,21 +598,21 @@ router.post('/login', (req, res) => {
                 break;
             case "operator":
                 loginInfoCheck(req,res,"seller"); // seller ddm chon farghi ndre
-                if (req.body.phone_number != null){
+                if (req.body.PhoneNumber != null){
                     sellerOperator.findAll({
                         where: {
-                            phone_number: req.body.phone_number, password: md5(req.body.password)
+                            PhoneNumber: req.body.PhoneNumber, password: md5(req.body.Password)
                         }
                     }).then(operator => {
                         if (!isThisArrayEmpty(operator)){
-                            var payload = { phone_number: operator[0].phone_number,
-                                password: operator[0].password,
+                            var payload = { PhoneNumber: operator[0].PhoneNumber,
+                                Password: operator[0].Password,
                                 random:Math.random()};
 
 
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(operator[0].image);
+                                base64str = base64_encode(operator[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -623,19 +622,19 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    id:operator[0].phone_numberid,
-                                    family_name :operator[0].family_name ,
-                                    name :operator[0].name ,
-                                    birthdate :operator[0].birthdate ,
-                                    phone_number :operator[0].phone_number ,
-                                    image:base64str,
-                                    point:operator[0].point,
-                                    username :operator[0].username ,
-                                    selleridIndex:operator[0].selleridIndex,
-                                    token:token
+                                    ID:operator[0].PhoneNumberID,
+                                    FamilyName :operator[0].FamilyName ,
+                                    Name :operator[0].Name,
+                                    BirthDate :operator[0].BirthDate ,
+                                    PhoneNumber :operator[0].PhoneNumber ,
+                                    Image:base64str,
+                                    Point:operator[0].Point,
+                                    Username :operator[0].Username ,
+                                    SellerID:operator[0].SellerID,
+                                    Token:token
 
 
-                                }}).then(loggerinfo.info(req.connection.remoteAddress + " login as operator with "+operator[0].phone_number + " phone number"));
+                                }}).then(loggerinfo.info(req.connection.remoteAddress + " login as operator with "+operator[0].PhoneNumber + " phone number"));
                         } else {
                             return res.status(404).json();
                         }
@@ -646,20 +645,20 @@ router.post('/login', (req, res) => {
                 } else {
                     sellerOperator.findAll({
                         where: {
-                            username: req.body.username, password: md5(req.body.password)
+                            Username: req.body.Username, Password: md5(req.body.Password)
                         }
                     }).then(operator => {
                         if (!isThisArrayEmpty(operator))
                         {
-                            var payload = { phone_number: operator[0].phone_number,
-                                password: operator[0].password,
+                            var payload = { PhoneNumber: operator[0].PhoneNumber,
+                                Password: operator[0].Password,
                                 random:Math.random()};
 
 
 
                             var base64str="not Found";
                             try {
-                                base64str = base64_encode(operator[0].image);
+                                base64str = base64_encode(operator[0].Image);
 
                             }catch (e) {
                                 base64str = "not Found";
@@ -670,19 +669,19 @@ router.post('/login', (req, res) => {
 
                             response(res,{"data":{
 
-                                    id:operator[0].phone_numberid,
-                                    family_name :operator[0].family_name ,
-                                    name :operator[0].name ,
-                                    birthdate :operator[0].birthdate ,
-                                    phone_number :operator[0].phone_number ,
-                                    image:base64str,
-                                    point:operator[0].point,
-                                    username :operator[0].username ,
-                                    selleridIndex:operator[0].selleridIndex,
-                                    token:token
+                                    ID:operator[0].PhoneNumberID,
+                                    FamilyName :operator[0].FamilyName ,
+                                    Name :operator[0].Name ,
+                                    BirthDate :operator[0].BirthDate ,
+                                    PhoneNumber :operator[0].PhoneNumber ,
+                                    Image:base64str,
+                                    Point:operator[0].Point,
+                                    Username :operator[0].Username ,
+                                    SellerID:operator[0].SellerID,
+                                    Token:token
 
 
-                                }}).then(loggerinfo.info(req.connection.remoteAddress + " login as operator with "+operator[0].phone_number + " phone number"));
+                                }}).then(loggerinfo.info(req.connection.remoteAddress + " login as operator with "+operator[0].PhoneNumber + " phone number"));
 
                         } else {
                             return res.status(404).json();
@@ -716,25 +715,25 @@ router.post('/phoneNumber',(req,res) => {
         var numberFour = "notSetYet";
         var numberFive = "notSetYet";
 
-        if (req.body.phone_number1 != null)numberOne =  req.body.phone_number1;
-        if (req.body.phone_number2 != null)numberTwo =  req.body.phone_number2;
-        if (req.body.phone_number3 != null)numberThree =  req.body.phone_number3;
-        if (req.body.phone_number4 != null)numberFour =  req.body.phone_number4;
-        if (req.body.phone_number5 != null)numberFive =  req.body.phone_number5;
+        if (req.body.PhoneNumber1 != null)numberOne =  req.body.PhoneNumber1;
+        if (req.body.PhoneNumber2 != null)numberTwo =  req.body.PhoneNumber2;
+        if (req.body.PhoneNumber3 != null)numberThree =  req.body.PhoneNumber3;
+        if (req.body.PhoneNumber4 != null)numberFour =  req.body.PhoneNumber4;
+        if (req.body.PhoneNumber5 != null)numberFive =  req.body.PhoneNumber5;
         sequelize.transaction().then(function(t) {
             sellerPhoneNumber.create({
 
-                phone_number1:req.body.phone_number1,
-                phone_number2:req.body.phone_number2,
-                phone_number3:req.body.phone_number3,
-                phone_number4:req.body.phone_number4,
-                phone_number5:req.body.phone_number5,
+                PhoneNumber1:req.body.PhoneNumber1,
+                PhoneNumber2:req.body.PhoneNumber2,
+                PhoneNumber3:req.body.PhoneNumber3,
+                PhoneNumber4:req.body.PhoneNumber4,
+                PhoneNumber5:req.body.PhoneNumber5,
 
             }, {
                 transaction: t
             }).then(savedNumber => {
                 t.commit();
-                response(res,{"data":{"id":savedNumber.id}}).then(loggerinfo.info(req.connection.remoteAddress + " add a group of phone number with "+ savedNumber.id));
+                response(res,{"data":{"id":savedNumber.ID}}).then(loggerinfo.info(req.connection.remoteAddress + " add a group of phone number with "+ savedNumber.ID));
 
             }).catch(function(error) {
                 loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
@@ -757,16 +756,16 @@ router.post('/forgetPassword',(req,res)=>{
 });
 
 router.post('/tokenCheck',(req,res)=>{
-    if (req.body.role ==  null)
+    if (req.body.Role ==  null)
     {
         return res.status(400).json({"code":703});
     }
-    if (req.body.clientVersion ==  null)
+    if (req.body.ClientVersion ==  null)
     {
         return res.status(400).json({"code":703});
     }
-    var searchQuery = checkToken(req,res,req.body.role);
-    switch (req.body.role) {
+    var searchQuery = checkToken(req,res,req.body.Role);
+    switch (req.body.Role) {
         case "seller":
             Seller.findAll(searchQuery).then(seller => {
                 if (isThisArrayEmpty(seller)) {
@@ -776,7 +775,7 @@ router.post('/tokenCheck',(req,res)=>{
                 }else {
                     application.findAll().then(
                         app=>{
-                            if (req.body.clientVersion === app[0].clientVersion) {
+                            if (req.body.ClientVersion === app[0].ClientVersion) {
                                 return res.json({"data":{"forceUpdate":false}});
                             }else {
                                 return res.json({"data":{"forceUpdate":true}});

@@ -1,74 +1,74 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Transportation', {
+  return sequelize.define('TakhfifProduct', {
     ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    WareHouseID: {
+    SellerID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'SellerWareHouse',
+        model: 'Seller',
         key: 'ID'
       }
     },
-    Name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    FamilyName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    Username: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    Password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    Birthdate: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    PhoneNumber: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    Status: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
-    Point: {
+    ProductID: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Products',
+        key: 'ID'
+      }
+    },
+    Start: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    Finish: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    PriceBefore: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    PriceAfter: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    Percentage: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    SupplyOFProduct: {
+      type: DataTypes.STRING,
       allowNull: true
+    },
+    UnitOFProduct: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    UnitID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Unit',
+        key: 'ID'
+      }
     },
     Image: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    ModelID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'CarModel',
-        key: 'ID'
-      }
+    PachalChiStatus: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     },
-    Color: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    PelakNumber: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-      AirConditionar: {
+    Enable: {
       type: DataTypes.BOOLEAN,
       allowNull: true
     },
@@ -77,6 +77,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'Transportation'
+    tableName: 'TakhfifProduct'
   });
 };

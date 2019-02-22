@@ -1,12 +1,11 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Cities', {
+  return sequelize.define('ProductGroups', {
     ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      primaryKey: true
     },
     Name: {
       type: DataTypes.STRING,
@@ -14,9 +13,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     ParentID: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'ProductGroups',
+        key: 'ID'
+      }
     }
   }, {
-    tableName: 'Cities'
+    tableName: 'ProductGroups'
   });
 };

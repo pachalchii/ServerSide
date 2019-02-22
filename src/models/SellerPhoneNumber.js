@@ -1,38 +1,34 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Support', {
+  return sequelize.define('SellerPhoneNumber', {
     ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    Name: {
+    PhoneNumber1: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    FamilyName: {
+    PhoneNumber2: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
-    Image: {
+    PhoneNumber3: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
-    Username: {
+    PhoneNumber4: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
-    Password: {
+    PhoneNumber5: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    Status: {
-      type: DataTypes.BOOLEAN,
       allowNull: true
     }
   }, {
-    tableName: 'Support'
+    tableName: 'SellerPhoneNumber'
   });
 };

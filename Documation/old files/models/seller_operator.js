@@ -1,62 +1,62 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('seller_products', {
+  return sequelize.define('seller_operator', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    description: {
-      type: DataTypes.STRING(100),
+    birthdate: {
+      type: DataTypes.STRING(50),
       allowNull: true
+    },
+    family_name: {
+      type: DataTypes.STRING(50),
+      allowNull: false
     },
     image: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    price: {
+    name: {
       type: DataTypes.STRING(50),
       allowNull: false
     },
-    price_date_time: {
+    password: {
       type: DataTypes.STRING(50),
       allowNull: false
     },
-    supply_of_product: {
-      type: DataTypes.STRING(50),
+    phone_number: {
+        unique: true,
+
+        type: DataTypes.STRING(50),
       allowNull: true
     },
-    unit_of_product: {
-      type: DataTypes.STRING(50),
-      allowNull: false
-    },
-    productid: {
+    point: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
-      references: {
-        model: 'products',
-        key: 'id'
-      }
+      allowNull: true
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    username: {
+        unique: true,
+
+        type: DataTypes.STRING(50),
+      allowNull: false
     },
     sellerid: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
         model: 'seller',
-        key: 'id'
-      }
-    },
-    unitid: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      references: {
-        model: 'unit',
-        key: 'id'
+        key: 'ID'
       }
     }
   }, {
-    tableName: 'seller_products'
+    tableName: 'seller_operator'
   });
 };

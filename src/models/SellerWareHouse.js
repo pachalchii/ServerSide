@@ -1,28 +1,27 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Transportation', {
+  return sequelize.define('SellerWareHouse', {
     ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      primaryKey: true
     },
-    WareHouseID: {
+    AgentName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    AgentFamilyName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    SellerID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'SellerWareHouse',
+        model: 'Seller',
         key: 'ID'
       }
-    },
-    Name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    FamilyName: {
-      type: DataTypes.STRING,
-      allowNull: false
     },
     Username: {
       type: DataTypes.STRING,
@@ -34,9 +33,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     Birthdate: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     PhoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    CellPhoneNumber: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -52,31 +55,23 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true
     },
-    ModelID: {
+    WareHouseAddressCityID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'CarModel',
+        model: 'Cities',
         key: 'ID'
       }
     },
-    Color: {
+    WareHouseGoogleMapAddressLink: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    PelakNumber: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-      AirConditionar: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
-    Description: {
+    WareHouseCompleteAddressDescription: {
       type: DataTypes.STRING,
       allowNull: true
     }
   }, {
-    tableName: 'Transportation'
+    tableName: 'SellerWareHouse'
   });
 };

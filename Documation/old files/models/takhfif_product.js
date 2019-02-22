@@ -57,7 +57,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       references: {
         model: 'products',
-        key: 'id'
+        key: 'ID'
       }
     },
     sellerid: {
@@ -65,7 +65,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       references: {
         model: 'seller',
-        key: 'id'
+        key: 'ID'
       }
     },
     unitid: {
@@ -73,7 +73,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       references: {
         model: 'unit',
-        key: 'id'
+        key: 'ID'
       }
     }
   }, {

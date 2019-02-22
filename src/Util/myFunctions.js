@@ -6,12 +6,17 @@ var Kavenegar = require('kavenegar');
 
 
 function smsHandler(message,phone) {
-    var api = Kavenegar.KavenegarApi({apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'});
+    var api = Kavenegar.KavenegarApi({
+        apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'});
     api.Send({
         message: message,
-        sender: "10004346",
+        sender: "100065995",
         receptor: phone
-    });
+    },
+        function(response, status) {
+            console.log(response);
+            console.log(status);
+        });
     
 }
 function response(res, json) {
@@ -44,8 +49,8 @@ function insertCities(value, index, array) {
     cities.create(
         {
 
-            id: value.id,
-            name: value.name
+            ID: value.ID,
+            Name: value.Name
         }
     ).catch(err => {
         console.log(err)
@@ -56,8 +61,8 @@ function insertTypes(value, index, array) {
     sellerType.create(
         {
 
-            id: value.id,
-            type: value.type
+            ID: value.ID,
+            Type: value.Type
         }
     ).catch(err => {
         console.log(err)
@@ -68,9 +73,9 @@ function insertProductsGroup(value, index, array) {
     productGroups.create(
         {
 
-            id: value.id,
-            name: value.name,
-            parentid: value.parentid
+            ID: value.ID,
+            Name: value.Name,
+            ParentID: value.ParentID
         }
     ).catch(err => {
         console.log(err)
@@ -81,9 +86,9 @@ function insertProducts(value, index, array) {
     products.create(
         {
 
-            id: value.id,
-            name: value.name,
-            groupid: value.groupid
+            ID: value.ID,
+            Name: value.Name,
+            GroupID: value.GroupID
         }
     ).catch(err => {
         console.log(err)
@@ -93,8 +98,8 @@ function insertProducts(value, index, array) {
 function insertUnits(value, index, array) {
     unit.create(
         {
-            id: value.id,
-            unit_name: value.unit_name
+            ID: value.ID,
+            UnitName: value.UnitName
         }
     ).catch(err => {
         console.log(err)
@@ -104,9 +109,9 @@ function insertUnits(value, index, array) {
 function insertCarModels(value, index, array) {
     car.create(
         {
-            id: value.id,
-            name: value.name,
-            parentid: value.parentid
+            ID: value.ID,
+            Name: value.Name,
+            ParentID: value.ParentID
         }
     ).catch(err => {
         console.log(err)
@@ -116,37 +121,37 @@ function insertCarModels(value, index, array) {
 function fillDataBase() {
 
     var city = [
-        {id: 1, name: "آذربایجان شرقی"},
-        {id: 2, name: "اردبیل"},
-        {id: 3, name: "اصفهان"},
-        {id: 4, name: "البرز"},
-        {id: 5, name: "ایلام"},
-        {id: 6, name: "بوشهر"},
-        {id: 7, name: "تهران"},
-        {id: 8, name: "چهارمحال و بختیاری"},
-        {id: 9, name: "خراسان جنوبی"},
-        {id: 10, name: "خراسان رضوی"},
-        {id: 11, name: "خراسان شمالی"},
-        {id: 12, name: "خوزستان"},
-        {id: 13, name: "زنجان"},
-        {id: 14, name: "سمنان"},
-        {id: 15, name: "سیستان و بلوچستان"},
-        {id: 16, name: "فارس"},
-        {id: 17, name: "قزوین"},
-        {id: 18, name: "قم"},
-        {id: 19, name: "کردستان"},
-        {id: 20, name: "کرمان"},
-        {id: 21, name: "کرمانشاه"},
-        {id: 22, name: "کهگیلویه و بویراحمد"},
-        {id: 23, name: "گلستان"},
-        {id: 24, name: "گیلان"},
-        {id: 25, name: "لرستان"},
-        {id: 26, name: "مازندران"},
-        {id: 27, name: "مرکزی"},
-        {id: 28, name: "هرمزگان"},
-        {id: 29, name: "همدان"},
-        {id: 30, name: "یزد"},
-        {id: 31, name: "آذربایجان شرقی"}
+        {ID: 1,  Name: "آذربایجان شرقی"},
+        {ID: 2,  Name: "اردبیل"},
+        {ID: 3,  Name: "اصفهان"},
+        {ID: 4,  Name: "البرز"},
+        {ID: 5,  Name: "ایلام"},
+        {ID: 6,  Name: "بوشهر"},
+        {ID: 7,  Name: "تهران"},
+        {ID: 8,  Name: "چهارمحال و بختیاری"},
+        {ID: 9,  Name: "خراسان جنوبی"},
+        {ID: 10, Name: "خراسان رضوی"},
+        {ID: 11, Name: "خراسان شمالی"},
+        {ID: 12, Name: "خوزستان"},
+        {ID: 13, Name: "زنجان"},
+        {ID: 14, Name: "سمنان"},
+        {ID: 15, Name: "سیستان و بلوچستان"},
+        {ID: 16, Name: "فارس"},
+        {ID: 17, Name: "قزوین"},
+        {ID: 18, Name: "قم"},
+        {ID: 19, Name: "کردستان"},
+        {ID: 20, Name: "کرمان"},
+        {ID: 21, Name: "کرمانشاه"},
+        {ID: 22, Name: "کهگیلویه و بویراحمد"},
+        {ID: 23, Name: "گلستان"},
+        {ID: 24, Name: "گیلان"},
+        {ID: 25, Name: "لرستان"},
+        {ID: 26, Name: "مازندران"},
+        {ID: 27, Name: "مرکزی"},
+        {ID: 28, Name: "هرمزگان"},
+        {ID: 29, Name: "همدان"},
+        {ID: 30, Name: "یزد"},
+        {ID: 31, Name: "آذربایجان شرقی"}
 
 
     ];
@@ -160,8 +165,8 @@ function fillDataBase() {
     });
 
     var type = [
-        {id: 1, type: "شرکت اصلی"},
-        {id: 2, type: "نماینده فروش"}
+        {ID: 1, Type: "شرکت اصلی"},
+        {ID: 2, Type: "نماینده فروش"}
 
     ];
     sellerType.findAll().then(sellerType => {
@@ -173,12 +178,12 @@ function fillDataBase() {
         }
     });
     var carModelvar = [
-        {id: 1, name: "نیسان", parentid: null},
-        {id: 2, name: "پیکان وانت", parentid: null},
-        {id: 3, name: "نیسان یخچال دار", parentid: null},
-        {id: 4, name: "پراید وانت", parentid: null},
-        {id: 5, name: "پرشیا وانت", parentid: null},
-        {id: 6, name: "کامیون یخچال دار", parentid: null}
+        {ID: 1, Name: "نیسان", ParentID: null},
+        {ID: 2, Name: "پیکان وانت", ParentID: null},
+        {ID: 3, Name: "نیسان یخچال دار", ParentID: null},
+        {ID: 4, Name: "پراید وانت", ParentID: null},
+        {ID: 5, Name: "پرشیا وانت", ParentID: null},
+        {ID: 6, Name: "کامیون یخچال دار", ParentID: null}
     ];
     car.findAll().then(car => {
         if (car[0] === undefined) {
@@ -190,15 +195,15 @@ function fillDataBase() {
     });
 
     var unitvar = [
-        {id: 1, unit_name: "گرم"},
-        {id: 2, unit_name: "کیلو گرم"},
-        {id: 3, unit_name: "تن"},
-        {id: 4, unit_name: "پوند"},
-        {id: 5, unit_name: "میکرو گرم"},
-        {id: 6, unit_name: "اونس"},
-        {id: 7, unit_name: "مثقال"},
-        {id: 8, unit_name: "سیر"},
-        {id: 9, unit_name: "چارک"},
+        {ID: 1, UnitName: "گرم"},
+        {ID: 2, UnitName: "کیلو گرم"},
+        {ID: 3, UnitName: "تن"},
+        {ID: 4, UnitName: "پوند"},
+        {ID: 5, UnitName: "میکرو گرم"},
+        {ID: 6, UnitName: "اونس"},
+        {ID: 7, UnitName: "مثقال"},
+        {ID: 8, UnitName: "سیر"},
+        {ID: 9, UnitName: "چارک"},
 
     ];
     unit.findAll().then(unit => {
@@ -212,41 +217,41 @@ function fillDataBase() {
 
     var productsGroupvar = [
 
-        {id: 2, name: "گوساله", parentid: null},
+        {ID: 2, Name: "گوساله", ParentID: null},
 
-        {id: 23, name: "گوسفند", parentid: null},
+        {ID: 23, Name: "گوسفند", ParentID: null},
 
-        {id: 52, name: "مرغ", parentid: null},
+        {ID: 52, Name: "مرغ", ParentID: null},
 
-        {id: 96, name: "ماهی", parentid: null},
+        {ID: 96, Name: "ماهی", ParentID: null},
 
-        {id: 108, name: "منجمد وارداتی", parentid: null},
+        {ID: 108, Name: "منجمد وارداتی", ParentID: null},
 
-        {id: 109, name: "گوسفند وارداتی", parentid: 108},
-        {id: 110, name: "گوساله وارداتی", parentid: 108},
-        {id: 111, name: "ران", parentid: 109},
-        {id: 112, name: "سردست", parentid: 109},
-        {id: 113, name: "گردن", parentid: 109},
-        {id: 114, name: "راسته با استخوان", parentid: 109},
-        {id: 115, name: "راسته شاندیزی", parentid: 109},
-        {id: 116, name: "گردن", parentid: 109},
-        {id: 117, name: "قلوه گاه گوسفند", parentid: 109},
-        {id: 118, name: "قلوه گاه با استخوان گوسفند", parentid: 109},
-        {id: 119, name: "ماهیچه", parentid: 109},
-
-
-        {id: 126, name: "ران", parentid: 110},
-        {id: 127, name: "سردست", parentid: 110},
-        {id: 128, name: "گردن", parentid: 110},
-        {id: 129, name: "بغل ران", parentid: 110},
-        {id: 130, name: "سفید ران", parentid: 110},
-        {id: 131, name: "مغز ران", parentid: 110},
-        {id: 132, name: "راسته", parentid: 110},
-        {id: 133, name: "فیله", parentid: 110},
-        {id: 134, name: "قلوه گاه", parentid: 110},
+        {ID: 109, Name: "گوسفند وارداتی", ParentID: 108},
+        {ID: 110, Name: "گوساله وارداتی", ParentID: 108},
+        {ID: 111, Name: "ران", ParentID: 109},
+        {ID: 112, Name: "سردست", ParentID: 109},
+        {ID: 113, Name: "گردن", ParentID: 109},
+        {ID: 114, Name: "راسته با استخوان", ParentID: 109},
+        {ID: 115, Name: "راسته شاندیزی", ParentID: 109},
+        {ID: 116, Name: "گردن", ParentID: 109},
+        {ID: 117, Name: "قلوه گاه گوسفند", ParentID: 109},
+        {ID: 118, Name: "قلوه گاه با استخوان گوسفند", ParentID: 109},
+        {ID: 119, Name: "ماهیچه", ParentID: 109},
 
 
-        {id: 150, name: "فراورده های گوشتی", parentid: null}
+        {ID: 126, Name: "ران", ParentID: 110},
+        {ID: 127, Name: "سردست", ParentID: 110},
+        {ID: 128, Name: "گردن", ParentID: 110},
+        {ID: 129, Name: "بغل ران", ParentID: 110},
+        {ID: 130, Name: "سفید ران", ParentID: 110},
+        {ID: 131, Name: "مغز ران", ParentID: 110},
+        {ID: 132, Name: "راسته", ParentID: 110},
+        {ID: 133, Name: "فیله", ParentID: 110},
+        {ID: 134, Name: "قلوه گاه", ParentID: 110},
+
+
+        {ID: 150, Name: "فراورده های گوشتی", ParentID: null}
 
 
     ];
@@ -260,144 +265,144 @@ function fillDataBase() {
     });
 
     var productsvar = [
-        {id: 3, name: "قلوه گاه گوساله", groupid: 2},
-        {id: 4, name: "خرده راسته گوساله", groupid: 2},
-        {id: 5, name: "گردن گوساله", groupid: 2},
-        {id: 6, name: "فیله گوساله", groupid: 2},
-        {id: 7, name: "مغز راسته گوساله", groupid: 2},
-        {id: 8, name: "راسته با استخوان گوساله", groupid: 2},
-        {id: 9, name: "دنبالیچه گوساله", groupid: 2},
-        {id: 10, name: "چربی گوساله", groupid: 2},
-        {id: 11, name: "ران ممتاز گوساله جوان", groupid: 2},
-        {id: 12, name: "سردست ممتاز گوساله جوان", groupid: 2},
-        {id: 13, name: "ران ممتاز ماده گاو", groupid: 2},
-        {id: 14, name: "سردست ممتاز ماده گاو", groupid: 2},
-        {id: 15, name: "ماهیچه گوساله", groupid: 2},
-        {id: 16, name: "ران با استخوان گوساله جوان", groupid: 2},
-        {id: 17, name: "سردست با استخوان گوساله جوان", groupid: 2},
-        {id: 18, name: "ران با استخوان ماده گاو", groupid: 2},
-        {id: 19, name: "سردست با استخوان ماده گاو ", groupid: 2},
-        {id: 20, name: "چرخکرده مخلوط", groupid: 2},
-        {id: 21, name: "چرخکرده گوساله", groupid: 2},
-        {id: 22, name: "خرده گوساله", groupid: 2},
+        {ID: 3, Name: "قلوه گاه گوساله", GroupID: 2},
+        {ID: 4, Name: "خرده راسته گوساله", GroupID: 2},
+        {ID: 5, Name: "گردن گوساله", GroupID: 2},
+        {ID: 6, Name: "فیله گوساله", GroupID: 2},
+        {ID: 7, Name: "مغز راسته گوساله", GroupID: 2},
+        {ID: 8, Name: "راسته با استخوان گوساله", GroupID: 2},
+        {ID: 9, Name: "دنبالیچه گوساله", GroupID: 2},
+        {ID: 10, Name: "چربی گوساله", GroupID: 2},
+        {ID: 11, Name: "ران ممتاز گوساله جوان", GroupID: 2},
+        {ID: 12, Name: "سردست ممتاز گوساله جوان", GroupID: 2},
+        {ID: 13, Name: "ران ممتاز ماده گاو", GroupID: 2},
+        {ID: 14, Name: "سردست ممتاز ماده گاو", GroupID: 2},
+        {ID: 15, Name: "ماهیچه گوساله", GroupID: 2},
+        {ID: 16, Name: "ران با استخوان گوساله جوان", GroupID: 2},
+        {ID: 17, Name: "سردست با استخوان گوساله جوان", GroupID: 2},
+        {ID: 18, Name: "ران با استخوان ماده گاو", GroupID: 2},
+        {ID: 19, Name: "سردست با استخوان ماده گاو ", GroupID: 2},
+        {ID: 20, Name: "چرخکرده مخلوط", GroupID: 2},
+        {ID: 21, Name: "چرخکرده گوساله", GroupID: 2},
+        {ID: 22, Name: "خرده گوساله", GroupID: 2},
 
 
-        {id: 24, name: "خرده گوسفند", groupid: 23},
-        {id: 25, name: "قلوه گاه گوسفند", groupid: 23},
-        {id: 26, name: "قلوه گاه با استخوان گوسفند", groupid: 23},
-        {id: 27, name: "خرده قلوه گاه گوسفند", groupid: 23},
-        {id: 28, name: "خرده راسته گوسفند", groupid: 23},
-        {id: 29, name: "گردن گوسفند", groupid: 23},
-        {id: 30, name: "گردن شقه ای گوسفند", groupid: 23},
-        {id: 31, name: "لاشه بدون دنبه گوسفند", groupid: 23},
-        {id: 32, name: "لاشه گوسفند با کله", groupid: 23},
-        {id: 33, name: "دنبه گوسفند", groupid: 23},
-        {id: 34, name: "ران ممتاز گوسفند", groupid: 23},
-        {id: 35, name: "ران بدون استخوان گوسفند", groupid: 23},
-        {id: 36, name: "سردست ممتاز گوسفند", groupid: 23},
-        {id: 37, name: "سردست بدون استخوان گوسفند", groupid: 23},
-        {id: 38, name: "راسته با استخوان گوسفند", groupid: 23},
-        {id: 39, name: "راسته بدون استخوان گوسفند", groupid: 23},
-        {id: 40, name: "مغز راسته گوسفند ( دو تکه)", groupid: 23},
-        {id: 41, name: "مغز راسته گوسفند ( سه تکه)", groupid: 23},
-        {id: 42, name: "فیله ممتاز گوسفند", groupid: 23},
-        {id: 43, name: "راسته شاندیزی گوسفند", groupid: 23},
-        {id: 44, name: "شیشلیک بدون مواد گوسفند", groupid: 23},
-        {id: 45, name: "شیشلیک با مواد گوسفند", groupid: 23},
-        {id: 46, name: "ماهیچه بدون گل گوسفند", groupid: 23},
-        {id: 47, name: "ماهیچه با گل گوسفند", groupid: 23},
-        {id: 48, name: "ماهیچه ران گوسفند", groupid: 23},
-        {id: 49, name: "ماهیچه برش مشهدی گوسفند", groupid: 23},
-        {id: 50, name: "ران و سردست بشقابی گوسفند", groupid: 23},
-        {id: 51, name: "ماهیچه بشقابی گوسفند", groupid: 23},
+        {ID: 24, Name: "خرده گوسفند", GroupID: 23},
+        {ID: 25, Name: "قلوه گاه گوسفند", GroupID: 23},
+        {ID: 26, Name: "قلوه گاه با استخوان گوسفند", GroupID: 23},
+        {ID: 27, Name: "خرده قلوه گاه گوسفند", GroupID: 23},
+        {ID: 28, Name: "خرده راسته گوسفند", GroupID: 23},
+        {ID: 29, Name: "گردن گوسفند", GroupID: 23},
+        {ID: 30, Name: "گردن شقه ای گوسفند", GroupID: 23},
+        {ID: 31, Name: "لاشه بدون دنبه گوسفند", GroupID: 23},
+        {ID: 32, Name: "لاشه گوسفند با کله", GroupID: 23},
+        {ID: 33, Name: "دنبه گوسفند", GroupID: 23},
+        {ID: 34, Name: "ران ممتاز گوسفند", GroupID: 23},
+        {ID: 35, Name: "ران بدون استخوان گوسفند", GroupID: 23},
+        {ID: 36, Name: "سردست ممتاز گوسفند", GroupID: 23},
+        {ID: 37, Name: "سردست بدون استخوان گوسفند", GroupID: 23},
+        {ID: 38, Name: "راسته با استخوان گوسفند", GroupID: 23},
+        {ID: 39, Name: "راسته بدون استخوان گوسفند", GroupID: 23},
+        {ID: 40, Name: "مغز راسته گوسفند ( دو تکه)", GroupID: 23},
+        {ID: 41, Name: "مغز راسته گوسفند ( سه تکه)", GroupID: 23},
+        {ID: 42, Name: "فیله ممتاز گوسفند", GroupID: 23},
+        {ID: 43, Name: "راسته شاندیزی گوسفند", GroupID: 23},
+        {ID: 44, Name: "شیشلیک بدون مواد گوسفند", GroupID: 23},
+        {ID: 45, Name: "شیشلیک با مواد گوسفند", GroupID: 23},
+        {ID: 46, Name: "ماهیچه بدون گل گوسفند", GroupID: 23},
+        {ID: 47, Name: "ماهیچه با گل گوسفند", GroupID: 23},
+        {ID: 48, Name: "ماهیچه ران گوسفند", GroupID: 23},
+        {ID: 49, Name: "ماهیچه برش مشهدی گوسفند", GroupID: 23},
+        {ID: 50, Name: "ران و سردست بشقابی گوسفند", GroupID: 23},
+        {ID: 51, Name: "ماهیچه بشقابی گوسفند", GroupID: 23},
 
 
-        {id: 53, name: "ران بی پوست بدون کمر  300 گرمی", groupid: 52},
-        {id: 54, name: "ران بی پوست بدون کمر  350 گرمی", groupid: 52},
-        {id: 55, name: "ران بی پوست بدون کمر  400 گرمی", groupid: 52},
-        {id: 56, name: "ران با پوست بدون کمر  300 گرمی", groupid: 52},
-        {id: 57, name: "ران با پوست بدون کم  350 گرمی", groupid: 52},
-        {id: 58, name: "ران با پوست بدون کمر  400 گرمی", groupid: 52},
-        {id: 59, name: "سینه با استخوان بدون پوست  300 گرمی", groupid: 52},
-        {id: 60, name: "سینه با استخوان بدون پوست  350 گرمی", groupid: 52},
-        {id: 61, name: "سینه با استخوان بدون پوست  400 گرمی", groupid: 52},
-        {id: 62, name: "سینه با استخوان با پوست  300 گرمی", groupid: 52},
-        {id: 63, name: "سینه با استخوان با پوست  350 گرمی", groupid: 52},
-        {id: 64, name: "سینه با استخوان با پوست  400 گرمی", groupid: 52},
-        {id: 65, name: "بال با نوک", groupid: 52},
-        {id: 66, name: "بال بی نوک", groupid: 52},
-        {id: 67, name: "بازو با پوست", groupid: 52},
-        {id: 68, name: "بازو بی پوست", groupid: 52},
-        {id: 69, name: "بال و بازو سه تکه", groupid: 52},
-        {id: 70, name: "بال و بازو دو تکه", groupid: 52},
-        {id: 71, name: "گردن با پوست", groupid: 52},
-        {id: 72, name: "گردن بی پوست", groupid: 52},
-        {id: 73, name: "فیله", groupid: 52},
-        {id: 74, name: "مرغ کامل شکم خالی 1200 گرمی", groupid: 52},
-        {id: 75, name: "مرغ کامل شکم خالی 1300 گرمی", groupid: 52},
-        {id: 76, name: "مرغ کامل شکم خالی 1400 گرمی", groupid: 52},
-        {id: 77, name: "مرغ کامل شکم خالی 1500 گرمی", groupid: 52},
-        {id: 78, name: "مرغ کامل شکم خالی 1600 گرمی", groupid: 52},
-        {id: 79, name: "مرغ کامل شکم خالی 1700 گرمی", groupid: 52},
-        {id: 80, name: "مرغ کامل شکم خالی 1800 گرمی", groupid: 52},
-        {id: 81, name: "مرغ کامل شکم خالی 1900 گرمی", groupid: 52},
-        {id: 82, name: "مرغ کامل شکم خالی 2000 گرمی", groupid: 52},
-        {id: 83, name: "مرغ کامل شکم خالی 2100 گرمی", groupid: 52},
-        {id: 84, name: "مرغ کامل شکم خالی 2200 گرمی", groupid: 52},
-        {id: 85, name: "مرغ کامل شکم خالی درشت", groupid: 52},
-        {id: 86, name: "سینه بدون کتف ممتاز", groupid: 52},
-        {id: 87, name: "سینه بدون کتف معمولی", groupid: 52},
-        {id: 88, name: "سینه با کتف ممتاز", groupid: 52},
-        {id: 89, name: "سینه با کتف معمولی", groupid: 52},
-        {id: 90, name: "اکبر جوجه 600 گرمی", groupid: 52},
-        {id: 91, name: "اکبر جوجه 1000 گرمی", groupid: 52},
-        {id: 92, name: "اکبر جوجه 1100 گرمی", groupid: 52},
-        {id: 93, name: "خرده مرغ", groupid: 52},
-        {id: 94, name: "گوشت گردن", groupid: 52},
-        {id: 95, name: "خمیر مرغ", groupid: 52},
+        {ID: 53, Name: "ران بی پوست بدون کمر  300 گرمی", GroupID: 52},
+        {ID: 54, Name: "ران بی پوست بدون کمر  350 گرمی", GroupID: 52},
+        {ID: 55, Name: "ران بی پوست بدون کمر  400 گرمی", GroupID: 52},
+        {ID: 56, Name: "ران با پوست بدون کمر  300 گرمی", GroupID: 52},
+        {ID: 57, Name: "ران با پوست بدون کم  350 گرمی", GroupID: 52},
+        {ID: 58, Name: "ران با پوست بدون کمر  400 گرمی", GroupID: 52},
+        {ID: 59, Name: "سینه با استخوان بدون پوست  300 گرمی", GroupID: 52},
+        {ID: 60, Name: "سینه با استخوان بدون پوست  350 گرمی", GroupID: 52},
+        {ID: 61, Name: "سینه با استخوان بدون پوست  400 گرمی", GroupID: 52},
+        {ID: 62, Name: "سینه با استخوان با پوست  300 گرمی", GroupID: 52},
+        {ID: 63, Name: "سینه با استخوان با پوست  350 گرمی", GroupID: 52},
+        {ID: 64, Name: "سینه با استخوان با پوست  400 گرمی", GroupID: 52},
+        {ID: 65, Name: "بال با نوک", GroupID: 52},
+        {ID: 66, Name: "بال بی نوک", GroupID: 52},
+        {ID: 67, Name: "بازو با پوست", GroupID: 52},
+        {ID: 68, Name: "بازو بی پوست", GroupID: 52},
+        {ID: 69, Name: "بال و بازو سه تکه", GroupID: 52},
+        {ID: 70, Name: "بال و بازو دو تکه", GroupID: 52},
+        {ID: 71, Name: "گردن با پوست", GroupID: 52},
+        {ID: 72, Name: "گردن بی پوست", GroupID: 52},
+        {ID: 73, Name: "فیله", GroupID: 52},
+        {ID: 74, Name: "مرغ کامل شکم خالی 1200 گرمی", GroupID: 52},
+        {ID: 75, Name: "مرغ کامل شکم خالی 1300 گرمی", GroupID: 52},
+        {ID: 76, Name: "مرغ کامل شکم خالی 1400 گرمی", GroupID: 52},
+        {ID: 77, Name: "مرغ کامل شکم خالی 1500 گرمی", GroupID: 52},
+        {ID: 78, Name: "مرغ کامل شکم خالی 1600 گرمی", GroupID: 52},
+        {ID: 79, Name: "مرغ کامل شکم خالی 1700 گرمی", GroupID: 52},
+        {ID: 80, Name: "مرغ کامل شکم خالی 1800 گرمی", GroupID: 52},
+        {ID: 81, Name: "مرغ کامل شکم خالی 1900 گرمی", GroupID: 52},
+        {ID: 82, Name: "مرغ کامل شکم خالی 2000 گرمی", GroupID: 52},
+        {ID: 83, Name: "مرغ کامل شکم خالی 2100 گرمی", GroupID: 52},
+        {ID: 84, Name: "مرغ کامل شکم خالی 2200 گرمی", GroupID: 52},
+        {ID: 85, Name: "مرغ کامل شکم خالی درشت", GroupID: 52},
+        {ID: 86, Name: "سینه بدون کتف ممتاز", GroupID: 52},
+        {ID: 87, Name: "سینه بدون کتف معمولی", GroupID: 52},
+        {ID: 88, Name: "سینه با کتف ممتاز", GroupID: 52},
+        {ID: 89, Name: "سینه با کتف معمولی", GroupID: 52},
+        {ID: 90, Name: "اکبر جوجه 600 گرمی", GroupID: 52},
+        {ID: 91, Name: "اکبر جوجه 1000 گرمی", GroupID: 52},
+        {ID: 92, Name: "اکبر جوجه 1100 گرمی", GroupID: 52},
+        {ID: 93, Name: "خرده مرغ", GroupID: 52},
+        {ID: 94, Name: "گوشت گردن", GroupID: 52},
+        {ID: 95, Name: "خمیر مرغ", GroupID: 52},
 
-        {id: 97, name: "قزل آلا 200 گرمی", groupid: 96},
-        {id: 98, name: "قزل آلا 2520 گرمی", groupid: 96},
-        {id: 99, name: "قزل آلا 300 گرمی", groupid: 96},
-        {id: 100, name: "قزل آلا 350 گرمی", groupid: 96},
-        {id: 101, name: "قزل آلا 400 گرمی", groupid: 96},
-        {id: 102, name: "قزل آلا 450 گرمی", groupid: 96},
-        {id: 103, name: "قزل آلا 500 گرمی", groupid: 96},
-        {id: 104, name: "تیلاپیا M", groupid: 96},
-        {id: 105, name: "تیلاپیا S", groupid: 96},
-        {id: 106, name: "سالمون", groupid: 96},
-        {id: 107, name: "میگو", groupid: 96},
-
-
-        {id: 120, name: "مغول", groupid: 111},
-        {id: 121, name: "استرالیا", groupid: 111},
-        {id: 122, name: "قزاقستان", groupid: 111},
-        {id: 123, name: "نیوزلند", groupid: 111},
-        {id: 124, name: "ارمنستان", groupid: 111},
-        {id: 125, name: "گرجستان", groupid: 111},
+        {ID: 97, Name: "قزل آلا 200 گرمی", GroupID: 96},
+        {ID: 98, Name: "قزل آلا 2520 گرمی", GroupID: 96},
+        {ID: 99, Name: "قزل آلا 300 گرمی", GroupID: 96},
+        {ID: 100, Name: "قزل آلا 350 گرمی", GroupID: 96},
+        {ID: 101, Name: "قزل آلا 400 گرمی", GroupID: 96},
+        {ID: 102, Name: "قزل آلا 450 گرمی", GroupID: 96},
+        {ID: 103, Name: "قزل آلا 500 گرمی", GroupID: 96},
+        {ID: 104, Name: "تیلاپیا M", GroupID: 96},
+        {ID: 105, Name: "تیلاپیا S", GroupID: 96},
+        {ID: 106, Name: "سالمون", GroupID: 96},
+        {ID: 107, Name: "میگو", GroupID: 96},
 
 
-        {id: 135, name: "مینروا", groupid: 126},
-        {id: 136, name: "جی جی", groupid: 126},
-        {id: 137, name: "جی جی زد", groupid: 126},
-        {id: 138, name: "آگرا", groupid: 126},
-        {id: 139, name: "استرلا", groupid: 126},
-        {id: 140, name: "آسترا", groupid: 126},
-        {id: 141, name: "فری بوی", groupid: 126},
-        {id: 142, name: "فریگو", groupid: 126},
-        {id: 143, name: "مارفریگ", groupid: 126},
-        {id: 144, name: "بیف کلاب", groupid: 126},
-        {id: 145, name: "آنجلو", groupid: 126},
-        {id: 146, name: "پالاتاری", groupid: 126},
-        {id: 147, name: "کیومیت", groupid: 126},
-        {id: 148, name: "متابوی", groupid: 126},
-        {id: 149, name: "بیگ بوی", groupid: 126},
+        {ID: 120, Name: "مغول", GroupID: 111},
+        {ID: 121, Name: "استرالیا", GroupID: 111},
+        {ID: 122, Name: "قزاقستان", GroupID: 111},
+        {ID: 123, Name: "نیوزلند", GroupID: 111},
+        {ID: 124, Name: "ارمنستان", GroupID: 111},
+        {ID: 125, Name: "گرجستان", GroupID: 111},
 
 
-        {id: 151, name: "سوسیس", groupid: 150},
-        {id: 152, name: "کالباس", groupid: 150},
-        {id: 153, name: "همبرگر و کباب لقمه", groupid: 150},
-        {id: 154, name: "غذاهای آماده", groupid: 150}
+        {ID: 135, Name: "مینروا", GroupID: 126},
+        {ID: 136, Name: "جی جی", GroupID: 126},
+        {ID: 137, Name: "جی جی زد", GroupID: 126},
+        {ID: 138, Name: "آگرا", GroupID: 126},
+        {ID: 139, Name: "استرلا", GroupID: 126},
+        {ID: 140, Name: "آسترا", GroupID: 126},
+        {ID: 141, Name: "فری بوی", GroupID: 126},
+        {ID: 142, Name: "فریگو", GroupID: 126},
+        {ID: 143, Name: "مارفریگ", GroupID: 126},
+        {ID: 144, Name: "بیف کلاب", GroupID: 126},
+        {ID: 145, Name: "آنجلو", GroupID: 126},
+        {ID: 146, Name: "پالاتاری", GroupID: 126},
+        {ID: 147, Name: "کیومیت", GroupID: 126},
+        {ID: 148, Name: "متابوی", GroupID: 126},
+        {ID: 149, Name: "بیگ بوی", GroupID: 126},
+
+
+        {ID: 151, Name: "سوسیس", GroupID: 150},
+        {ID: 152, Name: "کالباس", GroupID: 150},
+        {ID: 153, Name: "همبرگر و کباب لقمه", GroupID: 150},
+        {ID: 154, Name: "غذاهای آماده", GroupID: 150}
     ];
     products.findAll().then(products => {
         if (products[0] === undefined) {
@@ -410,7 +415,8 @@ function fillDataBase() {
 
     application.findAll().then(app => {
         if (app[0] === undefined) {
-            application.create({"clientVersion":"1.0.0"}).then(
+            application.create({"ID":"1",
+                                "ClientVersion":"1.0.0"}).then(
                 console.log(colors.bg.Green, "import  app  demo data done successfuly", colors.Reset)
         );
         } else {
@@ -427,9 +433,9 @@ function isThisArrayEmpty(array) {
 }
 
 function checkPhone(req, res) {
-    if (req.body.phone_number != null) {
+    if (req.body.PhoneNumber != null) {
         var pattern = new RegExp(PHONENUMBER_REGEX);
-        var status = pattern.test(req.body.phone_number);
+        var status = pattern.test(req.body.PhoneNumber);
         if (!status) {
             res.status(400).json({"code":711});
             return false;
@@ -442,9 +448,9 @@ function checkPhone(req, res) {
 }
 
 function checkPassword(req, res) {
-    if (req.body.password != null) {
+    if (req.body.Password != null) {
         var pattern = new RegExp(PASSWORD_REGEX);
-        var status = pattern.test(req.body.password);
+        var status = pattern.test(req.body.Password);
         if (!status) {
             res.status(400).json({"code": 712});
             return false;
@@ -457,9 +463,9 @@ function checkPassword(req, res) {
 }
 
 function checkUserName(req, res) {
-    if (req.body.username != null) {
+    if (req.body.usernamer != null) {
         var pattern = new RegExp(USERNAME_REGEX);
-        var status = pattern.test(req.body.password);
+        var status = pattern.test(req.body.Username);
         if (!status) {
             res.status(400).json({"code": 713});
             return false;
@@ -474,16 +480,16 @@ function checkUserName(req, res) {
 function registerInfoCheck(req, res, role) {
     switch (role) {
         case "customer":
-            if (req.body.birth_date == null ||
-                req.body.company_name == null ||
-                req.body.family_name == null ||
-                req.body.name == null ||
-                req.body.password == null ||
-                req.body.phone_number == null ||
-                req.body.registration_date_time == null ||
-                req.body.theme == null ||
-                req.body.username == null ||
-                req.body.cityid == null
+            if (req.body.BirthDate == null ||
+                req.body.CompanyName == null ||
+                req.body.FamilyName == null ||
+                req.body.Name == null ||
+                req.body.Password == null ||
+                req.body.PhoneNumber == null ||
+                req.body.RegistrationDateTime == null ||
+                req.body.Theme == null ||
+                req.body.Username == null ||
+                req.body.CityID == null
             ) {
                 res.status(400).json({"code": 703});
                 return false;
@@ -491,16 +497,16 @@ function registerInfoCheck(req, res, role) {
             break;
 
         case "seller":
-            if (req.body.company_name == null ||
-                req.body.complete_address_description == null ||
-                req.body.google_map_address_link == null ||
-                req.body.owner_family_name == null ||
-                req.body.owner_name == null ||
-                req.body.owner_phone_number == null ||
-                req.body.username == null ||
-                req.body.password == null ||
-                req.body.company_address_cityid == null ||
-                req.body.phone_numberid == null) {
+            if (req.body.CompanyName == null ||
+                req.body.CompleteAddressDescription == null ||
+                req.body.GoogleMapAddressLink == null ||
+                req.body.OwnerName == null ||
+                req.body.OwnerFamilyName == null ||
+                req.body.OwnerPhoneNumber == null ||
+                req.body.Username == null ||
+                req.body.Password == null ||
+                req.body.CompanyAddressCityID == null ||
+                req.body.PhoneNumberID == null) {
                 res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
@@ -514,13 +520,13 @@ function loginInfoCheck(req, res, role) {
     switch (role) {
         case "customer":
             if (
-                req.body.password == null || (req.body.phone_number == null && req.body.username == null)
+                req.body.Password == null || (req.body.PhoneNumber == null && req.body.Username == null)
 
             ) {
                 res.status(400).json({"code": 703});
                 return false;
             } else {
-                if (req.body.phone_number != null) {
+                if (req.body.PhoneNumber != null) {
                     checkPhone(req, res);
                 }
                 checkPassword(req, res)
@@ -529,13 +535,13 @@ function loginInfoCheck(req, res, role) {
             break;
         case "seller":
             if (
-                req.body.password == null || (req.body.phone_number == null && req.body.username == null)
+                req.body.Password == null || (req.body.PhoneNumber == null && req.body.Username == null)
 
             ) {
                 res.status(400).json({"code": 703});
                 return false;
             } else {
-                if (req.body.phone_number != null) {
+                if (req.body.PhoneNumber != null) {
                     checkPhone(req, res);
                 }
                 checkPassword(req, res)
@@ -552,33 +558,33 @@ function addRoleInfoCheck(req, res, role) {
     switch (role) {
 
         case "seller":
-            if (req.body.company_name == null ||
-                req.body.complete_address_description == null ||
-                req.body.google_map_address_link == null ||
-                req.body.owner_family_name == null ||
-                req.body.owner_name == null ||
-                req.body.owner_phone_number == null ||
-                req.body.username == null ||
-                req.body.password == null ||
-                req.body.company_address_cityid == null ||
-                req.body.phone_numberid == null) {
+            if (req.body.CompanyName == null ||
+                req.body.CompleteAddressDescription == null ||
+                req.body.GoogleMapAddressLink == null ||
+                req.body.OwnerFamilyName == null ||
+                req.body.OwnerName == null ||
+                req.body.OwnerPhoneNumber == null ||
+                req.body.Username == null ||
+                req.body.Password == null ||
+                req.body.CompanyAddressCityID == null ||
+                req.body.PhoneNumberID == null) {
                 res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
             break;
         case "transportation":
-            if (req.body.air_conditionar == null ||
-                req.body.birthdate == null ||
-                req.body.color == null ||
-                req.body.description == null ||
-                req.body.family_name == null ||
-                req.body.name == null ||
-                req.body.password == null ||
-                req.body.pelak_number == null ||
-                req.body.phone_number == null ||
-                req.body.username == null ||
-                req.body.modelid == null ||
-                req.body.ware_houseid == null
+            if (req.body.AirConditionar == null ||
+                req.body.BirthDate == null ||
+                req.body.Color == null ||
+                req.body.Description == null ||
+                req.body.FamilyName == null ||
+                req.body.Name == null ||
+                req.body.Password == null ||
+                req.body.PelakNumber == null ||
+                req.body.PhoneNumber == null ||
+                req.body.Username == null ||
+                req.body.ModelID == null ||
+                req.body.WareHouseID == null
             ) {
                 res.status(400).json({"code": 703});
                 return false;
@@ -587,30 +593,30 @@ function addRoleInfoCheck(req, res, role) {
             break;
         case "wareHouse":
 
-            if (req.body.agent_family_name == null ||
-                req.body.agent_name == null ||
-                req.body.birthdate == null ||
-                req.body.cell_phone_number == null ||
-                req.body.password == null ||
-                req.body.phone_number == null ||
-                req.body.username == null ||
-                req.body.ware_house_complete_address_description == null ||
-                req.body.ware_house_google_map_address_link == null ||
-                req.body.ware_house_address_cityidIndex == null ||
-                req.body.selleridIndex == null) {
+            if (req.body.AgentFamilyName == null ||
+                req.body.AgentName == null ||
+                req.body.BirthDate == null ||
+                req.body.CellPhoneNumber == null ||
+                req.body.Password == null ||
+                req.body.PhoneNumber == null ||
+                req.body.Username == null ||
+                req.body.WareHouseCompleteAddressDescription == null ||
+                req.body.WareHouseGoogleMapAddressLink == null ||
+                req.body.WareHouseAddressCityID == null ||
+                req.body.SellerID == null) {
                 res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
 
             break;
         case "operator" :
-            if (req.body.birthdate == null ||
-                req.body.family_name == null ||
-                req.body.name == null ||
-                req.body.password == null ||
-                req.body.phone_number == null ||
-                req.body.username == null ||
-                req.body.selleridIndex == null
+            if (req.body.BirthDate == null ||
+                req.body.FamilyName == null ||
+                req.body.Name == null ||
+                req.body.Password == null ||
+                req.body.PhoneNumber == null ||
+                req.body.Username == null ||
+                req.body.SellerID == null
             ) {
                 res.status(400).json({"code": 703});
                 return false;
@@ -630,30 +636,30 @@ function checkToken(req, res ) {
         if (req.headers['token'] != null) {
             try{
                 var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
-                if (decodedJWT.password == null || (decodedJWT.username  && decodedJWT.phone_number )) {
+                if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
                      res.status(400).json({message: "expired token"});
                      return false
 
                 }else {
 
                     var searchQuery ;
-                    if (decodedJWT.username != null) {
+                    if (decodedJWT.Username != null) {
                         searchQuery = {
                             where: {
-                                username: decodedJWT.username, password: decodedJWT.password
+                                Username: decodedJWT.Username, Password: decodedJWT.Password
                             }
                         };
                     }else {
                         try {
                             searchQuery = {
                                 where: {
-                                    phone_number: decodedJWT.phone_number, password: decodedJWT.password
+                                    PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
                                 }
                             };
                         }catch (e) {
                             searchQuery = {
                                 where: {
-                                    owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
+                                    OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
                                 }
                             };
 
@@ -687,9 +693,9 @@ function checkToken(req, res ) {
 function filterRequest(req,res,type){
     switch (type) {
         case "orderProduct":
-            if (req.body.id == null || req.body.status == null){res.status(400).json({"code": 703}); return false;}
-            if (req.body.status){
-                if (req.body.ware_houseid == null){
+            if (req.body.ID == null || req.body.Status == null){res.status(400).json({"code": 703}); return false;}
+            if (req.body.Status){
+                if (req.body.WareHouseID == null){
                     res.status(404).json({"code":703});
                     return false;
                 }

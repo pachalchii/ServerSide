@@ -1,12 +1,11 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Support', {
+  return sequelize.define('PachalChiAdmins&Supports', {
     ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      primaryKey: true
     },
     Name: {
       type: DataTypes.STRING,
@@ -20,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    Username: {
+    UserName: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -31,8 +30,16 @@ module.exports = function(sequelize, DataTypes) {
     Status: {
       type: DataTypes.BOOLEAN,
       allowNull: true
+    },
+    RoleID: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'PachalChiRoles',
+        key: 'ID'
+      }
     }
   }, {
-    tableName: 'Support'
+    tableName: 'PachalChiAdmins&Supports'
   });
 };

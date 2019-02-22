@@ -45,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       references: {
         model: 'seller_operator',
-        key: 'id'
+        key: 'ID'
       }
     },
     ware_houseid: {
@@ -53,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       references: {
         model: 'seller_ware_house',
-        key: 'id'
+        key: 'ID'
       }
     },
     productid: {
@@ -61,7 +61,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       references: {
         model: 'takhfif_product',
-        key: 'id'
+        key: 'ID'
       }
     },
     transportarid: {
@@ -69,7 +69,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       references: {
         model: 'transportation',
-        key: 'id'
+        key: 'ID'
       }
     }
   }, {

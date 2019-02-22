@@ -1,32 +1,36 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('seller_ware_house', {
+  return sequelize.define('customer', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    agent_family_name: {
+    birth_date: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: true
     },
-    agent_name: {
+    company_name: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: true
     },
-    birthdate: {
-      type: DataTypes.STRING(50),
-      allowNull: false
+    enabled: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     },
-    cell_phone_number: {
+    family_name: {
       type: DataTypes.STRING(50),
       allowNull: false
     },
     image: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(200),
       allowNull: true
+    },
+    name: {
+      type: DataTypes.STRING(50),
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING(50),
@@ -42,8 +46,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER(11),
       allowNull: true
     },
+    registration_date_time: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
     status: {
       type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    theme: {
+      type: DataTypes.STRING(10),
       allowNull: true
     },
     username: {
@@ -52,31 +64,15 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING(50),
       allowNull: false
     },
-    ware_house_complete_address_description: {
-      type: DataTypes.STRING(300),
-      allowNull: true
-    },
-    ware_house_google_map_address_link: {
-      type: DataTypes.STRING(300),
-      allowNull: false
-    },
-    ware_house_address_cityid: {
+    cityid: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'cities',
-        key: 'id'
-      }
-    },
-    sellerid: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      references: {
-        model: 'seller',
-        key: 'id'
+        key: 'ID'
       }
     }
   }, {
-    tableName: 'seller_ware_house'
+    tableName: 'customer'
   });
 };

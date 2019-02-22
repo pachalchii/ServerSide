@@ -1,78 +1,74 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('customer', {
-    id: {
-      type: DataTypes.INTEGER(11),
+  return sequelize.define('Customer', {
+    ID: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    birth_date: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    company_name: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    enabled: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
-    family_name: {
-      type: DataTypes.STRING(50),
+    Name: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    image: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    name: {
-      type: DataTypes.STRING(50),
+    FamilyName: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    password: {
-      type: DataTypes.STRING(50),
+    Username: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    phone_number: {
-        unique: true,
-
-        type: DataTypes.STRING(50),
+    Password: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    point: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true
-    },
-    registration_date_time: {
-      type: DataTypes.STRING(50),
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
-    theme: {
-      type: DataTypes.STRING(10),
-      allowNull: true
-    },
-    username: {
-        unique: true,
-
-        type: DataTypes.STRING(50),
-      allowNull: false
-    },
-    cityid: {
-      type: DataTypes.INTEGER(11),
+    CityID: {
+      type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'cities',
-        key: 'id'
+        model: 'Cities',
+        key: 'ID'
       }
+    },
+    Status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    Enabled: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    Point: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    BirthDate: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    RegistrationDateTime: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    PhoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    Theme: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    Image: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    CompanyName: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
-    tableName: 'customer'
+    tableName: 'Customer'
   });
 };

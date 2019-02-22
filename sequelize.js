@@ -3,25 +3,30 @@ const Sequelize = require('sequelize');
 const citiesModel = require('./src/models/cities');
 const SellerModel = require('./src/models/seller');
 const addressesModel = require('./src/models/addresses');
-const carModelModel = require('./src/models/car_model');
+const carModelModel = require('./src/models/CarModel');
 const chatModel = require('./src/models/chat');
 const customerModel = require('./src/models/customer');
-const orderNazarSanjiModel = require('./src/models/order_nazar_sanji');
-const orderPardakhtModel = require('./src/models/order_pardakht');
-const orderProductModel = require('./src/models/order_product');
-const pachalChiRolesModel = require('./src/models/pachal_chi_roles');
-const productGroupsModel = require('./src/models/product_groups');
+const orderNazarSanjiModel = require('./src/models/OrderNazarSanji');
+const orderPardakhtModel = require('./src/models/OrderPardakht');
+const orderProductModel = require('./src/models/OrderProduct');
+const pachalChiRolesModel = require('./src/models/PachalChiRoles');
+const productGroupsModel = require('./src/models/ProductGroups');
 const productsModel = require('./src/models/products');
-const sellerOperatorModel = require('./src/models/seller_operator');
-const sellerPhoneNumberModel = require('./src/models/seller_phone_number');
-const sellerProductsModel = require('./src/models/seller_products');
-const sellerTypeModel = require('./src/models/seller_type');
-const sellerWareHouseModel = require('./src/models/seller_ware_house');
+const sellerOperatorModel = require('./src/models/SellerOperator');
+const sellerPhoneNumberModel = require('./src/models/SellerPhoneNumber');
+const sellerProductsModel = require('./src/models/SellerProducts');
+const sellerTypeModel = require('./src/models/SellerType');
+const sellerWareHouseModel = require('./src/models/SellerWareHouse');
 const supportModel = require('./src/models/support');
-const takhfifProductModel = require('./src/models/takhfif_product');
+const takhfifProductModel = require('./src/models/TakhfifProduct');
 const transportationModel = require('./src/models/transportation');
 const unitModel = require('./src/models/unit');
 const applicationModel = require('./src/models/application');
+const orderModel = require('./src/models/Order');
+const pachalChiAdminSupportsModel = require('./src/models/PachalChiAdmins&Supports');
+
+
+
 
 
 const {colors , databaseStatus} = require('./src/Util/myVars');
@@ -60,6 +65,10 @@ const takhfifProduct = takhfifProductModel(sequelize, Sequelize);
 const transportation = transportationModel(sequelize, Sequelize);
 const unit= unitModel(sequelize, Sequelize);
 const application = applicationModel(sequelize,Sequelize);
+const Order = orderModel(sequelize,Sequelize);
+const Support = supportModel(sequelize,Sequelize);
+const pachalChiAdminSupports = pachalChiAdminSupportsModel(sequelize,Sequelize);
+
 
 
 sequelize.sync({ force: databaseStatus })
