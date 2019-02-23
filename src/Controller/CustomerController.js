@@ -2,91 +2,97 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {upload,colors} = require('../Util/myVars');
-const { customer } = require('../../sequelize');
+const {loggerinfo,upload, colors} = require('../Util/myVars');
+const {response,filterRequest,isThisArrayEmpty , checkToken} = require('../Util/myFunctions');
+
+const {cities,addresses,customer} = require('../../sequelize');
 
 
+router.post('/address', (req, res) => {
+    var searchQuery = checkToken(req, res);
+    var AddresFilter = filterRequest(req,res,"customerAddress");
+    try {
+            if (searchQuery && AddresFilter){
+                customer.findAll(searchQuery).then(
+                    customer=>{
+                        if (!isThisArrayEmpty(customer)){
+                            cities.findAll({where:{ID:req.body.CityID}}).then(
+                                city=>{
+                                    if (!isThisArrayEmpty(city)) {
+                                        addresses.create({
+                                            CustomerID:customer[0].ID,
+                                            CityID:req.body.CityID,
+                                            GoogleMapAddressLink:req.body.GoogleMapAddressLink,
+                                            CompleteAddressDescription:req.body.CompleteAddressDescription,
+                                            CustomName:req.body.CustomName
+                                        });
+                                        response(res,undefined).then(
+                                            loggerinfo.info("user with id : "+customer[0].ID+" add a addres with ")
+                                        );
 
-
-
-/*router.post('/order' , (req,res)=>{
-    if (req.headers['token'] != null) {
-
-        try {
-            var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
-            if (decodedJWT.password == null || (decodedJWT.username && decodedJWT.phone_number)) {
-                res.status(400).json({message: "expired token"});
-            } else {
-                if (decodedJWT.username != null) {
-                    customer.findAll({
-                        where: {
-                            username: decodedJWT.username, password: decodedJWT.password
-                        }
-                    }).then(customer => {
-
-                        if (customer[0] != undefined) {
-
-                            if (req.body.supply == null ||
-                                req.body.)
-
-
-
-
-                        }else {
-                            res.status(400).json({"message":"expired token"});
-                        }
-                    });
-                } else {
-                    customer.findAll({
-                        where: {
-                            owner_phone_number: decodedJWT.owner_phone_number, password: decodedJWT.password
-                        }
-                    }).then(customer => {
-
-                        if (customer[0] != undefined) {
-
-
-
-
-
-
+                                    }else {
+                                        return res.status(404).json();
+                                    }
+                                }
+                            );
 
 
 
                         }else {
-                            res.status(400).json({"message":"expired token"});
+                            return res.status(404).json({"code": 700});
                         }
-                    });
-                }
+                    }
+                );
+
 
             }
-        } catch(err) {
-            console.log(err);
-            res.status(400).json({"message":"expired token"});
+
+
+    } catch (e) {
+        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+        res.status(500).json({"code": 500});
+
+
+    }
+
+});
+
+router.get('/address', (req, res) => {
+    var searchQuery = checkToken(req, res);
+    try {
+        if (searchQuery ){
+            customer.findAll(searchQuery).then(
+                customer=>{
+                    if (!isThisArrayEmpty(customer)){
+                        addresses.findAll({where: {CustomerID: customer[0].ID}}).then(
+                            addresses=>{
+                                response(res,addresses).then(
+                                    loggerinfo.info("customer with id :"+customer[0].ID+ " get all his address")
+                                )
+                            }
+                        )
+
+
+                    }else {
+                        return res.status(404).json({"code": 700});
+                    }
+                }
+            );
+
 
         }
 
 
+    } catch (e) {
+        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+        res.status(500).json({"code": 500});
 
 
-
-    } else {
-        res.status(400).json({"message": "token not found in header"});
     }
+});
 
-} );*/
-
-router.get('/orders' , (req,res)=>{} );
-
-router.post('/payment' , (req,res)=>{});
-
-
-
-
-
-
-
-
+router.post('/payment', (req, res) => {
+});
 
 
 module.exports = router;

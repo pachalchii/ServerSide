@@ -31,140 +31,141 @@ router.post('/register',upload.single("Image"), (req, res) => {
             var image ;
             switch (role) {
                 case "customer":
-                    registerInfoCheck(req,res,role);
-                    if (req.file != null){
+                    if (registerInfoCheck(req,res,role)){
+                        if (req.file != null ){
 
-                        const tempPath = req.file.path;
-                        const targetPath = path.join(__dirname, "./../../uploads/customer/"+req.body.Username+path.extname(req.file.originalname).toLowerCase());
-                        image = targetPath;
-                        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
-                            fs.rename(tempPath, targetPath, err => {
-                                if (err) return handleError(err, res);
-                            });
-                        } else {
-                            fs.unlink(tempPath, err => {
-                                if (err) return handleError(err, res);
+                            const tempPath = req.file.path;
+                            const targetPath = path.join(__dirname, "./../../uploads/customer/"+req.body.Username+path.extname(req.file.originalname).toLowerCase());
+                            image = targetPath;
+                            if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                                fs.rename(tempPath, targetPath, err => {
+                                    if (err) return handleError(err, res);
+                                });
+                            } else {
+                                fs.unlink(tempPath, err => {
+                                    if (err) return handleError(err, res);
 
-                                return res
-                                    .status(403)
-                                    .contentType("text/plain")
-                                    .end("this format of image is not under support");
-                            });
-                        }
-
-
-                    }else{
-                        image = "notSetYet";
-                    }
-                    sequelize.transaction().then(function(t) {
-                        customer.create({
-                            BirthDate:req.body.BirthDate,
-                            CompanyName:req.body.CompanyName,
-                            Enable:true,
-                            Status:true,
-                            FamilyName:req.body.FamilyName,
-                            Image:image,
-                            Name:req.body.name,
-                            PhoneNumber:req.body.PhoneNumber,
-                            Password:md5(req.body.password),
-                            EstablishedDate:req.body.EstablishedDate,
-                            Point:0,
-                            RegistrationDateTime:req.body.RegistrationDateTime,
-                            Theme:req.body.Theme,
-                            Username:req.body.Username,
-                            CityID:req.body.CityID
-
-                        }, {
-                            transaction: t
-                        }).then(function() {
-                            t.commit();
-                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumber +" phone number");
-                            return res.status(200).json();
-
-
-                        }).catch(function(error) {
-                            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
-                            t.rollback();
-                            if (error.parent.errno === 1062)
-                            {
-                                return res.status(400).json({"message":"customer signUped before"})
+                                    return res
+                                        .status(403)
+                                        .contentType("text/plain")
+                                        .end("this format of image is not under support");
+                                });
                             }
-                            else {
-                                return res.status(400).json({"message":"Oops! Something went wrong!"})
 
-                            }                        });
-                    });
 
+                        }else{
+                            image = "notSetYet";
+                        }
+                        sequelize.transaction().then(function(t) {
+                            customer.create({
+                                BirthDate:req.body.BirthDate,
+                                CompanyName:req.body.CompanyName,
+                                Enable:true,
+                                Status:true,
+                                FamilyName:req.body.FamilyName,
+                                Image:image,
+                                Name:req.body.Name,
+                                PhoneNumber:req.body.PhoneNumber,
+                                Password:md5(req.body.Password),
+                                EstablishedDate:req.body.EstablishedDate,
+                                Point:0,
+                                RegistrationDateTime:req.body.RegistrationDateTime,
+                                Theme:req.body.Theme,
+                                Username:req.body.Username,
+                                CityID:req.body.CityID
+
+                            }, {
+                                transaction: t
+                            }).then(function() {
+                                t.commit();
+                                loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumber +" phone number");
+                                return res.status(200).json();
+
+
+                            }).catch(function(error) {
+                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
+                                t.rollback();
+                                if (error.parent.errno === 1062)
+                                {
+                                    return res.status(400).json({"message":"customer signUped before"})
+                                }
+                                else {
+                                    return res.status(400).json({"message":"Oops! Something went wrong!"})
+
+                                }                        });
+                        });
+
+                    }
 
                     break;
                 case "seller":
-                    registerInfoCheck(req,res,role);
-                    if (req.file != null){
-                        const tempPath =req.file.path;
-                        const targetPath = path.join(__dirname, "./../../uploads/seller/"+req.body.Username+path.extname(req.file.originalname).toLowerCase());
-                        image = targetPath;
+                    if (registerInfoCheck(req,res,role)){
+                        if (req.file != null){
+                            const tempPath =req.file.path;
+                            const targetPath = path.join(__dirname, "./../../uploads/seller/"+req.body.Username+path.extname(req.file.originalname).toLowerCase());
+                            image = targetPath;
 
-                        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
-                            fs.rename(tempPath, targetPath, err => {
-                                if (err) return handleError(err, res);
+                            if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                                fs.rename(tempPath, targetPath, err => {
+                                    if (err) return handleError(err, res);
 
-                            });
-                        } else {
-                            fs.unlink(tempPath, err => {
-                                if (err) return handleError(err, res);
+                                });
+                            } else {
+                                fs.unlink(tempPath, err => {
+                                    if (err) return handleError(err, res);
 
-                                res
-                                    .status(403)
-                                    .contentType("text/plain")
-                                    .end("this format of image is not under support");
-                            });
+                                    res
+                                        .status(403)
+                                        .contentType("text/plain")
+                                        .end("this format of image is not under support");
+                                });
+                            }
+
+                        }else{
+                            image = "notSetYet";
                         }
 
-                    }else{
-                        image = "notSetYet";
-                    }
+                        sequelize.transaction().then(function(t) {
+                            Seller.create({
+                                ID:req.body.PhoneNumberID,
+                                CompanyName:req.body.CompanyName,
+                                CompleteAddressDescription:req.body.CompleteAddressDescription,
+                                Enable:true,
+                                Point:0,
+                                RegistrationDateTime:req.body.RegistrationDateTime,
+                                GoogleMapAddressLink:req.body.GoogleMapAddressLink,
+                                LogoImage:image,
+                                OwnerFamilyName:req.body.OwnerFamilyName,
+                                OwnerName:req.body.OwnerName,
+                                Password:md5(req.body.Password),
+                                OwnerPhoneNumber:req.body.OwnerPhoneNumber,
+                                Username:req.body.Username,
+                                CompanyAddressCityID:req.body.CompanyAddressCityID,
+                                PhoneNumberID:req.body.PhoneNumberID,
+                                TypeID:1
 
-                    sequelize.transaction().then(function(t) {
-                        Seller.create({
-                            ID:req.body.PhoneNumberID,
-                            CompanyName:req.body.CompanyName,
-                            CompleteAddressDescription:req.body.CompleteAddressDescription,
-                            Enable:true,
-                            Point:0,
-                            RegistrationDateTime:req.body.RegistrationDateTime,
-                            GoogleMapAddressLink:req.body.GoogleMapAddressLink,
-                            LogoImage:image,
-                            OwnerFamilyName:req.body.OwnerFamilyName,
-                            OwnerName:req.body.OwnerName,
-                            Password:md5(req.body.Password),
-                            OwnerPhoneNumber:req.body.OwnerPhoneNumber,
-                            Username:req.body.Username,
-                            CompanyAddressCityID:req.body.CompanyAddressCityID,
-                            PhoneNumberID:req.body.PhoneNumberID,
-                            TypeID:1
+                            }, {
+                                transaction: t
+                            }).then(function() {
+                                t.commit();
+                                loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumberID +" phone_numberid");
+                                return res.status(200).json()
 
-                        }, {
-                            transaction: t
-                        }).then(function() {
-                            t.commit();
-                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumberID +" phone_numberid");
-                            return res.status(200).json()
+                            }).catch(function(error) {
+                                loggererror.info(req.connection.remoteAddress +  "cause this erorr : " + error);
+                                t.rollback();
+                                if (error.parent.errno === 1062)
+                                {
+                                    return res.status(400).json({"message":"seller signUped before"})
+                                }
+                                else {
+                                    console.log(error);
+                                    return res.status(400).json({"message":"Oops! Something went wrong!"})
 
-                        }).catch(function(error) {
-                            loggererror.info(req.connection.remoteAddress +  "cause this erorr : " + error);
-                            t.rollback();
-                            if (error.parent.errno === 1062)
-                            {
-                                return res.status(400).json({"message":"seller signUped before"})
-                            }
-                            else {
-                                console.log(error);
-                                return res.status(400).json({"message":"Oops! Something went wrong!"})
-
-                            }
+                                }
+                            });
                         });
-                    });
-
+                    }
 
                     break;
                 default: return res.status(404).json({"message":"wrong role name"})

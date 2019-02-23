@@ -443,7 +443,7 @@ function checkPhone(req, res) {
         return true;
 
 
-    }
+    }else return true;
 
 }
 
@@ -458,12 +458,12 @@ function checkPassword(req, res) {
         return true;
 
 
-    }
+    }else return true;
 
 }
 
 function checkUserName(req, res) {
-    if (req.body.usernamer != null) {
+    if (req.body.Username != null) {
         var pattern = new RegExp(USERNAME_REGEX);
         var status = pattern.test(req.body.Username);
         if (!status) {
@@ -473,7 +473,7 @@ function checkUserName(req, res) {
         return true;
 
 
-    }
+    }else return true;
 
 }
 
@@ -694,12 +694,19 @@ function filterRequest(req,res,type){
     switch (type) {
         case "orderProduct":
             if (req.body.ID == null || req.body.Status == null){res.status(400).json({"code": 703}); return false;}
-            if (req.body.Status){
+            else if (req.body.Status){
                 if (req.body.WareHouseID == null){
                     res.status(404).json({"code":703});
                     return false;
-                }
-            } 
+                }else{return true;}
+            }else{return true;}
+            break;
+        case "customerAddress":
+            if (req.body.CityID == null || req.body.GoogleMapAddressLink == null || req.body.CompleteAddressDescription == null || req.body.CustomName == null)
+            {
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
             break;
 
 
