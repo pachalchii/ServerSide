@@ -728,6 +728,16 @@ function filterRequest(req,res,type){
             break;
         case "followUp":
             if (req.body.HashCode == null){
+
+                    return status;
+                }
+            }
+            
+            break;
+
+        case "editCustomerAddress":
+            if (req.body.CustomerAddressID == null)
+            {
                 res.status(400).json({"code": 703});
                 return false;
             }else{return true;}

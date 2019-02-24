@@ -5,8 +5,12 @@ var router = express.Router();
 const {loggererror ,loggerinfo,upload, colors} = require('../Util/myVars');
 const {response,filterRequest,isThisArrayEmpty , checkToken} = require('../Util/myFunctions');
 
+<<<<<<< HEAD
 const {support,chat,orderProduct, Seller ,products , sequelize, takhfifProduct , sellerProducts , Order,cities,addresses,customer} = require('../../sequelize');
 const Op = sequelize.Op;
+=======
+const { Seller ,products , sequelize, takhfifProduct , sellerProducts , Order,cities,addresses,customer} = require('../../sequelize');
+>>>>>>> de03db3b2cc442f997fc7c90a16363a09a225139
 
 
 router.post('/address', (req, res) => {
@@ -218,9 +222,15 @@ router.post('/order', (req, res) => {
                                                           product => {
                                                               if (!isThisArrayEmpty(product)) {
 
+<<<<<<< HEAD
                                                                   if (takhfifProduct[0].Start < new Date().getTime() < takhfifProduct[0].Finish && takhfifProduct[0].SupplyOfProduct > 0 && takhfifProduct[0].Enable && takhfifProduct[0].PachalChiStatus) {
                                                                       var ii = value.Supply;
                                                                       if (takhfifProduct[0].SupplyOfProduct > 0) {
+=======
+                                                                  if (takhfifProduct[0].Start < new Date().getTime() < takhfifProduct[0].Finish && takhfifProduct[0].SupplyOFProduct > 0 && takhfifProduct[0].Enable && takhfifProduct[0].PachalChiStatus) {
+                                                                      var ii = value.Supply;
+                                                                      if (takhfifProduct[0].SupplyOFProduct > 0) {
+>>>>>>> de03db3b2cc442f997fc7c90a16363a09a225139
                                                                           for (ii; ii > 0; ii = ii - 1) {
                                                                               koleTakhfif = koleTakhfif + (takhfifProduct[0].PriceBefore - takhfifProduct[0].PriceAfter);
                                                                           }
@@ -328,7 +338,11 @@ router.post('/order', (req, res) => {
 
 router.get('/order', (req, res) => {
 
+<<<<<<< HEAD
     var searchQuery = checkToken(req, res);
+=======
+    var searchQuery = checkToken(req, res, "seller");
+>>>>>>> de03db3b2cc442f997fc7c90a16363a09a225139
     if (searchQuery) {
 
         customer.findAll(searchQuery).then(customer => {
