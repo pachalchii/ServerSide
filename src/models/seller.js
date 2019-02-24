@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     LogoImage: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(200),
       allowNull: false
     },
     EstablishedDate: {
@@ -59,6 +59,7 @@ module.exports = function(sequelize, DataTypes) {
     PhoneNumberID: {
       type: DataTypes.INTEGER,
       allowNull: true,
+          unique: true,
       references: {
         model: 'SellerPhoneNumber',
         key: 'ID'
@@ -86,7 +87,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     Username: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+        unique: true
     },
     Password: {
       type: DataTypes.STRING,

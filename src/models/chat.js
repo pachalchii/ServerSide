@@ -23,10 +23,6 @@ module.exports = function(sequelize, DataTypes) {
     DateTimeSend: {
       type: DataTypes.STRING,
       allowNull: true
-    },
-    SeenStatus: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
     }
   }, {
     tableName: 'Chat'

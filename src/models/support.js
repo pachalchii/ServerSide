@@ -17,12 +17,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     Image: {
-      type: DataTypes.STRING,
+        type: DataTypes.STRING(200),
       allowNull: false
     },
     Username: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+        unique: true
     },
     Password: {
       type: DataTypes.STRING,

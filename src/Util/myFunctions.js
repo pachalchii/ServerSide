@@ -3,7 +3,8 @@ const { orderProduct ,application } = require('../../sequelize');
 const {loggererror  ,colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
 var jwt = require('jwt-simple');
 var Kavenegar = require('kavenegar');
-
+var path = require('path');
+const fs = require("fs");
 
 function smsHandler(message,phone) {
     var api = Kavenegar.KavenegarApi({
@@ -439,9 +440,9 @@ function checkPhone(req, res) {
         if (!status) {
             res.status(400).json({"code":711});
             return false;
+        }else {
+            return true;
         }
-        return true;
-
 
     }else return true;
 
@@ -454,8 +455,9 @@ function checkPassword(req, res) {
         if (!status) {
             res.status(400).json({"code": 712});
             return false;
+        }else {
+            return true;
         }
-        return true;
 
 
     }else return true;
@@ -469,9 +471,9 @@ function checkUserName(req, res) {
         if (!status) {
             res.status(400).json({"code": 713});
             return false;
+        }else {
+            return true;
         }
-        return true;
-
 
     }else return true;
 
@@ -516,9 +518,7 @@ function registerInfoCheck(req, res, role) {
 
 }
 
-function loginInfoCheck(req, res, role) {
-    switch (role) {
-        case "customer":
+function loginInfoCheck(req, res) {
             if (
                 req.body.Password == null || (req.body.PhoneNumber == null && req.body.Username == null)
 
@@ -526,31 +526,18 @@ function loginInfoCheck(req, res, role) {
                 res.status(400).json({"code": 703});
                 return false;
             } else {
-                if (req.body.PhoneNumber != null) {
-                    checkPhone(req, res);
+                if (checkPassword(req, res)){
+                    if (req.body.PhoneNumber != null) {
+                        return checkPhone(req, res);
+                    }else {
+                        return checkUserName(req, res);
+                    }
+                } else {
+                    res.status(400).json({"code": 712});
+                    return false
                 }
-                checkPassword(req, res)
-            }
-            ;
-            break;
-        case "seller":
-            if (
-                req.body.Password == null || (req.body.PhoneNumber == null && req.body.Username == null)
 
-            ) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else {
-                if (req.body.PhoneNumber != null) {
-                    checkPhone(req, res);
-                }
-                checkPassword(req, res)
-            }
-            ;
-            break;
-
-    }
-
+            };
 
 }
 
@@ -637,7 +624,7 @@ function checkToken(req, res ) {
             try{
                 var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
                 if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
-                     res.status(400).json({message: "expired token"});
+                     res.status(400).json({"code": 700});
                      return false
 
                 }else {
@@ -649,7 +636,7 @@ function checkToken(req, res ) {
                                 Username: decodedJWT.Username, Password: decodedJWT.Password
                             }
                         };
-                    }else {
+                    }else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
                         try {
                             searchQuery = {
                                 where: {
@@ -665,6 +652,8 @@ function checkToken(req, res ) {
 
                         }
 
+                    }else {
+                        res.status(400).json({"code":700});
                     }
                    return searchQuery;
 
@@ -676,7 +665,7 @@ function checkToken(req, res ) {
 
             }  catch(err) {
                 loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
-                  res.status(400).json({"message":"expired token"});
+                  res.status(400).json({"code":700});
                   return false;
 
             }
@@ -708,8 +697,62 @@ function filterRequest(req,res,type){
                 return false;
             }else{return true;}
             break;
+        case "DoOrder":
+            if (req.body.CustomerAddressID == null || req.body.DateTimeErsal == null ){
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                var products = [];
+                products = req.body.products;
+                var status =  true;
+                var tof = false;
+                function productsIteration(value, index, array) {
+                    if (value.SellerProductID == null|| value.Supply == null ){
+                        status = false;
+                        if (!tof) {
+                            res.status(400).json({"code": 703});
+                            tof = true;
+                        }
+                    }
+                }
+                if (isThisArrayEmpty(products)) {
+                    res.status(400).json({"code": 703});
+                    return false;
+                }else {
+                    products.forEach(productsIteration);
 
+                    return status;
+                }
+            }
+            
+            break;
+        case "followUp":
+            if (req.body.HashCode == null){
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
+            break;
 
+        case "editCustomerAddress":
+            if (req.body.CustomerAddressID == null)
+            {
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
+            break;
+        case "message":
+            console.log("hi")
+            if ( req.body.Message == null ){
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
+            break;
+        case "Smessage":
+            if ( req.body.ToID == null || req.body.Message == null  ){
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
+            break;
         default : console.log("wrong type parameter")
     }
 }

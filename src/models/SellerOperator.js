@@ -5,7 +5,9 @@ module.exports = function(sequelize, DataTypes) {
     ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+        autoIncrement: true
+
     },
     Name: {
       type: DataTypes.STRING,
@@ -25,7 +27,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     Username: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+        unique: true
     },
     Password: {
       type: DataTypes.STRING,
@@ -37,7 +40,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     PhoneNumber: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+        unique: true
     },
     Status: {
       type: DataTypes.BOOLEAN,
@@ -48,7 +52,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     Image: {
-      type: DataTypes.STRING,
+        type: DataTypes.STRING(200),
       allowNull: true
     }
   }, {

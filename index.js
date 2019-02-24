@@ -6,7 +6,7 @@ const {smsHandler,fillDataBase} = require('./src/Util/myFunctions');
 const app = express();
 app.use(bodyParser.json());
 
-
+var supportController = require('./src/Controller/SupportController');
 var appController = require('./src/Controller/AppController');
 var customerController = require('./src/Controller/CustomerController');
 var AuthController = require('./src/Controller/AuthController');
@@ -17,6 +17,7 @@ var transportationController = require('./src/Controller/transportationControlle
 
 
 app.use('/application', appController);
+app.use('/support', supportController);
 app.use('/customer', customerController);
 app.use('/Auth', AuthController);
 app.use('/seller', SellerController);
@@ -49,7 +50,6 @@ var twirlTimer = (function() {
 })();
 
 app.listen(port, () => {
-    console.log(process.env.PORT);
     console.log(colors.fg.Green , "                  _           _ _____ _     _    _                   _ _                                _         _ \n" +
     "                 | |         | /  __ \\ |   (_)  (_)                 | (_)                              (_)       | |\n" +
     " _ __   __ _  ___| |__   __ _| | /  \\/ |__  _    _ ___    ___  _ __ | |_ _ __   ___    __ _  __ _  __ _ _ _ __   | |\n" +

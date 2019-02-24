@@ -15,6 +15,7 @@ const http = require("http");
 
 
 
+
 //seller or Sales Representative
 
 router.get('/list', (req, res) => {
@@ -43,7 +44,7 @@ router.get('/list', (req, res) => {
     Seller.findAll({
         where: {
             TypeID: 1,
-            CompanyAddressCityID: req.params.CityID
+            CompanyAddressCityID: req.query.CityID
         }
     }).then(seller => {
         if (!isThisArrayEmpty(seller)) {
@@ -59,7 +60,7 @@ router.get('/list', (req, res) => {
 });
 
 router.post('/addRole', upload.single("Image"), (req, res) => {
-    var searchQuery = checkToken(req, res, "seller");
+    var searchQuery = checkToken(req, res);
     if (searchQuery) {
 
         Seller.findAll(searchQuery).then(seller => {
@@ -348,7 +349,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
 router.post('/product', upload.single("Image"), (req, res) => {
 
     var timeStatus = checkLimitTime(res);
-    var searchQuery = checkToken(req, res, "seller");
+    var searchQuery = checkToken(req, res);
     if (searchQuery && timeStatus) {
 
         Seller.findAll(searchQuery).then(seller => {
@@ -385,7 +386,7 @@ router.post('/product', upload.single("Image"), (req, res) => {
                 if (req.body.Description == null ||
                     req.body.Price == null ||
                     req.body.PriceDateTime == null ||
-                    req.body.SupplyOFProduct == null ||
+                    req.body.SupplyOfProduct == null ||
                     req.body.UnitOfProduct == null ||
                     req.body.ProductID == null ||
                     req.body.UnitID == null
@@ -411,7 +412,7 @@ router.post('/product', upload.single("Image"), (req, res) => {
                         Image: image,
                         Price: req.body.Price,
                         PriceDateTime: req.body.PriceDateTime,
-                        SupplyOFProduct: req.body.SupplyOFProduct,
+                        SupplyOfProduct: req.body.SupplyOfProduct,
                         UnitOfProduct: req.body.UnitOfProduct,
                         ProductID: req.body.ProductID,
                         SellerID: seller[0].ID,
@@ -435,7 +436,7 @@ router.post('/product', upload.single("Image"), (req, res) => {
 router.put('/product', upload.single("Image"), (req, res) => {
 
     var timeStatus = checkLimitTime(res);
-    var searchQuery = checkToken(req, res, "seller");
+    var searchQuery = checkToken(req, res);
     if (searchQuery && timeStatus) {
 
         Seller.findAll(searchQuery).then(seller => {
@@ -451,7 +452,7 @@ router.put('/product', upload.single("Image"), (req, res) => {
                     req.body.Description == null ||
                     req.body.Price == null ||
                     req.body.PriceDateTime == null ||
-                    req.body.SupplyOFProduct == null ||
+                    req.body.SupplyOfProduct == null ||
                     req.body.UnitOfProduct == null ||
                     req.body.ProductID == null ||
                     req.body.UnitID == null
@@ -507,7 +508,7 @@ router.put('/product', upload.single("Image"), (req, res) => {
                                     Image: image,
                                     Price: req.body.Price,
                                     PriceDateTime: req.body.PriceDateTime,
-                                    SupplyOFProduct: req.body.SupplyOFProduct,
+                                    SupplyOfProduct: req.body.SupplyOfProduct,
                                     UnitOfProduct: req.body.UnitOfProduct,
                                     ProductID: req.body.ProductID,
                                     SellerID: seller[0].ID,
@@ -540,7 +541,7 @@ router.put('/product', upload.single("Image"), (req, res) => {
 
 router.get('/product', (req, res) => {
 
-    var searchQuery = checkToken(req, res, "seller");
+    var searchQuery = checkToken(req, res);
     if (searchQuery) {
 
         Seller.findAll(searchQuery).then(seller => {
@@ -568,8 +569,8 @@ router.get('/product', (req, res) => {
                         Description: value.Description,
                         Price: value.Price,
                         PriceDateTime: value.PriceDateTime,
-                        SupplyOFProduct: value.SupplyOFProduct,
-                        UnitOFProduct: value.UnitOFProduct,
+                        SupplyOfProduct: value.SupplyOfProduct,
+                        UnitOfProduct: value.UnitOfProduct,
                         ProductID: value.ProductID,
                         SellerID: value.SellerID,
                         UnitID: value.UnitID,
@@ -606,7 +607,7 @@ router.get('/product', (req, res) => {
 
 router.get('/Subtypes', (req, res) => {
 
-    var searchQuery = checkToken(req, res, "seller");
+    var searchQuery = checkToken(req, res);
     if (searchQuery) {
 
         Seller.findAll(searchQuery).then(seller => {

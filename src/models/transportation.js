@@ -26,7 +26,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     Username: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+        unique: true
     },
     Password: {
       type: DataTypes.STRING,
@@ -38,7 +39,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     PhoneNumber: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+        unique: true
     },
     Status: {
       type: DataTypes.BOOLEAN,
@@ -49,7 +51,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     Image: {
-      type: DataTypes.STRING,
+        type: DataTypes.STRING(200),
       allowNull: true
     },
     ModelID: {

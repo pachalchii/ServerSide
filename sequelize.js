@@ -83,6 +83,7 @@ sequelize.sync({ force: databaseStatus })
 
 
 module.exports = {
+    pachalChiAdminSupports,Support,Order,
     sequelize,application,
     Seller,cities,addresses,car,chat,customer,orderNazarSanji,orderPardakht,orderProduct,pachalChiRoles,productGroups,
     sellerOperator,products,sellerPhoneNumber,sellerProducts,sellerType,sellerWareHouse,support,takhfifProduct,transportation,unit
