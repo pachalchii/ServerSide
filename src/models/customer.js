@@ -61,7 +61,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     Image: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     CompanyName: {

@@ -3,7 +3,8 @@ const { orderProduct ,application } = require('../../sequelize');
 const {loggererror  ,colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
 var jwt = require('jwt-simple');
 var Kavenegar = require('kavenegar');
-
+var path = require('path');
+const fs = require("fs");
 
 function smsHandler(message,phone) {
     var api = Kavenegar.KavenegarApi({
@@ -708,7 +709,43 @@ function filterRequest(req,res,type){
                 return false;
             }else{return true;}
             break;
+        case "DoOrder":
+            if (req.body.CustomerAddressID == null || req.body.DateTimeErsal == null ){
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                var products = [];
+                products = req.body.products;
+                var status =  true;
+                var tof = false;
+                function productsIteration(value, index, array) {
+                    if (value.SellerProductID == null|| value.Supply == null ){
+                        status = false;
+                        if (!tof) {
+                            res.status(400).json({"code": 703});
+                            tof = true;
+                        }
+                    }
+                }
+                if (isThisArrayEmpty(products)) {
+                    res.status(400).json({"code": 703});
+                    return false;
+                }else {
+                    products.forEach(productsIteration);
 
+                    return status;
+                }
+            }
+            
+            break;
+
+        case "editCustomerAddress":
+            if (req.body.CustomerAddressID == null)
+            {
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
+            break;
 
         default : console.log("wrong type parameter")
     }

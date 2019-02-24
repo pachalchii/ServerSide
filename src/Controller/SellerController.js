@@ -43,7 +43,7 @@ router.get('/list', (req, res) => {
     Seller.findAll({
         where: {
             TypeID: 1,
-            CompanyAddressCityID: req.params.CityID
+            CompanyAddressCityID: req.query.CityID
         }
     }).then(seller => {
         if (!isThisArrayEmpty(seller)) {
@@ -385,7 +385,7 @@ router.post('/product', upload.single("Image"), (req, res) => {
                 if (req.body.Description == null ||
                     req.body.Price == null ||
                     req.body.PriceDateTime == null ||
-                    req.body.SupplyOFProduct == null ||
+                    req.body.SupplyOfProduct == null ||
                     req.body.UnitOfProduct == null ||
                     req.body.ProductID == null ||
                     req.body.UnitID == null
@@ -540,7 +540,7 @@ router.put('/product', upload.single("Image"), (req, res) => {
 
 router.get('/product', (req, res) => {
 
-    var searchQuery = checkToken(req, res, "seller");
+    var searchQuery = checkToken(req, res);
     if (searchQuery) {
 
         Seller.findAll(searchQuery).then(seller => {
@@ -606,7 +606,7 @@ router.get('/product', (req, res) => {
 
 router.get('/Subtypes', (req, res) => {
 
-    var searchQuery = checkToken(req, res, "seller");
+    var searchQuery = checkToken(req, res);
     if (searchQuery) {
 
         Seller.findAll(searchQuery).then(seller => {

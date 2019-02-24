@@ -49,7 +49,6 @@ var twirlTimer = (function() {
 })();
 
 app.listen(port, () => {
-    console.log(process.env.PORT);
     console.log(colors.fg.Green , "                  _           _ _____ _     _    _                   _ _                                _         _ \n" +
     "                 | |         | /  __ \\ |   (_)  (_)                 | (_)                              (_)       | |\n" +
     " _ __   __ _  ___| |__   __ _| | /  \\/ |__  _    _ ___    ___  _ __ | |_ _ __   ___    __ _  __ _  __ _ _ _ __   | |\n" +

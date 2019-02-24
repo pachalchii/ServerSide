@@ -724,11 +724,11 @@ router.post('/phoneNumber',(req,res) => {
         sequelize.transaction().then(function(t) {
             sellerPhoneNumber.create({
 
-                PhoneNumber1:req.body.PhoneNumber1,
-                PhoneNumber2:req.body.PhoneNumber2,
-                PhoneNumber3:req.body.PhoneNumber3,
-                PhoneNumber4:req.body.PhoneNumber4,
-                PhoneNumber5:req.body.PhoneNumber5,
+                PhoneNumber1:numberOne,
+                PhoneNumber2:numberTwo,
+                PhoneNumber3:numberThree,
+                PhoneNumber4:numberFour,
+                PhoneNumber5:numberFive,
 
             }, {
                 transaction: t

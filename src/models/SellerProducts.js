@@ -5,7 +5,9 @@ module.exports = function(sequelize, DataTypes) {
     ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+        autoIncrement: true
+
     },
     SellerID: {
       type: DataTypes.INTEGER,
@@ -48,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     Image: {
-      type: DataTypes.STRING,
+        type: DataTypes.STRING(200),
       allowNull: true
     },
     Description: {

@@ -16,14 +16,14 @@ module.exports = function(sequelize, DataTypes) {
         key: 'ID'
       }
     },
-    ProductID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Products',
-        key: 'ID'
-      }
-    },
+      ProductID: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          references: {
+              model: 'Products',
+              key: 'ID'
+          }
+      },
     Start: {
       type: DataTypes.STRING,
       allowNull: false
@@ -61,8 +61,8 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     Image: {
-      type: DataTypes.STRING,
-      allowNull: true
+        type: DataTypes.STRING(200),
+        allowNull: true
     },
     PachalChiStatus: {
       type: DataTypes.BOOLEAN,
