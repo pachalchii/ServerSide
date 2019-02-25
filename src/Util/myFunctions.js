@@ -732,7 +732,6 @@ function filterRequest(req,res,type){
                 return false;
             }else{return true;}
             break;
-
         case "editCustomerAddress":
             if (req.body.CustomerAddressID == null)
             {
@@ -753,6 +752,13 @@ function filterRequest(req,res,type){
                 return false;
             }else{return true;}
             break;
+        case "search":
+            if (req.body.param == null){
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
+            break;
+
         default : console.log("wrong type parameter")
     }
 }

@@ -3,9 +3,9 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {loggererror ,loggerinfo,upload, colors} = require('../Util/myVars');
-const {response,filterRequest,isThisArrayEmpty , checkToken} = require('../Util/myFunctions');
+const {base64_encode,response,filterRequest,isThisArrayEmpty , checkToken} = require('../Util/myFunctions');
 
-const {support,chat,orderProduct, Seller ,products , sequelize, takhfifProduct , sellerProducts , Order,cities,addresses,customer} = require('../../sequelize');
+const { support,chat,orderProduct, Seller ,products , sequelize, takhfifProduct , sellerProducts , Order,cities,addresses,customer} = require('../../sequelize');
 const Op = sequelize.Op;
 
 
@@ -175,7 +175,6 @@ router.post('/order', (req, res) => {
         if (searchQuery && requestFilter){
             customer.findAll(searchQuery).then(
                 customer=>{
-
                     if (!isThisArrayEmpty(customer)){
                         var productss = [];
                         productss =  req.body.products;
@@ -235,7 +234,7 @@ router.post('/order', (req, res) => {
                                                               }
                                                               else {
                                                                   res.status(404).json();
-                                                                  status = false;
+                                                                  statusTwo = false;
                                                               }
 
                                                           }
@@ -252,10 +251,10 @@ router.post('/order', (req, res) => {
                                   );
                               })
                           }
-
                           productss.forEach((item)=>{
                               Promise.all([getAllTakhfif(item)
                                   .then((koleTakhfif)=>{
+
                                       if (status && statusTwo){
 
                                           sequelize.transaction().then(function(t) {
@@ -267,14 +266,21 @@ router.post('/order', (req, res) => {
                                                   JameKol:KolMablagh,
                                                   JameKolAfterTakhfif:KolMablagh-koleTakhfif,
                                                   OrderStatus: false,
-                                                  HashCode:"hashCode!"
+                                                  HashCode:randomstring.generate(10)
 
                                               }, {
                                                   transaction: t
                                               }).then(savedOrder=> {
                                                   t.commit();
+                                                  Order.update({HashCode:Math.floor(100000000 + Math.random() * 900000000).savedOrder.ID},{where:{ID:savedOrder.ID}}).then(test=>
+                                                  {
+                                                      return res.status(200).json()
+
+                                                  }
+
+                                              );
+
                                                   loggerinfo.info(req.connection.remoteAddress + " order saved  with id " + savedOrder.ID );
-                                                  return res.status(200).json()
 
                                               }).catch(function (error) {
                                                   loggererror.info(req.connection.remoteAddress + "cause this erorr : " + error);
@@ -288,7 +294,7 @@ router.post('/order', (req, res) => {
                                       }
                                   })
                                   .catch((err)=>{
-                                      console.log(err)
+                                      console.log(err);
                                       res.status(500).json({"code":500});
                                       status = false
 
@@ -420,6 +426,50 @@ router.get('/message', (req, res) => {
 
 });
 
+router.post('/search',(req,res)=>{
+    var searchQuery = checkToken(req, res);
+    var requestFilter = filterRequest(req,res,"search")
+    if (searchQuery && requestFilter) {
+        customer.findAll(searchQuery).then(customer => {
+
+            if (isThisArrayEmpty(customer)) {
+
+                return res.status(400).json({"code": 700});
+
+
+            } else {
+
+console.log( "%"+req.body.param+"%")
+                products.findAll({where:{
+                        [Op.or]: [
+                            {
+                                Name: {
+                                    [Op.like]: '%'+req.body.param+'%'
+                                }
+                            }
+                        ]
+                    }}).then(ProductsList=>{
+                    Seller.findAll({where:{
+                            [Op.or]: [
+                                {
+                                    CompanyName: {
+                                        [Op.like]: '%'+req.body.param+'%'
+                                    }
+                                }
+                            ]
+                        }}).then(Sellerlist=>{
+                        return res.json({
+                            Sellerlist,
+                            ProductsList
+                        });
+                    });
+                });
+
+            }
+        });
+            }
+});
+
 router.post('/message', (req, res) => {
 
     var searchQuery = checkToken(req, res);
@@ -470,6 +520,84 @@ router.post('/message', (req, res) => {
 
 });
 
+router.get('/off', (req, res) => {
+
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+
+        customer.findAll(searchQuery).then(customer => {
+
+            if (isThisArrayEmpty(customer)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+                var final = [];
+
+                function testFunction2(value, index, array) {
+                    var base64str = "not Found";
+                    try {
+                        base64str = base64_encode(value.Image);
+
+                    } catch (e) {
+                        base64str = "not Found";
+
+                    }
+
+                    final[index] = {
+                        ID: value.ID,
+                        Image: base64str,
+                        SellerID:value.SellerID,
+                        ProductID:value.ProductID,
+                        Start :value.Start ,
+                        Finish:value.Finish,
+                        PriceBefore:value.PriceBefore,
+                        PriceAfter:value.PriceAfter,
+                        Percentage:value.Percentage,
+                        SupplyOFProduct:value.SupplyOFProduct,
+                        UnitOFProduct:value.UnitOFProduct,
+                        UnitID:value.UnitID,
+                        PachalChiStatus:value.PachalChiStatus,
+                        Enable:value.Enable,
+                        Description:value.Description
+
+
+
+                    }
+                }
+                takhfifProduct.findAll({
+                    where:{
+                        "Finish": {
+                            [Op.gt]: new Date().getTime()
+                        },
+                         "Start": {
+                              [Op.lte]: new Date().getTime()
+
+                          },
+                        "SupplyOFProduct": {
+                            [Op.gt]: 0
+
+                        },
+                        "PachalChiStatus":true,
+                        "Enable":true
+
+                    }
+                }).then(
+                    takhfif=>{
+                        takhfif.forEach(testFunction2);
+                        return res.json(final);
+                    }
+                );
+
+
+
+            }
+        });
+
+
+    }
+
+});
 
 
 

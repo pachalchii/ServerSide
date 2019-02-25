@@ -1,6 +1,7 @@
 const multer = require("multer");
 var Pusher = require('pusher');
 var log4js = require('log4js'); // include log4js
+var Kavenegar = require('kavenegar');
 
 log4js.configure({
     appenders: {
@@ -20,6 +21,10 @@ var pusher = new Pusher({
     key: "df6e40d402010a993107" ,
     secret:  "fcea536f8bbf208aa730" ,
     cluster: "us2",
+});
+
+var SmsApi = Kavenegar.KavenegarApi({
+    apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'
 });
 
 var loggererror = log4js.getLogger('info'); // initialize the var to use.
@@ -144,6 +149,7 @@ const statusCodes ={
 
 module.exports = {
     statusCodes,
+    SmsApi,
     selfDestroyKey,
     databaseStatus,
     colors,

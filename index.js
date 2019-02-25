@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {colors,databaseStatus} = require('./src/Util/myVars');
+const {SmsApi,colors,databaseStatus} = require('./src/Util/myVars');
 const {smsHandler,fillDataBase} = require('./src/Util/myFunctions');
 
 const app = express();
@@ -12,7 +12,6 @@ var customerController = require('./src/Controller/CustomerController');
 var AuthController = require('./src/Controller/AuthController');
 var SellerController = require('./src/Controller/SellerController');
 var transportationController = require('./src/Controller/transportationController');
-
 
 
 
@@ -31,23 +30,8 @@ app.get('/', function(req, res){
 
 
 
-var port = process.env.PORT || 1010;
+var port = process.env.PORT || 1008;
 
-var twirlTimer = (function() {
-    var P = [
-        "▹▹▹▹▹",
-        "▸▹▹▹▹",
-        "▹▸▹▹▹",
-        "▹▹▸▹▹",
-        "▹▹▹▸▹",
-        "▹▹▹▹▸"
-    ];
-    var x = 0;
-    return setInterval(function() {
-        process.stdout.write("\r" + P[x++]);
-        x &= 3;
-    }, 250);
-})();
 
 app.listen(port, () => {
     console.log(colors.fg.Green , "                  _           _ _____ _     _    _                   _ _                                _         _ \n" +

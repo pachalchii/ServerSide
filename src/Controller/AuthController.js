@@ -4,7 +4,7 @@ var router = express.Router();
 /*********************************************/
 const { application,support , Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
 const {checkToken, response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
-const {upload,loggererror, colors ,JWT_SECRET  ,handleError , loggerinfo } = require('../Util/myVars');
+const {SmsApi,upload,loggererror, colors ,JWT_SECRET  ,handleError , loggerinfo } = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
 var path = require('path');
@@ -78,6 +78,15 @@ router.post('/register',upload.single("Image"), (req, res) => {
                                 transaction: t
                             }).then(function() {
                                 t.commit();
+                                SmsApi.Send({
+                                        message: "خدمات پیام کوتاه کاوه نگار",
+                                        sender: "10004346",
+                                        receptor: "09903933686"
+                                    },
+                                    function(response, status) {
+                                        console.log(response);
+                                        console.log(status);
+                                    });
                                 loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumber +" phone number");
                                 return res.status(200).json();
 
