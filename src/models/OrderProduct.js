@@ -20,14 +20,20 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
-    ProductID: {
+    temp: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'TakhfifProduct',
         key: 'ID'
       }
-    },
+    }
+    ,
+      ProductID:{
+          type: DataTypes.STRING,
+          allowNull: false,
+      }
+      ,
     Supply: {
       type: DataTypes.STRING,
       allowNull: false

@@ -52,7 +52,17 @@ console.log(colors.bg.Green ,  'Node Server listening on port '+port ,  colors.R
         fillDataBase();
     }
 
-
+/*
+    SmsApi.Send({
+            message: "خدمات پیام کوتاه کاوه نگار",
+            sender: "10004346",
+            receptor: "09127255512"
+        },
+        function(response, status) {
+            console.log(response);
+            console.log(status);
+        });
+*/
 
 
 

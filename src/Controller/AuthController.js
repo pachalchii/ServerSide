@@ -79,13 +79,12 @@ router.post('/register',upload.single("Image"), (req, res) => {
                             }).then(function() {
                                 t.commit();
                                 SmsApi.Send({
-                                        message: "خدمات پیام کوتاه کاوه نگار",
+                                        message: "ثبت نام شما با موفقیت انجام شد",
                                         sender: "10004346",
-                                        receptor: "09903933686"
+                                        receptor: req.body.PhoneNumber
                                     },
                                     function(response, status) {
-                                        console.log(response);
-                                        console.log(status);
+
                                     });
                                 loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumber +" phone number");
                                 return res.status(200).json();
@@ -157,6 +156,14 @@ router.post('/register',upload.single("Image"), (req, res) => {
                                 transaction: t
                             }).then(function() {
                                 t.commit();
+                                SmsApi.Send({
+                                        message: "ثبت نام شما با موفقیت انجام شد",
+                                        sender: "10004346",
+                                        receptor: req.body.PhoneNumber
+                                    },
+                                    function(response, status) {
+
+                                    });
                                 loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumberID +" phone_numberid");
                                 return res.status(200).json()
 

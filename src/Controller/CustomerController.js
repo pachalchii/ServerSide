@@ -5,9 +5,9 @@ var router = express.Router();
 const {loggererror ,loggerinfo,upload, colors} = require('../Util/myVars');
 const {base64_encode,response,filterRequest,isThisArrayEmpty , checkToken} = require('../Util/myFunctions');
 
-const { support,chat,orderProduct, Seller ,products , sequelize, takhfifProduct , sellerProducts , Order,cities,addresses,customer} = require('../../sequelize');
+const {sellerPhoneNumber,orderNazarSanji, support,chat,orderProduct, Seller ,products , sequelize, takhfifProduct , sellerProducts , Order,cities,addresses,customer} = require('../../sequelize');
 const Op = sequelize.Op;
-
+var randomstring= require("randomstring");
 
 router.post('/address', (req, res) => {
     var searchQuery = checkToken(req, res);
@@ -180,21 +180,75 @@ router.post('/order', (req, res) => {
                         productss =  req.body.products;
                         var KolMablagh = 0 ;
                         var status = true;
-                        function getAllPrice(value, index, array){
-                            sellerProducts.findAll({where:{ID:value.SellerProductID}}).then(
-                                product=>{
-                                    if (!isThisArrayEmpty(product)) {
-                                        KolMablagh = KolMablagh + (value.Supply*product[0].Price)
-                                    }
-                                    else{
-                                        res.status(404).json();
-                                        status = false;
-                                    }
-                                }
-                            );
-                        }
-                        productss.forEach(getAllPrice);
 
+
+
+
+                        if (status) {
+                            sequelize.transaction().then(function (t) {
+                                Order.create({
+                                    CustomerID: customer[0].ID,
+                                    OrderDateTime: new Date().getTime(),
+                                    CustomerAddressID: req.body.CustomerAddressID,
+                                    DateTimeErsal: req.body.DateTimeErsal,
+                                    JameKol: KolMablagh,
+                                    JameKolAfterTakhfif: KolMablagh,
+                                    OrderStatus: false,
+                                    HashCode: randomstring.generate(10)
+
+                                }, {
+                                    transaction: t
+                                }).then(savedOrder => {
+                                    t.commit();
+                                    Order.update({HashCode: Math.floor(100000000 + Math.random() * 900000000)+savedOrder.ID}, {where: {ID: savedOrder.ID}})
+                                    productss.map((item,index)=>{
+                                        sellerProducts.findAll({where:{ID:item.SellerProductID}}).then(
+                                            product=>{
+                                                if (!isThisArrayEmpty(product)) {
+
+                                                    KolMablagh = KolMablagh + (item.Supply*product[0].Price)
+                                                    orderProduct.create({
+                                                        OrderID:savedOrder.ID,
+                                                        Takhfif:item.Supply*product[0].Price,
+                                                        ProductID:product[0].ProductID,
+                                                        Supply:item.Supply,
+                                                        Price:item.Supply*product[0].Price,
+                                                        CustomerStatus:true
+                                                    }).then()
+                                                }
+
+                                                else{
+                                                    res.status(404).json();
+                                                    status = false;
+                                                }
+                                            }
+                                        );
+
+
+                                    });
+
+                                    loggerinfo.info(req.connection.remoteAddress + " order saved  with id " + savedOrder.ID);
+                                    return res.status(200).json();
+
+
+                                }).catch(function (error) {
+                                    loggererror.info(req.connection.remoteAddress + "cause this erorr : " + error);
+                                    console.log(error);
+                                    t.rollback();
+                                    return res.status(400).json({"message": "Oops! Something went wrong!"})
+
+
+                                });
+                            });
+
+                        }
+
+
+
+
+
+
+/*
                         if (status)
                         {
                             var statusTwo = true;
@@ -251,6 +305,7 @@ router.post('/order', (req, res) => {
                                   );
                               })
                           }
+
                           productss.forEach((item)=>{
                               Promise.all([getAllTakhfif(item)
                                   .then((koleTakhfif)=>{
@@ -306,7 +361,7 @@ router.post('/order', (req, res) => {
 
 
 
-                        }
+                        }*/
 
 
 
@@ -427,20 +482,9 @@ router.get('/message', (req, res) => {
 });
 
 router.post('/search',(req,res)=>{
-    var searchQuery = checkToken(req, res);
     var requestFilter = filterRequest(req,res,"search")
-    if (searchQuery && requestFilter) {
-        customer.findAll(searchQuery).then(customer => {
-
-            if (isThisArrayEmpty(customer)) {
-
-                return res.status(400).json({"code": 700});
-
-
-            } else {
-
-console.log( "%"+req.body.param+"%")
-                products.findAll({where:{
+    if ( requestFilter) {
+         products.findAll({where:{
                         [Op.or]: [
                             {
                                 Name: {
@@ -465,8 +509,7 @@ console.log( "%"+req.body.param+"%")
                     });
                 });
 
-            }
-        });
+
             }
 });
 
@@ -598,6 +641,108 @@ router.get('/off', (req, res) => {
     }
 
 });
+
+router.get('/phoneNumber', (req, res) => {
+
+    var searchQuery = checkToken(req, res);
+    var fr = filterRequest(req,res,"getPhoneNumber")
+    if (searchQuery) {
+
+        customer.findAll(searchQuery).then(customer => {
+
+            if (isThisArrayEmpty(customer)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+                sellerPhoneNumber.findAll({where:{
+                        ID:req.query.SellerID
+                    }}).then(
+                    sellerPhoneNumber=>{
+                        response(res, sellerPhoneNumber).then(
+                            loggerinfo.info(req.connection.remoteAddress + "customer with id : " + customer[0].Id + "get all his/her subtypes")
+                        );
+                    }
+                );
+
+
+
+
+            }
+        });
+
+
+    }
+
+
+});
+
+
+router.post('/Survey', (req, res) => {
+
+    var searchQuery = checkToken(req, res);
+    var requestFilter = filterRequest(req, res , "Survey");
+
+    if (searchQuery && requestFilter) {
+
+        customer.findAll(searchQuery).then(customer => {
+
+            if (isThisArrayEmpty(customer)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+
+                sequelize.transaction().then(function(t) {
+                    orderNazarSanji.create({
+                        PachalChi:req.body.PachalChi,
+                        Seller:req.body.Seller,
+                        SellerOperator:req.body.SellerOperator,
+                        Transportar:req.body.Transportar,
+                        Support:req.body.Support
+
+                    }, {
+                        transaction: t
+                    }).then(savedNazar=> {
+
+                        t.commit();
+                        Order.update({
+                            NazarSanjiID: savedNazar.ID
+                        },{where:{
+                            ID:req.body.OrderID
+                            }}).then(finish=>{
+                            loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumber +" phone number");
+                            return res.status(200).json();
+                        });
+
+
+
+                    }).catch(function(error) {
+                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
+                        t.rollback();
+                        if (error.parent.errno === 1062)
+                        {
+                            return res.status(400).json({"message":"customer signUped before"})
+                        }
+                        else {
+                            return res.status(400).json({"message":"Oops! Something went wrong!"})
+
+                        }                        });
+                });
+
+
+            }
+
+
+
+
+        });
+
+
+    }
+
+});
+
 
 
 

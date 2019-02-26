@@ -72,7 +72,10 @@ router.post('/order',(req,res)=>{
                             if (!isThisArrayEmpty(order)){
                                 if (order[0].TransportarID === tran[0].Id){
                                     order[0].update({TransportarStatus: true}).then(
-                                        response(res,undefined).then(loggerinfo.info(req.connection.remoteAddress + "transportation with id : "+tran[0].ID +" change product status with id : "+order[0].ID))
+                                        transportation.update({Status : false},{where:{ID:tran[0].ID}}).then(
+                                            response(res,undefined).then(loggerinfo.info(req.connection.remoteAddress + "transportation with id : "+tran[0].ID +" change product status with id : "+order[0].ID))
+
+                                        )
                                     );
                                 } else {
                                     res.status(400).json({"code":709});

@@ -4,7 +4,7 @@ var router = express.Router();
 /*********************************************/
 const {checkLimitTime, filterRequest, checkToken, response, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
 const {loggererror, loggerinfo, colors, JWT_SECRET, upload} = require('../Util/myVars');
-const {Seller, sellerProducts, sellerWareHouse, sellerOperator, transportation, sequelize, products, unit} = require('../../sequelize');
+const {sellerPhoneNumber,Seller, sellerProducts, sellerWareHouse, sellerOperator, transportation, sequelize, products, unit} = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
 var md5 = require('md5');
@@ -36,8 +36,21 @@ router.get('/list', (req, res) => {
         }
 
         final[index] = {
+            ID:value.ID,
             Name: value.CompanyName,
-            Image: base64str
+            Image: base64str,
+            TypeID:value.TypeID,
+            OwnerName:value.OwnerName,
+            OwnerFamilyName:value.OwnerFamilyName,
+            EstablishedDate:value.EstablishedDate,
+            RegistrationDateTime:value.RegistrationDateTime,
+            Point:value.Point,
+            PhoneNumberID:value.PhoneNumberID,
+            CompanyAddressCityID:value.CompanyAddressCityID,
+            CompleteAddressDescription:value.CompleteAddressDescription,
+            GoogleMapAddressLink:value.GoogleMapAddressLink,
+            OwnerPhoneNumber:value.OwnerPhoneNumber
+
         }
     }
 
@@ -54,6 +67,58 @@ router.get('/list', (req, res) => {
         response(res, final).then(
             loggerinfo.info(req.connection.remoteAddress + " get seller list")
         );
+    });
+
+
+});
+
+router.get('/Singlelist', (req, res) => {
+    if (req.query.SellerID == null) {
+        return res.status(400).json({"message": "SellerID not found"});
+    }
+
+    var final = [];
+
+    function testFunction(value, index, array) {
+        var base64str = "not Found";
+        try {
+            base64str = base64_encode(value.LogoImage);
+
+        } catch (e) {
+            base64str = "not Found";
+
+        }
+
+        final[index] = {
+            ID:value.ID,
+            Name: value.CompanyName,
+            Image: base64str,
+            TypeID:value.TypeID,
+            OwnerName:value.OwnerName,
+            OwnerFamilyName:value.OwnerFamilyName,
+            EstablishedDate:value.EstablishedDate,
+            RegistrationDateTime:value.RegistrationDateTime,
+            Point:value.Point,
+            PhoneNumberID:value.PhoneNumberID,
+            CompanyAddressCityID:value.CompanyAddressCityID,
+            CompleteAddressDescription:value.CompleteAddressDescription,
+            GoogleMapAddressLink:value.GoogleMapAddressLink,
+            OwnerPhoneNumber:value.OwnerPhoneNumber
+        }
+    }
+
+    Seller.findAll({
+        where: {
+            ID: req.query.SellerID
+        }
+    }).then(seller => {
+        if (!isThisArrayEmpty(seller)) {
+            seller.forEach(testFunction);
+            response(res, final).then(
+                loggerinfo.info(req.connection.remoteAddress + " get seller list")
+            );
+        }
+
     });
 
 
@@ -652,6 +717,8 @@ router.get('/Subtypes', (req, res) => {
 
 
 });
+
+
 
 
 

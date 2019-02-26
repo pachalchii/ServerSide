@@ -218,15 +218,19 @@ function fillDataBase() {
 
     var productsGroupvar = [
 
-        {ID: 2, Name: "گوساله", ParentID: null},
+        {ID: 500, Name: "تازه", ParentID: null},
 
-        {ID: 23, Name: "گوسفند", ParentID: null},
 
-        {ID: 52, Name: "مرغ", ParentID: null},
 
-        {ID: 96, Name: "ماهی", ParentID: null},
+        {ID: 2, Name: "گوساله", ParentID: 500},
 
-        {ID: 108, Name: "منجمد وارداتی", ParentID: null},
+        {ID: 23, Name: "گوسفند", ParentID: 500},
+
+        {ID: 52, Name: "مرغ", ParentID: 500},
+
+        {ID: 96, Name: "ماهی", ParentID: 500},
+
+        {ID: 108, Name: "منجمد وارداتی", ParentID: 500},
 
         {ID: 109, Name: "گوسفند وارداتی", ParentID: 108},
         {ID: 110, Name: "گوساله وارداتی", ParentID: 108},
@@ -252,7 +256,72 @@ function fillDataBase() {
         {ID: 134, Name: "قلوه گاه", ParentID: 110},
 
 
-        {ID: 150, Name: "فراورده های گوشتی", ParentID: null}
+        {ID: 150, Name: "فراورده های گوشتی", ParentID: 500},
+
+        {ID: 97, Name: "قزل آلا", ParentID: 96},
+        {ID: 151, Name: "ران بی پوست بدون کمر", ParentID: 52},
+        {ID: 152, Name: "ران با پوست بدون کمر", ParentID: 52},
+        {ID: 153, Name: "سینه با استخوان بدون پوست", ParentID: 52},
+        {ID: 154, Name: "سینه با استخوان با پوست", ParentID: 52},
+        {ID: 155, Name: "مرغ کامل شکم خالی", ParentID: 52},
+
+
+
+
+
+
+
+
+        {ID: 600, Name: "منجمد", ParentID: null},
+
+
+
+        {ID: 602, Name: "گوساله", ParentID: 600},
+
+        {ID: 623, Name: "گوسفند", ParentID: 600},
+
+        {ID: 652, Name: "مرغ", ParentID: 600},
+
+        {ID: 696, Name: "ماهی", ParentID: 600},
+
+        {ID: 6108, Name: "منجمد وارداتی", ParentID: 600},
+
+        {ID: 6109, Name: "گوسفند وارداتی", ParentID: 6108},
+        {ID: 6110, Name: "گوساله وارداتی", ParentID: 6108},
+        {ID: 6111, Name: "ران", ParentID: 6109},
+        {ID: 6112, Name: "سردست", ParentID: 6109},
+        {ID: 6113, Name: "گردن", ParentID: 6109},
+        {ID: 6114, Name: "راسته با استخوان", ParentID: 6109},
+        {ID: 6115, Name: "راسته شاندیزی", ParentID: 6109},
+        {ID: 6116, Name: "گردن", ParentID: 6109},
+        {ID: 6117, Name: "قلوه گاه گوسفند", ParentID: 6109},
+        {ID: 6118, Name: "قلوه گاه با استخوان گوسفند", ParentID: 6109},
+        {ID: 6119, Name: "ماهیچه", ParentID: 6109},
+
+
+        {ID: 6126, Name: "ران", ParentID: 6110},
+        {ID: 6127, Name: "سردست", ParentID: 6110},
+        {ID: 6128, Name: "گردن", ParentID: 6110},
+        {ID: 6129, Name: "بغل ران", ParentID: 6110},
+        {ID: 6130, Name: "سفید ران", ParentID: 6110},
+        {ID: 6131, Name: "مغز ران", ParentID: 6110},
+        {ID: 6132, Name: "راسته", ParentID: 6110},
+        {ID: 6133, Name: "فیله", ParentID: 6110},
+        {ID: 6134, Name: "قلوه گاه", ParentID: 6110},
+
+
+        {ID: 6150, Name: "فراورده های گوشتی", ParentID: 600},
+
+        {ID: 697, Name: "قزل آلا", ParentID: 696},
+        {ID: 6151, Name: "ران بی پوست بدون کمر", ParentID: 652},
+        {ID: 6152, Name: "ران با پوست بدون کمر", ParentID: 652},
+        {ID: 6153, Name: "سینه با استخوان بدون پوست", ParentID: 652},
+        {ID: 6154, Name: "سینه با استخوان با پوست", ParentID: 652},
+        {ID: 6155, Name: "مرغ کامل شکم خالی", ParentID: 652},
+
+
+
+
 
 
     ];
@@ -318,18 +387,22 @@ function fillDataBase() {
         {ID: 51, Name: "ماهیچه بشقابی گوسفند", GroupID: 23},
 
 
-        {ID: 53, Name: "ران بی پوست بدون کمر  300 گرمی", GroupID: 52},
-        {ID: 54, Name: "ران بی پوست بدون کمر  350 گرمی", GroupID: 52},
-        {ID: 55, Name: "ران بی پوست بدون کمر  400 گرمی", GroupID: 52},
-        {ID: 56, Name: "ران با پوست بدون کمر  300 گرمی", GroupID: 52},
-        {ID: 57, Name: "ران با پوست بدون کم  350 گرمی", GroupID: 52},
-        {ID: 58, Name: "ران با پوست بدون کمر  400 گرمی", GroupID: 52},
-        {ID: 59, Name: "سینه با استخوان بدون پوست  300 گرمی", GroupID: 52},
-        {ID: 60, Name: "سینه با استخوان بدون پوست  350 گرمی", GroupID: 52},
-        {ID: 61, Name: "سینه با استخوان بدون پوست  400 گرمی", GroupID: 52},
-        {ID: 62, Name: "سینه با استخوان با پوست  300 گرمی", GroupID: 52},
-        {ID: 63, Name: "سینه با استخوان با پوست  350 گرمی", GroupID: 52},
-        {ID: 64, Name: "سینه با استخوان با پوست  400 گرمی", GroupID: 52},
+        {ID: 53, Name: "300 گرمی", GroupID: 151},
+        {ID: 54, Name: "350 گرمی", GroupID: 151},
+        {ID: 55, Name: "400 گرمی", GroupID: 151},
+
+        {ID: 56, Name: "300 گرمی", GroupID: 152},
+        {ID: 57, Name: "350 گرمی", GroupID: 152},
+        {ID: 58, Name: "400 گرمی", GroupID: 152},
+
+        {ID: 59, Name: "300 گرمی", GroupID: 153},
+        {ID: 60, Name: "350 گرمی", GroupID: 153},
+        {ID: 61, Name: "400 گرمی", GroupID: 153},
+
+        {ID: 62, Name: "300 گرمی", GroupID: 154},
+        {ID: 63, Name: "350 گرمی", GroupID: 154},
+        {ID: 64, Name: "400 گرمی", GroupID: 154},
+
         {ID: 65, Name: "بال با نوک", GroupID: 52},
         {ID: 66, Name: "بال بی نوک", GroupID: 52},
         {ID: 67, Name: "بازو با پوست", GroupID: 52},
@@ -339,36 +412,53 @@ function fillDataBase() {
         {ID: 71, Name: "گردن با پوست", GroupID: 52},
         {ID: 72, Name: "گردن بی پوست", GroupID: 52},
         {ID: 73, Name: "فیله", GroupID: 52},
-        {ID: 74, Name: "مرغ کامل شکم خالی 1200 گرمی", GroupID: 52},
-        {ID: 75, Name: "مرغ کامل شکم خالی 1300 گرمی", GroupID: 52},
-        {ID: 76, Name: "مرغ کامل شکم خالی 1400 گرمی", GroupID: 52},
-        {ID: 77, Name: "مرغ کامل شکم خالی 1500 گرمی", GroupID: 52},
-        {ID: 78, Name: "مرغ کامل شکم خالی 1600 گرمی", GroupID: 52},
-        {ID: 79, Name: "مرغ کامل شکم خالی 1700 گرمی", GroupID: 52},
-        {ID: 80, Name: "مرغ کامل شکم خالی 1800 گرمی", GroupID: 52},
-        {ID: 81, Name: "مرغ کامل شکم خالی 1900 گرمی", GroupID: 52},
-        {ID: 82, Name: "مرغ کامل شکم خالی 2000 گرمی", GroupID: 52},
-        {ID: 83, Name: "مرغ کامل شکم خالی 2100 گرمی", GroupID: 52},
-        {ID: 84, Name: "مرغ کامل شکم خالی 2200 گرمی", GroupID: 52},
+        {ID: 74, Name: "مرغ کامل شکم خالی", GroupID: 52},
+
+        {ID: 74, Name: "1200 گرمی", GroupID: 155},
+        {ID: 75, Name: "1300 گرمی", GroupID: 155},
+        {ID: 76, Name: "1400 گرمی", GroupID: 155},
+        {ID: 77, Name: "1500 گرمی", GroupID: 155},
+        {ID: 78, Name: "1600 گرمی", GroupID: 155},
+        {ID: 79, Name: "1700 گرمی", GroupID: 155},
+
+
+
+        {ID: 80, Name: "1800 گرمی", GroupID: 74},
+        {ID: 81, Name: " 1900 گرمی", GroupID: 74},
+        {ID: 82, Name: " 2000 گرمی", GroupID: 74},
+        {ID: 83, Name: " 2100 گرمی", GroupID: 74},
+        {ID: 84, Name: " 2200 گرمی", GroupID: 74},
+
+
+
         {ID: 85, Name: "مرغ کامل شکم خالی درشت", GroupID: 52},
         {ID: 86, Name: "سینه بدون کتف ممتاز", GroupID: 52},
         {ID: 87, Name: "سینه بدون کتف معمولی", GroupID: 52},
         {ID: 88, Name: "سینه با کتف ممتاز", GroupID: 52},
         {ID: 89, Name: "سینه با کتف معمولی", GroupID: 52},
-        {ID: 90, Name: "اکبر جوجه 600 گرمی", GroupID: 52},
-        {ID: 91, Name: "اکبر جوجه 1000 گرمی", GroupID: 52},
-        {ID: 92, Name: "اکبر جوجه 1100 گرمی", GroupID: 52},
+        {ID: 90, Name: "اکبر جوجه", GroupID: 52},
+
+
+        {ID: 91, Name: "600 گرمی", GroupID: 90},
+        {ID: 92, Name: "1100 گرمی", GroupID: 90},
+        {ID: 156, Name: "1100 گرمی", GroupID: 90},
+
+
+
         {ID: 93, Name: "خرده مرغ", GroupID: 52},
         {ID: 94, Name: "گوشت گردن", GroupID: 52},
         {ID: 95, Name: "خمیر مرغ", GroupID: 52},
 
-        {ID: 97, Name: "قزل آلا 200 گرمی", GroupID: 96},
-        {ID: 98, Name: "قزل آلا 2520 گرمی", GroupID: 96},
-        {ID: 99, Name: "قزل آلا 300 گرمی", GroupID: 96},
-        {ID: 100, Name: "قزل آلا 350 گرمی", GroupID: 96},
-        {ID: 101, Name: "قزل آلا 400 گرمی", GroupID: 96},
-        {ID: 102, Name: "قزل آلا 450 گرمی", GroupID: 96},
-        {ID: 103, Name: "قزل آلا 500 گرمی", GroupID: 96},
+
+        {ID: 98, Name: "200 گرمی", GroupID: 97},
+        {ID: 99, Name: "250 گرمی", GroupID: 97},
+        {ID: 100, Name: "300 گرمی", GroupID: 97},
+        {ID: 101, Name: "350 گرمی", GroupID: 97},
+        {ID: 102, Name: "400 گرمی", GroupID: 97},
+        {ID: 103, Name: "450 گرمی", GroupID: 97},
+        {ID: 155, Name: "500 گرمی", GroupID: 97},
+
+
         {ID: 104, Name: "تیلاپیا M", GroupID: 96},
         {ID: 105, Name: "تیلاپیا S", GroupID: 96},
         {ID: 106, Name: "سالمون", GroupID: 96},
@@ -403,7 +493,191 @@ function fillDataBase() {
         {ID: 151, Name: "سوسیس", GroupID: 150},
         {ID: 152, Name: "کالباس", GroupID: 150},
         {ID: 153, Name: "همبرگر و کباب لقمه", GroupID: 150},
-        {ID: 154, Name: "غذاهای آماده", GroupID: 150}
+        {ID: 154, Name: "غذاهای آماده", GroupID: 150},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {ID: 663, Name: "قلوه گاه گوساله", GroupID: 662},
+        {ID: 664, Name: "خرده راسته گوساله", GroupID: 602},
+        {ID: 665, Name: "گردن گوساله", GroupID: 602},
+        {ID: 666, Name: "فیله گوساله", GroupID: 602},
+        {ID: 667, Name: "مغز راسته گوساله", GroupID: 602},
+        {ID: 668, Name: "راسته با استخوان گوساله", GroupID: 602},
+        {ID: 669, Name: "دنبالیچه گوساله", GroupID: 602},
+        {ID: 6610, Name: "چربی گوساله", GroupID: 602},
+        {ID: 6611, Name: "ران ممتاز گوساله جوان", GroupID: 602},
+        {ID: 6612, Name: "سردست ممتاز گوساله جوان", GroupID: 602},
+        {ID: 6613, Name: "ران ممتاز ماده گاو", GroupID: 602},
+        {ID: 6614, Name: "سردست ممتاز ماده گاو", GroupID: 602},
+        {ID: 6615, Name: "ماهیچه گوساله", GroupID: 602},
+        {ID: 6616, Name: "ران با استخوان گوساله جوان", GroupID: 602},
+        {ID: 6617, Name: "سردست با استخوان گوساله جوان", GroupID: 602},
+        {ID: 6618, Name: "ران با استخوان ماده گاو", GroupID: 602},
+        {ID: 6619, Name: "سردست با استخوان ماده گاو ", GroupID: 602},
+        {ID: 6620, Name: "چرخکرده مخلوط", GroupID: 602},
+        {ID: 6621, Name: "چرخکرده گوساله", GroupID: 602},
+        {ID: 6622, Name: "خرده گوساله", GroupID: 602},
+
+
+        {ID: 6624, Name: "خرده گوسفند", GroupID: 623},
+        {ID: 6625, Name: "قلوه گاه گوسفند", GroupID: 623},
+        {ID: 6626, Name: "قلوه گاه با استخوان گوسفند", GroupID: 623},
+        {ID: 6627, Name: "خرده قلوه گاه گوسفند", GroupID: 623},
+        {ID: 6628, Name: "خرده راسته گوسفند", GroupID: 623},
+        {ID: 6629, Name: "گردن گوسفند", GroupID: 623},
+        {ID: 6630, Name: "گردن شقه ای گوسفند", GroupID: 623},
+        {ID: 6631, Name: "لاشه بدون دنبه گوسفند", GroupID: 623},
+        {ID: 6632, Name: "لاشه گوسفند با کله", GroupID: 623},
+        {ID: 6633, Name: "دنبه گوسفند", GroupID: 623},
+        {ID: 6634, Name: "ران ممتاز گوسفند", GroupID: 623},
+        {ID: 6635, Name: "ران بدون استخوان گوسفند", GroupID: 623},
+        {ID: 6636, Name: "سردست ممتاز گوسفند", GroupID: 623},
+        {ID: 6637, Name: "سردست بدون استخوان گوسفند", GroupID: 623},
+        {ID: 6638, Name: "راسته با استخوان گوسفند", GroupID: 623},
+        {ID: 6639, Name: "راسته بدون استخوان گوسفند", GroupID: 623},
+        {ID: 6640, Name: "مغز راسته گوسفند ( دو تکه)", GroupID: 623},
+        {ID: 6641, Name: "مغز راسته گوسفند ( سه تکه)", GroupID: 623},
+        {ID: 6642, Name: "فیله ممتاز گوسفند", GroupID: 623},
+        {ID: 6643, Name: "راسته شاندیزی گوسفند", GroupID: 623},
+        {ID: 6644, Name: "شیشلیک بدون مواد گوسفند", GroupID: 623},
+        {ID: 6645, Name: "شیشلیک با مواد گوسفند", GroupID: 623},
+        {ID: 6646, Name: "ماهیچه بدون گل گوسفند", GroupID: 623},
+        {ID: 6647, Name: "ماهیچه با گل گوسفند", GroupID: 623},
+        {ID: 6648, Name: "ماهیچه ران گوسفند", GroupID: 623},
+        {ID: 6649, Name: "ماهیچه برش مشهدی گوسفند", GroupID: 623},
+        {ID: 6650, Name: "ران و سردست بشقابی گوسفند", GroupID: 623},
+        {ID: 6651, Name: "ماهیچه بشقابی گوسفند", GroupID: 623},
+
+
+        {ID: 6653, Name: "300 گرمی", GroupID: 651},
+        {ID: 6654, Name: "350 گرمی", GroupID: 651},
+        {ID: 6655, Name: "400 گرمی", GroupID: 651},
+
+        {ID: 6656, Name: "300 گرمی", GroupID: 652},
+        {ID: 6657, Name: "350 گرمی", GroupID: 652},
+        {ID: 6658, Name: "400 گرمی", GroupID: 652},
+
+        {ID: 6659, Name: "300 گرمی", GroupID: 653},
+        {ID: 6660, Name: "350 گرمی", GroupID: 653},
+        {ID: 6661, Name: "400 گرمی", GroupID: 653},
+
+        {ID: 6662, Name: "300 گرمی", GroupID: 654},
+        {ID: 6663, Name: "350 گرمی", GroupID: 654},
+        {ID: 6664, Name: "400 گرمی", GroupID: 654},
+
+        {ID: 6665, Name: "بال با نوک", GroupID: 652},
+        {ID: 6666, Name: "بال بی نوک", GroupID: 652},
+        {ID: 6667, Name: "بازو با پوست", GroupID: 652},
+        {ID: 6668, Name: "بازو بی پوست", GroupID: 652},
+        {ID: 6669, Name: "بال و بازو سه تکه", GroupID: 652},
+        {ID: 6670, Name: "بال و بازو دو تکه", GroupID: 652},
+        {ID: 6671, Name: "گردن با پوست", GroupID: 652},
+        {ID: 6672, Name: "گردن بی پوست", GroupID: 652},
+        {ID: 6673, Name: "فیله", GroupID: 652},
+        {ID: 6674, Name: "مرغ کامل شکم خالی", GroupID: 652},
+
+        {ID: 6674, Name: "1200 گرمی", GroupID: 655},
+        {ID: 6675, Name: "1300 گرمی", GroupID: 655},
+        {ID: 6676, Name: "1400 گرمی", GroupID: 655},
+        {ID: 6677, Name: "1500 گرمی", GroupID: 655},
+        {ID: 6678, Name: "1600 گرمی", GroupID: 655},
+        {ID: 6679, Name: "1700 گرمی", GroupID: 655},
+
+
+
+        {ID: 6680, Name: "1800 گرمی", GroupID: 674},
+        {ID: 6681, Name: " 1900 گرمی", GroupID: 674},
+        {ID: 6682, Name: " 2000 گرمی", GroupID: 674},
+        {ID: 6683, Name: " 2100 گرمی", GroupID: 674},
+        {ID: 6684, Name: " 2200 گرمی", GroupID: 674},
+
+
+
+        {ID: 6685, Name: "مرغ کامل شکم خالی درشت", GroupID: 652},
+        {ID: 6686, Name: "سینه بدون کتف ممتاز", GroupID: 652},
+        {ID: 6687, Name: "سینه بدون کتف معمولی", GroupID: 652},
+        {ID: 6688, Name: "سینه با کتف ممتاز", GroupID: 652},
+        {ID: 6689, Name: "سینه با کتف معمولی", GroupID: 652},
+        {ID: 6690, Name: "اکبر جوجه", GroupID: 652},
+
+
+        {ID: 6691, Name: "600 گرمی", GroupID: 690},
+        {ID: 6692, Name: "1100 گرمی", GroupID: 690},
+        {ID: 66156, Name: "1100 گرمی", GroupID: 690},
+
+
+
+        {ID: 6693, Name: "خرده مرغ", GroupID: 652},
+        {ID: 6694, Name: "گوشت گردن", GroupID: 652},
+        {ID: 6695, Name: "خمیر مرغ", GroupID: 652},
+
+        {ID: 6697, Name: "قزل آلا", GroupID: 696},
+
+        {ID: 6698, Name: "200 گرمی", GroupID: 697},
+        {ID: 6699, Name: "250 گرمی", GroupID: 697},
+        {ID: 66100, Name: "300 گرمی", GroupID: 697},
+        {ID: 66101, Name: "350 گرمی", GroupID: 697},
+        {ID: 66102, Name: "400 گرمی", GroupID: 697},
+        {ID: 66103, Name: "450 گرمی", GroupID: 697},
+        {ID: 66155, Name: "500 گرمی", GroupID: 697},
+
+
+        {ID: 66104, Name: "تیلاپیا M", GroupID: 696},
+        {ID: 66105, Name: "تیلاپیا S", GroupID: 696},
+        {ID: 66106, Name: "سالمون", GroupID: 696},
+        {ID: 66107, Name: "میگو", GroupID: 696},
+
+
+        {ID: 66120, Name: "مغول", GroupID: 6111},
+        {ID: 66121, Name: "استرالیا", GroupID: 6111},
+        {ID: 66122, Name: "قزاقستان", GroupID: 6111},
+        {ID: 66123, Name: "نیوزلند", GroupID: 6111},
+        {ID: 66124, Name: "ارمنستان", GroupID: 6111},
+        {ID: 66125, Name: "گرجستان", GroupID: 6111},
+
+
+        {ID: 66135, Name: "مینروا", GroupID: 6126},
+        {ID: 66136, Name: "جی جی", GroupID: 6126},
+        {ID: 66137, Name: "جی جی زد", GroupID: 6126},
+        {ID: 66138, Name: "آگرا", GroupID: 6126},
+        {ID: 66139, Name: "استرلا", GroupID: 6126},
+        {ID: 66140, Name: "آسترا", GroupID: 6126},
+        {ID: 66141, Name: "فری بوی", GroupID: 6126},
+        {ID: 66142, Name: "فریگو", GroupID: 6126},
+        {ID: 66143, Name: "مارفریگ", GroupID: 6126},
+        {ID: 66144, Name: "بیف کلاب", GroupID: 6126},
+        {ID: 66145, Name: "آنجلو", GroupID: 6126},
+        {ID: 66146, Name: "پالاتاری", GroupID: 6126},
+        {ID: 66147, Name: "کیومیت", GroupID: 6126},
+        {ID: 66148, Name: "متابوی", GroupID: 6126},
+        {ID: 66149, Name: "بیگ بوی", GroupID: 6126},
+
+
+        {ID: 66151, Name: "سوسیس", GroupID: 6150},
+        {ID: 66152, Name: "کالباس", GroupID: 6150},
+        {ID: 66153, Name: "همبرگر و کباب لقمه", GroupID: 6150},
+        {ID: 66154, Name: "غذاهای آماده", GroupID: 6150}
     ];
     products.findAll().then(products => {
         if (products[0] === undefined) {
@@ -758,6 +1032,20 @@ function filterRequest(req,res,type){
                 return false;
             }else{return true;}
             break;
+        case "Survey":
+            if (req.body.OrderID == null || req.body.Support == null || req.body.Transportar == null || req.body.SellerOperator == null || req.body.Seller == null || req.body.PachalChi == null){
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
+            break;
+        case "getPhoneNumber":
+            if (req.query.SellerID == null){
+                res.status(400).json({"code": 703});
+                return false;
+            }else{return true;}
+            break;
+
+
 
         default : console.log("wrong type parameter")
     }

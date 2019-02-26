@@ -136,7 +136,7 @@
 							"raw": "{\n\t\"id\":\"3\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/application/AppInfoGetter/product?id=2",
+							"raw": "{{baseUrl}}/application/AppInfoGetter/product?ID=3",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -147,8 +147,8 @@
 							],
 							"query": [
 								{
-									"key": "id",
-									"value": "2"
+									"key": "ID",
+									"value": "3"
 								}
 							]
 						}
@@ -165,13 +165,19 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/seller/list",
+							"raw": "{{baseUrl}}/seller/list?cityId=1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"seller",
 								"list"
+							],
+							"query": [
+								{
+									"key": "cityId",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -222,6 +228,44 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "selfDestroy (never even test this api ! )",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/application/Suicide?key=755Amirr2205",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"application",
+								"Suicide"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "755Amirr2205"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -244,62 +288,62 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "role",
+									"key": "Role",
 									"value": "customer",
 									"type": "text"
 								},
 								{
-									"key": "cityid",
+									"key": "CityID",
 									"value": "1",
 									"type": "text"
 								},
 								{
-									"key": "username",
-									"value": "awdawd",
+									"key": "Username",
+									"value": "awdaGwd1",
 									"type": "text"
 								},
 								{
-									"key": "theme",
+									"key": "Theme",
 									"value": "theme",
 									"type": "text"
 								},
 								{
-									"key": "registration_date_time",
+									"key": "RegistrationDateTime",
 									"value": "registration_date_time",
 									"type": "text"
 								},
 								{
-									"key": "phone_number",
+									"key": "PhoneNumber",
 									"value": "09122292594",
 									"type": "text"
 								},
 								{
-									"key": "password",
+									"key": "Password",
 									"value": "password1",
 									"type": "text"
 								},
 								{
-									"key": "name",
+									"key": "Name",
 									"value": "name",
 									"type": "text"
 								},
 								{
-									"key": "family_name",
+									"key": "FamilyName",
 									"value": "family_name",
 									"type": "text"
 								},
 								{
-									"key": "company_name",
+									"key": "CompanyName",
 									"value": "company_name",
 									"type": "text"
 								},
 								{
-									"key": "birth_date",
+									"key": "BirthDate",
 									"value": "birth_date",
 									"type": "text"
 								},
 								{
-									"key": "image",
+									"key": "Image",
 									"type": "file",
 									"src": ""
 								}
@@ -332,7 +376,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"role\":\"seller\",\n\t\"username\":\"username11awdad\",\n\t\"password\":\"password1aawddw\"\n}"
+							"raw": "{\n\t\"Role\":\"support\",\n\t\"Username\":\"aaaAAA111\",\n\t\"Password\":\"password1aawddw\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/Auth/login",
@@ -363,72 +407,72 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "role",
+									"key": "Role",
 									"value": "seller",
 									"type": "text"
 								},
 								{
-									"key": "company_name",
+									"key": "CompanyName",
 									"value": "company_name",
 									"type": "text"
 								},
 								{
-									"key": "complete_address_description",
+									"key": "CompleteAddressDescription",
 									"value": "complete_address_description",
 									"type": "text"
 								},
 								{
-									"key": "google_map_address_link",
+									"key": "GoogleMapAddressLink",
 									"value": "google_map_address_link",
 									"type": "text"
 								},
 								{
-									"key": "owner_family_name",
+									"key": "OwnerFamilyName",
 									"value": "owner_family_name",
 									"type": "text"
 								},
 								{
-									"key": "owner_name",
+									"key": "OwnerName",
 									"value": "owner_name",
 									"type": "text"
 								},
 								{
-									"key": "owner_phone_number",
+									"key": "OwnerPhoneNumber",
 									"value": "owner_phone_number",
 									"type": "text"
 								},
 								{
-									"key": "username",
-									"value": "username11awdad",
+									"key": "Username",
+									"value": "username11awdad11",
 									"type": "text"
 								},
 								{
-									"key": "password",
+									"key": "Password",
 									"value": "password1aawddw",
 									"type": "text"
 								},
 								{
-									"key": "company_address_cityid",
+									"key": "CompanyAddressCityID",
 									"value": "2",
 									"type": "text"
 								},
 								{
-									"key": "phone_numberid",
-									"value": "2",
+									"key": "PhoneNumberID",
+									"value": "1",
 									"type": "text"
 								},
 								{
-									"key": "image",
+									"key": "Image",
 									"type": "file",
 									"src": ""
 								},
 								{
-									"key": "registration_date_time",
+									"key": "RegistrationDateTime",
 									"value": "registration_date_time",
 									"type": "text"
 								},
 								{
-									"key": "established_date",
+									"key": "EstablishedDate",
 									"value": "132132",
 									"type": "text"
 								}
@@ -461,7 +505,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"phone_number1\":\"09903933686\",\n\t\"phone_number2\":\"09903933687\",\n\t\"phone_number3\":\"09903933688\",\n\t\"phone_number4\":\"09903933689\",\n\t\t\"phone_number5\":\"09903933683\"\n\n\n}"
+							"raw": "{\n\t\"PhoneNumber1\":\"09903933686\"\n\n\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/Auth/phoneNumber",
@@ -504,6 +548,41 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "tokenCheck",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuOTI2NzkxODM1NzQ2NzU5NX0.PNCPrjryvLlxBf8wv-RpRmdN_MjsSbtq1zw3pvfe9Z0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"role\":\"seller\",\n\t\"clientVersion\":\"1.0.0\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Auth//tokenCheck",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"",
+								"tokenCheck"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -517,7 +596,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuMTQxMTU1Mjc3NDM2MTcyNH0.LR3DIAU5JM9axpFxax4YIt4hw1Q-Fb4rxjC5Wy4YQ9c",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuNjI0ODk2ODIzNTE5MzMzMX0.4wTYb_rR6DgNY8vMqJzDY0h4fFC2CPycZcb5Kqkvo-U",
 								"type": "text"
 							}
 						],
@@ -545,7 +624,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuNjM4OTI2NDQ1NTM4MDM5OX0.cuEPqZKVAmXCnj9OlZMwMrdrNsLRmYkEk-ehNTQh2_s",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZDExIiwicGFzc3dvcmQiOiJjNzNlMDExMGFhOTZhYzQzNTVjMzY1ZTljMTcyODhlOCIsInJhbmRvbSI6MC4xMzIzMzg0NDU0MTIwODg0fQ.GTY453XSgYydaw5HuiqPv0IJCuhhpzQD8qR2J0M-R2d",
 								"type": "text"
 							}
 						],
@@ -644,7 +723,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuOTI3NTcwNDk0NjQ0MTI1fQ.XvWxk8Rx99gx1cFcBJ-3q61dI8LFj8haLXk_6rRaZpM",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZDExIiwiUGFzc3dvcmQiOiJjNzNlMDExMGFhOTZhYzQzNTVjMzY1ZTljMTcyODhlOCIsInJhbmRvbSI6MC40ODg2MDA1MzA2MDI2MTh9.pURzh1l7khwrgliVlUyhhRdq20Q6pPRcnF36j3cxQ78",
 								"type": "text"
 							}
 						],
@@ -652,42 +731,42 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "image",
+									"key": "Image",
 									"type": "file",
 									"src": ""
 								},
 								{
-									"key": "description",
+									"key": "Description",
 									"value": "description",
 									"type": "text"
 								},
 								{
-									"key": "price",
+									"key": "Price",
 									"value": "123",
 									"type": "text"
 								},
 								{
-									"key": "price_date_time",
+									"key": "PriceDateTime",
 									"value": "price_date_time",
 									"type": "text"
 								},
 								{
-									"key": "supply_of_product",
-									"value": "supply_of_product",
+									"key": "SupplyOfProduct",
+									"value": "234234",
 									"type": "text"
 								},
 								{
-									"key": "unit_of_product",
-									"value": "unit_of_product",
+									"key": "UnitOfProduct",
+									"value": "234234",
 									"type": "text"
 								},
 								{
-									"key": "productid",
+									"key": "ProductID",
 									"value": "3",
 									"type": "text"
 								},
 								{
-									"key": "unitid",
+									"key": "UnitID",
 									"value": "1",
 									"type": "text"
 								}
@@ -782,7 +861,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuODc3MjI2NzYzODk4NTY3Nn0.VlhKxZdEUrBZbOT5eeRWwnZbewRypnBubVoVVr6nLd8",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuNjI0ODk2ODIzNTE5MzMzMX0.4wTYb_rR6DgNY8vMqJzDY0h4fFC2CPycZcb5Kqkvo-U",
 								"type": "text"
 							}
 						],
@@ -798,6 +877,35 @@
 							"path": [
 								"seller",
 								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept or reject buy request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuNjI0ODk2ODIzNTE5MzMzMX0.4wTYb_rR6DgNY8vMqJzDY0h4fFC2CPycZcb5Kqkvo-U"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/operator/orderProduct",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"operator",
+								"orderProduct"
 							]
 						}
 					},
@@ -837,7 +945,7 @@
 					"response": []
 				},
 				{
-					"name": "tahvile dadan order",
+					"name": "taede bargiri",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -871,6 +979,422 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "add address",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4zNjY4ODEzOTc5NTYxNjgwM30.FlLMD_6T-6UoiXonk6nCMn0_wEs-pM7z7FmXK5oxorg",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CityID\":\"2\",\n\t\"GoogleMapAddressLink\":\"یبلیقلیقلیلق\",\n\t\"CompleteAddressDescription\":\"یقلیقلیسل\",\n\t\"CustomName\":\"یقلیقلیسقلیسق\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/address",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4zNjY4ODEzOTc5NTYxNjgwM30.FlLMD_6T-6UoiXonk6nCMn0_wEs-pM7z7FmXK5oxorg",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CityID\":\"2\",\n\t\"GoogleMapAddressLink\":\"یبلیقلیقلیلق\",\n\t\"CompleteAddressDescription\":\"یقلیقلیسل\",\n\t\"CustomName\":\"یقلیقلیسقلیسق\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/address",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all adress",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4wODYxNjA0MzM1NzM1NjQ0fQ.zy7VDK4qqdIx1L8BJuwKSUO1fWYVtipoJAh3KLAy-7U",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/address",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "peygiri order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4wODYxNjA0MzM1NzM1NjQ0fQ.zy7VDK4qqdIx1L8BJuwKSUO1fWYVtipoJAh3KLAy-7U"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"HashCode\":\"hashCode!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/order/followUp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"order",
+								"followUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all valid off",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4wODYxNjA0MzM1NzM1NjQ0fQ.zy7VDK4qqdIx1L8BJuwKSUO1fWYVtipoJAh3KLAy-7U"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/off",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"off"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit address",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4wODYxNjA0MzM1NzM1NjQ0fQ.zy7VDK4qqdIx1L8BJuwKSUO1fWYVtipoJAh3KLAy-7U"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CustomerAddressID\":\"1\",\n\t\"CompleteAddressDescription\":\"salam\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/address",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4zNjY4ODEzOTc5NTYxNjgwM30.FlLMD_6T-6UoiXonk6nCMn0_wEs-pM7z7FmXK5oxorg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CustomerAddressID\":\"1\",\n\t\"DateTimeErsal\":\"farda\",\n\t\"products\":[\n\t\t{\n\t\t\t\"SellerProductID\":\"1\",\n\t\t\t\"Supply\":\"2\"\n\t\t},{\n\t\t\t\"SellerProductID\":\"1\",\n\t\t\t\"Supply\":\"2\"\t\n\t\t}\n\t\t]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"order"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4zNjY4ODEzOTc5NTYxNjgwM30.FlLMD_6T-6UoiXonk6nCMn0_wEs-pM7z7FmXK5oxorg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all message",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4wODYxNjA0MzM1NzM1NjQ0fQ.zy7VDK4qqdIx1L8BJuwKSUO1fWYVtipoJAh3KLAy-7U",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/message",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send message ",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4wODYxNjA0MzM1NzM1NjQ0fQ.zy7VDK4qqdIx1L8BJuwKSUO1fWYVtipoJAh3KLAy-7U",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n\n{\n\t\"Message\":\"salam\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/message",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"message"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "support",
+			"item": [
+				{
+					"name": "get all message",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6ImFhYUFBQTExMSIsIlBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuMjEyODMwODUwNjYxOTE0MX0.5HAsVCP-RPsyOJS1hg5Gwpxf7L1-oDwAKmmjgxByUR8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/support/message",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"support",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6ImFhYUFBQTExMSIsIlBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuMjEyODMwODUwNjYxOTE0MX0.5HAsVCP-RPsyOJS1hg5Gwpxf7L1-oDwAKmmjgxByUR8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ToID\":\"1\",\n\t\"Message\":\"sadfghfdsa\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/support/message",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"support",
+								"message"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -897,9 +1421,9 @@
 	],
 	"variable": [
 		{
-			"id": "af8786a3-905e-44e7-8fd7-e3ece98a1906",
+			"id": "c137d3fc-6958-4761-ad9e-b387c0d43e4a",
 			"key": "baseUrl",
-			"value": "http://localhost:1010",
+			"value": "http://localhost:1008",
 			"type": "string"
 		}
 	]

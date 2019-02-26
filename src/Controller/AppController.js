@@ -36,7 +36,7 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
         case "moreproductGroup" :
             if (req.query.ID == null){res.status(400).json({"message":"id not found"});}else {
                 products.findAll({where: {
-                        GroupID: req.body.ID
+                        GroupID: req.query.ID
                     }}).then(products => {
                     response(res,products).then(
                         loggerinfo.info(req.connection.remoteAddress + " get productGroup detail list")
@@ -62,18 +62,21 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
 
                         }
 
-                        final[index] = {
-                            ID:value.ID,
-                            Description:value.Description,
-                            Price:value.Price,
-                            PriceDateTime:value.PriceDateTime,
-                            SupplyOfProduct:value.SupplyOfProduct,
-                            UnitOfProduct:value.UnitOfProduct,
-                            ProductID:value.ProductID,
-                            SellerID:value.SellerID,
-                            UnitID:value.UnitID,
-                            Image:base64str
-                        }
+                            final[index] = {
+                                ID:value.ID,
+                                Description:value.Description,
+                                Price:value.Price,
+                                PriceDateTime:value.PriceDateTime,
+                                SupplyOfProduct:value.SupplyOfProduct,
+                                UnitOfProduct:value.UnitOfProduct,
+                                ProductID:value.ProductID,
+                                SellerID:value.SellerID,
+                                UnitID:value.UnitID,
+                                Image:base64str
+                            }
+
+
+
                     }
                     if (!isThisArrayEmpty(products)){
                         products.forEach(testFunction2);
