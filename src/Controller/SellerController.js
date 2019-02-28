@@ -4,7 +4,7 @@ var router = express.Router();
 /*********************************************/
 const {checkLimitTime, filterRequest, checkToken, response, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
 const {loggererror, loggerinfo, colors, JWT_SECRET, upload} = require('../Util/myVars');
-const {sellerPhoneNumber,Seller, sellerProducts, sellerWareHouse, sellerOperator, transportation, sequelize, products, unit} = require('../../sequelize');
+const {sellerOperator, sellerPhoneNumber,Seller, sellerProducts, sellerWareHouse, transportation, sequelize, products, unit} = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
 var md5 = require('md5');
@@ -458,33 +458,40 @@ router.post('/product', upload.single("Image"), (req, res) => {
                 ) {
                     res.status(400).json({"code": 703});
                 } else {
+                    var status = true;
                     products.findAll({where: {id: req.body.ProductID}}).then(
                         products => {
                             if (!isThisArrayEmpty(products)) {
                                 unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
                                     if (isThisArrayEmpty(unit)) {
+                                        status = false;
                                         return res.status(404).json();
 
                                     }
                                 })
                             } else {
+                                status = false;
                                 return res.status(404).json();
                             }
                         }
                     );
-                    sellerProducts.create({
-                        Description: req.body.Description,
-                        Image: image,
-                        Price: req.body.Price,
-                        PriceDateTime: req.body.PriceDateTime,
-                        SupplyOfProduct: req.body.SupplyOfProduct,
-                        UnitOfProduct: req.body.UnitOfProduct,
-                        ProductID: req.body.ProductID,
-                        SellerID: seller[0].ID,
-                        UnitID: req.body.UnitID
+                    if (status){
 
-                    });
-                    return res.status(200).json();
+                        sellerProducts.create({
+                            Description: req.body.Description,
+                            Image: image,
+                            Price: req.body.Price,
+                            PriceDateTime: req.body.PriceDateTime,
+                            SupplyOfProduct: req.body.SupplyOfProduct,
+                            UnitOfProduct: req.body.UnitOfProduct,
+                            ProductID: req.body.ProductID,
+                            SellerID: seller[0].ID,
+                            UnitID: req.body.UnitID
+
+                        });
+                        return res.status(200).json();
+                    }
+
 
 
                 }
@@ -724,12 +731,106 @@ router.get('/Subtypes', (req, res) => {
 
 //operator
 
-router.post('/operator/orderProduct', (req, res) => {
+
+router.post('/operator/product', upload.single("Image"), (req, res) => {
+
+    var timeStatus = checkLimitTime(res);
+    var searchQuery = checkToken(req, res);
+    if (searchQuery && timeStatus) {
+
+        sellerOperator.findAll(searchQuery).then(selleroperator => {
+
+            if (isThisArrayEmpty(selleroperator)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+
+                if (req.file != null) {
+                    const tempPath = req.file.path;
+                    const targetPath = path.join(__dirname, "./../../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
+                    image = targetPath;
+                    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                        fs.rename(tempPath, targetPath, err => {
+                            if (err) return handleError(err, res);
+                        });
+                    } else {
+                        fs.unlink(tempPath, err => {
+                            if (err) return handleError(err, res);
+
+                            return res
+                                .status(403)
+                                .contentType("text/plain")
+                                .end("this format of image is not under support");
+                        });
+                    }
+
+                } else {
+                    image = "notSetYet";
+                }
+
+                if (req.body.Description == null ||
+                    req.body.Price == null ||
+                    req.body.PriceDateTime == null ||
+                    req.body.SupplyOfProduct == null ||
+                    req.body.UnitOfProduct == null ||
+                    req.body.ProductID == null ||
+                    req.body.UnitID == null
+                ) {
+                    res.status(400).json({"code": 703});
+                } else {
+                    var status = true;
+                    products.findAll({where: {id: req.body.ProductID}}).then(
+                        products => {
+                            if (!isThisArrayEmpty(products)) {
+                                unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
+                                    if (isThisArrayEmpty(unit)) {
+                                        status= false;
+                                        return res.status(404).json();
+
+                                    }
+                                })
+                            } else {
+                                status=false;
+                                return res.status(404).json();
+                            }
+                        }
+                    );
+                    if (status){
+                        sellerProducts.create({
+                            Description: req.body.Description,
+                            Image: image,
+                            Price: req.body.Price,
+                            PriceDateTime: req.body.PriceDateTime,
+                            SupplyOfProduct: req.body.SupplyOfProduct,
+                            UnitOfProduct: req.body.UnitOfProduct,
+                            ProductID: req.body.ProductID,
+                            SellerID: selleroperator[0].SellerID,
+                            UnitID: req.body.UnitID
+
+                        });
+                        return res.status(200).json();
+                    }
+
+
+
+                }
+
+            }
+        });
+
+
+    }
+
+
+});
+
+router.post('/operator/orderProduct', (req, res) =>{
     var searchQuery = checkToken(req, res);
     var filteringStatus = filterRequest(req, res, "orderProduct");
         try {
             if (searchQuery && filteringStatus) {
-                sellerOperator.findAll({where: {searchQuery}}).then(operator => {
+                sellerOperator.findAll(searchQuery).then(operator => {
                     if (!isThisArrayEmpty(operator)) {
                         orderProduct.findAll({where: {ID: req.body.ID}}).then(res => {
                             if (!isThisArrayEmpty(res)) {

@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Controller/CustomerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CustomerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/myFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/myFunctions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/dataBase/export.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/dataBase/export.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SellerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SellerController.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,61 +68,69 @@
     <session id="-940590212">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.2" value="3" />
           <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="2" />
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="17" />
+          <entry key="project.opened" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="2" />
           <entry key="jpg" value="2" />
-          <entry key="js" value="571" />
+          <entry key="js" value="575" />
           <entry key="json" value="9" />
           <entry key="log" value="41" />
           <entry key="png" value="2" />
           <entry key="randomstring" value="1" />
-          <entry key="sql" value="1" />
+          <entry key="sql" value="2" />
+          <entry key="ts" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="4" />
           <entry key="JSON" value="9" />
-          <entry key="JavaScript" value="572" />
+          <entry key="JavaScript" value="576" />
           <entry key="Log" value="41" />
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="SQL" value="1" />
+          <entry key="SQL" value="2" />
+          <entry key="TypeScript" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="25954" />
+          <entry key="js" value="26137" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="25954" />
+          <entry key="JavaScript" value="26137" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts">
+        <counts>
+          <entry key="TypeScriptServerServiceImpl" value="1" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Util/myFunctions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1893">
-              <caret line="1075" column="6" selection-start-line="1075" selection-start-column="6" selection-end-line="1075" selection-end-column="6" />
+            <state relative-caret-position="160">
+              <caret line="957" column="28" selection-start-line="957" selection-start-column="28" selection-end-line="957" selection-end-column="28" />
               <folding>
                 <element signature="n#!!block;n#base64_encode#0" />
                 <element signature="n#!!block;n#isThisArrayEmpty#0" />
@@ -131,25 +140,53 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-166">
+              <caret line="679" column="38" lean-forward="true" selection-start-line="679" selection-start-column="38" selection-end-line="679" selection-end-column="38" />
+              <folding>
+                <element signature="e#844#2279#0" />
+                <element signature="e#2323#3734#0" />
+                <element signature="e#3800#19351#0" />
+                <element signature="e#22819#27647#0" />
+                <element signature="e#27688#29671#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="143" column="2" lean-forward="true" selection-start-line="87" selection-end-line="143" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Documation/dataBase/export.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="49" column="46" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sequelize.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="88" column="4" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="208" column="29" lean-forward="true" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
-              <folding>
-                <element signature="e#647#2487#0" />
-                <element signature="e#2528#5854#0" />
-                <element signature="e#5895#6828#0" />
-                <element signature="e#8090#8176#0" />
-                <element signature="e#10145#10512#0" />
-                <element signature="e#17019#17519#0" />
-                <element signature="e#17567#18492#0" />
-                <element signature="e#18533#19117#0" />
-                <element signature="e#19154#20186#0" />
-                <element signature="e#20228#21422#0" />
-                <element signature="e#21459#23677#0" />
-                <element signature="e#23722#24517#0" />
-                <element signature="e#24559#26523#0" />
-              </folding>
+            <state relative-caret-position="3120">
+              <caret line="208" column="29" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -228,7 +265,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Controller/AppController.js" />
         <option value="$PROJECT_DIR$/Controller/CustomerController.js" />
         <option value="$PROJECT_DIR$/Util/myFunctions.js" />
         <option value="$PROJECT_DIR$/Util/myVars.js" />
@@ -271,14 +307,15 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/sequelize.js" />
         <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/src/Controller/SellerController.js" />
         <option value="$PROJECT_DIR$/src/Controller/AuthController.js" />
         <option value="$PROJECT_DIR$/src/Controller/transportationController.js" />
         <option value="$PROJECT_DIR$/src/Controller/AppController.js" />
         <option value="$PROJECT_DIR$/src/models/OrderProduct.js" />
         <option value="$PROJECT_DIR$/src/Util/myVars.js" />
-        <option value="$PROJECT_DIR$/src/Util/myFunctions.js" />
         <option value="$PROJECT_DIR$/src/Controller/CustomerController.js" />
+        <option value="$PROJECT_DIR$/src/Util/myFunctions.js" />
+        <option value="$PROJECT_DIR$/src/Controller/SellerController.js" />
+        <option value="$PROJECT_DIR$/Documation/dataBase/export.sql" />
       </list>
     </option>
   </component>
@@ -319,6 +356,17 @@
             <path>
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Documation" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Documation" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="dataBase" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
@@ -351,6 +399,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -474,24 +523,26 @@
       <workItem from="1551003631452" duration="2042000" />
       <workItem from="1551007135653" duration="8985000" />
       <workItem from="1551088689610" duration="9386000" />
-      <workItem from="1551171125360" duration="23834000" />
+      <workItem from="1551171125360" duration="24023000" />
+      <workItem from="1551342668517" duration="1667000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="229382000" />
+    <option name="totallyTimeSpent" value="231238000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25250357" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32920793" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.35767326" />
@@ -500,7 +551,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49713877" visible="true" weight="0.43811882" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49713877" visible="true" weight="0.43811882" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5028612" side_tool="true" weight="0.33415842" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32920793" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -530,12 +581,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="order fixed + moreproductGroup bug fixed + sending sms in registerationn + get seller phone numbers for customer + Singlelist api for customer for getting spicial seller info + return all seller info in sellerList + orderProduct relation between takhfifProudoct + change demo data ( monjamed + taze)" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Documation/old files/models/seller_products.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Documation/old files/models/seller_type.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Documation/old files/models/unit.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -740,13 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sequelize.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="84" column="18" selection-start-line="84" selection-start-column="18" selection-end-line="84" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
@@ -772,23 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
           <caret line="235" column="15" selection-start-line="235" selection-start-column="15" selection-end-line="235" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-65">
-          <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
-          <folding>
-            <element signature="e#826#1674#0" />
-            <element signature="e#1718#2543#0" />
-            <element signature="e#2610#18161#0" />
-            <element signature="e#18227#21564#0" />
-            <element signature="e#21629#26457#0" />
-            <element signature="e#26498#28481#0" />
-            <element signature="e#28523#29699#0" />
-            <element signature="e#29769#32278#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -854,13 +875,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="86" column="28" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/TakhfifProduct.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-376">
@@ -870,34 +884,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="208" column="29" lean-forward="true" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
-          <folding>
-            <element signature="e#647#2487#0" />
-            <element signature="e#2528#5854#0" />
-            <element signature="e#5895#6828#0" />
-            <element signature="e#8090#8176#0" />
-            <element signature="e#10145#10512#0" />
-            <element signature="e#17019#17519#0" />
-            <element signature="e#17567#18492#0" />
-            <element signature="e#18533#19117#0" />
-            <element signature="e#19154#20186#0" />
-            <element signature="e#20228#21422#0" />
-            <element signature="e#21459#23677#0" />
-            <element signature="e#23722#24517#0" />
-            <element signature="e#24559#26523#0" />
-          </folding>
+        <state relative-caret-position="3120">
+          <caret line="208" column="29" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/node/assert.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sequelize.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="88" column="4" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Util/myFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1893">
-          <caret line="1075" column="6" selection-start-line="1075" selection-start-column="6" selection-end-line="1075" selection-end-column="6" />
+        <state relative-caret-position="160">
+          <caret line="957" column="28" selection-start-line="957" selection-start-column="28" selection-end-line="957" selection-end-column="28" />
           <folding>
             <element signature="n#!!block;n#base64_encode#0" />
             <element signature="n#!!block;n#isThisArrayEmpty#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-166">
+          <caret line="679" column="38" lean-forward="true" selection-start-line="679" selection-start-column="38" selection-end-line="679" selection-end-column="38" />
+          <folding>
+            <element signature="e#844#2279#0" />
+            <element signature="e#2323#3734#0" />
+            <element signature="e#3800#19351#0" />
+            <element signature="e#22819#27647#0" />
+            <element signature="e#27688#29671#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="143" column="2" lean-forward="true" selection-start-line="87" selection-end-line="143" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Documation/dataBase/export.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="49" column="46" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="46" />
         </state>
       </provider>
     </entry>
