@@ -12,6 +12,7 @@ var customerController = require('./src/Controller/CustomerController');
 var AuthController = require('./src/Controller/AuthController');
 var SellerController = require('./src/Controller/SellerController');
 var transportationController = require('./src/Controller/transportationController');
+var warehouseController = require('./src/Controller/WareHouseController');
 
 
 
@@ -21,6 +22,7 @@ app.use('/customer', customerController);
 app.use('/Auth', AuthController);
 app.use('/seller', SellerController);
 app.use('/transportation',transportationController);
+app.use('/warehouse',warehouseController);
 
 
 

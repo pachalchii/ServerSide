@@ -4,7 +4,7 @@ var router = express.Router();
 /*********************************************/
 const {checkLimitTime, filterRequest, checkToken, response, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
 const {loggererror, loggerinfo, colors, JWT_SECRET, upload} = require('../Util/myVars');
-const {sellerOperator, sellerPhoneNumber,Seller, sellerProducts, sellerWareHouse, transportation, sequelize, products, unit} = require('../../sequelize');
+const {orderNazarSanji,orderProduct,Order, customer, sellerOperator, sellerPhoneNumber,Seller, sellerProducts, sellerWareHouse, transportation, sequelize, products, unit} = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
 var md5 = require('md5');
@@ -725,6 +725,133 @@ router.get('/Subtypes', (req, res) => {
 
 });
 
+router.get('/orderProduct', (req, res) => {
+
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+
+        Seller.findAll(searchQuery).then(seller => {
+
+            if (isThisArrayEmpty(seller)) {
+
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+              orderProduct.findAll({where:{
+                    SellerID:seller[0].id
+                  }}).then(
+                      orderProduct=>{
+                          return res.json(orderProduct);
+                      }
+
+              );
+
+
+
+
+
+            }
+        });
+
+
+    }
+
+
+});
+
+router.get('/Order', (req, res) => {
+
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+        if (req.body.OrderID == null){
+            return res.status(400).json({"code": 703});
+        } else {
+            Seller.findAll(searchQuery).then(seller => {
+
+                if (isThisArrayEmpty(seller)) {
+
+
+                    return res.status(400).json({"code": 700});
+
+                } else {
+                    Order.findAll({where:{
+                            ID:req.body.OrderID
+                        }}).then(
+                        order=>{
+                            return res.json(order);
+                        }
+
+                    );
+
+
+
+
+
+                }
+            });
+        }
+
+
+
+
+    }
+
+
+});
+
+router.get('/OrderDetail', (req, res) => {
+
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+        if (req.body.OrderID == null){
+            return res.status(400).json({"code": 703});
+        } else {
+            Seller.findAll(searchQuery).then(seller => {
+
+                if (isThisArrayEmpty(seller)) {
+
+
+                    return res.status(400).json({"code": 700});
+
+                } else {
+                    Order.findAll({where:{
+                            ID:req.body.OrderID
+                        }}).then(
+                        order=>{
+                           customer.findAll({where:{ID:order[0].CustomerID}}).then(
+                               customerres=>{
+                                   orderNazarSanji.findAll({where:{ID:order[0].NazarSanjiID}}).then(
+                                       orderNazarSanjires=>{
+                                           return res.json({
+                                               nazarsanji:orderNazarSanjires,
+                                               customer: customerres
+                                           });
+                                       }
+                                   )
+
+                               }
+                           )
+                        }
+
+                    );
+
+
+
+
+
+                }
+            });
+        }
+
+
+
+
+    }
+
+
+});
+
 
 
 
@@ -875,7 +1002,7 @@ router.post('/operator/orderProduct', (req, res) =>{
 
         }
 
-});  //not tested
+});
 
 
 

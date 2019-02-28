@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documation/dataBase/export.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/dataBase/export.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SellerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SellerController.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -87,7 +86,7 @@
         <counts>
           <entry key="gitignore" value="2" />
           <entry key="jpg" value="2" />
-          <entry key="js" value="575" />
+          <entry key="js" value="582" />
           <entry key="json" value="9" />
           <entry key="log" value="41" />
           <entry key="png" value="2" />
@@ -100,7 +99,7 @@
         <counts>
           <entry key="Image" value="4" />
           <entry key="JSON" value="9" />
-          <entry key="JavaScript" value="576" />
+          <entry key="JavaScript" value="583" />
           <entry key="Log" value="41" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="SQL" value="2" />
@@ -109,12 +108,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="26137" />
+          <entry key="js" value="26701" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="26137" />
+          <entry key="JavaScript" value="26701" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -129,8 +128,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Util/myFunctions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="957" column="28" selection-start-line="957" selection-start-column="28" selection-end-line="957" selection-end-column="28" />
+            <state relative-caret-position="175">
+              <caret line="958" column="64" selection-start-line="958" selection-start-column="64" selection-end-line="958" selection-end-column="100" />
               <folding>
                 <element signature="n#!!block;n#base64_encode#0" />
                 <element signature="n#!!block;n#isThisArrayEmpty#0" />
@@ -142,15 +141,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-166">
-              <caret line="679" column="38" lean-forward="true" selection-start-line="679" selection-start-column="38" selection-end-line="679" selection-end-column="38" />
+            <state relative-caret-position="109">
+              <caret line="802" column="41" selection-start-line="802" selection-start-column="41" selection-end-line="802" selection-end-column="41" />
               <folding>
                 <element signature="e#844#2279#0" />
                 <element signature="e#2323#3734#0" />
                 <element signature="e#3800#19351#0" />
+                <element signature="e#19417#22754#0" />
                 <element signature="e#22819#27647#0" />
                 <element signature="e#27688#29671#0" />
+                <element signature="e#29713#30889#0" />
+                <element signature="e#31189#32365#0" />
+                <element signature="e#31805#32351#0" />
+                <element signature="e#32539#33241#0" />
+                <element signature="e#30972#34309#0" />
+                <element signature="e#31096#34305#0" />
+                <element signature="e#30961#33470#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/AppController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="52" column="35" lean-forward="true" selection-end-line="128" />
             </state>
           </provider>
         </entry>
@@ -158,13 +174,31 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="143" column="2" lean-forward="true" selection-start-line="87" selection-end-line="143" selection-end-column="2" />
+            <state relative-caret-position="992">
+              <caret line="149" column="18" lean-forward="true" selection-start-line="149" selection-start-column="18" selection-end-line="149" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/AuthController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-6852">
+              <caret line="171" column="45" lean-forward="true" selection-start-line="171" selection-start-column="45" selection-end-line="171" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Documation/dataBase/export.sql">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="396">
@@ -174,19 +208,27 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sequelize.js">
+        <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="88" column="4" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="4" />
+            <state relative-caret-position="225">
+              <caret line="135" column="20" lean-forward="true" selection-start-line="135" selection-end-line="168" />
+              <folding>
+                <element signature="e#654#2405#0" />
+                <element signature="e#2446#5922#0" />
+                <element signature="e#5963#6906#0" />
+                <element signature="e#6946#19652#0" />
+                <element signature="e#20241#21184#0" />
+                <element signature="e#21225#21862#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Controller/WareHouseController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3120">
-              <caret line="208" column="29" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
+            <state relative-caret-position="73">
+              <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -265,7 +307,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Controller/CustomerController.js" />
         <option value="$PROJECT_DIR$/Util/myFunctions.js" />
         <option value="$PROJECT_DIR$/Util/myVars.js" />
         <option value="$PROJECT_DIR$/Controller/AuthController.js" />
@@ -306,7 +347,6 @@
         <option value="$PROJECT_DIR$/src/Controller/SupportController.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/sequelize.js" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/src/Controller/AuthController.js" />
         <option value="$PROJECT_DIR$/src/Controller/transportationController.js" />
         <option value="$PROJECT_DIR$/src/Controller/AppController.js" />
@@ -314,8 +354,10 @@
         <option value="$PROJECT_DIR$/src/Util/myVars.js" />
         <option value="$PROJECT_DIR$/src/Controller/CustomerController.js" />
         <option value="$PROJECT_DIR$/src/Util/myFunctions.js" />
-        <option value="$PROJECT_DIR$/src/Controller/SellerController.js" />
         <option value="$PROJECT_DIR$/Documation/dataBase/export.sql" />
+        <option value="$PROJECT_DIR$/src/Controller/SellerController.js" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/src/Controller/WareHouseController.js" />
       </list>
     </option>
   </component>
@@ -357,12 +399,6 @@
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="Documation" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="Documation" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="dataBase" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -524,12 +560,12 @@
       <workItem from="1551007135653" duration="8985000" />
       <workItem from="1551088689610" duration="9386000" />
       <workItem from="1551171125360" duration="24023000" />
-      <workItem from="1551342668517" duration="1667000" />
+      <workItem from="1551342668517" duration="4968000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="231238000" />
+    <option name="totallyTimeSpent" value="234539000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -581,13 +617,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="order fixed + moreproductGroup bug fixed + sending sms in registerationn + get seller phone numbers for customer + Singlelist api for customer for getting spicial seller info + return all seller info in sellerList + orderProduct relation between takhfifProudoct + change demo data ( monjamed + taze)" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Documation/old files/models/unit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="23" lean-forward="true" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Documation/old files/models/seller_ware_house.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -785,13 +814,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="55" column="3" selection-start-line="55" selection-start-column="3" selection-end-line="63" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/randomstring/bin/randomstring">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -831,19 +853,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/AuthController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="158" column="32" selection-start-line="158" selection-start-column="32" selection-end-line="165" selection-end-column="39" />
-          <folding>
-            <element signature="e#9482#37921#0" />
-            <element signature="e#37965#39549#0" />
-            <element signature="e#39594#39626#0" />
-            <element signature="e#39667#42303#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/Transportation.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
@@ -865,27 +874,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/AppController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3">
-          <caret line="52" column="35" lean-forward="true" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
-          <folding>
-            <element signature="e#4214#4552#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/TakhfifProduct.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-376">
           <caret line="30" column="13" lean-forward="true" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3120">
-          <caret line="208" column="29" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -896,17 +888,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sequelize.js">
+    <entry file="file://$PROJECT_DIR$/Documation/dataBase/export.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="88" column="4" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="4" />
+        <state relative-caret-position="396">
+          <caret line="49" column="46" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="992">
+          <caret line="149" column="18" lean-forward="true" selection-start-line="149" selection-start-column="18" selection-end-line="149" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Util/myFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="957" column="28" selection-start-line="957" selection-start-column="28" selection-end-line="957" selection-end-column="28" />
+        <state relative-caret-position="175">
+          <caret line="958" column="64" selection-start-line="958" selection-start-column="64" selection-end-line="958" selection-end-column="100" />
           <folding>
             <element signature="n#!!block;n#base64_encode#0" />
             <element signature="n#!!block;n#isThisArrayEmpty#0" />
@@ -916,29 +915,73 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-166">
-          <caret line="679" column="38" lean-forward="true" selection-start-line="679" selection-start-column="38" selection-end-line="679" selection-end-column="38" />
+        <state relative-caret-position="109">
+          <caret line="802" column="41" selection-start-line="802" selection-start-column="41" selection-end-line="802" selection-end-column="41" />
           <folding>
             <element signature="e#844#2279#0" />
             <element signature="e#2323#3734#0" />
             <element signature="e#3800#19351#0" />
+            <element signature="e#19417#22754#0" />
             <element signature="e#22819#27647#0" />
             <element signature="e#27688#29671#0" />
+            <element signature="e#29713#30889#0" />
+            <element signature="e#31189#32365#0" />
+            <element signature="e#31805#32351#0" />
+            <element signature="e#32539#33241#0" />
+            <element signature="e#30972#34309#0" />
+            <element signature="e#31096#34305#0" />
+            <element signature="e#30961#33470#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
+    <entry file="file://$PROJECT_DIR$/sequelize.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="143" column="2" lean-forward="true" selection-start-line="87" selection-end-line="143" selection-end-column="2" />
+        <state relative-caret-position="850">
+          <caret line="87" column="37" selection-start-line="87" selection-start-column="37" selection-end-line="87" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Documation/dataBase/export.sql">
+    <entry file="file://$PROJECT_DIR$/src/Controller/AuthController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="49" column="46" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="46" />
+        <state relative-caret-position="-6852">
+          <caret line="171" column="45" lean-forward="true" selection-start-line="171" selection-start-column="45" selection-end-line="171" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/AppController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="52" column="35" lean-forward="true" selection-end-line="128" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="135" column="20" lean-forward="true" selection-start-line="135" selection-end-line="168" />
+          <folding>
+            <element signature="e#654#2405#0" />
+            <element signature="e#2446#5922#0" />
+            <element signature="e#5963#6906#0" />
+            <element signature="e#6946#19652#0" />
+            <element signature="e#20241#21184#0" />
+            <element signature="e#21225#21862#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/WareHouseController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
         </state>
       </provider>
     </entry>
