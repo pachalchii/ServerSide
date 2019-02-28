@@ -20,6 +20,7 @@ function smsHandler(message,phone) {
         });
     
 }
+
 function response(res, json) {
 
     return new Promise(resolve => {
@@ -964,6 +965,16 @@ function filterRequest(req,res,type){
                 }else{return true;}
             }else{return true;}
             break;
+        case "WorderProduct":
+            if (req.body.ID == null || req.body.Status == null){res.status(400).json({"code": 703}); return false;}
+            else if (req.body.Status){
+                if (req.body.TransportarID == null){
+                    res.status(404).json({"code":703});
+                    return false;
+                }else{return true;}
+            }else{return true;}
+            break;
+            break;
         case "customerAddress":
             if (req.body.CityID == null || req.body.GoogleMapAddressLink == null || req.body.CompleteAddressDescription == null || req.body.CustomName == null)
             {
@@ -1062,7 +1073,22 @@ function checkLimitTime(res){
     }
 }
 
+function checkStatus (searchQuery, Role){
+    Role.findAll(searchQuery).then(
+        entity=>{
+            if (!isThisArrayEmpty(entity)) {
+                if (!entity[0].Status){
+                    return res.status(400).json({"code": 900});
+                }
+            }else {
+                return res.status(400).json({"code": 700});
+            }
+        }
+    );
+}
+
 module.exports = {
+    checkStatus,
     smsHandler,
     checkLimitTime,
     filterRequest,

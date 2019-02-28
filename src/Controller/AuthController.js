@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const { application,support , Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
-const {checkToken, response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
+const {checkStatus,checkToken, response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
 const {SmsApi,upload,loggererror, colors ,JWT_SECRET  ,handleError , loggerinfo } = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
@@ -208,7 +208,7 @@ router.post('/login', (req, res) => {
         var role = req.body.Role;
         switch (role) {
             case "customer":
-                if(loginInfoCheck(req,res)) {
+                if(loginInfoCheck(req,res) ) {
 
                     if (req.body.PhoneNumber != null){
                         customer.findAll({
