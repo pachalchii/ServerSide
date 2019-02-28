@@ -133,7 +133,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":\"3\"\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{baseUrl}}/application/AppInfoGetter/product?ID=3",
@@ -165,7 +165,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/seller/list?cityId=1",
+							"raw": "{{baseUrl}}/seller/list?CityID=2",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -175,7 +175,35 @@
 							],
 							"query": [
 								{
-									"key": "cityId",
+									"key": "CityID",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get seller info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/Singlelist?SellerID=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"Singlelist"
+							],
+							"query": [
+								{
+									"key": "SellerID",
 									"value": "1"
 								}
 							]
@@ -299,7 +327,7 @@
 								},
 								{
 									"key": "Username",
-									"value": "awdaGwd1",
+									"value": "awdaGwd1a",
 									"type": "text"
 								},
 								{
@@ -314,7 +342,7 @@
 								},
 								{
 									"key": "PhoneNumber",
-									"value": "09122292594",
+									"value": "09127255512",
 									"type": "text"
 								},
 								{
@@ -376,7 +404,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Role\":\"support\",\n\t\"Username\":\"aaaAAA111\",\n\t\"Password\":\"password1aawddw\"\n}"
+							"raw": "{\n\t\"Role\":\"seller\",\n\t\"Username\":\"username11awdad11\",\n\t\"Password\":\"password1aawddw\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/Auth/login",
@@ -723,7 +751,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZDExIiwiUGFzc3dvcmQiOiJjNzNlMDExMGFhOTZhYzQzNTVjMzY1ZTljMTcyODhlOCIsInJhbmRvbSI6MC40ODg2MDA1MzA2MDI2MTh9.pURzh1l7khwrgliVlUyhhRdq20Q6pPRcnF36j3cxQ78",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZDExIiwiUGFzc3dvcmQiOiJjNzNlMDExMGFhOTZhYzQzNTVjMzY1ZTljMTcyODhlOCIsInJhbmRvbSI6MC41MjUxNTU2NTUyOTIwNDg5fQ.nQV9ERVWYGwH10Brfb7zvC8s3-MJGUC_oCVkDdiPZtE",
 								"type": "text"
 							}
 						],
@@ -861,7 +889,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZCIsInBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuNjI0ODk2ODIzNTE5MzMzMX0.4wTYb_rR6DgNY8vMqJzDY0h4fFC2CPycZcb5Kqkvo-U",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZDExIiwiUGFzc3dvcmQiOiJjNzNlMDExMGFhOTZhYzQzNTVjMzY1ZTljMTcyODhlOCIsInJhbmRvbSI6MC42MzIxODQzNjQ5OTQxMDd9.dspja-H4GYiFGwDuT31aOi5LUiZLXDiEL6U6E09kO6A",
 								"type": "text"
 							}
 						],
@@ -877,6 +905,34 @@
 							"path": [
 								"seller",
 								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all orderProudoct",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZDExIiwiUGFzc3dvcmQiOiJjNzNlMDExMGFhOTZhYzQzNTVjMzY1ZTljMTcyODhlOCIsInJhbmRvbSI6MC42MzIxODQzNjQ5OTQxMDd9.dspja-H4GYiFGwDuT31aOi5LUiZLXDiEL6U6E09kO6A"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/orderProduct",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"orderProduct"
 							]
 						}
 					},
@@ -906,6 +962,80 @@
 								"seller",
 								"operator",
 								"orderProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get order detail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "awdawd",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n\t\"OrderID\":\"1\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/Order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get order nazarsanji and customer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "awdawd"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n\t\"OrderID\":\"1\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/OrderDetail",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"OrderDetail"
 							]
 						}
 					},
@@ -990,7 +1120,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4zNjY4ODEzOTc5NTYxNjgwM30.FlLMD_6T-6UoiXonk6nCMn0_wEs-pM7z7FmXK5oxorg",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6ImF3ZGFHd2QxYSIsIlBhc3N3b3JkIjoiN2M2YTE4MGIzNjg5NmEwYThjMDI3ODdlZWFmYjBlNGMiLCJyYW5kb20iOjAuMzM2NDkwMzU1MDE4NjMyfQ.68n1aslVOK_b0ZIBDq50V-ioDYcWHvp_7Bx4RgHVTwo",
 								"type": "text"
 							},
 							{
@@ -1024,28 +1154,28 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4zNjY4ODEzOTc5NTYxNjgwM30.FlLMD_6T-6UoiXonk6nCMn0_wEs-pM7z7FmXK5oxorg",
-								"type": "text"
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4zNjY4ODEzOTc5NTYxNjgwM30.FlLMD_6T-6UoiXonk6nCMn0_wEs-pM7z7FmXK5oxorg"
 							},
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"CityID\":\"2\",\n\t\"GoogleMapAddressLink\":\"یبلیقلیقلیلق\",\n\t\"CompleteAddressDescription\":\"یقلیقلیسل\",\n\t\"CustomName\":\"یقلیقلیسقلیسق\"\n}"
+							"raw": "{\n\t\"param\":\"company\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/customer/address",
+							"raw": "{{baseUrl}}/customer/search",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"customer",
-								"address"
+								"search"
 							]
 						}
 					},
@@ -1201,7 +1331,7 @@
 							},
 							{
 								"key": "token",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQaG9uZU51bWJlciI6IjA5MTIyMjkyNTk0IiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4zNjY4ODEzOTc5NTYxNjgwM30.FlLMD_6T-6UoiXonk6nCMn0_wEs-pM7z7FmXK5oxorg",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6ImF3ZGFHd2QxYSIsIlBhc3N3b3JkIjoiN2M2YTE4MGIzNjg5NmEwYThjMDI3ODdlZWFmYjBlNGMiLCJyYW5kb20iOjAuMzM2NDkwMzU1MDE4NjMyfQ.68n1aslVOK_b0ZIBDq50V-ioDYcWHvp_7Bx4RgHVTwo",
 								"type": "text"
 							}
 						],
@@ -1288,6 +1418,40 @@
 							"path": [
 								"customer",
 								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get seller phoneNumber",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6ImF3ZGFHd2QxIiwiUGFzc3dvcmQiOiI3YzZhMTgwYjM2ODk2YTBhOGMwMjc4N2VlYWZiMGU0YyIsInJhbmRvbSI6MC4xNjE1MzMwMzUyNDk4MTcyMX0.c5Z4scZDFo0rb0WrcHu1GSul65duG-PvYGC6zdoTS5k"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/phoneNumber?SellerID=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"phoneNumber"
+							],
+							"query": [
+								{
+									"key": "SellerID",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -1395,6 +1559,148 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "operator",
+			"item": [
+				{
+					"name": "add products",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZDExIiwiUGFzc3dvcmQiOiJjNzNlMDExMGFhOTZhYzQzNTVjMzY1ZTljMTcyODhlOCIsInJhbmRvbSI6MC41MjUxNTU2NTUyOTIwNDg5fQ.nQV9ERVWYGwH10Brfb7zvC8s3-MJGUC_oCVkDdiPZtE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Image",
+									"type": "file",
+									"src": ""
+								},
+								{
+									"key": "Description",
+									"value": "description",
+									"type": "text"
+								},
+								{
+									"key": "Price",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "PriceDateTime",
+									"value": "price_date_time",
+									"type": "text"
+								},
+								{
+									"key": "SupplyOfProduct",
+									"value": "234234",
+									"type": "text"
+								},
+								{
+									"key": "UnitOfProduct",
+									"value": "234234",
+									"type": "text"
+								},
+								{
+									"key": "ProductID",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "UnitID",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/product",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change orderOperatorStatus + add wareHouseId to an order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6InVzZXJuYW1lMTFhd2RhZDExIiwiUGFzc3dvcmQiOiJjNzNlMDExMGFhOTZhYzQzNTVjMzY1ZTljMTcyODhlOCIsInJhbmRvbSI6MC41MjUxNTU2NTUyOTIwNDg5fQ.nQV9ERVWYGwH10Brfb7zvC8s3-MJGUC_oCVkDdiPZtE"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ID\":\"1\",\n\t\"Status\":true,\n\t\"WareHouseID\":\"1\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/seller/operator/orderProduct",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"seller",
+								"operator",
+								"orderProduct"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "wareHouse",
+			"item": [
+				{
+					"name": "get all transportation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6ImFhYUFBQTExMSIsIlBhc3N3b3JkIjoiYzczZTAxMTBhYTk2YWM0MzU1YzM2NWU5YzE3Mjg4ZTgiLCJyYW5kb20iOjAuMjEyODMwODUwNjYxOTE0MX0.5HAsVCP-RPsyOJS1hg5Gwpxf7L1-oDwAKmmjgxByUR8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/warehouse/transportation",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"warehouse",
+								"transportation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -1421,7 +1727,7 @@
 	],
 	"variable": [
 		{
-			"id": "c137d3fc-6958-4761-ad9e-b387c0d43e4a",
+			"id": "61717668-1779-4852-bbde-49a6661b39f4",
 			"key": "baseUrl",
 			"value": "http://localhost:1008",
 			"type": "string"

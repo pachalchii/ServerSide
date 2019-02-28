@@ -852,6 +852,65 @@ router.get('/OrderDetail', (req, res) => {
 
 });
 
+router.post('/disableUser', upload.single("Image"), (req, res) => {
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+
+        Seller.findAll(searchQuery).then(seller => {
+
+            if (isThisArrayEmpty(seller)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+                if (req.body.Role == null || req.body.ID) {
+                    return res.status(400).json({"code": 703});
+                } else {
+                    switch (req.body.Role) {
+
+                        case "seller":
+                         Seller.update({Status:false},{where:{ID:req.body.ID}}).then(
+                             tes=>{
+                                 return res.json();
+                             }
+                         );
+                            break;
+                        case "transportation":
+                            transportation.update({Status:false},{where:{ID:req.body.ID}}).then(
+                                tes=>{
+                                    return res.json();
+                                }
+                            );
+                            break;
+                        case "wareHouse":
+                            sellerWareHouse.update({Status:false},{where:{ID:req.body.ID}}).then(
+                                tes=>{
+                                    return res.json();
+                                }
+                            );
+                            break;
+                        case "operator" :
+                            sellerOperator.update({Status:false},{where:{ID:req.body.ID}}).then(
+                                tes=>{
+                                    return res.json();
+                                }
+                            );
+                            break;
+
+                        default :
+                            return res.status(404).json({"message": "invalid role type"});
+                    }
+
+                }
+
+
+            }
+        });
+
+
+    }
+
+});
 
 
 
