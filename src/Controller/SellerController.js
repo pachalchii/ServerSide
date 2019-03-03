@@ -247,8 +247,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     Status: true,
                                     Username: req.body.Username,
                                     ModelID: req.body.ModelID,
-                                    WareHouseID: req.body.WareHouseID
-
+                                    SellerID: seller[0].ID
                                 }, {
                                     transaction: t
                                 }).then(function () {
@@ -312,7 +311,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     WareHouseCompleteAddressDescription: req.body.WareHouseCompleteAddressDescription,
                                     WareHouseGoogleMapAddressLink: req.body.WareHouseGoogleMapAddressLink,
                                     WareHouseAddressCityID: req.body.WareHouseAddressCityID,
-                                    SellerID: req.body.SellerID
+                                    SellerID: seller[0].ID
 
                                 }, {
                                     transaction: t
@@ -372,8 +371,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     Point: 0,
                                     Status: true,
                                     Username: req.body.Username,
-                                    SellerID: req.body.SellerID
-
+                                    SellerID: seller[0].ID
                                 }, {
                                     transaction: t
                                 }).then(function () {
