@@ -4,11 +4,8 @@
     <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CustomerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CustomerController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SellerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SellerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/transportationController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/transportationController.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +89,7 @@
         <counts>
           <entry key="gitignore" value="2" />
           <entry key="jpg" value="2" />
-          <entry key="js" value="598" />
+          <entry key="js" value="601" />
           <entry key="json" value="9" />
           <entry key="log" value="41" />
           <entry key="png" value="2" />
@@ -105,7 +102,7 @@
         <counts>
           <entry key="Image" value="4" />
           <entry key="JSON" value="9" />
-          <entry key="JavaScript" value="599" />
+          <entry key="JavaScript" value="602" />
           <entry key="Log" value="41" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="SQL" value="2" />
@@ -114,12 +111,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="27604" />
+          <entry key="js" value="27987" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="27604" />
+          <entry key="JavaScript" value="27987" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -132,65 +129,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Util/myFunctions.js">
+        <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="895" selection-start-line="895" selection-end-line="954" selection-end-column="1" />
+            <state relative-caret-position="-2030">
+              <caret line="126" column="62" lean-forward="true" selection-start-line="126" selection-start-column="62" selection-end-line="126" selection-end-column="62" />
               <folding>
-                <element signature="n#!!block;n#smsHandler#0" />
-                <element signature="n#!!block;n#response#0" />
-                <element signature="n#!!block;n#base64_encode#0" />
-                <element signature="n#!!block;n#base64_decode#0" />
-                <element signature="n#!!block;n#insertCities#0" />
-                <element signature="n#!!block;n#insertTypes#0" />
-                <element signature="n#!!block;n#insertProductsGroup#0" />
-                <element signature="n#!!block;n#insertProducts#0" />
-                <element signature="n#!!block;n#insertUnits#0" />
-                <element signature="n#!!block;n#insertCarModels#0" />
-                <element signature="n#!!block;n#fillDataBase#0" />
-                <element signature="n#!!block;n#isThisArrayEmpty#0" />
-                <element signature="n#!!block;n#checkPhone#0" />
-                <element signature="n#!!block;n#checkPassword#0" />
-                <element signature="n#!!block;n#checkUserName#0" />
-                <element signature="n#!!block;n#registerInfoCheck#0" />
-                <element signature="n#!!block;n#loginInfoCheck#0" />
-                <element signature="n#!!block;n#addRoleInfoCheck#0" />
-                <element signature="n#!!block;n#checkLimitTime#0" />
-                <element signature="n#!!block;n#checkStatus#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/transportationController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="105" selection-start-line="105" selection-end-line="105" />
-              <folding>
-                <element signature="e#527#1490#0" />
-                <element signature="e#1526#3314#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="737" selection-start-line="737" selection-end-line="737" />
-              <folding>
-                <element signature="e#698#2449#0" />
-                <element signature="e#2490#5966#0" />
-                <element signature="e#6007#6950#0" />
-                <element signature="e#6990#19696#0" />
-                <element signature="e#19735#20237#0" />
-                <element signature="e#20285#21228#0" />
-                <element signature="e#21269#21906#0" />
-                <element signature="e#21947#22853#0" />
-                <element signature="e#22895#24096#0" />
-                <element signature="e#24133#26361#0" />
+                <element signature="e#890#2325#0" />
+                <element signature="e#2369#3780#0" />
+                <element signature="e#19463#23048#0" />
+                <element signature="e#23113#27941#0" />
+                <element signature="e#27982#29965#0" />
+                <element signature="e#30007#31079#0" />
+                <element signature="e#31125#31675#0" />
+                <element signature="e#31714#32416#0" />
+                <element signature="e#32461#33811#0" />
+                <element signature="e#33881#35859#0" />
+                <element signature="e#39624#41946#0" />
               </folding>
             </state>
           </provider>
@@ -199,11 +153,40 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="177" column="23" selection-start-line="177" selection-start-column="23" selection-end-line="177" selection-end-column="23" />
+            <state relative-caret-position="210">
+              <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
               <folding>
                 <element signature="e#3200#6382#0" />
                 <element signature="e#6422#9571#0" />
+                <element signature="e#6561#8780#0" />
+                <element signature="e#8870#9532#0" />
+                <element signature="e#9588#9604#0" />
+                <element signature="e#9755#11974#0" />
+                <element signature="e#12733#15915#0" />
+                <element signature="e#12898#15117#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="181">
+              <caret line="390" column="35" selection-start-line="390" selection-start-column="35" selection-end-line="390" selection-end-column="35" />
+              <folding>
+                <element signature="e#655#2406#0" />
+                <element signature="e#2447#5923#0" />
+                <element signature="e#5964#6907#0" />
+                <element signature="e#6947#19653#0" />
+                <element signature="e#20554#21056#0" />
+                <element signature="e#20242#21185#0" />
+                <element signature="e#21226#21863#0" />
+                <element signature="e#21904#22810#0" />
+                <element signature="e#22852#24053#0" />
+                <element signature="e#24090#26318#0" />
+                <element signature="e#26363#27200#0" />
+                <element signature="e#27241#29247#0" />
               </folding>
             </state>
           </provider>
@@ -220,7 +203,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>res                                     .status(200)                                     .contentType(&quot;text/plain&quot;)                                     .end(&quot;File uploaded!&quot;);</find>
       <find>File uploaded!</find>
       <find>path.join(__dirname,</find>
       <find>fs.rename</find>
@@ -250,6 +232,7 @@
       <find>Op</find>
       <find>SupplyOfProduct</find>
       <find>UnitOfProduct</find>
+      <find>token</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -328,11 +311,11 @@
         <option value="$PROJECT_DIR$/src/Controller/AuthController.js" />
         <option value="$PROJECT_DIR$/src/Util/myFunctions.js" />
         <option value="$PROJECT_DIR$/src/Controller/WareHouseController.js" />
-        <option value="$PROJECT_DIR$/src/Util/myVars.js" />
         <option value="$PROJECT_DIR$/src/models/Seller.js" />
+        <option value="$PROJECT_DIR$/src/Controller/transportationController.js" />
+        <option value="$PROJECT_DIR$/src/Util/myVars.js" />
         <option value="$PROJECT_DIR$/src/Controller/SellerController.js" />
         <option value="$PROJECT_DIR$/src/Controller/CustomerController.js" />
-        <option value="$PROJECT_DIR$/src/Controller/transportationController.js" />
         <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
@@ -534,18 +517,18 @@
       <workItem from="1551171125360" duration="24023000" />
       <workItem from="1551342668517" duration="8017000" />
       <workItem from="1551518997985" duration="1094000" />
-      <workItem from="1551618999164" duration="4061000" />
+      <workItem from="1551618999164" duration="6581000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="242743000" />
+    <option name="totallyTimeSpent" value="245263000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26680973" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26680973" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -560,7 +543,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49713877" visible="true" weight="0.38366336" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49713877" visible="true" weight="0.19678217" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5028612" side_tool="true" weight="0.33415842" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32920793" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -858,13 +841,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="86" column="28" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/Seller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -886,31 +862,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
+    <entry file="file://$PROJECT_DIR$/sequelize.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
-          <folding>
-            <element signature="e#2369#3780#0" />
-            <element signature="e#3846#19397#0" />
-            <element signature="e#19463#23048#0" />
-            <element signature="e#23113#27941#0" />
-            <element signature="e#27982#29965#0" />
-            <element signature="e#30007#31079#0" />
-            <element signature="e#31125#31675#0" />
-            <element signature="e#31714#32416#0" />
-            <element signature="e#32461#33811#0" />
-            <element signature="e#33881#35859#0" />
-            <element signature="e#35950#39569#0" />
-            <element signature="e#39624#41946#0" />
-          </folding>
+        <state relative-caret-position="422">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="86" column="28" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Util/myFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="895" selection-start-line="895" selection-end-line="954" selection-end-column="1" />
+        <state relative-caret-position="-3160">
+          <caret line="122" column="24" lean-forward="true" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
           <folding>
             <element signature="n#!!block;n#smsHandler#0" />
             <element signature="n#!!block;n#response#0" />
@@ -922,42 +891,14 @@
             <element signature="n#!!block;n#insertProducts#0" />
             <element signature="n#!!block;n#insertUnits#0" />
             <element signature="n#!!block;n#insertCarModels#0" />
-            <element signature="n#!!block;n#fillDataBase#0" />
             <element signature="n#!!block;n#isThisArrayEmpty#0" />
             <element signature="n#!!block;n#checkPhone#0" />
             <element signature="n#!!block;n#checkPassword#0" />
             <element signature="n#!!block;n#checkUserName#0" />
             <element signature="n#!!block;n#registerInfoCheck#0" />
-            <element signature="n#!!block;n#loginInfoCheck#0" />
             <element signature="n#!!block;n#addRoleInfoCheck#0" />
             <element signature="n#!!block;n#checkLimitTime#0" />
             <element signature="n#!!block;n#checkStatus#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sequelize.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="737" selection-start-line="737" selection-end-line="737" />
-          <folding>
-            <element signature="e#698#2449#0" />
-            <element signature="e#2490#5966#0" />
-            <element signature="e#6007#6950#0" />
-            <element signature="e#6990#19696#0" />
-            <element signature="e#19735#20237#0" />
-            <element signature="e#20285#21228#0" />
-            <element signature="e#21269#21906#0" />
-            <element signature="e#21947#22853#0" />
-            <element signature="e#22895#24096#0" />
-            <element signature="e#24133#26361#0" />
           </folding>
         </state>
       </provider>
@@ -973,13 +914,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="390" column="35" selection-start-line="390" selection-start-column="35" selection-end-line="390" selection-end-column="35" />
+          <folding>
+            <element signature="e#655#2406#0" />
+            <element signature="e#2447#5923#0" />
+            <element signature="e#5964#6907#0" />
+            <element signature="e#6947#19653#0" />
+            <element signature="e#20554#21056#0" />
+            <element signature="e#20242#21185#0" />
+            <element signature="e#21226#21863#0" />
+            <element signature="e#21904#22810#0" />
+            <element signature="e#22852#24053#0" />
+            <element signature="e#24090#26318#0" />
+            <element signature="e#26363#27200#0" />
+            <element signature="e#27241#29247#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2030">
+          <caret line="126" column="62" lean-forward="true" selection-start-line="126" selection-start-column="62" selection-end-line="126" selection-end-column="62" />
+          <folding>
+            <element signature="e#890#2325#0" />
+            <element signature="e#2369#3780#0" />
+            <element signature="e#19463#23048#0" />
+            <element signature="e#23113#27941#0" />
+            <element signature="e#27982#29965#0" />
+            <element signature="e#30007#31079#0" />
+            <element signature="e#31125#31675#0" />
+            <element signature="e#31714#32416#0" />
+            <element signature="e#32461#33811#0" />
+            <element signature="e#33881#35859#0" />
+            <element signature="e#39624#41946#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="177" column="23" selection-start-line="177" selection-start-column="23" selection-end-line="177" selection-end-column="23" />
+        <state relative-caret-position="210">
+          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
           <folding>
             <element signature="e#3200#6382#0" />
             <element signature="e#6422#9571#0" />
+            <element signature="e#6561#8780#0" />
+            <element signature="e#8870#9532#0" />
+            <element signature="e#9588#9604#0" />
+            <element signature="e#9755#11974#0" />
+            <element signature="e#12733#15915#0" />
+            <element signature="e#12898#15117#0" />
           </folding>
         </state>
       </provider>

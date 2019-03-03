@@ -5,7 +5,7 @@ var router = express.Router();
 const {loggererror, loggerinfo, upload, colors} = require('../Util/myVars');
 const {base64_encode, response, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/myFunctions');
 
-const {sellerPhoneNumber, orderNazarSanji, support, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
+const {sellerOperator,sellerPhoneNumber, orderNazarSanji, support, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
 const Op = sequelize.Op;
 var randomstring = require("randomstring");
 
@@ -202,16 +202,26 @@ router.post('/order', (req, res) => {
                                                     sellerProducts.findAll({where: {ID: item.SellerProductID}}).then(
                                                         product => {
                                                             if (!isThisArrayEmpty(product)) {
-                                                                KolMablagh = KolMablagh + (item.Supply * product[0].Price);
-                                                                console.log(KolMablagh, 'kol mablagh is here in map');
-                                                                orderProduct.create({
-                                                                    OrderID: savedOrder.ID,
-                                                                    Takhfif: item.Supply * product[0].Price,
-                                                                    ProductID: product[0].ProductID,
-                                                                    Supply: item.Supply,
-                                                                    Price: item.Supply * product[0].Price,
-                                                                    CustomerStatus: true
-                                                                }).then()
+                                                                sellerOperator.findAll({where:{
+                                                                    SellerID: product[0].SellerID
+                                                                    }}).then(
+                                                                        so=>{
+                                                                            var item = so[Math.floor(Math.random()*so.length)];
+                                                                            KolMablagh = KolMablagh + (item.Supply * product[0].Price);
+                                                                            console.log(KolMablagh, 'kol mablagh is here in map');
+                                                                            orderProduct.create({
+                                                                                SellerOperatorID:item.ID,
+                                                                                OrderID: savedOrder.ID,
+                                                                                Takhfif: item.Supply * product[0].Price,
+                                                                                ProductID: product[0].ProductID,
+                                                                                Supply: item.Supply,
+                                                                                Price: item.Supply * product[0].Price,
+                                                                                CustomerStatus: true
+                                                                            }).then()
+
+                                                                        }
+                                                                );
+
                                                             }
 
                                                             else {

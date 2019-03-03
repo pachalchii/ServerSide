@@ -4,6 +4,8 @@ const {SmsApi,colors,databaseStatus} = require('./src/Util/myVars');
 const {smsHandler,fillDataBase} = require('./src/Util/myFunctions');
 var cors = require('cors');
 
+const {orderProduct ,Seller, customer, transportation ,sellerOperator, sellerProducts} = require('./sequelize');
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -271,6 +273,186 @@ io.on('connection', function(socket) {
 
 
     });
+
+    socket.on('sellerOperatorAllProductOrder' , data=>{
+        if (data.token == null){
+            io.emit('answer', {"code":703})
+        } else {
+            function checkToken(data) {
+
+                if (data.token != null) {
+                    try{
+                        var decodedJWT = jwt.decode(data.token.toString(), JWT_SECRET);
+                        if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
+                            io.emit('answer', {"code":700})
+                            return false
+
+                        }else {
+
+                            var searchQuery ;
+                            if (decodedJWT.Username != null) {
+                                searchQuery = {
+                                    where: {
+                                        Username: decodedJWT.Username, Password: decodedJWT.Password
+                                    }
+                                };
+                            }else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
+                                try {
+                                    searchQuery = {
+                                        where: {
+                                            PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+                                }catch (e) {
+                                    searchQuery = {
+                                        where: {
+                                            OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+
+                                }
+
+                            }else {
+                                io.emit('answer', {"code":700})
+                            }
+                            return searchQuery;
+
+
+                        }
+
+
+
+
+                    }  catch(err) {
+                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
+                        io.emit('answer', {"code":700})
+                        return false;
+
+                    }
+
+
+
+                } else {
+                    io.emit('answer', {"code":703})
+                    return false;
+                }
+
+            }
+
+            var searchQuery = checkToken(data );
+            if (searchQuery !== false) {
+
+                sellerOperator.findAll(searchQuery).then(so => {
+
+                    if (isThisArrayEmpty(so)) {
+                        io.emit('answer', {"code":700})
+                    }else {
+                            orderProduct.findAll({where:{
+                                SellerOperatorID:so[0].ID
+                                }}).then(op=>{
+                                io.emit('answer', {"OrderProduct":op})
+
+                            });
+
+                    }
+                });
+
+
+
+            }
+        }
+    });
+
+    socket.on('customerAllProductOrder', data=>{
+        if (data.token == null || data.OrderProductID == null ){
+            io.emit('answer', {"code":703})
+        } else {
+            function checkToken(data) {
+
+                if (data.token != null) {
+                    try{
+                        var decodedJWT = jwt.decode(data.token.toString(), JWT_SECRET);
+                        if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
+                            io.emit('answer', {"code":700})
+                            return false
+
+                        }else {
+
+                            var searchQuery ;
+                            if (decodedJWT.Username != null) {
+                                searchQuery = {
+                                    where: {
+                                        Username: decodedJWT.Username, Password: decodedJWT.Password
+                                    }
+                                };
+                            }else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
+                                try {
+                                    searchQuery = {
+                                        where: {
+                                            PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+                                }catch (e) {
+                                    searchQuery = {
+                                        where: {
+                                            OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+
+                                }
+
+                            }else {
+                                io.emit('answer', {"code":700})
+                            }
+                            return searchQuery;
+
+
+                        }
+
+
+
+
+                    }  catch(err) {
+                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
+                        io.emit('answer', {"code":700})
+                        return false;
+
+                    }
+
+
+
+                } else {
+                    io.emit('answer', {"code":703})
+                    return false;
+                }
+
+            }
+
+            var searchQuery = checkToken(data );
+            if (searchQuery !== false) {
+
+                customer.findAll(searchQuery).then(cust => {
+
+                    if (isThisArrayEmpty(cust)) {
+                        io.emit('answer', {"code":700})
+                    }else {
+                        orderProduct.findAll({where: {ID: data.OrderProductID}}).then(
+                            orderp => {
+                                io.emit('answer', {"Order":orderp})
+                            }
+                        )
+                    }
+                });
+
+
+
+            }
+        }
+
+
+
+    });
+
 
 });
 
