@@ -40,9 +40,7 @@ module.exports = function(sequelize, DataTypes) {
     },
       AuthCode: {
           type: DataTypes.STRING,
-          allowNull: true,
-          unique: true
-      },
+          allowNull: true},
     PhoneNumber: {
       type: DataTypes.STRING,
       allowNull: true,

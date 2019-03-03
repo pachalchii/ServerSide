@@ -23,8 +23,7 @@ module.exports = function(sequelize, DataTypes) {
     },
       AuthCode: {
           type: DataTypes.STRING,
-          allowNull: true,
-          unique: true
+          allowNull: true
       },
     Password: {
       type: DataTypes.STRING,
