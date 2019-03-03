@@ -152,17 +152,22 @@ io.on('connection', function(socket) {
                     if (isThisArrayEmpty(cust)) {
                         io.emit('answer', {"code":700})
                     }else {
-                        orderProduct.findAll({
-                            where:{
-                                ID:data.OrderProductID
-                            }
-                        }).then(
-                            orderProduct=>{
-                                io.emit('answer', {"TrasnportarCurrentLocation ":orderProduct[0].TrasnportarCurrentLocation })
+                        if (cust[0].Status){
+                            orderProduct.findAll({
+                                where:{
+                                    ID:data.OrderProductID
+                                }
+                            }).then(
+                                orderProduct=>{
+                                    io.emit('answer', {"TrasnportarCurrentLocation ":orderProduct[0].TrasnportarCurrentLocation })
 
-                            }
+                                }
 
-                        )
+                            )
+
+                        }else {
+                            return res.status(404).json({"code": 900});
+                        }
 
 
                     }
@@ -250,16 +255,22 @@ io.on('connection', function(socket) {
                     if (isThisArrayEmpty(tran)) {
                         io.emit('answer', {"code":700})
                     }else {
-                        orderProduct.update({
-                            TrasnportarCurrentLocation:data.location.toString()
-                        },{
-                            where:{
-                                TransportarID:tran[0].ID
-                            }
-                        }).then(
-                            io.emit('answer', {"code":200})
+                        if (tran[0].Status){
+                            orderProduct.update({
+                                TrasnportarCurrentLocation:data.location.toString()
+                            },{
+                                where:{
+                                    TransportarID:tran[0].ID
+                                }
+                            }).then(
+                                io.emit('answer', {"code":200})
 
-                        )
+                            )
+
+                        }else {
+                            return res.status(404).json({"code": 900});
+
+                        }
 
 
                     }
@@ -347,12 +358,18 @@ io.on('connection', function(socket) {
                     if (isThisArrayEmpty(so)) {
                         io.emit('answer', {"code":700})
                     }else {
+                        if (so[0].Status)
+                        {
                             orderProduct.findAll({where:{
-                                SellerOperatorID:so[0].ID
+                                    SellerOperatorID:so[0].ID
                                 }}).then(op=>{
                                 io.emit('answer', {"OrderProduct":op})
 
                             });
+                        }else
+                            {
+                                return res.status(404).json({"code": 900});
+                            }
 
                     }
                 });
@@ -436,11 +453,16 @@ io.on('connection', function(socket) {
                     if (isThisArrayEmpty(cust)) {
                         io.emit('answer', {"code":700})
                     }else {
-                        orderProduct.findAll({where: {ID: data.OrderProductID}}).then(
-                            orderp => {
-                                io.emit('answer', {"Order":orderp})
-                            }
-                        )
+                        if (cust[0].Status){
+                            orderProduct.findAll({where: {ID: data.OrderProductID}}).then(
+                                orderp => {
+                                    io.emit('answer', {"Order":orderp})
+                                }
+                            )
+                        }else {
+                            return res.status(404).json({"code": 900});
+                        }
+
                     }
                 });
 

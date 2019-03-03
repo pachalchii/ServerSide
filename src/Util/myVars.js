@@ -87,6 +87,7 @@ const handleError = (err, res) => {
 const databaseStatus = false;
 
 const statusCodes ={
+
     900:{
         message:"حساب کاربری شما غیر فعال شده است ."
     },
