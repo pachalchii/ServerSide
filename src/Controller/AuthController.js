@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const { application,support , Seller , customer , sequelize , sellerPhoneNumber , transportation ,sellerWareHouse , sellerOperator} = require('../../sequelize');
-const {checkStatus,checkToken, response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
+const {checkPassword,checkStatus,checkToken, response ,isThisArrayEmpty ,  base64_encode ,loginInfoCheck , registerInfoCheck , } = require('../Util/myFunctions');
 const {SmsApi,upload,loggererror, colors ,JWT_SECRET  ,handleError , loggerinfo } = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
@@ -868,8 +868,292 @@ router.post('/phoneNumber',(req,res) => {
 });
 
 router.post('/forgetPassword',(req,res)=>{
-     return res.status(200);
+if (req.body.PhoneNumber == null || req.body.Role == null){
+    switch (req.body.Role) {
+        case "seller" :
+            Seller.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                objects=>{
+                    if (isThisArrayEmpty(objects)){
+                        if (objects[0].Status)
+                        {
+                            var authcode = Math.floor(Math.random()*90000) + 10000;
+                            Seller.update({AuthCode:authcode},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                return res.json();
+                            })
+
+
+
+                        } else {
+                            return res.status(404).json({"code": 900});
+                        }
+                    } else{
+                        return    res.status(404).json();
+
+                    }
+                }
+            );
+            break;
+        case "customer":
+            customer.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                objects=>{
+                    if (isThisArrayEmpty(objects)){
+                        if (objects[0].Status)
+                        {
+                            var authcode = Math.floor(Math.random()*90000) + 10000;
+                            customer.update({AuthCode:authcode},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                return res.json();
+                            })
+
+
+
+                        } else {
+                            return res.status(404).json({"code": 900});
+                        }
+                    } else{
+                        return    res.status(404).json();
+
+                    }
+                }
+            );
+            break;
+        case "transportation" :
+            transportation.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                objects=>{
+                    if (isThisArrayEmpty(objects)){
+                        if (objects[0].Status)
+                        {
+                            var authcode = Math.floor(Math.random()*90000) + 10000;
+                            transportation.update({AuthCode:authcode},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                return res.json();
+                            })
+
+
+
+                        } else {
+                            return res.status(404).json({"code": 900});
+                        }
+                    } else{
+                        return    res.status(404).json();
+
+                    }
+                }
+            );
+            break;
+        case "support":
+            support.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                objects=>{
+                    if (isThisArrayEmpty(objects)){
+                        if (objects[0].Status)
+                        {
+                            var authcode = Math.floor(Math.random()*90000) + 10000;
+                            support.update({AuthCode:authcode},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                return res.json();
+                            })
+
+
+
+                        } else {
+                            return res.status(404).json({"code": 900});
+                        }
+                    } else{
+                        return    res.status(404).json();
+
+                    }
+                }
+            );
+            break;
+        case "wareHouse":
+            sellerWareHouse.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                objects=>{
+                    if (isThisArrayEmpty(objects)){
+                        if (objects[0].Status)
+                        {
+                            var authcode = Math.floor(Math.random()*90000) + 10000;
+                            sellerWareHouse.update({AuthCode:authcode},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                return res.json();
+                            })
+
+
+
+                        } else {
+                            return res.status(404).json({"code": 900});
+                        }
+                    } else{
+                        return    res.status(404).json();
+
+                    }
+                }
+            );
+            break;
+        default :     return   res.status(404).json({"message":"role is wrong "});
+    }
+
+} else {
+    return   res.status(404).json({"code":703});
+
+}
+
+
 });
+
+router.post('/forgetPassword/submit',(req,res)=>{
+    if (req.body.PhoneNumber == null || req.body.code == null || req.body.Password ==null || req.body.Role == null){
+        if (checkPassword(req,res)){
+            switch (req.body.Role) {
+                case "seller" :
+                    Seller.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                        objects=>{
+                            if (isThisArrayEmpty(objects)){
+                                if (objects[0].Status)
+                                {
+                                    if (objects[0].AuthCode === req.body.code ){
+
+                                        Seller.update({Password:md5(req.body.Password)},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                            return res.json();
+                                        })
+                                    } else{
+                                        return res.status(404).json({"code":715});
+                                    }
+
+
+
+
+                                } else {
+                                    return res.status(404).json({"code": 900});
+                                }
+                            } else{
+                                return    res.status(404).json();
+
+                            }
+                        }
+                    );
+                    break;
+
+                case "customer":
+                    customer.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                        objects=>{
+                            if (isThisArrayEmpty(objects)){
+                                if (objects[0].Status)
+                                {
+                                    if (objects[0].AuthCode === req.body.code ){
+
+                                        customer.update({Password:md5(req.body.Password)},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                            return res.json();
+                                        })
+                                    } else{
+                                        return res.status(404).json({"code":715});
+                                    }
+
+
+
+
+                                } else {
+                                    return res.status(404).json({"code": 900});
+                                }
+                            } else{
+                                return    res.status(404).json();
+
+                            }
+                        }
+                    );
+                    break;
+                case "transportation" :
+                    transportation.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                        objects=>{
+                            if (isThisArrayEmpty(objects)){
+                                if (objects[0].Status)
+                                {
+                                    if (objects[0].AuthCode === req.body.code ){
+
+                                        transportation.update({Password:md5(req.body.Password)},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                            return res.json();
+                                        })
+                                    } else{
+                                        return res.status(404).json({"code":715});
+                                    }
+
+
+
+
+                                } else {
+                                    return res.status(404).json({"code": 900});
+                                }
+                            } else{
+                                return    res.status(404).json();
+
+                            }
+                        }
+                    );
+                    break;
+                case "support":
+                    support.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                        objects=>{
+                            if (isThisArrayEmpty(objects)){
+                                if (objects[0].Status)
+                                {
+                                    if (objects[0].AuthCode === req.body.code ){
+
+                                        support.update({Password:md5(req.body.Password)},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                            return res.json();
+                                        })
+                                    } else{
+                                        return res.status(404).json({"code":715});
+                                    }
+
+
+
+
+                                } else {
+                                    return res.status(404).json({"code": 900});
+                                }
+                            } else{
+                                return    res.status(404).json();
+
+                            }
+                        }
+                    );
+                    break;
+                case "wareHouse":
+                    sellerWareHouse.findAll({where:{PhoneNumber:req.body.PhoneNumber}}).then(
+                        objects=>{
+                            if (isThisArrayEmpty(objects)){
+                                if (objects[0].Status)
+                                {
+                                    if (objects[0].AuthCode === req.body.code ){
+
+                                        sellerWareHouse.update({Password:md5(req.body.Password)},{where:{PhoneNumber:req.body.PhoneNumber}}).then(obj=>{
+                                            return res.json();
+                                        })
+                                    } else{
+                                        return res.status(404).json({"code":715});
+                                    }
+
+
+
+
+                                } else {
+                                    return res.status(404).json({"code": 900});
+                                }
+                            } else{
+                                return    res.status(404).json();
+
+                            }
+                        }
+                    );
+                    break;
+                default :     return   res.status(404).json({"message":"role is wrong "});
+            }
+        }
+
+
+    } else {
+        return   res.status(404).json({"code":703});
+
+    }
+
+
+});
+
 
 router.post('/tokenCheck',(req,res)=>{
     if (req.body.Role ==  null)

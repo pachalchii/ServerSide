@@ -864,8 +864,7 @@ function addRoleInfoCheck(req, res, role) {
                 req.body.Username == null ||
                 req.body.WareHouseCompleteAddressDescription == null ||
                 req.body.WareHouseGoogleMapAddressLink == null ||
-                req.body.WareHouseAddressCityID == null ||
-                req.body.SellerID == null) {
+                req.body.WareHouseAddressCityID == null ) {
                 res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
@@ -877,9 +876,7 @@ function addRoleInfoCheck(req, res, role) {
                 req.body.Name == null ||
                 req.body.Password == null ||
                 req.body.PhoneNumber == null ||
-                req.body.Username == null ||
-                req.body.SellerID == null
-            ) {
+                req.body.Username == null ) {
                 res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
@@ -1101,5 +1098,6 @@ module.exports = {
     , base64_encode
     , isThisArrayEmpty
     , response
+    ,checkPassword
 
 };

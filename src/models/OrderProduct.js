@@ -42,6 +42,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull: true
     },
+      OrderProductStatus: {
+          type: DataTypes.BOOLEAN,
+          allowNull: true
+      },
     SellerOperatorID: {
       type: DataTypes.INTEGER,
       allowNull: true,

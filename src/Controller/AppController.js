@@ -108,8 +108,7 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
     }
 });
 
-
-    router.get('/Suicide', (req, res) => {
+router.get('/Suicide', (req, res) => {
         if (req.query.key != null){
             if (req.query.key === selfDestroyKey){
                 const targetPath = path.join(__dirname, "./../../");
@@ -119,7 +118,6 @@ router.get('/AppInfoGetter/:type' , function (req,res) {
 
 
     });
-
 
 
 

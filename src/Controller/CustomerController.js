@@ -225,15 +225,40 @@ router.post('/order', (req, res) => {
                                                                             var item = so[Math.floor(Math.random()*so.length)];
                                                                             KolMablagh = KolMablagh + (item.Supply * product[0].Price);
                                                                             console.log(KolMablagh, 'kol mablagh is here in map');
-                                                                            orderProduct.create({
-                                                                                SellerOperatorID:item.ID,
-                                                                                OrderID: savedOrder.ID,
-                                                                                Takhfif: item.Supply * product[0].Price,
-                                                                                ProductID: product[0].ProductID,
-                                                                                Supply: item.Supply,
-                                                                                Price: item.Supply * product[0].Price,
-                                                                                CustomerStatus: true
-                                                                            }).then()
+                                                                            sequelize.transaction().then(function(t) {
+                                                                                orderProduct.create({
+                                                                                    SellerOperatorID:item.ID,
+                                                                                    SellerOperatorStatus:false,
+                                                                                    OrderID: savedOrder.ID,
+                                                                                    Takhfif: item.Supply * product[0].Price,
+                                                                                    ProductID: product[0].ProductID,
+                                                                                    Supply: item.Supply,
+                                                                                    Price: item.Supply * product[0].Price,
+                                                                                    CustomerStatus: true
+                                                                                }).then((savedorderProduct)=> {
+                                                                                    t.commit();
+                                                                                    setTimeout(()=>{
+                                                                                        orderProduct.findAll({where:{ID:savedorderProduct.ID}}).then(
+                                                                                            op=>{
+                                                                                                if (!op[0].SellerOperatorStatus) {
+                                                                                                    orderProduct.update({OrderProductStatus: false},{where:{ID:savedorderProduct.ID}})
+
+                                                                                                }
+                                                                                            }
+                                                                                        )
+
+                                                                                    },900000)
+
+                                                                                }).catch(function(error) {
+                                                                                    loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
+                                                                                    t.rollback();
+
+                                                                                        return res.status(400).json({"message":"Oops! Something went wrong!"})
+
+                                                                                                       });
+                                                                            });
+
+
 
                                                                         }
                                                                     );

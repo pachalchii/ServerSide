@@ -18,13 +18,19 @@ router.get('/transportation', (req, res) => {
             sellerWareHouse.findAll(searchQuery).then(
                 sellerWareHouse => {
                     if (!isThisArrayEmpty(sellerWareHouse)) {
-                       transportation.findAll({where:{
-                           WareHouseID:sellerWareHouse[0].ID
-                           }}).then(
-                               transportation=>{
-                                   return res.json(transportation);
-                               }
-                       );
+                        if (sellerWareHouse[0].Status){
+                            transportation.findAll({where:{
+                                    WareHouseID:sellerWareHouse[0].ID
+                                }}).then(
+                                transportation=>{
+                                    return res.json(transportation);
+                                }
+                            );
+                        }else {
+                            return res.status(404).json({"code": 900});
+
+                        }
+
 
                     } else {
                         return res.status(404).json({"code": 700});
@@ -51,36 +57,41 @@ router.post('/orderProduct', (req, res) =>{
         if (searchQuery && filteringStatus) {
             sellerWareHouse.findAll(searchQuery).then(ware => {
                 if (!isThisArrayEmpty(ware)) {
-                    orderProduct.findAll({where: {ID: req.body.ID}}).then(res => {
-                        if (!isThisArrayEmpty(res)) {
-                            if (res[0].WareHouseID === ware.ID) {
-                                transportation.findAll({where:{ID:req.body.TransportarID}}).then(wareHouse=>{
-                                    if (!isThisArrayEmpty(wareHouse)) {
-                                        orderProduct.update({
-                                            WareHouseStatus: req.body.Status,
-                                            TransportarID:req.body.TransportarID
-                                        }, {
-                                            where: {
-                                                ID: req.body.ID
-                                            }
-                                        }).then(
-                                            response(res, undefined).then(
-                                                loggerinfo.info("eareHouse with id : " + ware.ID + " change orderProduct with id :" + res[0].ID + " Warehouse to : " + req.body.Status)
-                                            )
-                                        );
-                                    }
-                                    else return res.json({"code":704});
-                                })
+                    if (ware[0].Status){
+                        orderProduct.findAll({where: {ID: req.body.ID}}).then(res => {
+                            if (!isThisArrayEmpty(res)) {
+                                if (res[0].WareHouseID === ware.ID) {
+                                    transportation.findAll({where:{ID:req.body.TransportarID}}).then(wareHouse=>{
+                                        if (!isThisArrayEmpty(wareHouse)) {
+                                            orderProduct.update({
+                                                WareHouseStatus: req.body.Status,
+                                                TransportarID:req.body.TransportarID
+                                            }, {
+                                                where: {
+                                                    ID: req.body.ID
+                                                }
+                                            }).then(
+                                                response(res, undefined).then(
+                                                    loggerinfo.info("eareHouse with id : " + ware.ID + " change orderProduct with id :" + res[0].ID + " Warehouse to : " + req.body.Status)
+                                                )
+                                            );
+                                        }
+                                        else return res.json({"code":704});
+                                    })
+                                }
+                                else {
+                                    return res.status(400).json({"code": 702});
+                                }
+                            } else {
+                                res.status(404).json({"code": 701});
+                                return false;
                             }
-                            else {
-                                return res.status(400).json({"code": 702});
-                            }
-                        } else {
-                            res.status(404).json({"code": 701});
-                            return false;
-                        }
 
-                    });
+                        });
+                    }else {
+                        return res.status(404).json({"code": 900});
+                    }
+
                 } else {
                     return res.status(404).json({"code": 700});
                 }

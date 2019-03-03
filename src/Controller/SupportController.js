@@ -23,13 +23,19 @@ router.get('/message', (req, res) => {
                 return res.status(400).json({"code": 700});
 
             } else {
+                if (support[0].Status){
 
-                chat.findAll({where:{   [Op.or]: [{ToID: "111"+support[0].ID}, {FromID: "111"+support[0].ID}]}}).then(
-                    message=>{
-                        return res.status(200).json(message);
-                    }
+                    chat.findAll({where:{   [Op.or]: [{ToID: "111"+support[0].ID}, {FromID: "111"+support[0].ID}]}}).then(
+                        message=>{
+                            return res.status(200).json(message);
+                        }
 
-                )
+                    )
+
+                } else {
+                    return res.status(404).json({"code": 900});
+
+                }
 
             }
         });
@@ -53,14 +59,20 @@ router.post('/message', (req, res) => {
                 return res.status(400).json({"code": 700});
 
             } else {
-                chat.create({
-                    FromID:"111"+support[0].ID,
-                    ToID:"222"+req.body.ToID,
-                    Message:req.body.Message,
-                    DateTimeSend:new Date().getTime()
+                if (support[0].Status){
+                    chat.create({
+                        FromID:"111"+support[0].ID,
+                        ToID:"222"+req.body.ToID,
+                        Message:req.body.Message,
+                        DateTimeSend:new Date().getTime()
 
-                });
-                return res.json();
+                    });
+                    return res.json();
+                }else {
+                    return res.status(400).json({"code": 700});
+
+                }
+
             }
 
 

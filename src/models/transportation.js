@@ -42,6 +42,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
         unique: true
     },
+      AuthCode: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          unique: true
+      },
     Status: {
       type: DataTypes.BOOLEAN,
       allowNull: true

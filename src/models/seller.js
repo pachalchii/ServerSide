@@ -44,6 +44,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true
     },
+      AuthCode: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          unique: true
+      },
     RegistrationDateTime: {
       type: DataTypes.STRING,
       allowNull: false
