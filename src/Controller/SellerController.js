@@ -241,7 +241,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     sequelize.transaction().then(function (t) {
                                         transportation.create({
                                             AirConditionar: req.body.AirConditionar,
-                                            BirthDate: req.body.BirthDate,
+                                            Birthdate: req.body.BirthDate,
                                             Color: req.body.Color,
                                             Description: req.body.Description,
                                             FamilyName: req.body.FamilyName,
@@ -307,10 +307,10 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                 }
                                 if(status){
                                     sequelize.transaction().then(function (t) {
-                                        transportation.create({
+                                        sellerWareHouse.create({
                                             AgentFamilyName: req.body.AgentFamilyName,
                                             AgentName: req.body.AgentName,
-                                            BirthDate: req.body.BirthDate,
+                                            Birthdate: req.body.BirthDate,
                                             CellPhoneNumber: req.body.CellPhoneNumber,
                                             Image: image,
                                             Password: md5(req.body.Password),
@@ -333,6 +333,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                         }).catch(function (error) {
                                             loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                             t.rollback();
+                                            console.log(error)
                                             if (error.parent.errno === 1062) {
                                                 return res.status(400).json({"code": 706})
                                             }
@@ -375,7 +376,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                 if (status){
                                     sequelize.transaction().then(function (t) {
                                         sellerOperator.create({
-                                            BirthDate: req.body.BirthDate,
+                                            Birthdate: req.body.BirthDate,
                                             FamilyName: req.body.FamilyName,
                                             Image: image,
                                             Name: req.body.Name,
@@ -727,6 +728,7 @@ router.get('/Subtypes', (req, res) => {
 
             } else {
                 if (seller[0].Status){
+
                     sellerWareHouse.findAll({
                         where: {
                             SellerID: seller[0].ID
@@ -738,12 +740,74 @@ router.get('/Subtypes', (req, res) => {
                                 SellerID: seller[0].ID
                             }
                         }).then(sellerOperator => {
+
+                            var wareHousesfinal=[];
+                            var  sellerOperatorfinal=[];
+                            function wareHouseIteration(value,index) {
+                                var base64str = "not Found";
+                                try {
+                                    base64str = base64_encode(value.Image);
+
+                                } catch (e) {
+                                    base64str = "not Found";
+
+                                }
+                                wareHousesfinal[index] = {
+                                    ID: value.ID,
+                                    AgentName: value.AgentName,
+                                    AgentFamilyName: value.AgentFamilyName,
+                                    SellerID: value.SellerID,
+                                    Username: value.Username,
+                                    Birthdate: value.Birthdate,
+                                    PhoneNumber: value.PhoneNumber,
+                                    CellPhoneNumber: value.CellPhoneNumber,
+                                    Status: value.Status,
+                                    Point: value.Point,
+                                    Image: base64str,
+                                    WareHouseAddressCityID: value.WareHouseAddressCityID
+                                    , WareHouseGoogleMapAddressLink: value.WareHouseGoogleMapAddressLink,
+                                    WareHouseCompleteAddressDescription: value.WareHouseCompleteAddressDescription
+
+                                };
+                            }
+                            function OperatorIteration(value,index){
+                                var base64str="not Found";
+                                try {
+                                    base64str = base64_encode(value.Image);
+
+                                }catch (e) {
+                                    base64str = "not Found";
+
+                                }
+                                sellerOperatorfinal[index]={
+                                    ID:value.ID,
+                                    Name:value.Name,
+                                    FamilyName  :value. 	 FamilyName  ,
+                                    SellerID:value.SellerID,
+                                    Username:value.Username,
+                                    Birthdate:value.Birthdate,
+                                    PhoneNumber:value.PhoneNumber,
+                                    ModelID:value. 	ModelID,
+                                    Status:value. 	Status,
+                                    Point:value. 	Point,
+                                    Image:base64str
+
+                                }
+                            }
+
+                                wareHouses.forEach(wareHouseIteration);
+                                sellerOperator.forEach(OperatorIteration);
+
+
                             response(res, {
-                                WareHouse: {wareHouses},
-                                Operator: {sellerOperator}
-                            }).then(
-                                loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].Id + "get all his/her subtypes")
+                                WareHouse: {wareHousesfinal},
+                                Operator: {sellerOperatorfinal}
+                            }).then(function(){
+                                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].Id + "get all his/her subtypes")
+
+                                }
                             );
+
 
                         });
                     });

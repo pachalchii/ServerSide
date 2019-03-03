@@ -23,7 +23,37 @@ router.get('/transportation', (req, res) => {
                                     WareHouseID:sellerWareHouse[0].ID
                                 }}).then(
                                 transportation=>{
-                                    return res.json(transportation);
+                                    var  tranOperatorfinal=[];
+                                    function tranIteration(value,index) {
+                                        var base64str = "not Found";
+                                        try {
+                                            base64str = base64_encode(value.Image);
+
+                                        } catch (e) {
+                                            base64str = "not Found";
+
+                                        }
+                                        wareHousesfinal[index] = {
+                                            ID: value.ID,
+                                            WareHouseID: value.WareHouseID,
+                                            Name : value. 	Name ,
+                                            FamilyName : value.FamilyName ,
+                                            Username: value.Username,
+                                            Birthdate: value.Birthdate,
+                                            PhoneNumber: value.PhoneNumber,
+                                            CellPhoneNumber: value.CellPhoneNumber,
+                                            Status: value.Status,
+                                            Point: value.Point,
+                                            Image: base64str,
+                                            ModelID: value.ModelID
+                                            , PelakNumber: value.PelakNumber,
+                                            AirConditionar: value.AirConditionar,
+                                            Description:value.Description
+
+                                        };
+                                    }
+                                    transportation.forEach(tranIteration);
+                                    return res.json(tranOperatorfinal);
                                 }
                             );
                         }else {
