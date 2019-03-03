@@ -11,7 +11,7 @@ var jwt = require('jwt-simple');
 router.get('/order' , ( req , res )=>{
 
 
-    var searchQuery = checkToken(req, res, "seller" );
+    var searchQuery = checkToken(req, res );
     if (searchQuery !== false) {
 
         transportation.findAll(searchQuery).then(tran => {
@@ -51,7 +51,7 @@ try{
 router.post('/order',(req,res)=>{
 
 
-    var searchQuery = checkToken(req, res, "seller" );
+    var searchQuery = checkToken(req, res );
     if (searchQuery !== false) {
 
         transportation.findAll(searchQuery).then(tran => {
@@ -99,6 +99,8 @@ router.post('/order',(req,res)=>{
 
 
 });
+
+
 
 
 

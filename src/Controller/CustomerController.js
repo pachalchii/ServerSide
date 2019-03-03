@@ -9,6 +9,7 @@ const {sellerPhoneNumber, orderNazarSanji, support, chat, orderProduct, Seller, 
 const Op = sequelize.Op;
 var randomstring = require("randomstring");
 
+
 router.post('/address', (req, res) => {
     var searchQuery = checkToken(req, res);
     var AddresFilter = filterRequest(req, res, "customerAddress");
@@ -670,7 +671,6 @@ router.get('/phoneNumber', (req, res) => {
 
 });
 
-
 router.post('/Survey', (req, res) => {
 
     var searchQuery = checkToken(req, res);
@@ -734,6 +734,8 @@ router.post('/Survey', (req, res) => {
     }
 
 });
+
+
 
 
 module.exports = router;

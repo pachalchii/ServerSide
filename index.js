@@ -2,9 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {SmsApi,colors,databaseStatus} = require('./src/Util/myVars');
 const {smsHandler,fillDataBase} = require('./src/Util/myFunctions');
+var cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
+var io = require('socket.io').listen(port);
+
 
 var supportController = require('./src/Controller/SupportController');
 var appController = require('./src/Controller/AppController');
@@ -69,5 +73,209 @@ console.log(colors.bg.Green ,  'Node Server listening on port '+port ,  colors.R
 
 
 });
+
+
+io.on('connection', function(socket) {
+
+    socket.on('getLocation', data=>{
+        if (data.token == null || data.OrderProductID == null){
+            io.emit('answer', {"code":703})
+        } else {
+            function checkToken(data) {
+
+                if (data.token != null) {
+                    try{
+                        var decodedJWT = jwt.decode(data.token.toString(), JWT_SECRET);
+                        if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
+                            io.emit('answer', {"code":700})
+                            return false
+
+                        }else {
+
+                            var searchQuery ;
+                            if (decodedJWT.Username != null) {
+                                searchQuery = {
+                                    where: {
+                                        Username: decodedJWT.Username, Password: decodedJWT.Password
+                                    }
+                                };
+                            }else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
+                                try {
+                                    searchQuery = {
+                                        where: {
+                                            PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+                                }catch (e) {
+                                    searchQuery = {
+                                        where: {
+                                            OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+
+                                }
+
+                            }else {
+                                io.emit('answer', {"code":700})
+                            }
+                            return searchQuery;
+
+
+                        }
+
+
+
+
+                    }  catch(err) {
+                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
+                        io.emit('answer', {"code":700})
+                        return false;
+
+                    }
+
+
+
+                } else {
+                    io.emit('answer', {"code":703})
+                    return false;
+                }
+
+            }
+
+            var searchQuery = checkToken(data );
+            if (searchQuery !== false) {
+
+                customer.findAll(searchQuery).then(cust => {
+
+                    if (isThisArrayEmpty(cust)) {
+                        io.emit('answer', {"code":700})
+                    }else {
+                        orderProduct.findAll({
+                            where:{
+                                ID:data.OrderProductID
+                            }
+                        }).then(
+                            orderProduct=>{
+                                io.emit('answer', {"TrasnportarCurrentLocation ":orderProduct[0].TrasnportarCurrentLocation })
+
+                            }
+
+                        )
+
+
+                    }
+                });
+
+
+
+            }
+        }
+
+
+
+    });
+
+    socket.on('sendLocation', data=>{
+        if (data.token == null || data.location == null){
+            io.emit('answer', {"code":703})
+        } else {
+            function checkToken(data) {
+
+                if (data.token != null) {
+                    try{
+                        var decodedJWT = jwt.decode(data.token.toString(), JWT_SECRET);
+                        if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
+                            io.emit('answer', {"code":700})
+                            return false
+
+                        }else {
+
+                            var searchQuery ;
+                            if (decodedJWT.Username != null) {
+                                searchQuery = {
+                                    where: {
+                                        Username: decodedJWT.Username, Password: decodedJWT.Password
+                                    }
+                                };
+                            }else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
+                                try {
+                                    searchQuery = {
+                                        where: {
+                                            PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+                                }catch (e) {
+                                    searchQuery = {
+                                        where: {
+                                            OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+
+                                }
+
+                            }else {
+                                io.emit('answer', {"code":700})
+                            }
+                            return searchQuery;
+
+
+                        }
+
+
+
+
+                    }  catch(err) {
+                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
+                        io.emit('answer', {"code":700})
+                        return false;
+
+                    }
+
+
+
+                } else {
+                    io.emit('answer', {"code":703})
+                    return false;
+                }
+
+            }
+
+            var searchQuery = checkToken(data );
+            if (searchQuery !== false) {
+
+                transportation.findAll(searchQuery).then(tran => {
+
+                    if (isThisArrayEmpty(tran)) {
+                        io.emit('answer', {"code":700})
+                    }else {
+                        orderProduct.update({
+                            TrasnportarCurrentLocation:data.location.toString()
+                        },{
+                            where:{
+                                TransportarID:tran[0].ID
+                            }
+                        }).then(
+                            io.emit('answer', {"code":200})
+
+                        )
+
+
+                    }
+                });
+
+
+
+            }
+        }
+
+
+
+    });
+
+});
+
+
+
+
 
 

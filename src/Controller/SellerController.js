@@ -689,31 +689,30 @@ router.get('/Subtypes', (req, res) => {
                 return res.status(400).json({"code": 700});
 
             } else {
-                var wareHouselist = [];
-                var operatorlist = [];
 
                 sellerWareHouse.findAll({
                     where: {
                         SellerID: seller[0].ID
                     }
                 }).then(wareHouses => {
-                    wareHouselist = wareHouses;
+
+                    sellerOperator.findAll({
+                        where: {
+                            SellerID: seller[0].ID
+                        }
+                    }).then(sellerOperator => {
+                        response(res, {
+                            WareHouse: {wareHouses},
+                            Operator: {sellerOperator}
+                        }).then(
+                            loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].Id + "get all his/her subtypes")
+                        );
+
+                    });
                 });
 
-                sellerOperator.findAll({
-                    where: {
-                        SellerID: seller[0].ID
-                    }
-                }).then(sellerOperator => {
-                    operatorlist = sellerOperator;
-                });
 
-                response(res, {
-                    WareHouse: {wareHouselist},
-                    Operator: {operatorlist}
-                }).then(
-                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].Id + "get all his/her subtypes")
-                );
+
 
 
             }
@@ -738,14 +737,14 @@ router.get('/orderProduct', (req, res) => {
                 return res.status(400).json({"code": 700});
 
             } else {
-              orderProduct.findAll({where:{
-                    SellerID:seller[0].id
-                  }}).then(
-                      orderProduct=>{
-                          return res.json(orderProduct);
-                      }
+                orderProduct.findAll({where:{
+                        SellerID:seller[0].id
+                    }}).then(
+                    orderProduct=>{
+                        return res.json(orderProduct);
+                    }
 
-              );
+                );
 
 
 
@@ -819,19 +818,19 @@ router.get('/OrderDetail', (req, res) => {
                             ID:req.body.OrderID
                         }}).then(
                         order=>{
-                           customer.findAll({where:{ID:order[0].CustomerID}}).then(
-                               customerres=>{
-                                   orderNazarSanji.findAll({where:{ID:order[0].NazarSanjiID}}).then(
-                                       orderNazarSanjires=>{
-                                           return res.json({
-                                               nazarsanji:orderNazarSanjires,
-                                               customer: customerres
-                                           });
-                                       }
-                                   )
+                            customer.findAll({where:{ID:order[0].CustomerID}}).then(
+                                customerres=>{
+                                    orderNazarSanji.findAll({where:{ID:order[0].NazarSanjiID}}).then(
+                                        orderNazarSanjires=>{
+                                            return res.json({
+                                                nazarsanji:orderNazarSanjires,
+                                                customer: customerres
+                                            });
+                                        }
+                                    )
 
-                               }
-                           )
+                                }
+                            )
                         }
 
                     );
@@ -869,11 +868,11 @@ router.post('/disableUser', upload.single("Image"), (req, res) => {
                     switch (req.body.Role) {
 
                         case "seller":
-                         Seller.update({Status:false},{where:{ID:req.body.ID}}).then(
-                             tes=>{
-                                 return res.json();
-                             }
-                         );
+                            Seller.update({Status:false},{where:{ID:req.body.ID}}).then(
+                                tes=>{
+                                    return res.json();
+                                }
+                            );
                             break;
                         case "transportation":
                             transportation.update({Status:false},{where:{ID:req.body.ID}}).then(
@@ -1014,52 +1013,52 @@ router.post('/operator/product', upload.single("Image"), (req, res) => {
 router.post('/operator/orderProduct', (req, res) =>{
     var searchQuery = checkToken(req, res);
     var filteringStatus = filterRequest(req, res, "orderProduct");
-        try {
-            if (searchQuery && filteringStatus) {
-                sellerOperator.findAll(searchQuery).then(operator => {
-                    if (!isThisArrayEmpty(operator)) {
-                        orderProduct.findAll({where: {ID: req.body.ID}}).then(res => {
-                            if (!isThisArrayEmpty(res)) {
-                                if (res[0].SellerOperatorID === operator.ID) {
-                                    sellerWareHouse.findAll({where:{ID:req.body.WareHouseID}}).then(wareHouse=>{
-                                        if (!isThisArrayEmpty(wareHouse)) {
-                                            orderProduct.update({
-                                                SellerOperatorStatus: req.body.Status,
-                                                WareHouseID:req.body.WareHouseID
-                                            }, {
-                                                where: {
-                                                    ID: req.body.ID
-                                                }
-                                            }).then(
-                                                response(res, undefined).then(
-                                                    loggerinfo.info("seller operator with id : " + operator.ID + " change orderProduct with id :" + res[0].ID + " operatorStatus to : " + req.body.Status)
-                                                )
-                                            );
-                                        }
-                                        else return res.json({"code":704});
-                                    })
-                                }
-                                else {
-                                    return res.status(400).json({"code": 702});
-                                }
-                            } else {
-                                res.status(404).json({"code": 701});
-                                return false;
+    try {
+        if (searchQuery && filteringStatus) {
+            sellerOperator.findAll(searchQuery).then(operator => {
+                if (!isThisArrayEmpty(operator)) {
+                    orderProduct.findAll({where: {ID: req.body.ID}}).then(res => {
+                        if (!isThisArrayEmpty(res)) {
+                            if (res[0].SellerOperatorID === operator.ID) {
+                                sellerWareHouse.findAll({where:{ID:req.body.WareHouseID}}).then(wareHouse=>{
+                                    if (!isThisArrayEmpty(wareHouse)) {
+                                        orderProduct.update({
+                                            SellerOperatorStatus: req.body.Status,
+                                            WareHouseID:req.body.WareHouseID
+                                        }, {
+                                            where: {
+                                                ID: req.body.ID
+                                            }
+                                        }).then(
+                                            response(res, undefined).then(
+                                                loggerinfo.info("seller operator with id : " + operator.ID + " change orderProduct with id :" + res[0].ID + " operatorStatus to : " + req.body.Status)
+                                            )
+                                        );
+                                    }
+                                    else return res.json({"code":704});
+                                })
                             }
+                            else {
+                                return res.status(400).json({"code": 702});
+                            }
+                        } else {
+                            res.status(404).json({"code": 701});
+                            return false;
+                        }
 
-                        });
-                    } else {
-                        return res.status(404).json({"code": 700});
-                    }
-                });
-
-            }
-        }catch (e) {
-                loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
-                res.status(500).json({"code":500});
-
+                    });
+                } else {
+                    return res.status(404).json({"code": 700});
+                }
+            });
 
         }
+    }catch (e) {
+        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+        res.status(500).json({"code":500});
+
+
+    }
 
 });
 
