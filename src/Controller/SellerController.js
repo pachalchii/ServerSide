@@ -139,6 +139,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                     if (req.body.Role == null) {
                         return res.status(400).json({"code": 703});
                     } else if (addRoleInfoCheck(req, res, req.body.Role)) {
+                        var status = true;
                         switch (req.body.Role) {
 
                             case "seller":
@@ -149,11 +150,11 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     image = targetPath;
                                     if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                         fs.rename(tempPath, targetPath, err => {
-                                            if (err) return handleError(err, res);
+                                            if (err) return status= false; handleError(err, res);
                                         });
                                     } else {
                                         fs.unlink(tempPath, err => {
-                                            if (err) return handleError(err, res);
+                                            if (err)  {status = false ;return handleError(err, res);}
 
                                             return res
                                                 .status(403)
@@ -167,46 +168,48 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                 } else {
                                     image = "notSetYet";
                                 }
-                                sequelize.transaction().then(function (t) {
-                                    Seller.create({
-                                        ID: req.body.PhoneNumberID,
-                                        CompanyName: req.body.CompanyName,
-                                        CompleteAddressDescription: req.body.CompleteAddressDescription,
-                                        Enable: true,
-                                        Point: 0,
-                                        RegistrationDateTime: req.body.RegistrationDateTime,
-                                        GoogleMapAddressLink: req.body.GoogleMapAddressLink,
-                                        LogoImage: image,
-                                        OwnerFamilyName: req.body.OwnerFamilyName,
-                                        OwnerName: req.body.OwnerName,
-                                        Password: md5(req.body.Password),
-                                        OwnerPhoneNumber: req.body.OwnerPhoneNumber,
-                                        Username: req.body.Username,
-                                        CompanyAddressCityID: req.body.CompanyAddressCityID,
-                                        PhoneNumberID: req.body.PhoneNumberID,
-                                        TypeID: 2
+                                if (status){
+                                    sequelize.transaction().then(function (t) {
+                                        Seller.create({
+                                            ID: req.body.PhoneNumberID,
+                                            CompanyName: req.body.CompanyName,
+                                            CompleteAddressDescription: req.body.CompleteAddressDescription,
+                                            Enable: true,
+                                            Point: 0,
+                                            RegistrationDateTime: req.body.RegistrationDateTime,
+                                            GoogleMapAddressLink: req.body.GoogleMapAddressLink,
+                                            LogoImage: image,
+                                            OwnerFamilyName: req.body.OwnerFamilyName,
+                                            OwnerName: req.body.OwnerName,
+                                            Password: md5(req.body.Password),
+                                            OwnerPhoneNumber: req.body.OwnerPhoneNumber,
+                                            Username: req.body.Username,
+                                            CompanyAddressCityID: req.body.CompanyAddressCityID,
+                                            PhoneNumberID: req.body.PhoneNumberID,
+                                            TypeID: 2
 
-                                    }, {
-                                        transaction: t
-                                    }).then(function () {
-                                        t.commit();
-                                        response(res, undefined).then(
-                                            loggerinfo.info(req.connection.remoteAddress + "a seller added by " + req.body.phone_numberid + " phoneNumberid")
-                                        );
+                                        }, {
+                                            transaction: t
+                                        }).then(function () {
+                                            t.commit();
+                                            response(res, undefined).then(
+                                                loggerinfo.info(req.connection.remoteAddress + "a seller added by " + req.body.phone_numberid + " phoneNumberid")
+                                            );
 
-                                    }).catch(function (error) {
-                                        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
-                                        t.rollback();
-                                        if (error.parent.errno === 1062) {
-                                            return res.status(400).json({"code": 705})
-                                        }
-                                        else {
-                                            return res.status(400).json({"code": 706})
+                                        }).catch(function (error) {
+                                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+                                            t.rollback();
+                                            if (error.parent.errno === 1062) {
+                                                return res.status(400).json({"code": 705})
+                                            }
+                                            else {
+                                                return res.status(400).json({"code": 706})
 
-                                        }
+                                            }
+                                        });
                                     });
-                                });
 
+                                }
 
                                 break;
                             case "transportation":
@@ -217,11 +220,11 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     image = targetPath;
                                     if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                         fs.rename(tempPath, targetPath, err => {
-                                            if (err) return handleError(err, res);
+                                            if (err) {status = false ;return handleError(err, res);}
                                         });
                                     } else {
                                         fs.unlink(tempPath, err => {
-                                            if (err) return handleError(err, res);
+                                            if (err)  {status = false ;return handleError(err, res);}
 
                                             return res
                                                 .status(403)
@@ -233,43 +236,47 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                 } else {
                                     image = "notSetYet";
                                 }
-                                sequelize.transaction().then(function (t) {
-                                    transportation.create({
-                                        AirConditionar: req.body.AirConditionar,
-                                        BirthDate: req.body.BirthDate,
-                                        Color: req.body.Color,
-                                        Description: req.body.Description,
-                                        FamilyName: req.body.FamilyName,
-                                        Name: req.body.Name,
-                                        Image: image,
-                                        PelakNumber: req.body.PelakNumber,
-                                        PhoneNumber: req.body.PhoneNumber,
-                                        Password: md5(req.body.Password),
-                                        Status: true,
-                                        Username: req.body.Username,
-                                        ModelID: req.body.ModelID,
-                                        SellerID: seller[0].ID
-                                    }, {
-                                        transaction: t
-                                    }).then(function () {
-                                        t.commit();
-                                        response(res, undefined).then(
-                                            loggerinfo.info(req.connection.remoteAddress + "a transportation added by " + req.body.PhoneNumber + " phoneNumber")
-                                        );
+                                if (status)
+                                {
+                                    sequelize.transaction().then(function (t) {
+                                        transportation.create({
+                                            AirConditionar: req.body.AirConditionar,
+                                            BirthDate: req.body.BirthDate,
+                                            Color: req.body.Color,
+                                            Description: req.body.Description,
+                                            FamilyName: req.body.FamilyName,
+                                            Name: req.body.Name,
+                                            Image: image,
+                                            PelakNumber: req.body.PelakNumber,
+                                            PhoneNumber: req.body.PhoneNumber,
+                                            Password: md5(req.body.Password),
+                                            Status: true,
+                                            Username: req.body.Username,
+                                            ModelID: req.body.ModelID,
+                                            SellerID: seller[0].ID
+                                        }, {
+                                            transaction: t
+                                        }).then(function () {
+                                            t.commit();
+                                            response(res, undefined).then(
+                                                loggerinfo.info(req.connection.remoteAddress + "a transportation added by " + req.body.PhoneNumber + " phoneNumber")
+                                            );
 
-                                    }).catch(function (error) {
-                                        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
-                                        t.rollback();
-                                        if (error.parent.errno === 1062) {
-                                            return res.status(400).json({"code": 707})
-                                        }
-                                        else {
-                                            return res.status(400).json({"code": 500})
+                                        }).catch(function (error) {
+                                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+                                            t.rollback();
+                                            if (error.parent.errno === 1062) {
+                                                return res.status(400).json({"code": 707})
+                                            }
+                                            else {
+                                                return res.status(400).json({"code": 500})
 
-                                        }
+                                            }
+                                        });
                                     });
-                                });
 
+
+                                }
 
                                 break;
                             case "wareHouse":
@@ -280,11 +287,11 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     image = targetPath;
                                     if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                         fs.rename(tempPath, targetPath, err => {
-                                            if (err) return handleError(err, res);
+                                            if (err) {status = false;return handleError(err, res);}
                                         });
                                     } else {
                                         fs.unlink(tempPath, err => {
-                                            if (err) return handleError(err, res);
+                                            if (err) {status=false;return handleError(err, res);}
 
                                             return res
                                                 .status(403)
@@ -297,42 +304,45 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                 } else {
                                     image = "notSetYet";
                                 }
-                                sequelize.transaction().then(function (t) {
-                                    transportation.create({
-                                        AgentFamilyName: req.body.AgentFamilyName,
-                                        AgentName: req.body.AgentName,
-                                        BirthDate: req.body.BirthDate,
-                                        CellPhoneNumber: req.body.CellPhoneNumber,
-                                        Image: image,
-                                        Password: md5(req.body.Password),
-                                        PhoneNumber: req.body.PhoneNumber,
-                                        Point: 0,
-                                        Status: true,
-                                        Username: req.body.Username,
-                                        WareHouseCompleteAddressDescription: req.body.WareHouseCompleteAddressDescription,
-                                        WareHouseGoogleMapAddressLink: req.body.WareHouseGoogleMapAddressLink,
-                                        WareHouseAddressCityID: req.body.WareHouseAddressCityID,
-                                        SellerID: seller[0].ID
+                                if(status){
+                                    sequelize.transaction().then(function (t) {
+                                        transportation.create({
+                                            AgentFamilyName: req.body.AgentFamilyName,
+                                            AgentName: req.body.AgentName,
+                                            BirthDate: req.body.BirthDate,
+                                            CellPhoneNumber: req.body.CellPhoneNumber,
+                                            Image: image,
+                                            Password: md5(req.body.Password),
+                                            PhoneNumber: req.body.PhoneNumber,
+                                            Point: 0,
+                                            Status: true,
+                                            Username: req.body.Username,
+                                            WareHouseCompleteAddressDescription: req.body.WareHouseCompleteAddressDescription,
+                                            WareHouseGoogleMapAddressLink: req.body.WareHouseGoogleMapAddressLink,
+                                            WareHouseAddressCityID: req.body.WareHouseAddressCityID,
+                                            SellerID: seller[0].ID
 
-                                    }, {
-                                        transaction: t
-                                    }).then(function () {
-                                        t.commit();
-                                        response(res, undefined).then(
-                                            loggerinfo.info(req.connection.remoteAddress + "a wareHouse added by " + req.body.PhoneNumber + " phoneNumber")
-                                        );
-                                    }).catch(function (error) {
-                                        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
-                                        t.rollback();
-                                        if (error.parent.errno === 1062) {
-                                            return res.status(400).json({"code": 706})
-                                        }
-                                        else {
-                                            return res.status(400).json({"code": 500})
+                                        }, {
+                                            transaction: t
+                                        }).then(function () {
+                                            t.commit();
+                                            response(res, undefined).then(
+                                                loggerinfo.info(req.connection.remoteAddress + "a wareHouse added by " + req.body.PhoneNumber + " phoneNumber")
+                                            );
+                                        }).catch(function (error) {
+                                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+                                            t.rollback();
+                                            if (error.parent.errno === 1062) {
+                                                return res.status(400).json({"code": 706})
+                                            }
+                                            else {
+                                                return res.status(400).json({"code": 500})
 
-                                        }
+                                            }
+                                        });
                                     });
-                                });
+
+                                }
 
 
                                 break;
@@ -344,11 +354,11 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     image = targetPath;
                                     if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                         fs.rename(tempPath, targetPath, err => {
-                                            if (err) return handleError(err, res);
+                                            if (err) {status = false ;return handleError(err, res);}
                                         });
                                     } else {
                                         fs.unlink(tempPath, err => {
-                                            if (err) return handleError(err, res);
+                                            if (err){ status = false;return handleError(err, res);}
 
                                             return res
                                                 .status(403)
@@ -361,37 +371,40 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                 } else {
                                     image = "notSetYet";
                                 }
-                                sequelize.transaction().then(function (t) {
-                                    transportation.create({
-                                        BirthDate: req.body.BirthDate,
-                                        FamilyName: req.body.FamilyName,
-                                        Image: image,
-                                        Name: req.body.Name,
-                                        Password: md5(req.body.Password),
-                                        PhoneNumber: req.body.PhoneNumber,
-                                        Point: 0,
-                                        Status: true,
-                                        Username: req.body.Username,
-                                        SellerID: seller[0].ID
-                                    }, {
-                                        transaction: t
-                                    }).then(function () {
-                                        t.commit();
-                                        response(res, undefined).then(
-                                            loggerinfo.info(req.connection.remoteAddress + "a operator added by " + req.body.PhoneNumber + " phoneNumber")
-                                        );
-                                    }).catch(function (error) {
-                                        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
-                                        t.rollback();
-                                        if (error.parent.errno === 1062) {
-                                            return res.status(400).json({"code": 708})
-                                        }
-                                        else {
-                                            return res.status(400).json({"code": 500})
+                                if (status){
+                                    sequelize.transaction().then(function (t) {
+                                        transportation.create({
+                                            BirthDate: req.body.BirthDate,
+                                            FamilyName: req.body.FamilyName,
+                                            Image: image,
+                                            Name: req.body.Name,
+                                            Password: md5(req.body.Password),
+                                            PhoneNumber: req.body.PhoneNumber,
+                                            Point: 0,
+                                            Status: true,
+                                            Username: req.body.Username,
+                                            SellerID: seller[0].ID
+                                        }, {
+                                            transaction: t
+                                        }).then(function () {
+                                            t.commit();
+                                            response(res, undefined).then(
+                                                loggerinfo.info(req.connection.remoteAddress + "a operator added by " + req.body.PhoneNumber + " phoneNumber")
+                                            );
+                                        }).catch(function (error) {
+                                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+                                            t.rollback();
+                                            if (error.parent.errno === 1062) {
+                                                return res.status(400).json({"code": 708})
+                                            }
+                                            else {
+                                                return res.status(400).json({"code": 500})
 
-                                        }
+                                            }
+                                        });
                                     });
-                                });
+                                }
+
 
                                 break;
 
@@ -426,17 +439,19 @@ router.post('/product', upload.single("Image"), (req, res) => {
 
             } else {
                 if (seller[0].Status){
+                    var status = true;
+
                     if (req.file != null) {
                         const tempPath = req.file.path;
                         const targetPath = path.join(__dirname, "./../../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
                         image = targetPath;
                         if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                             fs.rename(tempPath, targetPath, err => {
-                                if (err) return handleError(err, res);
+                                if (err) {status= false;return handleError(err, res);}
                             });
                         } else {
                             fs.unlink(tempPath, err => {
-                                if (err) return handleError(err, res);
+                                if (err) {status =false; return handleError(err, res);}
 
                                 return res
                                     .status(403)
@@ -448,54 +463,57 @@ router.post('/product', upload.single("Image"), (req, res) => {
                     } else {
                         image = "notSetYet";
                     }
+if (status)
+{
+    if (req.body.Description == null ||
+        req.body.Price == null ||
+        req.body.PriceDateTime == null ||
+        req.body.SupplyOfProduct == null ||
+        req.body.UnitOfProduct == null ||
+        req.body.ProductID == null ||
+        req.body.UnitID == null
+    ) {
+        res.status(400).json({"code": 703});
+    } else {
+        var status = true;
+        products.findAll({where: {id: req.body.ProductID}}).then(
+            products => {
+                if (!isThisArrayEmpty(products)) {
+                    unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
+                        if (isThisArrayEmpty(unit)) {
+                            status = false;
+                            return res.status(404).json();
 
-                    if (req.body.Description == null ||
-                        req.body.Price == null ||
-                        req.body.PriceDateTime == null ||
-                        req.body.SupplyOfProduct == null ||
-                        req.body.UnitOfProduct == null ||
-                        req.body.ProductID == null ||
-                        req.body.UnitID == null
-                    ) {
-                        res.status(400).json({"code": 703});
-                    } else {
-                        var status = true;
-                        products.findAll({where: {id: req.body.ProductID}}).then(
-                            products => {
-                                if (!isThisArrayEmpty(products)) {
-                                    unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
-                                        if (isThisArrayEmpty(unit)) {
-                                            status = false;
-                                            return res.status(404).json();
-
-                                        }
-                                    })
-                                } else {
-                                    status = false;
-                                    return res.status(404).json();
-                                }
-                            }
-                        );
-                        if (status){
-
-                            sellerProducts.create({
-                                Description: req.body.Description,
-                                Image: image,
-                                Price: req.body.Price,
-                                PriceDateTime: req.body.PriceDateTime,
-                                SupplyOfProduct: req.body.SupplyOfProduct,
-                                UnitOfProduct: req.body.UnitOfProduct,
-                                ProductID: req.body.ProductID,
-                                SellerID: seller[0].ID,
-                                UnitID: req.body.UnitID
-
-                            });
-                            return res.status(200).json();
                         }
+                    })
+                } else {
+                    status = false;
+                    return res.status(404).json();
+                }
+            }
+        );
+        if (status){
+
+            sellerProducts.create({
+                Description: req.body.Description,
+                Image: image,
+                Price: req.body.Price,
+                PriceDateTime: req.body.PriceDateTime,
+                SupplyOfProduct: req.body.SupplyOfProduct,
+                UnitOfProduct: req.body.UnitOfProduct,
+                ProductID: req.body.ProductID,
+                SellerID: seller[0].ID,
+                UnitID: req.body.UnitID
+
+            });
+            return res.status(200).json();
+        }
 
 
 
-                    }
+    }
+}
+
                 } else {
                     return res.status(404).json({"code": 900});
                 }
@@ -525,6 +543,7 @@ router.put('/product', upload.single("Image"), (req, res) => {
 
             } else {
                 if (seller[0].Status){
+                    var status = true;
                     if (
                         req.body.SellerProductID == null ||
                         req.body.Description == null ||
@@ -549,11 +568,11 @@ router.put('/product', upload.single("Image"), (req, res) => {
                                         image = targetPath;
                                         if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                             fs.rename(tempPath, targetPath, err => {
-                                                if (err) return handleError(err, res);
+                                                if (err) {status = false;return handleError(err, res);}
                                             });
                                         } else {
                                             fs.unlink(tempPath, err => {
-                                                if (err) return handleError(err, res);
+                                                if (err)  {status = false;return handleError(err, res);}
 
                                                 return res
                                                     .status(403)
@@ -567,46 +586,50 @@ router.put('/product', upload.single("Image"), (req, res) => {
                                         image = sellerproductid[0].Image;
                                     }
 
-                                    products.findAll({where: {ID: req.body.ProductID}}).then(
-                                        products => {
-                                            if (!isThisArrayEmpty(products)) {
-                                                unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
-                                                    if (isThisArrayEmpty(unit)) {
-                                                        return res.status(404).json();
-
-                                                    }
-                                                })
-                                            } else {
+                        if(status)
+                        {
+                            products.findAll({where: {ID: req.body.ProductID}}).then(
+                                products => {
+                                    if (!isThisArrayEmpty(products)) {
+                                        unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
+                                            if (isThisArrayEmpty(unit)) {
                                                 return res.status(404).json();
+
                                             }
-                                        }
-                                    );
-                                    sellerProducts.update({
-                                        Description: req.body.Description,
-                                        Image: image,
-                                        Price: req.body.Price,
-                                        PriceDateTime: req.body.PriceDateTime,
-                                        SupplyOfProduct: req.body.SupplyOfProduct,
-                                        UnitOfProduct: req.body.UnitOfProduct,
-                                        ProductID: req.body.ProductID,
-                                        SellerID: seller[0].ID,
-                                        UnitID: req.body.UnitID
-                                    }, {
-                                        where: {
-                                            ID: sellerproductid[0].ID
-                                        }
-                                    });
-                                    response(res, undefined).then(
-                                        loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " edit product with productid :" + sellerproductid[0])
-                                    )
-
-
+                                        })
+                                    } else {
+                                        return res.status(404).json();
+                                    }
                                 }
-                            }
-                        );
+                            );
+                            sellerProducts.update({
+                                Description: req.body.Description,
+                                Image: image,
+                                Price: req.body.Price,
+                                PriceDateTime: req.body.PriceDateTime,
+                                SupplyOfProduct: req.body.SupplyOfProduct,
+                                UnitOfProduct: req.body.UnitOfProduct,
+                                ProductID: req.body.ProductID,
+                                SellerID: seller[0].ID,
+                                UnitID: req.body.UnitID
+                            }, {
+                                where: {
+                                    ID: sellerproductid[0].ID
+                                }
+                            });
+                            response(res, undefined).then(
+                                loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " edit product with productid :" + sellerproductid[0])
+                            )
+
+
+                        }
+                                }
+                            );
 
 
                     }
+                        }
+                                }
                 } else {
                     return res.status(404).json({"code": 900});
                 }
