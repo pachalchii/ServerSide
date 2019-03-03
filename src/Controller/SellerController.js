@@ -251,6 +251,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                             PhoneNumber: req.body.PhoneNumber,
                                             Password: md5(req.body.Password),
                                             Status: true,
+                                            WareHouseID:req.body.WareHouseID,
                                             Username: req.body.Username,
                                             ModelID: req.body.ModelID,
                                             SellerID: seller[0].ID
@@ -463,56 +464,56 @@ router.post('/product', upload.single("Image"), (req, res) => {
                     } else {
                         image = "notSetYet";
                     }
-if (status)
-{
-    if (req.body.Description == null ||
-        req.body.Price == null ||
-        req.body.PriceDateTime == null ||
-        req.body.SupplyOfProduct == null ||
-        req.body.UnitOfProduct == null ||
-        req.body.ProductID == null ||
-        req.body.UnitID == null
-    ) {
-        res.status(400).json({"code": 703});
-    } else {
-        var status = true;
-        products.findAll({where: {id: req.body.ProductID}}).then(
-            products => {
-                if (!isThisArrayEmpty(products)) {
-                    unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
-                        if (isThisArrayEmpty(unit)) {
-                            status = false;
-                            return res.status(404).json();
+                    if (status)
+                    {
+                        if (req.body.Description == null ||
+                            req.body.Price == null ||
+                            req.body.PriceDateTime == null ||
+                            req.body.SupplyOfProduct == null ||
+                            req.body.UnitOfProduct == null ||
+                            req.body.ProductID == null ||
+                            req.body.UnitID == null
+                        ) {
+                            res.status(400).json({"code": 703});
+                        } else {
+                            var status = true;
+                            products.findAll({where: {id: req.body.ProductID}}).then(
+                                products => {
+                                    if (!isThisArrayEmpty(products)) {
+                                        unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
+                                            if (isThisArrayEmpty(unit)) {
+                                                status = false;
+                                                return res.status(404).json();
+
+                                            }
+                                        })
+                                    } else {
+                                        status = false;
+                                        return res.status(404).json();
+                                    }
+                                }
+                            );
+                            if (status){
+
+                                sellerProducts.create({
+                                    Description: req.body.Description,
+                                    Image: image,
+                                    Price: req.body.Price,
+                                    PriceDateTime: req.body.PriceDateTime,
+                                    SupplyOfProduct: req.body.SupplyOfProduct,
+                                    UnitOfProduct: req.body.UnitOfProduct,
+                                    ProductID: req.body.ProductID,
+                                    SellerID: seller[0].ID,
+                                    UnitID: req.body.UnitID
+
+                                });
+                                return res.status(200).json();
+                            }
+
+
 
                         }
-                    })
-                } else {
-                    status = false;
-                    return res.status(404).json();
-                }
-            }
-        );
-        if (status){
-
-            sellerProducts.create({
-                Description: req.body.Description,
-                Image: image,
-                Price: req.body.Price,
-                PriceDateTime: req.body.PriceDateTime,
-                SupplyOfProduct: req.body.SupplyOfProduct,
-                UnitOfProduct: req.body.UnitOfProduct,
-                ProductID: req.body.ProductID,
-                SellerID: seller[0].ID,
-                UnitID: req.body.UnitID
-
-            });
-            return res.status(200).json();
-        }
-
-
-
-    }
-}
+                    }
 
                 } else {
                     return res.status(404).json({"code": 900});
@@ -542,8 +543,8 @@ router.put('/product', upload.single("Image"), (req, res) => {
                 return res.status(400).json({"code": 700});
 
             } else {
+                var status = true;
                 if (seller[0].Status){
-                    var status = true;
                     if (
                         req.body.SellerProductID == null ||
                         req.body.Description == null ||
@@ -568,11 +569,11 @@ router.put('/product', upload.single("Image"), (req, res) => {
                                         image = targetPath;
                                         if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                             fs.rename(tempPath, targetPath, err => {
-                                                if (err) {status = false;return handleError(err, res);}
+                                                if (err) {status= false; return handleError(err, res);}
                                             });
                                         } else {
                                             fs.unlink(tempPath, err => {
-                                                if (err)  {status = false;return handleError(err, res);}
+                                                if (err){status= false ; return handleError(err, res);}
 
                                                 return res
                                                     .status(403)
@@ -586,50 +587,48 @@ router.put('/product', upload.single("Image"), (req, res) => {
                                         image = sellerproductid[0].Image;
                                     }
 
-                        if(status)
-                        {
-                            products.findAll({where: {ID: req.body.ProductID}}).then(
-                                products => {
-                                    if (!isThisArrayEmpty(products)) {
-                                        unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
-                                            if (isThisArrayEmpty(unit)) {
-                                                return res.status(404).json();
+                                    if (status){
+                                        products.findAll({where: {ID: req.body.ProductID}}).then(
+                                            products => {
+                                                if (!isThisArrayEmpty(products)) {
+                                                    unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
+                                                        if (isThisArrayEmpty(unit)) {
+                                                            return res.status(404).json();
 
+                                                        }
+                                                    })
+                                                } else {
+                                                    return res.status(404).json();
+                                                }
                                             }
-                                        })
-                                    } else {
-                                        return res.status(404).json();
+                                        );
+                                        sellerProducts.update({
+                                            Description: req.body.Description,
+                                            Image: image,
+                                            Price: req.body.Price,
+                                            PriceDateTime: req.body.PriceDateTime,
+                                            SupplyOfProduct: req.body.SupplyOfProduct,
+                                            UnitOfProduct: req.body.UnitOfProduct,
+                                            ProductID: req.body.ProductID,
+                                            SellerID: seller[0].ID,
+                                            UnitID: req.body.UnitID
+                                        }, {
+                                            where: {
+                                                ID: sellerproductid[0].ID
+                                            }
+                                        });
+                                        response(res, undefined).then(
+                                            loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " edit product with productid :" + sellerproductid[0])
+                                        )
                                     }
-                                }
-                            );
-                            sellerProducts.update({
-                                Description: req.body.Description,
-                                Image: image,
-                                Price: req.body.Price,
-                                PriceDateTime: req.body.PriceDateTime,
-                                SupplyOfProduct: req.body.SupplyOfProduct,
-                                UnitOfProduct: req.body.UnitOfProduct,
-                                ProductID: req.body.ProductID,
-                                SellerID: seller[0].ID,
-                                UnitID: req.body.UnitID
-                            }, {
-                                where: {
-                                    ID: sellerproductid[0].ID
-                                }
-                            });
-                            response(res, undefined).then(
-                                loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " edit product with productid :" + sellerproductid[0])
-                            )
 
 
-                        }
                                 }
-                            );
+                            }
+                        );
 
 
                     }
-                        }
-                                }
                 } else {
                     return res.status(404).json({"code": 900});
                 }
