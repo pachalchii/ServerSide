@@ -374,7 +374,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                 }
                                 if (status){
                                     sequelize.transaction().then(function (t) {
-                                        transportation.create({
+                                        sellerOperator.create({
                                             BirthDate: req.body.BirthDate,
                                             FamilyName: req.body.FamilyName,
                                             Image: image,
@@ -395,6 +395,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                         }).catch(function (error) {
                                             loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                             t.rollback();
+                                            console.log(error)
                                             if (error.parent.errno === 1062) {
                                                 return res.status(400).json({"code": 708})
                                             }
