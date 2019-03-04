@@ -1181,6 +1181,74 @@ router.post('/operator/orderProduct', (req, res) =>{
 
 });
 
+router.get('/operator/product', (req, res) => {
+
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+
+        sellerOperator.findAll(searchQuery).then(seller => {
+
+            if (isThisArrayEmpty(seller)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+                if (seller[0].Status){
+                    var final = [];
+
+                    function getallproducts(value, index, array) {
+                        var base64str = "not Found";
+                        try {
+                            base64str = base64_encode(value.Image);
+
+                        } catch (e) {
+                            base64str = "not Found";
+
+                        }
+
+                        final[index] = {
+                            ID: value.ID,
+                            Description: value.Description,
+                            Price: value.Price,
+                            PriceDateTime: value.PriceDateTime,
+                            SupplyOfProduct: value.SupplyOfProduct,
+                            UnitOfProduct: value.UnitOfProduct,
+                            ProductID: value.ProductID,
+                            SellerID: value.SellerID,
+                            UnitID: value.UnitID,
+                            Image: base64str
+                        }
+                    }
+                    sellerProducts.findAll(
+                        {
+                            where: {
+                                SellerID: seller[0].SellerID
+                            }
+                        }
+                    ).then(sellerProducts => {
+                            if (!isThisArrayEmpty(sellerProducts)) {
+                                sellerProducts.forEach(getallproducts);
+                                response(res, final).then(
+                                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " get all his/her products ")
+                                )
+
+                            } else {
+                                return res.status(404).json();
+                            }
+                        }
+                    );
+                } else {
+                    return res.status(404).json({"code": 900});
+                }
+
+
+            }
+        });
+
+
+    }
+
+});
 
 
 
