@@ -137,6 +137,183 @@ router.post('/orderProduct', (req, res) =>{
 
 });
 
+router.post('/transportation', (req, res) =>{
+    var searchQuery = checkToken(req, res);
+    try {
+        if (searchQuery && filteringStatus) {
+            sellerWareHouse.findAll(searchQuery).then(ware => {
+                if (!isThisArrayEmpty(ware)) {
+                    if (ware[0].Status){
+                        if(addRoleInfoCheck(req, res, "transportation") ){
+
+                            if (req.file != null) {
+
+                                const tempPath = req.file.path;
+                                const targetPath = path.join(__dirname, "./../../uploads/transportation/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
+                                image = targetPath;
+                                if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
+                                    fs.rename(tempPath, targetPath, err => {
+                                        if (err) {status = false ;return handleError(err, res);}
+                                    });
+                                } else {
+                                    fs.unlink(tempPath, err => {
+                                        if (err)  {status = false ;return handleError(err, res);}
+
+                                        return res
+                                            .status(403)
+                                            .contentType("text/plain")
+                                            .end("this format of image is not under support");
+                                    });
+                                }
+
+                            } else {
+                                image = "notSetYet";
+                            }
+                            if (status)
+                            {
+                                sequelize.transaction().then(function (t) {
+                                    transportation.create({
+                                        AirConditionar: req.body.AirConditionar,
+                                        Birthdate: req.body.BirthDate,
+                                        Color: req.body.Color,
+                                        Description: req.body.Description,
+                                        FamilyName: req.body.FamilyName,
+                                        Name: req.body.Name,
+                                        Image: image,
+                                        PelakNumber: req.body.PelakNumber,
+                                        PhoneNumber: req.body.PhoneNumber,
+                                        Password: md5(req.body.Password),
+                                        Status: true,
+                                        WareHouseID:ware[0].ID,
+                                        Username: req.body.Username,
+                                        ModelID: req.body.ModelID,
+                                        SellerID: ware[0].SellerID
+                                    }, {
+                                        transaction: t
+                                    }).then(function () {
+                                        t.commit();
+                                        response(res, undefined).then(
+                                            loggerinfo.info(req.connection.remoteAddress + "a transportation added by wareHouse with : " + req.body.PhoneNumber + " phoneNumber")
+                                        );
+
+                                    }).catch(function (error) {
+                                        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+                                        t.rollback();
+                                        if (error.parent.errno === 1062) {
+                                            return res.status(400).json({"code": 707})
+                                        }
+                                        else {
+                                            return res.status(400).json({"code": 500})
+
+                                        }
+                                    });
+                                });
+
+
+                            }
+
+
+                        }
+
+
+
+
+                    }else {
+                        return res.status(404).json({"code": 900});
+                    }
+
+                } else {
+                    return res.status(404).json({"code": 700});
+                }
+            });
+
+        }
+    }catch (e) {
+        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+        res.status(500).json({"code":500});
+
+
+    }
+
+});
+
+router.post('/disableUser', (req, res) => {
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+
+        sellerWareHouse.findAll(searchQuery).then(seller => {
+
+            if (isThisArrayEmpty(seller)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+                if (seller[0].Status){
+                    if (req.body.ID == null) {
+                        return res.status(400).json({"code": 703});
+
+                    } else {
+
+                                transportation.update({Status:false},{where:{ID:req.body.ID}}).then(
+                                    tes=>{
+                                        return res.json();
+                                    }
+                                );
+
+
+
+                    }
+                } else {
+                    return res.status(404).json({"code": 900});
+                }
+
+
+
+            }
+        });
+
+
+    }
+
+});
+
+router.post('/enableUser', (req, res) => {
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+
+        Seller.findAll(searchQuery).then(seller => {
+
+            if (isThisArrayEmpty(seller)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+                if (seller[0].Status){
+                    if ( req.body.ID == null) {
+                        return res.status(400).json({"code": 703});
+                    } else {
+
+                                transportation.update({Status:true},{where:{ID:req.body.ID}}).then(
+                                    tes=>{
+                                        return res.json();
+                                    }
+                                );
+
+
+                    }
+                } else {
+                    return res.status(404).json({"code": 900});
+                }
+
+
+
+            }
+        });
+
+
+    }
+
+});
 
 
 module.exports = router;

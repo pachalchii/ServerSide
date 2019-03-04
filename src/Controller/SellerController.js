@@ -212,74 +212,6 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                 }
 
                                 break;
-                            case "transportation":
-                                if (req.file != null) {
-
-                                    const tempPath = req.file.path;
-                                    const targetPath = path.join(__dirname, "./../../uploads/transportation/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
-                                    image = targetPath;
-                                    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
-                                        fs.rename(tempPath, targetPath, err => {
-                                            if (err) {status = false ;return handleError(err, res);}
-                                        });
-                                    } else {
-                                        fs.unlink(tempPath, err => {
-                                            if (err)  {status = false ;return handleError(err, res);}
-
-                                            return res
-                                                .status(403)
-                                                .contentType("text/plain")
-                                                .end("this format of image is not under support");
-                                        });
-                                    }
-
-                                } else {
-                                    image = "notSetYet";
-                                }
-                                if (status)
-                                {
-                                    sequelize.transaction().then(function (t) {
-                                        transportation.create({
-                                            AirConditionar: req.body.AirConditionar,
-                                            Birthdate: req.body.BirthDate,
-                                            Color: req.body.Color,
-                                            Description: req.body.Description,
-                                            FamilyName: req.body.FamilyName,
-                                            Name: req.body.Name,
-                                            Image: image,
-                                            PelakNumber: req.body.PelakNumber,
-                                            PhoneNumber: req.body.PhoneNumber,
-                                            Password: md5(req.body.Password),
-                                            Status: true,
-                                            WareHouseID:req.body.WareHouseID,
-                                            Username: req.body.Username,
-                                            ModelID: req.body.ModelID,
-                                            SellerID: seller[0].ID
-                                        }, {
-                                            transaction: t
-                                        }).then(function () {
-                                            t.commit();
-                                            response(res, undefined).then(
-                                                loggerinfo.info(req.connection.remoteAddress + "a transportation added by " + req.body.PhoneNumber + " phoneNumber")
-                                            );
-
-                                        }).catch(function (error) {
-                                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
-                                            t.rollback();
-                                            if (error.parent.errno === 1062) {
-                                                return res.status(400).json({"code": 707})
-                                            }
-                                            else {
-                                                return res.status(400).json({"code": 500})
-
-                                            }
-                                        });
-                                    });
-
-
-                                }
-
-                                break;
                             case "wareHouse":
                                 if (req.file != null) {
 
@@ -971,7 +903,7 @@ router.get('/OrderDetail', (req, res) => {
 
 });
 
-router.post('/disableUser', upload.single("Image"), (req, res) => {
+router.post('/disableUser', (req, res) => {
     var searchQuery = checkToken(req, res);
     if (searchQuery) {
 
@@ -983,20 +915,14 @@ router.post('/disableUser', upload.single("Image"), (req, res) => {
 
             } else {
                 if (seller[0].Status){
-                    if (req.body.Role == null || req.body.ID) {
+                    if (req.body.Role == null || req.body.ID == null) {
                         return res.status(400).json({"code": 703});
+
                     } else {
                         switch (req.body.Role) {
 
                             case "seller":
                                 Seller.update({Status:false},{where:{ID:req.body.ID}}).then(
-                                    tes=>{
-                                        return res.json();
-                                    }
-                                );
-                                break;
-                            case "transportation":
-                                transportation.update({Status:false},{where:{ID:req.body.ID}}).then(
                                     tes=>{
                                         return res.json();
                                     }
@@ -1035,6 +961,65 @@ router.post('/disableUser', upload.single("Image"), (req, res) => {
     }
 
 });
+
+router.post('/enableUser', (req, res) => {
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+
+        Seller.findAll(searchQuery).then(seller => {
+
+            if (isThisArrayEmpty(seller)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+                if (seller[0].Status){
+                    if (req.body.Role == null || req.body.ID == null) {
+                        return res.status(400).json({"code": 703});
+                    } else {
+                        switch (req.body.Role) {
+
+                            case "seller":
+                                Seller.update({Status:true},{where:{ID:req.body.ID}}).then(
+                                    tes=>{
+                                        return res.json();
+                                    }
+                                );
+                                break;
+                            case "wareHouse":
+                                sellerWareHouse.update({Status:true},{where:{ID:req.body.ID}}).then(
+                                    tes=>{
+                                        return res.json();
+                                    }
+                                );
+                                break;
+                            case "operator" :
+                                sellerOperator.update({Status:true},{where:{ID:req.body.ID}}).then(
+                                    tes=>{
+                                        return res.json();
+                                    }
+                                );
+                                break;
+
+                            default :
+                                return res.status(404).json({"message": "invalid role type"});
+                        }
+
+                    }
+                } else {
+                    return res.status(404).json({"code": 900});
+                }
+
+
+
+            }
+        });
+
+
+    }
+
+});
+
 
 
 

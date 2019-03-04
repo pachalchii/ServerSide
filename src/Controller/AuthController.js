@@ -582,7 +582,7 @@ router.post('/login', (req, res) => {
                                             Name: support[0].Name,
                                             FamilyName: support[0].FamilyName,
                                             Username: support[0].Username,
-                                            token: token
+                                            Token: token
 
                                         }
                                     }).then(loggerinfo.info(req.connection.remoteAddress + " login as support with " + support[0].PhoneNumber + " phone number"));
@@ -625,7 +625,7 @@ router.post('/login', (req, res) => {
                                             Image: base64str,
                                             FamilyName: support[0].FamilyName,
                                             Username: support[0].Username,
-                                            token: token
+                                            Token: token
 
                                         }
                                     }).then(loggerinfo.info(req.connection.remoteAddress + " login as support with " + support[0].PhoneNumber + " phone number"));
@@ -734,7 +734,7 @@ router.post('/login', (req, res) => {
                                             WareHouseGoogleMapAddressLink: wareHouse[0].WareHouseGoogleMapAddressLink,
                                             WareHouseAddressCityID: wareHouse[0].WareHouseAddressCityID,
                                             SellerID: wareHouse[0].SellerID,
-                                            token: token
+                                            Token: token
                                         }
                                     }).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with " + wareHouse[0].PhoneNumber + " phone number"));
 

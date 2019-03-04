@@ -71,14 +71,14 @@ router.post('/order',(req,res)=>{
                 if (tran[0].Status){
                     try{
 
-                        if (req.body.Id == null ){
+                        if (req.body.ID == null ){
                             res.status(400).json({"code":703});
                         } else {
                             orderProduct.findAll({where:{
-                                    Id:req.body.Id
+                                    ID:req.body.ID
                                 }}).then(order =>{
                                 if (!isThisArrayEmpty(order)){
-                                    if (order[0].TransportarID === tran[0].Id){
+                                    if (order[0].TransportarID === tran[0].ID){
                                         order[0].update({TransportarStatus: true}).then(
                                             transportation.update({Status : false},{where:{ID:tran[0].ID}}).then(
                                                 response(res,undefined).then(loggerinfo.info(req.connection.remoteAddress + "transportation with id : "+tran[0].ID +" change product status with id : "+order[0].ID))
