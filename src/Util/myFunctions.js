@@ -10,15 +10,15 @@ function smsHandler(message,phone) {
     var api = Kavenegar.KavenegarApi({
         apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'});
     api.Send({
-        message: message,
-        sender: "100065995",
-        receptor: phone
-    },
+            message: message,
+            sender: "100065995",
+            receptor: phone
+        },
         function(response, status) {
             console.log(response);
             console.log(status);
         });
-    
+
 }
 
 function response(res, json) {
@@ -36,12 +36,12 @@ function base64_encode(file) {
     // read binary data
     var bitmap = fs.readFileSync(file);
     // convert binary data to base64 encoded string
-    return new Buffer(bitmap).toString('base64');
+    return  Buffer.from(bitmap).toString('base64');
 }
 
 function base64_decode(base64str, file) {
     // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-    var bitmap = new Buffer(base64str, 'base64');
+    var bitmap =  Buffer.from(base64str, 'base64');
     // write buffer to file
     fs.writeFileSync(file, bitmap);
     console.log('******** File created from base64 encoded string ********');
@@ -179,6 +179,7 @@ function fillDataBase() {
             console.log(colors.bg.Red, "import SellerType demo data canceled .", colors.Reset);
         }
     });
+
     var carModelvar = [
         {ID: 1, Name: "نیسان", ParentID: null},
         {ID: 2, Name: "پیکان وانت", ParentID: null},
@@ -260,6 +261,7 @@ function fillDataBase() {
         {ID: 150, Name: "فراورده های گوشتی", ParentID: 500},
 
         {ID: 97, Name: "قزل آلا", ParentID: 96},
+        {ID: 90, Name: "اکبر جوجه", ParentID: 52},
         {ID: 151, Name: "ران بی پوست بدون کمر", ParentID: 52},
         {ID: 152, Name: "ران با پوست بدون کمر", ParentID: 52},
         {ID: 153, Name: "سینه با استخوان بدون پوست", ParentID: 52},
@@ -277,48 +279,50 @@ function fillDataBase() {
 
 
 
-        {ID: 602, Name: "گوساله", ParentID: 600},
+        {ID: 20, Name: "گوساله", ParentID: 600},
 
-        {ID: 623, Name: "گوسفند", ParentID: 600},
+        {ID: 230, Name: "گوسفند", ParentID: 600},
 
-        {ID: 652, Name: "مرغ", ParentID: 600},
+        {ID: 520, Name: "مرغ", ParentID: 600},
 
-        {ID: 696, Name: "ماهی", ParentID: 600},
+        {ID: 960, Name: "ماهی", ParentID: 600},
 
-        {ID: 6108, Name: "منجمد وارداتی", ParentID: 600},
+        {ID: 1080, Name: "منجمد وارداتی", ParentID: 600},
 
-        {ID: 6109, Name: "گوسفند وارداتی", ParentID: 6108},
-        {ID: 6110, Name: "گوساله وارداتی", ParentID: 6108},
-        {ID: 6111, Name: "ران", ParentID: 6109},
-        {ID: 6112, Name: "سردست", ParentID: 6109},
-        {ID: 6113, Name: "گردن", ParentID: 6109},
-        {ID: 6114, Name: "راسته با استخوان", ParentID: 6109},
-        {ID: 6115, Name: "راسته شاندیزی", ParentID: 6109},
-        {ID: 6116, Name: "گردن", ParentID: 6109},
-        {ID: 6117, Name: "قلوه گاه گوسفند", ParentID: 6109},
-        {ID: 6118, Name: "قلوه گاه با استخوان گوسفند", ParentID: 6109},
-        {ID: 6119, Name: "ماهیچه", ParentID: 6109},
-
-
-        {ID: 6126, Name: "ران", ParentID: 6110},
-        {ID: 6127, Name: "سردست", ParentID: 6110},
-        {ID: 6128, Name: "گردن", ParentID: 6110},
-        {ID: 6129, Name: "بغل ران", ParentID: 6110},
-        {ID: 6130, Name: "سفید ران", ParentID: 6110},
-        {ID: 6131, Name: "مغز ران", ParentID: 6110},
-        {ID: 6132, Name: "راسته", ParentID: 6110},
-        {ID: 6133, Name: "فیله", ParentID: 6110},
-        {ID: 6134, Name: "قلوه گاه", ParentID: 6110},
+        {ID: 1090, Name: "گوسفند وارداتی", ParentID: 1080},
+        {ID: 1100, Name: "گوساله وارداتی", ParentID: 1080},
+        {ID: 1110, Name: "ران", ParentID: 1090},
+        {ID: 1120, Name: "سردست", ParentID: 1090},
+        {ID: 1130, Name: "گردن", ParentID: 1090},
+        {ID: 1140, Name: "راسته با استخوان", ParentID: 1090},
+        {ID: 1150, Name: "راسته شاندیزی", ParentID: 1090},
+        {ID: 1160, Name: "گردن", ParentID: 1090},
+        {ID: 1170, Name: "قلوه گاه گوسفند", ParentID: 1090},
+        {ID: 1180, Name: "قلوه گاه با استخوان گوسفند", ParentID: 1090},
+        {ID: 1190, Name: "ماهیچه", ParentID: 1090},
 
 
-        {ID: 6150, Name: "فراورده های گوشتی", ParentID: 600},
+        {ID: 1260, Name: "ران", ParentID: 1100},
+        {ID: 1270, Name: "سردست", ParentID: 1100},
+        {ID: 1280, Name: "گردن", ParentID: 1100},
+        {ID: 1290, Name: "بغل ران", ParentID: 1100},
+        {ID: 1300, Name: "سفید ران", ParentID: 1100},
+        {ID: 1310, Name: "مغز ران", ParentID: 1100},
+        {ID: 1320, Name: "راسته", ParentID: 1100},
+        {ID: 1330, Name: "فیله", ParentID: 1100},
+        {ID: 1340, Name: "قلوه گاه", ParentID: 1100},
 
-        {ID: 697, Name: "قزل آلا", ParentID: 696},
-        {ID: 6151, Name: "ران بی پوست بدون کمر", ParentID: 652},
-        {ID: 6152, Name: "ران با پوست بدون کمر", ParentID: 652},
-        {ID: 6153, Name: "سینه با استخوان بدون پوست", ParentID: 652},
-        {ID: 6154, Name: "سینه با استخوان با پوست", ParentID: 652},
-        {ID: 6155, Name: "مرغ کامل شکم خالی", ParentID: 652},
+
+        {ID: 1500, Name: "فراورده های گوشتی", ParentID: 600},
+
+        {ID: 970, Name: "قزل آلا", ParentID: 960},
+        {ID: 900, Name: "اکبر جوجه", ParentID: 520},
+        {ID: 1510, Name: "ران بی پوست بدون کمر", ParentID: 520},
+        {ID: 1520, Name: "ران با پوست بدون کمر", ParentID: 520},
+        {ID: 1530, Name: "سینه با استخوان بدون پوست", ParentID: 520},
+        {ID: 1540, Name: "سینه با استخوان با پوست", ParentID: 520},
+        {ID: 1550, Name: "مرغ کامل شکم خالی", ParentID: 520},
+
 
 
 
@@ -413,7 +417,6 @@ function fillDataBase() {
         {ID: 71, Name: "گردن با پوست", GroupID: 52},
         {ID: 72, Name: "گردن بی پوست", GroupID: 52},
         {ID: 73, Name: "فیله", GroupID: 52},
-        {ID: 74, Name: "مرغ کامل شکم خالی", GroupID: 52},
 
         {ID: 74, Name: "1200 گرمی", GroupID: 155},
         {ID: 75, Name: "1300 گرمی", GroupID: 155},
@@ -421,14 +424,11 @@ function fillDataBase() {
         {ID: 77, Name: "1500 گرمی", GroupID: 155},
         {ID: 78, Name: "1600 گرمی", GroupID: 155},
         {ID: 79, Name: "1700 گرمی", GroupID: 155},
-
-
-
-        {ID: 80, Name: "1800 گرمی", GroupID: 74},
-        {ID: 81, Name: " 1900 گرمی", GroupID: 74},
-        {ID: 82, Name: " 2000 گرمی", GroupID: 74},
-        {ID: 83, Name: " 2100 گرمی", GroupID: 74},
-        {ID: 84, Name: " 2200 گرمی", GroupID: 74},
+        {ID: 80, Name: "1800 گرمی", GroupID: 155},
+        {ID: 81, Name: " 1900 گرمی", GroupID: 155},
+        {ID: 82, Name: " 2000 گرمی", GroupID: 155},
+        {ID: 83, Name: " 2100 گرمی", GroupID: 155},
+        {ID: 84, Name: " 2200 گرمی", GroupID: 155},
 
 
 
@@ -437,7 +437,6 @@ function fillDataBase() {
         {ID: 87, Name: "سینه بدون کتف معمولی", GroupID: 52},
         {ID: 88, Name: "سینه با کتف ممتاز", GroupID: 52},
         {ID: 89, Name: "سینه با کتف معمولی", GroupID: 52},
-        {ID: 90, Name: "اکبر جوجه", GroupID: 52},
 
 
         {ID: 91, Name: "600 گرمی", GroupID: 90},
@@ -519,166 +518,163 @@ function fillDataBase() {
 
 
 
-        {ID: 663, Name: "قلوه گاه گوساله", GroupID: 662},
-        {ID: 664, Name: "خرده راسته گوساله", GroupID: 602},
-        {ID: 665, Name: "گردن گوساله", GroupID: 602},
-        {ID: 666, Name: "فیله گوساله", GroupID: 602},
-        {ID: 667, Name: "مغز راسته گوساله", GroupID: 602},
-        {ID: 668, Name: "راسته با استخوان گوساله", GroupID: 602},
-        {ID: 669, Name: "دنبالیچه گوساله", GroupID: 602},
-        {ID: 6610, Name: "چربی گوساله", GroupID: 602},
-        {ID: 6611, Name: "ران ممتاز گوساله جوان", GroupID: 602},
-        {ID: 6612, Name: "سردست ممتاز گوساله جوان", GroupID: 602},
-        {ID: 6613, Name: "ران ممتاز ماده گاو", GroupID: 602},
-        {ID: 6614, Name: "سردست ممتاز ماده گاو", GroupID: 602},
-        {ID: 6615, Name: "ماهیچه گوساله", GroupID: 602},
-        {ID: 6616, Name: "ران با استخوان گوساله جوان", GroupID: 602},
-        {ID: 6617, Name: "سردست با استخوان گوساله جوان", GroupID: 602},
-        {ID: 6618, Name: "ران با استخوان ماده گاو", GroupID: 602},
-        {ID: 6619, Name: "سردست با استخوان ماده گاو ", GroupID: 602},
-        {ID: 6620, Name: "چرخکرده مخلوط", GroupID: 602},
-        {ID: 6621, Name: "چرخکرده گوساله", GroupID: 602},
-        {ID: 6622, Name: "خرده گوساله", GroupID: 602},
+        {ID: 300, Name: "قلوه گاه گوساله", GroupID: 20},
+        {ID: 400, Name: "خرده راسته گوساله", GroupID: 20},
+        {ID: 500, Name: "گردن گوساله", GroupID: 20},
+        {ID: 600, Name: "فیله گوساله", GroupID: 20},
+        {ID: 700, Name: "مغز راسته گوساله", GroupID: 20},
+        {ID: 800, Name: "راسته با استخوان گوساله", GroupID: 20},
+        {ID: 900, Name: "دنبالیچه گوساله", GroupID: 20},
+        {ID: 1000, Name: "چربی گوساله", GroupID: 20},
+        {ID: 1100, Name: "ران ممتاز گوساله جوان", GroupID: 20},
+        {ID: 1200, Name: "سردست ممتاز گوساله جوان", GroupID: 20},
+        {ID: 1300, Name: "ران ممتاز ماده گاو", GroupID: 20},
+        {ID: 1400, Name: "سردست ممتاز ماده گاو", GroupID: 20},
+        {ID: 1500, Name: "ماهیچه گوساله", GroupID: 20},
+        {ID: 1600, Name: "ران با استخوان گوساله جوان", GroupID: 20},
+        {ID: 1700, Name: "سردست با استخوان گوساله جوان", GroupID: 20},
+        {ID: 1800, Name: "ران با استخوان ماده گاو", GroupID: 20},
+        {ID: 1900, Name: "سردست با استخوان ماده گاو ", GroupID: 20},
+        {ID: 2000, Name: "چرخکرده مخلوط", GroupID: 20},
+        {ID: 2100, Name: "چرخکرده گوساله", GroupID: 20},
+        {ID: 2200, Name: "خرده گوساله", GroupID: 20},
 
 
-        {ID: 6624, Name: "خرده گوسفند", GroupID: 623},
-        {ID: 6625, Name: "قلوه گاه گوسفند", GroupID: 623},
-        {ID: 6626, Name: "قلوه گاه با استخوان گوسفند", GroupID: 623},
-        {ID: 6627, Name: "خرده قلوه گاه گوسفند", GroupID: 623},
-        {ID: 6628, Name: "خرده راسته گوسفند", GroupID: 623},
-        {ID: 6629, Name: "گردن گوسفند", GroupID: 623},
-        {ID: 6630, Name: "گردن شقه ای گوسفند", GroupID: 623},
-        {ID: 6631, Name: "لاشه بدون دنبه گوسفند", GroupID: 623},
-        {ID: 6632, Name: "لاشه گوسفند با کله", GroupID: 623},
-        {ID: 6633, Name: "دنبه گوسفند", GroupID: 623},
-        {ID: 6634, Name: "ران ممتاز گوسفند", GroupID: 623},
-        {ID: 6635, Name: "ران بدون استخوان گوسفند", GroupID: 623},
-        {ID: 6636, Name: "سردست ممتاز گوسفند", GroupID: 623},
-        {ID: 6637, Name: "سردست بدون استخوان گوسفند", GroupID: 623},
-        {ID: 6638, Name: "راسته با استخوان گوسفند", GroupID: 623},
-        {ID: 6639, Name: "راسته بدون استخوان گوسفند", GroupID: 623},
-        {ID: 6640, Name: "مغز راسته گوسفند ( دو تکه)", GroupID: 623},
-        {ID: 6641, Name: "مغز راسته گوسفند ( سه تکه)", GroupID: 623},
-        {ID: 6642, Name: "فیله ممتاز گوسفند", GroupID: 623},
-        {ID: 6643, Name: "راسته شاندیزی گوسفند", GroupID: 623},
-        {ID: 6644, Name: "شیشلیک بدون مواد گوسفند", GroupID: 623},
-        {ID: 6645, Name: "شیشلیک با مواد گوسفند", GroupID: 623},
-        {ID: 6646, Name: "ماهیچه بدون گل گوسفند", GroupID: 623},
-        {ID: 6647, Name: "ماهیچه با گل گوسفند", GroupID: 623},
-        {ID: 6648, Name: "ماهیچه ران گوسفند", GroupID: 623},
-        {ID: 6649, Name: "ماهیچه برش مشهدی گوسفند", GroupID: 623},
-        {ID: 6650, Name: "ران و سردست بشقابی گوسفند", GroupID: 623},
-        {ID: 6651, Name: "ماهیچه بشقابی گوسفند", GroupID: 623},
+        {ID: 2400, Name: "خرده گوسفند", GroupID: 230},
+        {ID: 2500, Name: "قلوه گاه گوسفند", GroupID: 230},
+        {ID: 2600, Name: "قلوه گاه با استخوان گوسفند", GroupID: 230},
+        {ID: 2700, Name: "خرده قلوه گاه گوسفند", GroupID: 230},
+        {ID: 2800, Name: "خرده راسته گوسفند", GroupID: 230},
+        {ID: 2900, Name: "گردن گوسفند", GroupID: 230},
+        {ID: 3000, Name: "گردن شقه ای گوسفند", GroupID: 230},
+        {ID: 3100, Name: "لاشه بدون دنبه گوسفند", GroupID: 230},
+        {ID: 3200, Name: "لاشه گوسفند با کله", GroupID: 230},
+        {ID: 3300, Name: "دنبه گوسفند", GroupID: 230},
+        {ID: 3400, Name: "ران ممتاز گوسفند", GroupID: 230},
+        {ID: 3500, Name: "ران بدون استخوان گوسفند", GroupID: 230},
+        {ID: 3600, Name: "سردست ممتاز گوسفند", GroupID: 230},
+        {ID: 3700, Name: "سردست بدون استخوان گوسفند", GroupID: 230},
+        {ID: 3800, Name: "راسته با استخوان گوسفند", GroupID: 230},
+        {ID: 3900, Name: "راسته بدون استخوان گوسفند", GroupID: 230},
+        {ID: 4000, Name: "مغز راسته گوسفند ( دو تکه)", GroupID: 230},
+        {ID: 4100, Name: "مغز راسته گوسفند ( سه تکه)", GroupID: 230},
+        {ID: 4200, Name: "فیله ممتاز گوسفند", GroupID: 230},
+        {ID: 4300, Name: "راسته شاندیزی گوسفند", GroupID: 230},
+        {ID: 4400, Name: "شیشلیک بدون مواد گوسفند", GroupID: 230},
+        {ID: 4500, Name: "شیشلیک با مواد گوسفند", GroupID: 230},
+        {ID: 4600, Name: "ماهیچه بدون گل گوسفند", GroupID: 230},
+        {ID: 4700, Name: "ماهیچه با گل گوسفند", GroupID: 230},
+        {ID: 4800, Name: "ماهیچه ران گوسفند", GroupID: 230},
+        {ID: 4900, Name: "ماهیچه برش مشهدی گوسفند", GroupID: 230},
+        {ID: 5000, Name: "ران و سردست بشقابی گوسفند", GroupID: 230},
+        {ID: 5100, Name: "ماهیچه بشقابی گوسفند", GroupID: 230},
 
 
-        {ID: 6653, Name: "300 گرمی", GroupID: 651},
-        {ID: 6654, Name: "350 گرمی", GroupID: 651},
-        {ID: 6655, Name: "400 گرمی", GroupID: 651},
+        {ID: 5300, Name: "300 گرمی", GroupID: 1510},
+        {ID: 5400, Name: "350 گرمی", GroupID: 1510},
+        {ID: 5500, Name: "400 گرمی", GroupID: 1510},
 
-        {ID: 6656, Name: "300 گرمی", GroupID: 652},
-        {ID: 6657, Name: "350 گرمی", GroupID: 652},
-        {ID: 6658, Name: "400 گرمی", GroupID: 652},
+        {ID: 5600, Name: "300 گرمی", GroupID: 1520},
+        {ID: 5700, Name: "350 گرمی", GroupID: 1520},
+        {ID: 5800, Name: "400 گرمی", GroupID: 1520},
 
-        {ID: 6659, Name: "300 گرمی", GroupID: 653},
-        {ID: 6660, Name: "350 گرمی", GroupID: 653},
-        {ID: 6661, Name: "400 گرمی", GroupID: 653},
+        {ID: 5900, Name: "300 گرمی", GroupID: 1530},
+        {ID: 6000, Name: "350 گرمی", GroupID: 1530},
+        {ID: 6100, Name: "400 گرمی", GroupID: 1530},
 
-        {ID: 6662, Name: "300 گرمی", GroupID: 654},
-        {ID: 6663, Name: "350 گرمی", GroupID: 654},
-        {ID: 6664, Name: "400 گرمی", GroupID: 654},
+        {ID: 6200, Name: "300 گرمی", GroupID: 1540},
+        {ID: 6300, Name: "350 گرمی", GroupID: 1540},
+        {ID: 6400, Name: "400 گرمی", GroupID: 1540},
 
-        {ID: 6665, Name: "بال با نوک", GroupID: 652},
-        {ID: 6666, Name: "بال بی نوک", GroupID: 652},
-        {ID: 6667, Name: "بازو با پوست", GroupID: 652},
-        {ID: 6668, Name: "بازو بی پوست", GroupID: 652},
-        {ID: 6669, Name: "بال و بازو سه تکه", GroupID: 652},
-        {ID: 6670, Name: "بال و بازو دو تکه", GroupID: 652},
-        {ID: 6671, Name: "گردن با پوست", GroupID: 652},
-        {ID: 6672, Name: "گردن بی پوست", GroupID: 652},
-        {ID: 6673, Name: "فیله", GroupID: 652},
-        {ID: 6674, Name: "مرغ کامل شکم خالی", GroupID: 652},
+        {ID: 6500, Name: "بال با نوک", GroupID: 520},
+        {ID: 6600, Name: "بال بی نوک", GroupID: 520},
+        {ID: 6700, Name: "بازو با پوست", GroupID: 520},
+        {ID: 6800, Name: "بازو بی پوست", GroupID: 520},
+        {ID: 6900, Name: "بال و بازو سه تکه", GroupID: 520},
+        {ID: 7000, Name: "بال و بازو دو تکه", GroupID: 520},
+        {ID: 7100, Name: "گردن با پوست", GroupID: 520},
+        {ID: 7200, Name: "گردن بی پوست", GroupID: 520},
+        {ID: 7300, Name: "فیله", GroupID: 520},
 
-        {ID: 6674, Name: "1200 گرمی", GroupID: 655},
-        {ID: 6675, Name: "1300 گرمی", GroupID: 655},
-        {ID: 6676, Name: "1400 گرمی", GroupID: 655},
-        {ID: 6677, Name: "1500 گرمی", GroupID: 655},
-        {ID: 6678, Name: "1600 گرمی", GroupID: 655},
-        {ID: 6679, Name: "1700 گرمی", GroupID: 655},
-
-
-
-        {ID: 6680, Name: "1800 گرمی", GroupID: 674},
-        {ID: 6681, Name: " 1900 گرمی", GroupID: 674},
-        {ID: 6682, Name: " 2000 گرمی", GroupID: 674},
-        {ID: 6683, Name: " 2100 گرمی", GroupID: 674},
-        {ID: 6684, Name: " 2200 گرمی", GroupID: 674},
+        {ID: 7400, Name: "1200 گرمی", GroupID: 1550},
+        {ID: 7500, Name: "1300 گرمی", GroupID: 1550},
+        {ID: 7600, Name: "1400 گرمی", GroupID: 1550},
+        {ID: 7700, Name: "1500 گرمی", GroupID: 1550},
+        {ID: 7800, Name: "1600 گرمی", GroupID: 1550},
+        {ID: 7900, Name: "1700 گرمی", GroupID: 1550},
+        {ID: 8000, Name: "1800 گرمی", GroupID: 1550},
+        {ID: 8100, Name: " 1900 گرمی", GroupID: 1550},
+        {ID: 8200, Name: " 2000 گرمی", GroupID: 1550},
+        {ID: 8300, Name: " 2100 گرمی", GroupID: 1550},
+        {ID: 8400, Name: " 2200 گرمی", GroupID: 1550},
 
 
 
-        {ID: 6685, Name: "مرغ کامل شکم خالی درشت", GroupID: 652},
-        {ID: 6686, Name: "سینه بدون کتف ممتاز", GroupID: 652},
-        {ID: 6687, Name: "سینه بدون کتف معمولی", GroupID: 652},
-        {ID: 6688, Name: "سینه با کتف ممتاز", GroupID: 652},
-        {ID: 6689, Name: "سینه با کتف معمولی", GroupID: 652},
-        {ID: 6690, Name: "اکبر جوجه", GroupID: 652},
+        {ID: 8500, Name: "مرغ کامل شکم خالی درشت", GroupID: 520},
+        {ID: 8600, Name: "سینه بدون کتف ممتاز", GroupID: 520},
+        {ID: 8700, Name: "سینه بدون کتف معمولی", GroupID: 520},
+        {ID: 8800, Name: "سینه با کتف ممتاز", GroupID: 520},
+        {ID: 8900, Name: "سینه با کتف معمولی", GroupID: 520},
 
 
-        {ID: 6691, Name: "600 گرمی", GroupID: 690},
-        {ID: 6692, Name: "1100 گرمی", GroupID: 690},
-        {ID: 66156, Name: "1100 گرمی", GroupID: 690},
+        {ID: 9300, Name: "خرده مرغ", GroupID: 520},
+        {ID: 9400, Name: "گوشت گردن", GroupID: 520},
+        {ID: 9500, Name: "خمیر مرغ", GroupID: 520},
 
 
 
-        {ID: 6693, Name: "خرده مرغ", GroupID: 652},
-        {ID: 6694, Name: "گوشت گردن", GroupID: 652},
-        {ID: 6695, Name: "خمیر مرغ", GroupID: 652},
-
-        {ID: 6697, Name: "قزل آلا", GroupID: 696},
-
-        {ID: 6698, Name: "200 گرمی", GroupID: 697},
-        {ID: 6699, Name: "250 گرمی", GroupID: 697},
-        {ID: 66100, Name: "300 گرمی", GroupID: 697},
-        {ID: 66101, Name: "350 گرمی", GroupID: 697},
-        {ID: 66102, Name: "400 گرمی", GroupID: 697},
-        {ID: 66103, Name: "450 گرمی", GroupID: 697},
-        {ID: 66155, Name: "500 گرمی", GroupID: 697},
+        {ID: 9100, Name: "600 گرمی", GroupID: 900},
+        {ID: 9200, Name: "1100 گرمی", GroupID: 900},
+        {ID: 15600, Name: "1100 گرمی", GroupID: 900},
 
 
-        {ID: 66104, Name: "تیلاپیا M", GroupID: 696},
-        {ID: 66105, Name: "تیلاپیا S", GroupID: 696},
-        {ID: 66106, Name: "سالمون", GroupID: 696},
-        {ID: 66107, Name: "میگو", GroupID: 696},
+
+        {ID: 9800, Name: "200 گرمی", GroupID: 970},
+        {ID: 9900, Name: "250 گرمی", GroupID: 970},
+        {ID: 10000, Name: "300 گرمی", GroupID: 970},
+        {ID: 10100, Name: "350 گرمی", GroupID: 970},
+        {ID: 10200, Name: "400 گرمی", GroupID: 970},
+        {ID: 10300, Name: "450 گرمی", GroupID: 970},
+        {ID: 15500, Name: "500 گرمی", GroupID: 970},
 
 
-        {ID: 66120, Name: "مغول", GroupID: 6111},
-        {ID: 66121, Name: "استرالیا", GroupID: 6111},
-        {ID: 66122, Name: "قزاقستان", GroupID: 6111},
-        {ID: 66123, Name: "نیوزلند", GroupID: 6111},
-        {ID: 66124, Name: "ارمنستان", GroupID: 6111},
-        {ID: 66125, Name: "گرجستان", GroupID: 6111},
+        {ID: 10400, Name: "تیلاپیا M", GroupID: 960},
+        {ID: 10500, Name: "تیلاپیا S", GroupID: 960},
+        {ID: 10600, Name: "سالمون", GroupID: 960},
+        {ID: 10700, Name: "میگو", GroupID: 960},
 
 
-        {ID: 66135, Name: "مینروا", GroupID: 6126},
-        {ID: 66136, Name: "جی جی", GroupID: 6126},
-        {ID: 66137, Name: "جی جی زد", GroupID: 6126},
-        {ID: 66138, Name: "آگرا", GroupID: 6126},
-        {ID: 66139, Name: "استرلا", GroupID: 6126},
-        {ID: 66140, Name: "آسترا", GroupID: 6126},
-        {ID: 66141, Name: "فری بوی", GroupID: 6126},
-        {ID: 66142, Name: "فریگو", GroupID: 6126},
-        {ID: 66143, Name: "مارفریگ", GroupID: 6126},
-        {ID: 66144, Name: "بیف کلاب", GroupID: 6126},
-        {ID: 66145, Name: "آنجلو", GroupID: 6126},
-        {ID: 66146, Name: "پالاتاری", GroupID: 6126},
-        {ID: 66147, Name: "کیومیت", GroupID: 6126},
-        {ID: 66148, Name: "متابوی", GroupID: 6126},
-        {ID: 66149, Name: "بیگ بوی", GroupID: 6126},
+        {ID: 12000, Name: "مغول", GroupID: 1110},
+        {ID: 12100, Name: "استرالیا", GroupID: 1110},
+        {ID: 12200, Name: "قزاقستان", GroupID: 1110},
+        {ID: 12300, Name: "نیوزلند", GroupID: 1110},
+        {ID: 12400, Name: "ارمنستان", GroupID: 1110},
+        {ID: 12500, Name: "گرجستان", GroupID: 1110},
 
 
-        {ID: 66151, Name: "سوسیس", GroupID: 6150},
-        {ID: 66152, Name: "کالباس", GroupID: 6150},
-        {ID: 66153, Name: "همبرگر و کباب لقمه", GroupID: 6150},
-        {ID: 66154, Name: "غذاهای آماده", GroupID: 6150}
+        {ID: 13500, Name: "مینروا", GroupID: 1260},
+        {ID: 13600, Name: "جی جی", GroupID: 1260},
+        {ID: 13700, Name: "جی جی زد", GroupID: 1260},
+        {ID: 13800, Name: "آگرا", GroupID: 1260},
+        {ID: 13900, Name: "استرلا", GroupID: 1260},
+        {ID: 14000, Name: "آسترا", GroupID: 1260},
+        {ID: 14100, Name: "فری بوی", GroupID: 1260},
+        {ID: 14200, Name: "فریگو", GroupID: 1260},
+        {ID: 14300, Name: "مارفریگ", GroupID: 1260},
+        {ID: 14400, Name: "بیف کلاب", GroupID: 1260},
+        {ID: 14500, Name: "آنجلو", GroupID: 1260},
+        {ID: 14600, Name: "پالاتاری", GroupID: 1260},
+        {ID: 14700, Name: "کیومیت", GroupID: 1260},
+        {ID: 14800, Name: "متابوی", GroupID: 1260},
+        {ID: 14900, Name: "بیگ بوی", GroupID: 1260},
+
+
+        {ID: 15100, Name: "سوسیس", GroupID: 1500},
+        {ID: 15200, Name: "کالباس", GroupID: 1500},
+        {ID: 15300, Name: "همبرگر و کباب لقمه", GroupID: 1500},
+        {ID: 15400, Name: "غذاهای آماده", GroupID: 1500}
+
+
     ];
     products.findAll().then(products => {
         if (products[0] === undefined) {
@@ -692,9 +688,9 @@ function fillDataBase() {
     application.findAll().then(app => {
         if (app[0] === undefined) {
             application.create({"ID":"1",
-                                "ClientVersion":"1.0.0"}).then(
+                "ClientVersion":"1.0.0"}).then(
                 console.log(colors.bg.Green, "import  app  demo data done successfuly", colors.Reset)
-        );
+            );
         } else {
             console.log(colors.bg.Red, "import  app  demo data canceled .", colors.Reset);
         }
@@ -794,25 +790,25 @@ function registerInfoCheck(req, res, role) {
 }
 
 function loginInfoCheck(req, res) {
-            if (
-                req.body.Password == null || (req.body.PhoneNumber == null && req.body.Username == null)
+    if (
+        req.body.Password == null || (req.body.PhoneNumber == null && req.body.Username == null)
 
-            ) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else {
-                if (checkPassword(req, res)){
-                    if (req.body.PhoneNumber != null) {
-                        return checkPhone(req, res);
-                    }else {
-                        return checkUserName(req, res);
-                    }
-                } else {
-                    res.status(400).json({"code": 712});
-                    return false
-                }
+    ) {
+        res.status(400).json({"code": 703});
+        return false;
+    } else {
+        if (checkPassword(req, res)){
+            if (req.body.PhoneNumber != null) {
+                return checkPhone(req, res);
+            }else {
+                return checkUserName(req, res);
+            }
+        } else {
+            res.status(400).json({"code": 712});
+            return false
+        }
 
-            };
+    };
 
 }
 
@@ -845,9 +841,7 @@ function addRoleInfoCheck(req, res, role) {
                 req.body.PelakNumber == null ||
                 req.body.PhoneNumber == null ||
                 req.body.Username == null ||
-                req.body.ModelID == null ||
-                req.body.WareHouseID == null
-            ) {
+                req.body.ModelID == null ) {
                 res.status(400).json({"code": 703});
                 return false;
             } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
@@ -892,62 +886,62 @@ function addRoleInfoCheck(req, res, role) {
 
 function checkToken(req, res ) {
 
-        if (req.headers['token'] != null) {
-            try{
-                var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
-                if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
-                     res.status(400).json({"code": 700});
-                     return false
+    if (req.headers['token'] != null) {
+        try{
+            var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
+            if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
+                res.status(400).json({"code": 700});
+                return false
 
-                }else {
+            }else {
 
-                    var searchQuery ;
-                    if (decodedJWT.Username != null) {
+                var searchQuery ;
+                if (decodedJWT.Username != null) {
+                    searchQuery = {
+                        where: {
+                            Username: decodedJWT.Username, Password: decodedJWT.Password
+                        }
+                    };
+                }else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
+                    try {
                         searchQuery = {
                             where: {
-                                Username: decodedJWT.Username, Password: decodedJWT.Password
+                                PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
                             }
                         };
-                    }else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
-                        try {
-                            searchQuery = {
-                                where: {
-                                    PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
-                                }
-                            };
-                        }catch (e) {
-                            searchQuery = {
-                                where: {
-                                    OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
-                                }
-                            };
+                    }catch (e) {
+                        searchQuery = {
+                            where: {
+                                OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
+                            }
+                        };
 
-                        }
-
-                    }else {
-                        res.status(400).json({"code":700});
                     }
-                   return searchQuery;
 
-
+                }else {
+                    res.status(400).json({"code":700});
                 }
+                return searchQuery;
 
-
-
-
-            }  catch(err) {
-                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
-                  res.status(400).json({"code":700});
-                  return false;
 
             }
 
 
 
-        } else {
-            res.status(400).json({"code": 703});
-              return false;
+
+        }  catch(err) {
+            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
+            res.status(400).json({"code":700});
+            return false;
+
         }
+
+
+
+    } else {
+        res.status(400).json({"code": 703});
+        return false;
+    }
 
 }
 
@@ -1006,7 +1000,7 @@ function filterRequest(req,res,type){
                     return status;
                 }
             }
-            
+
             break;
         case "followUp":
             if (req.body.HashCode == null){
