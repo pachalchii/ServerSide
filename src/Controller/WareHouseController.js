@@ -2,11 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {transportation,sellerWareHouse,Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('../../sequelize');
-const {upload,selfDestroyKey , colors , loggerinfo} = require('../Util/myVars');
-const {base64_encode,checkToken,response , isThisArrayEmpty } = require("../Util/myFunctions");
+const {sequelize,transportation,sellerWareHouse,Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('../../sequelize');
+const {loggererror,upload,selfDestroyKey , colors , loggerinfo} = require('../Util/myVars');
+const {addRoleInfoCheck,base64_encode,checkToken,response , isThisArrayEmpty } = require("../Util/myFunctions");
 var path = require('path');
 const fs = require("fs");
+var md5 = require('md5');
+
 const rimraf = require("rimraf");
 /*********************************************/
 
@@ -33,7 +35,7 @@ router.get('/transportation', (req, res) => {
                                             base64str = "not Found";
 
                                         }
-                                        wareHousesfinal[index] = {
+                                        tranOperatorfinal[index] = {
                                             ID: value.ID,
                                             WareHouseID: value.WareHouseID,
                                             Name : value. 	Name ,
@@ -137,15 +139,15 @@ router.post('/orderProduct', (req, res) =>{
 
 });
 
-router.post('/transportation', (req, res) =>{
+router.post('/transportation',upload.single("Image"), (req, res) =>{
     var searchQuery = checkToken(req, res);
     try {
-        if (searchQuery && filteringStatus) {
+        if (searchQuery ) {
             sellerWareHouse.findAll(searchQuery).then(ware => {
                 if (!isThisArrayEmpty(ware)) {
                     if (ware[0].Status){
+                        var status = true;
                         if(addRoleInfoCheck(req, res, "transportation") ){
-
                             if (req.file != null) {
 
                                 const tempPath = req.file.path;
@@ -180,6 +182,7 @@ router.post('/transportation', (req, res) =>{
                                         FamilyName: req.body.FamilyName,
                                         Name: req.body.Name,
                                         Image: image,
+                                        Point:0,
                                         PelakNumber: req.body.PelakNumber,
                                         PhoneNumber: req.body.PhoneNumber,
                                         Password: md5(req.body.Password),
@@ -229,7 +232,8 @@ router.post('/transportation', (req, res) =>{
 
         }
     }catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
+        console.log(e)
+        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + e);
         res.status(500).json({"code":500});
 
 
@@ -281,7 +285,7 @@ router.post('/enableUser', (req, res) => {
     var searchQuery = checkToken(req, res);
     if (searchQuery) {
 
-        Seller.findAll(searchQuery).then(seller => {
+        sellerWareHouse.findAll(searchQuery).then(seller => {
 
             if (isThisArrayEmpty(seller)) {
 

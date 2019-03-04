@@ -380,7 +380,7 @@ io.on('connection', function(socket) {
         }
     });
 
-    socket.on('customerAllProductOrder', data=>{
+    socket.on('customerProductOrder', data=>{
         if (data.token == null || data.OrderProductID == null ){
             io.emit('answer', {"code":703})
         } else {

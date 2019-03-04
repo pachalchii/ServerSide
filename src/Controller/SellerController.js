@@ -615,7 +615,6 @@ router.get('/product', (req, res) => {
                             Image: base64str
                         }
                     }
-
                     sellerProducts.findAll(
                         {
                             where: {

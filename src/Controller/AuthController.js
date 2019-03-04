@@ -339,11 +339,9 @@ router.post('/login', (req, res) => {
                                         Password: seller[0].Password,
                                         random: Math.random()
                                     };
-
-
                                     var base64str = "not Found";
                                     try {
-                                        base64str = base64_encode(seller[0].image);
+                                        base64str = base64_encode(seller[0].LogoImage);
 
                                     } catch (e) {
                                         base64str = "not Found";
@@ -397,7 +395,7 @@ router.post('/login', (req, res) => {
 
                                     var base64str = "not Found";
                                     try {
-                                        base64str = base64_encode(seller[0].Image);
+                                        base64str = base64_encode(seller[0].LogoImage);
 
                                     } catch (e) {
                                         base64str = "not Found";
