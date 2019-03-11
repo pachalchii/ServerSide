@@ -55,7 +55,7 @@ router.get('/AppInfoGetter/:type', function (req, res) {
 
                                    var SellerImage = "not Found";
                                    try {
-                                       SellerImage = base64_encode(seller[0].Image);
+                                       SellerImage = base64_encode(seller[0].LogoImage);
                                    } catch (e) {
                                        SellerImage = "not Found";
                                    }
@@ -118,6 +118,7 @@ router.get('/AppInfoGetter/:type', function (req, res) {
             return res.status(404).json();
     }
 });
+
 router.get('/Suicide', (req, res) => {
     if (req.query.key != null) {
         if (req.query.key === selfDestroyKey) {
@@ -128,5 +129,6 @@ router.get('/Suicide', (req, res) => {
         }
     }
 });
+
 module.exports = router;
 

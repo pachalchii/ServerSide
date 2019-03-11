@@ -89,7 +89,6 @@ router.put('/address', (req, res) => {
                                     var GoogleMapAddressLink = address[0].GoogleMapAddressLink;
                                     var CompleteAddressDescription = address[0].CompleteAddressDescription;
                                     var CustomName = address[0].CustomName;
-                                    console.log(CityID)
 
                                     if (req.body.CityID != null) CityID = req.body.CityID;
                                     if (req.body.GoogleMapAddressLink != null) GoogleMapAddressLink = req.body.GoogleMapAddressLink;
@@ -192,223 +191,176 @@ router.post('/order', (req, res) => {
                 customer=>{
 
                     if (!isThisArrayEmpty(customer)){
-                        var productss = [];
-                        productss =  req.body.products;
-                        var KolMablagh = 0 ;
+                        var AllNeededProducts =  req.body.products;
+
                         var status = true;
-                        function getAllPrice(value, index){
-                           return new Promise(resolve => {
-                                sellerProducts.findAll({where:{ID:value.SellerProductID}}).then(
-                                   product=>{
-                                       if (!isThisArrayEmpty(product)) {
-                                           KolMablagh = KolMablagh + (value.Supply*product[0].Price)
-                                           resolve(KolMablagh);
-                                       }
-                                       else{
-                                           res.status(404).json();
-                                           status = false;
-                                       }
-                                   }
-                               );
-                           });
+                        async function getAllPrice(AllNeededProducts){
+                            var KolMablagh = 0 ;
+                            for (var i =0 ; i<AllNeededProducts.length ; i ++){
+                               await sellerProducts.findAll({where:{ID:AllNeededProducts[i].SellerProductID}}).then(
+                                    product=>{
+                                        if (!isThisArrayEmpty(product)) {
+                                            KolMablagh = KolMablagh + (AllNeededProducts[i].Supply*product[0].Price)
+                                        }
+                                        else{
+                                            res.status(404).json();
+                                            status = false;
+                                        }
+                                    }
+                                );
+                            }
 
+                            return KolMablagh;
                         }
-
-                         productss.map((item,index)=>{
-                            getAllPrice(item,index).then(kol=>{
-                                    KolMablagh = KolMablagh +kol;
-                                    console.log(kol,"kol")
-
-                                }
-                            )
-
-                        });
-
-                        console.log(KolMablagh,"in main");
+                        getAllPrice(AllNeededProducts).then(KolMablagh=>{
+                            if (status){
+                                //******************
 
 
-                        if (status)
-                        {
-                            var statusTwo = true;
+                                async function getAllTakhfif(AllNeededProducts) {
+                                    var koleTakhfif = 0;
+                                    for (var i = 0 ; i<AllNeededProducts.length ; i++){
 
-                            function getAllTakhfif(value ,koleTakhfif = 0 ) {
-                                return new Promise((resolve,reject)=>{
-                                    sellerProducts.findAll({where: {ID: value.SellerProductID}}).then(
-                                        sellerProductss => {
-                                            var SellerID = sellerProductss[0].SellerID;
-                                            var ProductID = sellerProductss[0].ProductID;
-                                            takhfifProduct.findAll({
-                                                where: {
-                                                    ProductID: ProductID
-                                                    , SellerID: SellerID
-                                                }
-                                            }).then(
-                                                takhfifProduct => {
-                                                    if (!isThisArrayEmpty(takhfifProduct)) {
-                                                        sellerProducts.findAll({where: {ID: value.SellerProductID}}).then(
-                                                            product => {
-                                                                if (!isThisArrayEmpty(product)) {
-
-                                                                    if (takhfifProduct[0].Start < new Date().getTime() < takhfifProduct[0].Finish && takhfifProduct[0].SupplyOFProduct > 0 && takhfifProduct[0].Enable && takhfifProduct[0].PachalChiStatus) {
-                                                                        var ii = value.Supply;
-                                                                        if (takhfifProduct[0].SupplyOFProduct > 0) {
-                                                                            for (ii; ii > 0; ii = ii - 1) {
-                                                                                koleTakhfif = koleTakhfif + (takhfifProduct[0].PriceBefore - takhfifProduct[0].PriceAfter);
-                                                                            }
-                                                                            resolve (koleTakhfif)
-
-                                                                        }
-
-
+                                       await sellerProducts.findAll({where: {ID: AllNeededProducts[i].SellerProductID}}).then(
+                                            sellerProductss => {
+                                                var SellerID = sellerProductss[0].SellerID;
+                                                var ProductID = sellerProductss[0].ProductID;
+                                               takhfifProduct.findAll({
+                                                    where: {
+                                                        ProductID: ProductID
+                                                        , SellerID: SellerID
+                                                    }
+                                                }).then(
+                                                    takhfifProduct => {
+                                                        if (!isThisArrayEmpty(takhfifProduct)) {
+                                                            if (takhfifProduct[0].Start < new Date().getTime() < takhfifProduct[0].Finish && takhfifProduct[0].SupplyOFProduct > 0 && takhfifProduct[0].Enable && takhfifProduct[0].PachalChiStatus) {
+                                                                var ii = AllNeededProducts[i].Supply;
+                                                                if (takhfifProduct[0].SupplyOFProduct > 0) {
+                                                                    for (ii; ii > 0; ii = ii - 1) {
+                                                                        koleTakhfif = koleTakhfif + (takhfifProduct[0].PriceBefore - takhfifProduct[0].PriceAfter);
                                                                     }
+
+                                                                }
+
+
+                                                            }
+
+
+                                                        }
+
+                                                    }
+                                                );
+
+
+                                            }
+                                        );
+                                    }
+                                return koleTakhfif;
+                                }
+
+                                getAllTakhfif(AllNeededProducts).then(KoleTakhfif=>{
+
+                                        sequelize.transaction().then(function(t) {
+                                            Order.create({
+                                                CustomerID:customer[0].ID,
+                                                OrderDateTime:new Date().getTime(),
+                                                CustomerAddressID:req.body.CustomerAddressID,
+                                                DateTimeErsal:req.body.DateTimeErsal,
+                                                JameKol:KolMablagh,
+                                                JameKolAfterTakhfif:KolMablagh-KoleTakhfif,
+                                                OrderStatus: false,
+                                                HashCode:"hashCode!"
+
+                                            }, {
+                                                transaction: t
+                                            })  .then(savedOrder => {
+                                                t.commit();
+                                                Order.update({HashCode: Math.floor(100000000 + Math.random() * 900000000) + savedOrder.ID}, {where: {ID: savedOrder.ID}})
+                                                    .then(() => {
+
+                                                        async function myFunction(AllNeededProducts){
+
+                                                            for (var i =0 ; i<AllNeededProducts.length ; i=i+1){
+                                                                var THISproduct ="";
+                                                                var THISso ="";
+                                                                await sellerProducts.findAll({where: {ID: AllNeededProducts[i].SellerProductID}}).then(
+                                                                    product => {
+                                                                  THISproduct = product;
+                                                                    }
+                                                                );
+                                                                if (!isThisArrayEmpty(THISproduct)) {
+                                                                   await sellerOperator.findAll().then(
+                                                                        so=>{
+                                                                            THISso=so;
+                                                                        }
+                                                                    );
+                                                                    var item = THISso[Math.floor(Math.random()*THISso.length)];
+                                                                    await orderProduct.create({
+                                                                            SellerOperatorID: item.ID,
+                                                                            SellerOperatorStatus:false,
+                                                                            OrderID: savedOrder.ID,
+                                                                            Takhfif:  AllNeededProducts[i].Supply * THISproduct[0].Price,
+                                                                            ProductID: THISproduct[0].ProductID,
+                                                                            Supply:  AllNeededProducts[i].Supply,
+                                                                            Price:  AllNeededProducts[i].Supply * THISproduct[0].Price,
+                                                                            CustomerStatus: true
+                                                                        }).then((savedorderProduct)=> {
+                                                                            setTimeout(()=>{
+                                                                                orderProduct.findAll({where:{ID:savedorderProduct.ID}}).then(
+                                                                                    op=>{
+                                                                                        if (!op[0].SellerOperatorStatus) {
+                                                                                            orderProduct.update({OrderProductStatus: false},{where:{ID:savedorderProduct.ID}})
+
+                                                                                        }
+                                                                                    }
+                                                                                )
+
+                                                                            },900000)
+
+                                                                        }).catch(function(error) {
+                                                                            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
+                                                                            t.rollback();
+
+                                                                            return res.status(400).json({"message":"Oops! Something went wrong!"})
+
+                                                                        });
+
 
 
                                                                 }
+
                                                                 else {
                                                                     res.status(404).json();
                                                                     status = false;
                                                                 }
 
                                                             }
-                                                        );
 
 
-                                                    }
-
-                                                }
-                                            );
 
 
-                                        }
-                                    );
-                                })
+                                                        }
+                                                        myFunction(AllNeededProducts).then(()=>{
+                                                            return res.status(200).json();
+                                                        })
+
+                                                        }
+
+                                                    )
+                                                });
+
+
+
+                                            })
+
+                                });
+
+                                //******************
+                            }else {
+                                return res.status(404).json({"code": 703 ,"message":"productId ersali mojod nist"});
                             }
 
-                            productss.forEach((item)=>{
-                                Promise.all([getAllTakhfif(item)
-                                    .then((koleTakhfif)=>{
-                                        if (status && statusTwo){
-
-                                            sequelize.transaction().then(function(t) {
-                                                Order.create({
-                                                    CustomerID:customer[0].ID,
-                                                    OrderDateTime:new Date().getTime(),
-                                                    CustomerAddressID:req.body.CustomerAddressID,
-                                                    DateTimeErsal:req.body.DateTimeErsal,
-                                                    JameKol:KolMablagh,
-                                                    JameKolAfterTakhfif:KolMablagh-koleTakhfif,
-                                                    OrderStatus: false,
-                                                    HashCode:"hashCode!"
-
-                                                }, {
-                                                    transaction: t
-                                                })  .then(savedOrder => {
-                                                    t.commit();
-                                                    Order.update({HashCode: Math.floor(100000000 + Math.random() * 900000000) + savedOrder.ID}, {where: {ID: savedOrder.ID}})
-                                                        .then(() => {
-                                                                var KolMablagh = 0;
-                                                                productss.forEach((item, index) => {
-                                                                    sellerProducts.findAll({where: {ID: item.SellerProductID}}).then(
-                                                                        product => {
-                                                                            if (!isThisArrayEmpty(product)) {
-                                                                                sellerOperator.findAll({where:{
-                                                                                        SellerID: product[0].SellerID
-                                                                                    }}).then(
-                                                                                    so=>{
-                                                                                        var item = so[Math.floor(Math.random()*so.length)];
-                                                                                        KolMablagh = KolMablagh + (item.Supply * product[0].Price);
-                                                                                        console.log(KolMablagh, 'kol mablagh is here in map');
-                                                                                        sequelize.transaction().then(function(t) {
-                                                                                            orderProduct.create({
-                                                                                                SellerOperatorID:item.ID,
-                                                                                                SellerOperatorStatus:false,
-                                                                                                OrderID: savedOrder.ID,
-                                                                                                Takhfif: item.Supply * product[0].Price,
-                                                                                                ProductID: product[0].ProductID,
-                                                                                                Supply: item.Supply,
-                                                                                                Price: item.Supply * product[0].Price,
-                                                                                                CustomerStatus: true
-                                                                                            }).then((savedorderProduct)=> {
-                                                                                                t.commit();
-                                                                                                setTimeout(()=>{
-                                                                                                    orderProduct.findAll({where:{ID:savedorderProduct.ID}}).then(
-                                                                                                        op=>{
-                                                                                                            if (!op[0].SellerOperatorStatus) {
-                                                                                                                orderProduct.update({OrderProductStatus: false},{where:{ID:savedorderProduct.ID}})
-
-                                                                                                            }
-                                                                                                        }
-                                                                                                    )
-
-                                                                                                },900000)
-
-                                                                                            }).catch(function(error) {
-                                                                                                loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
-                                                                                                t.rollback();
-
-                                                                                                return res.status(400).json({"message":"Oops! Something went wrong!"})
-
-                                                                                            });
-                                                                                        });
-
-
-
-                                                                                    }
-                                                                                );
-
-                                                                            }
-
-                                                                            else {
-                                                                                res.status(404).json();
-                                                                                status = false;
-                                                                            }
-                                                                        }
-                                                                    );
-
-
-                                                                });
-                                                                return KolMablagh;
-                                                            }
-
-                                                        ).then(price=>{
-                                                        console.log(price,"price is here")
-                                                    });
-
-                                                    loggerinfo.info(req.connection.remoteAddress + " order saved  with id " + savedOrder.ID);
-                                                    return res.status(200).json();
-
-
-                                                }).catch(function (error) {
-                                                    loggererror.info(req.connection.remoteAddress + "cause this erorr : " + error);
-                                                    console.log(error);
-                                                    t.rollback();
-                                                    return res.status(400).json({"message": "Oops! Something went wrong!"})
-
-
-                                                });
-                                            });
-                                        }
-                                    })
-                                    .catch((err)=>{
-                                        console.log(err);
-                                        res.status(500).json({"code":500});
-                                        status = false
-
-                                    })])
-                            })
-
-
-
-
-
-
-                        }
-
-
-
-
-
-
+                        });
 
                     }else {
                         return res.status(404).json({"code": 700});
