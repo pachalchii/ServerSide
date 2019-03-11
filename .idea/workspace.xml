@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="">
+    <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="bug =&gt;{ sellerID in addRole} fixed">
+      <change afterPath="$PROJECT_DIR$/tempUploads/1a70dcf2db58c4c95e0cea6a3eb0c0cf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tempUploads/496dd316780e7f615c772668f3f918a3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tempUploads/9ebeb068879c9e6a0cc6b9d02729e56c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tempUploads/ad54d7ba002983bf94cca4b01a71a137" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uploads/seller/sellerTest1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uploads/transportation/09111233456.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uploads/transportation/09111234567.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uploads/transportation/09311234567.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AuthController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SellerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SellerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/WareHouseController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WareHouseController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/myFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/myFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/seller/sellerTest.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/seller/sellerTest.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AppController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AppController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CustomerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CustomerController.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,8 +77,8 @@
     <session id="-940590212">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="17" />
-          <entry key="project.open.time.1" value="3" />
+          <entry key="project.closed" value="19" />
+          <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
@@ -84,15 +89,15 @@
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="2" />
           <entry key="project.open.time.8" value="2" />
-          <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="20" />
+          <entry key="project.open.time.9" value="2" />
+          <entry key="project.opened" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="3" />
           <entry key="jpg" value="2" />
-          <entry key="js" value="675" />
+          <entry key="js" value="685" />
           <entry key="json" value="9" />
           <entry key="log" value="41" />
           <entry key="png" value="2" />
@@ -105,7 +110,7 @@
         <counts>
           <entry key="Image" value="4" />
           <entry key="JSON" value="9" />
-          <entry key="JavaScript" value="676" />
+          <entry key="JavaScript" value="686" />
           <entry key="Log" value="41" />
           <entry key="PLAIN_TEXT" value="3" />
           <entry key="SQL" value="2" />
@@ -114,14 +119,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="31505" />
-          <entry key="txt" value="39" />
+          <entry key="js" value="32453" />
+          <entry key="txt" value="132" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="31505" />
-          <entry key="PLAIN_TEXT" value="39" />
+          <entry key="JavaScript" value="32453" />
+          <entry key="PLAIN_TEXT" value="132" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -134,59 +139,43 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Util/myFunctions.js">
+        <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="588" column="29" lean-forward="true" selection-start-line="588" selection-start-column="29" selection-end-line="588" selection-end-column="29" />
+            <state relative-caret-position="249">
+              <caret line="648" selection-start-line="648" selection-end-line="648" />
               <folding>
-                <element signature="n#!!block;n#smsHandler#0" />
-                <element signature="n#!!block;n#response#0" />
-                <element signature="n#!!block;n#base64_encode#0" />
-                <element signature="n#!!block;n#base64_decode#0" />
-                <element signature="n#!!block;n#insertCities#0" />
-                <element signature="n#!!block;n#insertTypes#0" />
-                <element signature="n#!!block;n#insertProductsGroup#0" />
-                <element signature="n#!!block;n#insertProducts#0" />
-                <element signature="n#!!block;n#insertUnits#0" />
-                <element signature="n#!!block;n#insertCarModels#0" />
-                <element signature="e#2934#4052#0" />
-                <element signature="e#4090#4392#0" />
-                <element signature="e#4411#4493#0" />
-                <element signature="e#4539#4856#0" />
-                <element signature="e#4881#5211#0" />
-                <element signature="e#5243#5562#0" />
-                <element signature="e#5584#5913#0" />
-                <element signature="e#5947#6248#0" />
-                <element signature="n#!!block;n#isThisArrayEmpty#0" />
-                <element signature="n#!!block;n#checkPhone#0" />
-                <element signature="n#!!block;n#checkPassword#0" />
-                <element signature="n#!!block;n#checkUserName#0" />
-                <element signature="n#!!block;n#registerInfoCheck#0" />
-                <element signature="n#!!block;n#loginInfoCheck#0" />
-                <element signature="n#!!block;n#addRoleInfoCheck#0" />
-                <element signature="n#!!block;n#checkToken#0" />
-                <element signature="n#!!block;n#filterRequest#0" />
-                <element signature="n#!!block;n#checkLimitTime#0" />
-                <element signature="n#!!block;n#checkStatus#0" />
+                <element signature="e#902#2337#0" />
+                <element signature="e#2381#3792#0" />
+                <element signature="e#3858#17427#0" />
+                <element signature="e#4462#8844#0" />
+                <element signature="e#17493#21782#0" />
+                <element signature="e#21847#27389#0" />
+                <element signature="e#27430#29710#0" />
+                <element signature="e#29752#34043#0" />
+                <element signature="e#34089#34814#0" />
+                <element signature="e#34853#35746#0" />
+                <element signature="e#35791#37376#0" />
+                <element signature="e#37422#39334#0" />
+                <element signature="e#39379#41287#0" />
+                <element signature="e#41379#45397#0" />
+                <element signature="e#45452#48055#0" />
+                <element signature="e#48105#50399#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/Products.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
+        <entry file="file://$PROJECT_DIR$/src/Controller/AppController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="86" column="28" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="28" />
+            <state relative-caret-position="361">
+              <caret line="62" column="51" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="51" />
+              <folding>
+                <element signature="e#694#930#0" />
+                <element signature="e#939#1192#0" />
+                <element signature="e#1201#1467#0" />
+                <element signature="e#1476#1944#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -202,7 +191,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>id:</find>
       <find>{id: 2,</find>
       <find>id</find>
       <find>parentid</find>
@@ -232,6 +220,7 @@
       <find>900</find>
       <find>Buffer()</find>
       <find>713</find>
+      <find>اکب</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -265,7 +254,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Util/myFunctions.js" />
         <option value="$PROJECT_DIR$/Util/myVars.js" />
         <option value="$PROJECT_DIR$/Controller/AuthController.js" />
         <option value="$PROJECT_DIR$/Controller/transportationController.js" />
@@ -299,9 +287,7 @@
         <option value="$PROJECT_DIR$/sequelize.js" />
         <option value="$PROJECT_DIR$/Documation/dataBase/export.sql" />
         <option value="$PROJECT_DIR$/src/Controller/SupportController.js" />
-        <option value="$PROJECT_DIR$/src/Controller/AppController.js" />
         <option value="$PROJECT_DIR$/src/models/OrderProduct.js" />
-        <option value="$PROJECT_DIR$/src/Controller/CustomerController.js" />
         <option value="$PROJECT_DIR$/src/models/Customer.js" />
         <option value="$PROJECT_DIR$/src/models/PachalChiAdmins&amp;Supports.js" />
         <option value="$PROJECT_DIR$/src/models/Seller.js" />
@@ -312,10 +298,13 @@
         <option value="$PROJECT_DIR$/src/Controller/transportationController.js" />
         <option value="$PROJECT_DIR$/src/Controller/WareHouseController.js" />
         <option value="$PROJECT_DIR$/src/Controller/AuthController.js" />
-        <option value="$PROJECT_DIR$/src/Controller/SellerController.js" />
         <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/src/Util/myFunctions.js" />
         <option value="$PROJECT_DIR$/src/Util/myVars.js" />
+        <option value="$PROJECT_DIR$/src/Util/myFunctions.js" />
+        <option value="$PROJECT_DIR$/src/Controller/SellerController.js" />
+        <option value="$PROJECT_DIR$/src/Controller/CustomerController.js" />
+        <option value="$PROJECT_DIR$/src/test.js" />
+        <option value="$PROJECT_DIR$/src/Controller/AppController.js" />
       </list>
     </option>
   </component>
@@ -399,7 +388,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
@@ -531,7 +520,9 @@
       <workItem from="1551171125360" duration="24023000" />
       <workItem from="1551342668517" duration="8017000" />
       <workItem from="1551518997985" duration="1094000" />
-      <workItem from="1551618999164" duration="33165000" />
+      <workItem from="1551618999164" duration="36035000" />
+      <workItem from="1551705405783" duration="5710000" />
+      <workItem from="1552314655196" duration="2472000" />
     </task>
     <task id="LOCAL-00001" summary="bug =&gt;{ sellerID in addRole} fixed">
       <created>1551636428530</created>
@@ -540,16 +531,37 @@
       <option name="project" value="LOCAL" />
       <updated>1551636428531</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="bug fixed">
+      <created>1551698675043</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1551698675043</updated>
+    </task>
+    <task id="LOCAL-00003" summary="change filldatabase id confilict">
+      <created>1551699488753</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1551699488753</updated>
+    </task>
+    <task id="LOCAL-00004" summary="get all product for operator">
+      <created>1551712336191</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1551712336191</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="271847000" />
+    <option name="totallyTimeSpent" value="282899000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26680973" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3297568" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -593,12 +605,12 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="order fixed + moreproductGroup bug fixed + sending sms in registerationn + get seller phone numbers for customer + Singlelist api for customer for getting spicial seller info + return all seller info in sellerList + orderProduct relation between takhfifProudoct + change demo data ( monjamed + taze)" />
     <MESSAGE value="bug =&gt;{ sellerID in addRole} fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug =&gt;{ sellerID in addRole} fixed" />
+    <MESSAGE value="bug fixed" />
+    <MESSAGE value="change filldatabase id confilict" />
+    <MESSAGE value="get all product for operator" />
+    <option name="LAST_COMMIT_MESSAGE" value="get all product for operator" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Documation/old files/models/takhfif_product.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Documation/old files/models/support.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -773,17 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/SupportController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
-          <folding>
-            <element signature="e#558#1104#0" />
-            <element signature="e#1315#2049#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/Addresses.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -809,27 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
           <caret line="303" column="4" selection-start-line="303" selection-start-column="4" selection-end-line="303" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="185" column="36" selection-start-line="185" selection-start-column="36" selection-end-line="185" selection-end-column="36" />
-          <folding>
-            <element signature="e#670#2674#0" />
-            <element signature="e#2715#6547#0" />
-            <element signature="e#6588#7739#0" />
-            <element signature="e#7779#24194#0" />
-            <element signature="e#24233#24903#0" />
-            <element signature="e#24951#26086#0" />
-            <element signature="e#26127#26948#0" />
-            <element signature="e#26989#27895#0" />
-            <element signature="e#27937#29370#0" />
-            <element signature="e#29407#31967#0" />
-            <element signature="e#32012#33041#0" />
-            <element signature="e#33082#35364#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -887,20 +867,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/AppController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-698">
-          <caret line="57" column="49" lean-forward="true" selection-start-line="57" selection-start-column="49" selection-end-line="57" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/transportationController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="389">
           <caret line="76" column="57" lean-forward="true" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
-          <folding>
-            <element signature="e#527#1751#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -910,28 +880,6 @@
           <caret line="397" column="85" selection-start-line="397" selection-start-column="85" selection-end-line="397" selection-end-column="85" />
           <folding>
             <element signature="e#947#10464#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="623" column="45" lean-forward="true" selection-start-line="623" selection-start-column="45" selection-end-line="623" selection-end-column="45" />
-          <folding>
-            <element signature="e#902#2337#0" />
-            <element signature="e#2381#3792#0" />
-            <element signature="e#3858#21724#0" />
-            <element signature="e#4462#8844#0" />
-            <element signature="e#21790#26079#0" />
-            <element signature="e#26144#31686#0" />
-            <element signature="e#34050#38341#0" />
-            <element signature="e#34945#36389#0" />
-            <element signature="e#38387#39112#0" />
-            <element signature="e#39151#40044#0" />
-            <element signature="e#40089#41674#0" />
-            <element signature="e#44104#48122#0" />
-            <element signature="e#48177#50780#0" />
           </folding>
         </state>
       </provider>
@@ -955,9 +903,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-201">
           <caret line="287" column="23" selection-start-line="287" selection-start-column="23" selection-end-line="287" selection-end-column="23" />
-          <folding>
-            <element signature="e#3628#6196#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -975,48 +920,89 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="75" column="17" lean-forward="true" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/SupportController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Util/myFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="588" column="29" lean-forward="true" selection-start-line="588" selection-start-column="29" selection-end-line="588" selection-end-column="29" />
+        <state relative-caret-position="148">
+          <caret line="1005" column="24" selection-start-line="1005" selection-start-column="20" selection-end-line="1005" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="465" column="41" selection-start-line="465" selection-start-column="41" selection-end-line="465" selection-end-column="41" />
           <folding>
-            <element signature="n#!!block;n#smsHandler#0" />
-            <element signature="n#!!block;n#response#0" />
-            <element signature="n#!!block;n#base64_encode#0" />
-            <element signature="n#!!block;n#base64_decode#0" />
-            <element signature="n#!!block;n#insertCities#0" />
-            <element signature="n#!!block;n#insertTypes#0" />
-            <element signature="n#!!block;n#insertProductsGroup#0" />
-            <element signature="n#!!block;n#insertProducts#0" />
-            <element signature="n#!!block;n#insertUnits#0" />
-            <element signature="n#!!block;n#insertCarModels#0" />
-            <element signature="e#2934#4052#0" />
-            <element signature="e#4090#4392#0" />
-            <element signature="e#4411#4493#0" />
-            <element signature="e#4539#4856#0" />
-            <element signature="e#4881#5211#0" />
-            <element signature="e#5243#5562#0" />
-            <element signature="e#5584#5913#0" />
-            <element signature="e#5947#6248#0" />
-            <element signature="n#!!block;n#isThisArrayEmpty#0" />
-            <element signature="n#!!block;n#checkPhone#0" />
-            <element signature="n#!!block;n#checkPassword#0" />
-            <element signature="n#!!block;n#checkUserName#0" />
-            <element signature="n#!!block;n#registerInfoCheck#0" />
-            <element signature="n#!!block;n#loginInfoCheck#0" />
-            <element signature="n#!!block;n#addRoleInfoCheck#0" />
-            <element signature="n#!!block;n#checkToken#0" />
-            <element signature="n#!!block;n#filterRequest#0" />
-            <element signature="n#!!block;n#checkLimitTime#0" />
-            <element signature="n#!!block;n#checkStatus#0" />
+            <element signature="e#670#2674#0" />
+            <element signature="e#2715#6547#0" />
+            <element signature="e#6588#7739#0" />
+            <element signature="e#24208#31630#0" />
+            <element signature="e#26986#27656#0" />
+            <element signature="e#28880#29701#0" />
+            <element signature="e#29742#30648#0" />
+            <element signature="e#30690#32123#0" />
+            <element signature="e#32160#34720#0" />
+            <element signature="e#34765#35794#0" />
+            <element signature="e#35835#38117#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util/myVars.js">
+    <entry file="file://$PROJECT_DIR$/src/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="86" column="28" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="28" />
+        <state relative-caret-position="110">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="648" selection-start-line="648" selection-end-line="648" />
+          <folding>
+            <element signature="e#902#2337#0" />
+            <element signature="e#2381#3792#0" />
+            <element signature="e#3858#17427#0" />
+            <element signature="e#4462#8844#0" />
+            <element signature="e#17493#21782#0" />
+            <element signature="e#21847#27389#0" />
+            <element signature="e#27430#29710#0" />
+            <element signature="e#29752#34043#0" />
+            <element signature="e#34089#34814#0" />
+            <element signature="e#34853#35746#0" />
+            <element signature="e#35791#37376#0" />
+            <element signature="e#37422#39334#0" />
+            <element signature="e#39379#41287#0" />
+            <element signature="e#41379#45397#0" />
+            <element signature="e#45452#48055#0" />
+            <element signature="e#48105#50399#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/AppController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="62" column="51" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="51" />
+          <folding>
+            <element signature="e#694#930#0" />
+            <element signature="e#939#1192#0" />
+            <element signature="e#1201#1467#0" />
+            <element signature="e#1476#1944#0" />
+          </folding>
         </state>
       </provider>
     </entry>
