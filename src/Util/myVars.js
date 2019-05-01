@@ -1,20 +1,8 @@
 const multer = require("multer");
 var Pusher = require('pusher');
-var log4js = require('log4js'); // include log4js
 var Kavenegar = require('kavenegar');
 
-log4js.configure({
-    appenders: {
-        error: { type: 'dateFile', filename: 'logs/error/error', "pattern":"dd-mm-yy.log",alwaysIncludePattern:true},
-        default: { type: 'dateFile', filename: 'logs/default/default', "pattern":"dd-mm-yy.log",alwaysIncludePattern:true},
-        info: { type: 'dateFile', filename: 'logs/info/info', "pattern":"dd-mm-yy.log",alwaysIncludePattern:true},
 
-    },
-    categories: {
-        default: { appenders: ['default'], level: 'info' },
-        info: { appenders: ['info'], level: 'info' },
-        error: { appenders: ['error'], level: 'error' }
-    } });
 
 var pusher = new Pusher({
     appId: 719640 ,
@@ -26,10 +14,6 @@ var pusher = new Pusher({
 var SmsApi = Kavenegar.KavenegarApi({
     apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'
 });
-
-var loggererror = log4js.getLogger('info'); // initialize the var to use.
-
-var loggerinfo = log4js.getLogger('info'); // initialize the var to use.
 
 var selfDestroyKey = "755Amirr2205";
 
@@ -166,7 +150,5 @@ module.exports = {
     PHONENUMBER_REGEX,
     USERNAME_REGEX,
     upload,
-    handleError,
-    loggererror,
-    loggerinfo
+    handleError
 };

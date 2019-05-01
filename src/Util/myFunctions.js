@@ -1,6 +1,6 @@
 const {cities, sellerType, productGroups, products, unit, car} = require('../../sequelize');
 const { orderProduct ,application } = require('../../sequelize');
-const {loggererror  ,colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
+const {colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
 var jwt = require('jwt-simple');
 var Kavenegar = require('kavenegar');
 var path = require('path');
@@ -930,7 +930,6 @@ function checkToken(req, res ) {
 
 
         }  catch(err) {
-            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
             res.status(400).json({"code":700});
             return false;
 

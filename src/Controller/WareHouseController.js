@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {sequelize,transportation,sellerWareHouse,Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('../../sequelize');
-const {loggererror,upload,selfDestroyKey , colors , loggerinfo} = require('../Util/myVars');
-const {addRoleInfoCheck,base64_encode,checkToken,response , isThisArrayEmpty } = require("../Util/myFunctions");
+const {upload,selfDestroyKey , colors } = require('../Util/myVars');
+const {addRoleInfoCheck,base64_encode,checkToken , isThisArrayEmpty } = require("../Util/myFunctions");
 var path = require('path');
 const fs = require("fs");
 var md5 = require('md5');
@@ -75,10 +75,7 @@ router.get('/transportation', (req, res) => {
 
 
     } catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
         res.status(500).json({"code": 500});
-
-
     }
 });
 
@@ -103,9 +100,7 @@ router.post('/orderProduct', (req, res) =>{
                                                     ID: req.body.ID
                                                 }
                                             }).then(
-                                                response(res, undefined).then(
-                                                    loggerinfo.info("eareHouse with id : " + ware.ID + " change orderProduct with id :" + res[0].ID + " Warehouse to : " + req.body.Status)
-                                                )
+                                                nothing=>{return res.json();}
                                             );
                                         }
                                         else return res.json({"code":704});
@@ -131,7 +126,6 @@ router.post('/orderProduct', (req, res) =>{
 
         }
     }catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
         res.status(500).json({"code":500});
 
 
@@ -156,6 +150,7 @@ router.post('/transportation',upload.single("Image"), (req, res) =>{
                                 if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                     fs.rename(tempPath, targetPath, err => {
                                         if (err) {status = false ;return handleError(err, res);}
+                                        fs.unlink(tempPath, err => {});
                                     });
                                 } else {
                                     fs.unlink(tempPath, err => {
@@ -195,12 +190,9 @@ router.post('/transportation',upload.single("Image"), (req, res) =>{
                                         transaction: t
                                     }).then(function () {
                                         t.commit();
-                                        response(res, undefined).then(
-                                            loggerinfo.info(req.connection.remoteAddress + "a transportation added by wareHouse with : " + req.body.PhoneNumber + " phoneNumber")
-                                        );
+                                        return res.json();
 
                                     }).catch(function (error) {
-                                        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                         t.rollback();
                                         if (error.parent.errno === 1062) {
                                             return res.status(400).json({"code": 707})
@@ -233,7 +225,6 @@ router.post('/transportation',upload.single("Image"), (req, res) =>{
         }
     }catch (e) {
         console.log(e)
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + e);
         res.status(500).json({"code":500});
 
 

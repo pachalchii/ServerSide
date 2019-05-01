@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const { Seller , transportation ,orderProduct } = require('../../sequelize');
-const {upload,loggererror , loggerinfo ,JWT_SECRET , colors} = require('../Util/myVars');
-const {checkToken ,response , isThisArrayEmpty} = require("../Util/myFunctions");
+const {upload  ,JWT_SECRET , colors} = require('../Util/myVars');
+const {checkToken , isThisArrayEmpty} = require("../Util/myFunctions");
 /*********************************************/
 var jwt = require('jwt-simple');
 
@@ -28,13 +28,10 @@ router.get('/order' , ( req , res )=>{
                                 TransportarID:tran[0].id
                             }
                         }).then(orderProduct => {
-                            response(res,orderProduct).then(
-                                loggerinfo.info(req.connection.remoteAddress + "transportation with id : "+tran[0].ID+" get all his/her order" )
-                            );
+                            return res.json(orderProduct);
 
                         })
                     } catch(err) {
-                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
                         res.status(400).json({"code":700});
 
                     }
@@ -80,10 +77,7 @@ router.post('/order',(req,res)=>{
                                 if (!isThisArrayEmpty(order)){
                                     if (order[0].TransportarID === tran[0].ID){
                                         order[0].update({TransportarStatus: true}).then(
-                                            transportation.update({Status : false},{where:{ID:tran[0].ID}}).then(
-                                                response(res,undefined).then(loggerinfo.info(req.connection.remoteAddress + "transportation with id : "+tran[0].ID +" change product status with id : "+order[0].ID))
-
-                                            )
+                                            transportation.update({Status : false},{where:{ID:tran[0].ID}}).then(nothing=>{return res.json();})
                                         );
                                     } else {
                                         res.status(400).json({"code":709});
@@ -94,7 +88,6 @@ router.post('/order',(req,res)=>{
                             })
                         }
                     } catch(err) {
-                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
                         res.status(400).json({"code":700});
 
                     }

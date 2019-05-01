@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {application, support, Seller, customer, sequelize, sellerPhoneNumber, transportation, sellerWareHouse, sellerOperator} = require('../../sequelize');
-const {checkPassword, checkStatus,checkUser, checkToken, checkPhone,response, isThisArrayEmpty, base64_encode, loginInfoCheck, registerInfoCheck} = require('../Util/myFunctions');
-const {SmsApi, upload, loggererror, colors, JWT_SECRET, handleError, loggerinfo} = require('../Util/myVars');
+const {checkPassword, checkStatus,checkUser, checkToken, checkPhone, isThisArrayEmpty, base64_encode, loginInfoCheck, registerInfoCheck} = require('../Util/myFunctions');
+const {SmsApi, upload, colors, JWT_SECRET, handleError} = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
 var path = require('path');
@@ -42,6 +42,7 @@ router.post('/register', upload.single("Image"), (req, res) => {
                                     if (err) {status = false;
                                     return handleError(err, res);}
                                 });
+                                fs.unlink(tempPath, err => {});
                             } else {
                                 fs.unlink(tempPath, err => {
                                     if (err) { status = false ; return handleError(err, res);}
@@ -88,12 +89,10 @@ router.post('/register', upload.single("Image"), (req, res) => {
                                         function (response, status) {
 
                                         });
-                                    loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumber + " phone number");
                                     return res.status(200).json();
 
 
                                 }).catch(function (error) {
-                                    loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                     t.rollback();
                                     if (error.parent.errno === 1062) {
                                         return res.status(400).json({"message": "customer signUped before"})
@@ -122,6 +121,7 @@ router.post('/register', upload.single("Image"), (req, res) => {
                                 fs.rename(tempPath, targetPath, err => {
                                     if (err) {status = false;
                                     return handleError(err, res);}
+                                    fs.unlink(tempPath, err => {});
 
                                 });
                             } else {
@@ -170,11 +170,9 @@ router.post('/register', upload.single("Image"), (req, res) => {
                                         function (response, status) {
 
                                         });
-                                    loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumberID + " phone_numberid");
                                     return res.status(200).json()
 
                                 }).catch(function (error) {
-                                    loggererror.info(req.connection.remoteAddress + "cause this erorr : " + error);
                                     t.rollback();
                                     if (error.parent.errno === 1062) {
                                         return res.status(400).json({"message": "seller signUped before"})
@@ -197,7 +195,6 @@ router.post('/register', upload.single("Image"), (req, res) => {
 
         }
     } catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + e);
         return res.status(500).json({"message": "Oops! Something went wrong!"})
     }
 
@@ -239,7 +236,7 @@ router.post('/login', (req, res) => {
                                     }
                                     var token = jwt.encode(payload, JWT_SECRET);
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             BirthDate: customer[0].BirthDate,
@@ -258,7 +255,6 @@ router.post('/login', (req, res) => {
                                             Token: token
                                         }
                                     }).then(
-                                        loggerinfo.info(req.connection.remoteAddress + " login as customer with " + customer[0].PhoneNumber + " phone number")
                                     );
 
                                 } else {
@@ -291,7 +287,7 @@ router.post('/login', (req, res) => {
                                     }
                                     var token = jwt.encode(payload, JWT_SECRET);
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             BirthDate: customer[0].BirthDate,
@@ -310,7 +306,6 @@ router.post('/login', (req, res) => {
                                             Token: token
                                         }
                                     }).then(
-                                        loggerinfo.info(req.connection.remoteAddress + " login as customer with " + customer[0].PhoneNumber + " phone number")
                                     );
 
                                 } else {
@@ -349,7 +344,7 @@ router.post('/login', (req, res) => {
                                     }
                                     var token = jwt.encode(payload, JWT_SECRET);
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             ID: seller[0].PhoneNumberID,
@@ -370,7 +365,7 @@ router.post('/login', (req, res) => {
                                             TypeID: seller[0].TypeID,
                                             Token: token
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as seller with " + seller[0].PhoneNumberID + " phone number"));
+                                    });
 
 
                                 } else {
@@ -425,7 +420,7 @@ router.post('/login', (req, res) => {
                                             TypeID: seller[0].TypeID,
                                             Token: token
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as seller with " + seller[0].PhoneNumberID + " phone number"));
+                                    });
 
                                 } else {
                                     return res.status(404).json();
@@ -464,7 +459,7 @@ router.post('/login', (req, res) => {
                                     }
                                     var token = jwt.encode(payload, JWT_SECRET);
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             ID: trans[0].PhoneNumberID,
@@ -482,7 +477,7 @@ router.post('/login', (req, res) => {
                                             WareHouseID: trans[0].WareHouseID,
                                             Token: token
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as transportation with " + trans[0].PhoneNumber + " phone number"));
+                                    });
 
                                 } else {
                                     return res.status(404).json();
@@ -515,7 +510,7 @@ router.post('/login', (req, res) => {
                                     var token = jwt.encode(payload, JWT_SECRET);
 
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             ID: trans[0].PhoneNumberID,
@@ -533,7 +528,7 @@ router.post('/login', (req, res) => {
                                             WareHouseID: trans[0].WareHouseID,
                                             Token: token
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as transportation with " + trans[0].PhoneNumber + " phone number"));
+                                    });
 
                                 } else {
                                     return res.status(404).json();
@@ -572,7 +567,7 @@ router.post('/login', (req, res) => {
                                     }
                                     var token = jwt.encode(payload, JWT_SECRET);
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             ID: support[0].ID,
@@ -583,7 +578,7 @@ router.post('/login', (req, res) => {
                                             Token: token
 
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as support with " + support[0].PhoneNumber + " phone number"));
+                                    });
                                 } else {
                                     return res.status(404).json();
                                 }
@@ -615,7 +610,7 @@ router.post('/login', (req, res) => {
                                     var token = jwt.encode(payload, JWT_SECRET);
 
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             ID: support[0].ID,
@@ -626,7 +621,7 @@ router.post('/login', (req, res) => {
                                             Token: token
 
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as support with " + support[0].PhoneNumber + " phone number"));
+                                    });
 
                                 } else {
                                     return res.status(404).json();
@@ -666,7 +661,7 @@ router.post('/login', (req, res) => {
                                     }
                                     var token = jwt.encode(payload, JWT_SECRET);
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             ID: wareHouse[0].PhoneNumberID,
@@ -684,7 +679,7 @@ router.post('/login', (req, res) => {
                                             SellerIDr: wareHouse[0].SellerID,
                                             Token: token
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with " + wareHouse[0].PhoneNumber + " phone number"));
+                                    });
                                 } else {
                                     return res.status(404).json();
                                 }
@@ -716,7 +711,7 @@ router.post('/login', (req, res) => {
                                     var token = jwt.encode(payload, JWT_SECRET);
 
 
-                                    response(res, {
+                                   return res.json({
                                         "data": {
 
                                             ID: wareHouse[0].PhoneNumberID,
@@ -734,7 +729,7 @@ router.post('/login', (req, res) => {
                                             SellerID: wareHouse[0].SellerID,
                                             Token: token
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as wareHouse with " + wareHouse[0].PhoneNumber + " phone number"));
+                                    });
 
                                 } else {
                                     return res.status(404).json();
@@ -773,7 +768,7 @@ router.post('/login', (req, res) => {
                                     }
                                     var token = jwt.encode(payload, JWT_SECRET);
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             ID: operator[0].PhoneNumberID,
@@ -789,7 +784,7 @@ router.post('/login', (req, res) => {
 
 
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as operator with " + operator[0].PhoneNumber + " phone number"));
+                                    });
                                 } else {
                                     return res.status(404).json();
                                 }
@@ -821,7 +816,7 @@ router.post('/login', (req, res) => {
                                     var token = jwt.encode(payload, JWT_SECRET);
 
 
-                                    response(res, {
+                                    return res.json({
                                         "data": {
 
                                             ID: operator[0].PhoneNumberID,
@@ -837,7 +832,7 @@ router.post('/login', (req, res) => {
 
 
                                         }
-                                    }).then(loggerinfo.info(req.connection.remoteAddress + " login as operator with " + operator[0].PhoneNumber + " phone number"));
+                                    });
 
                                 } else {
                                     return res.status(404).json();
@@ -859,7 +854,6 @@ router.post('/login', (req, res) => {
         }
 
     } catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + e);
         return res.status(500).json({"message": "Oops! Something went wrong!"})
     }
 

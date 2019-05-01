@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {loggererror, loggerinfo, upload, colors} = require('../Util/myVars');
-const {base64_encode, response, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/myFunctions');
+const { upload, colors} = require('../Util/myVars');
+const {base64_encode, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/myFunctions');
 
 const {sellerOperator,sellerPhoneNumber, orderNazarSanji, support, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
 const Op = sequelize.Op;
@@ -28,9 +28,7 @@ router.post('/address', (req, res) => {
                                             CompleteAddressDescription: req.body.CompleteAddressDescription,
                                             CustomName: req.body.CustomName
                                         });
-                                        response(res, undefined).then(
-                                            loggerinfo.info(req.connection.remoteAddress + "user with id : " + customer[0].ID + " add a addres")
-                                        );
+                                       return res.json();
 
                                     } else {
                                         return res.status(404).json();
@@ -54,7 +52,6 @@ router.post('/address', (req, res) => {
 
 
     } catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
         res.status(500).json({"code": 500});
 
 
@@ -109,9 +106,7 @@ router.put('/address', (req, res) => {
                                             ID: req.body.CustomerAddressID
                                         }
                                     });
-                                    response(res, undefined).then(
-                                        loggerinfo.info(req.connection.remoteAddress + "user with id : " + customer[0].ID + " edit a addres with ID: " + req.body.CustomerAddressID)
-                                    );
+                                    return res.json();
 
                                 } else {
                                     res.status(404).json({"code": 703});
@@ -134,7 +129,6 @@ router.put('/address', (req, res) => {
 
 
     } catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
         res.status(500).json({"code": 500});
 
 
@@ -152,9 +146,7 @@ router.get('/address', (req, res) => {
                         if (customer[0].Status){
                             addresses.findAll({where: {CustomerID: customer[0].ID}}).then(
                                 addresses => {
-                                    response(res, addresses).then(
-                                        loggerinfo.info("customer with id :" + customer[0].ID + " get all his address")
-                                    )
+                                    return res.json(addresses);
                                 }
                             )
 
@@ -174,10 +166,7 @@ router.get('/address', (req, res) => {
 
 
     } catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
         res.status(500).json({"code": 500});
-
-
     }
 });
 
@@ -318,9 +307,8 @@ router.post('/order', (req, res) => {
                                                                             },900000)
 
                                                                         }).catch(function(error) {
-                                                                            loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + error);
-                                                                            t.rollback();
 
+                                                                            t.rollback();
                                                                             return res.status(400).json({"message":"Oops! Something went wrong!"})
 
                                                                         });
@@ -373,7 +361,6 @@ router.post('/order', (req, res) => {
 
 
     } catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
         res.status(500).json({"code": 500});
 
 
@@ -683,9 +670,7 @@ router.get('/phoneNumber', (req, res) => {
                         }
                     }).then(
                         sellerPhoneNumber => {
-                            response(res, sellerPhoneNumber).then(
-                                loggerinfo.info(req.connection.remoteAddress + "customer with id : " + customer[0].Id + "get all his/her subtypes")
-                            );
+                            return res.json(sellerPhoneNumber);
                         }
                     );
 
@@ -739,13 +724,11 @@ router.post('/Survey', (req, res) => {
                                     ID: req.body.OrderID
                                 }
                             }).then(finish => {
-                                loggerinfo.info(req.connection.remoteAddress + " signUped as a customer with " + req.body.PhoneNumber + " phone number");
                                 return res.status(200).json();
                             });
 
 
                         }).catch(function (error) {
-                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                             t.rollback();
                             if (error.parent.errno === 1062) {
                                 return res.status(400).json({"message": "customer signUped before"})

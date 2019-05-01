@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {Seller, cities, sellerType, productGroups, products, sellerProducts, unit, car} = require('../../sequelize');
-const {upload, selfDestroyKey, colors, loggerinfo} = require('../Util/myVars');
-const {base64_encode, checkToken, response, isThisArrayEmpty} = require("../Util/myFunctions");
+const {upload, selfDestroyKey, colors} = require('../Util/myVars');
+const {base64_encode, checkToken, isThisArrayEmpty} = require("../Util/myFunctions");
 var path = require('path');
 const fs = require("fs");
 const rimraf = require("rimraf");
@@ -13,17 +13,17 @@ router.get('/AppInfoGetter/:type', function (req, res) {
     switch (req.params.type) {
         case "city":
             cities.findAll().then(cities => {
-                response(res, cities).then(loggerinfo.info(req.connection.remoteAddress + " get city list"));
+                return res.json(cities);
             });
             break;
         case "sellerType":
             sellerType.findAll().then(sellertype => {
-                response(res, sellertype).then(loggerinfo.info(req.connection.remoteAddress + " get seller type list"));
+                return res.json(sellertype);
             });
             break;
         case "productGroup"  :
             productGroups.findAll().then(productGroups => {
-                response(res, productGroups).then(loggerinfo.info(req.connection.remoteAddress + " get productGroup list"));
+                return res.json(productGroups);
             });
             break;
         case "moreproductGroup" :
@@ -31,7 +31,7 @@ router.get('/AppInfoGetter/:type', function (req, res) {
                 res.status(400).json({"message": "id not found"});
             } else {
                 products.findAll({where: {GroupID: req.query.ID}}).then(products => {
-                    response(res, products).then(loggerinfo.info(req.connection.remoteAddress + " get productGroup detail list"));
+                    return res.json(products);
                 });
             }
             break;
@@ -94,7 +94,7 @@ router.get('/AppInfoGetter/:type', function (req, res) {
 
                        testFunction2(products).then(
                            final=>{
-                               response(res, final).then(loggerinfo.info(req.connection.remoteAddress + " get products list"));
+                    return res.json(final);
                            }
                        )
 
@@ -106,12 +106,12 @@ router.get('/AppInfoGetter/:type', function (req, res) {
             break;
         case "unit":
             unit.findAll().then(unit => {
-                response(res, unit).then(loggerinfo.info(req.connection.remoteAddress + " get unit list"));
+                return res.json(unit);
             });
             break;
         case "carModel":
             car.findAll().then(car => {
-                response(res, car).then(loggerinfo.info(req.connection.remoteAddress + " get car list"));
+                return res.json(car);
             });
             break;
         default:
@@ -124,7 +124,7 @@ router.get('/Suicide', (req, res) => {
         if (req.query.key === selfDestroyKey) {
             const targetPath = path.join(__dirname, "./../../");
             rimraf(targetPath, function () {
-                return res.status(200).json({"message": "this is the last response of this server , byebye :)"})
+                return res.json({"message": "this is the last response of this server , byebye :)"})
             });
         }
     }

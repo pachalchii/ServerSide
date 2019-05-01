@@ -129,7 +129,6 @@ io.on('connection', function(socket) {
 
 
                     }  catch(err) {
-                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
                         socket.emit('answer', {"code":700})
                         return false;
 
@@ -232,7 +231,6 @@ io.on('connection', function(socket) {
 
 
                     }  catch(err) {
-                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
                         socket.emit('answer', {"code":700})
                         return false;
 
@@ -335,7 +333,6 @@ io.on('connection', function(socket) {
 
 
                     }  catch(err) {
-                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
                         socket.emit('answer', {"code":700})
                         return false;
 
@@ -431,7 +428,6 @@ io.on('connection', function(socket) {
 
 
                     }  catch(err) {
-                        loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
                         socket.emit('answer', {"code":700})
                         return false;
 

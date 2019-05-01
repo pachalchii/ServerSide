@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {checkLimitTime, filterRequest, checkToken, response, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
-const {handleError,loggererror, loggerinfo, colors, JWT_SECRET, upload} = require('../Util/myVars');
+const {checkLimitTime, filterRequest, checkToken, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
+const {handleError, colors, JWT_SECRET, upload} = require('../Util/myVars');
 const {orderNazarSanji,orderProduct,Order, customer, sellerOperator, sellerPhoneNumber,Seller, sellerProducts, sellerWareHouse, transportation, sequelize, products, unit} = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
@@ -64,9 +64,7 @@ router.get('/list', (req, res) => {
             seller.forEach(testFunction);
 
         }
-        response(res, final).then(
-            loggerinfo.info(req.connection.remoteAddress + " get seller list")
-        );
+        return res.json(final);
     });
 
 
@@ -114,9 +112,7 @@ router.get('/Singlelist', (req, res) => {
     }).then(seller => {
         if (!isThisArrayEmpty(seller)) {
             seller.forEach(testFunction);
-            response(res, final).then(
-                loggerinfo.info(req.connection.remoteAddress + " get seller list")
-            );
+            return res.json(final);
         }
 
     });
@@ -152,6 +148,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                         fs.rename(tempPath, targetPath, err => {
                                             if (err) return status= false; handleError(err, res);
                                         });
+                                        fs.unlink(tempPath, err => {});
                                     } else {
                                         fs.unlink(tempPath, err => {
                                             if (err)  {status = false ;return handleError(err, res);}
@@ -192,12 +189,9 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                             transaction: t
                                         }).then(function () {
                                             t.commit();
-                                            response(res, undefined).then(
-                                                loggerinfo.info(req.connection.remoteAddress + "a seller added by " + req.body.phone_numberid + " phoneNumberid")
-                                            );
+                                            return res.json();
 
                                         }).catch(function (error) {
-                                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                             t.rollback();
                                             if (error.parent.errno === 1062) {
                                                 return res.status(400).json({"code": 705})
@@ -221,6 +215,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                         fs.rename(tempPath, targetPath, err => {
                                             if (err) {status = false;return handleError(err, res);}
+                                            fs.unlink(tempPath, err => {});
                                         });
                                     } else {
                                         fs.unlink(tempPath, err => {
@@ -259,11 +254,8 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                             transaction: t
                                         }).then(function () {
                                             t.commit();
-                                            response(res, undefined).then(
-                                                loggerinfo.info(req.connection.remoteAddress + "a wareHouse added by " + req.body.PhoneNumber + " phoneNumber")
-                                            );
+                                            return res.json();
                                         }).catch(function (error) {
-                                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                             t.rollback();
                                             console.log(error)
                                             if (error.parent.errno === 1062) {
@@ -289,6 +281,7 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                     if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                         fs.rename(tempPath, targetPath, err => {
                                             if (err) {status = false ;return handleError(err, res);}
+                                            fs.unlink(tempPath, err => {});
                                         });
                                     } else {
                                         fs.unlink(tempPath, err => {
@@ -322,11 +315,9 @@ router.post('/addRole', upload.single("Image"), (req, res) => {
                                             transaction: t
                                         }).then(function () {
                                             t.commit();
-                                            response(res, undefined).then(
-                                                loggerinfo.info(req.connection.remoteAddress + "a operator added by " + req.body.PhoneNumber + " phoneNumber")
-                                            );
+                                            return res.json();
+
                                         }).catch(function (error) {
-                                            loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                                             t.rollback();
                                             console.log(error)
                                             if (error.parent.errno === 1062) {
@@ -383,6 +374,7 @@ router.post('/product', upload.single("Image"), (req, res) => {
                         if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                             fs.rename(tempPath, targetPath, err => {
                                 if (err) {status= false;return handleError(err, res);}
+                                fs.unlink(tempPath, err => {});
                             });
                         } else {
                             fs.unlink(tempPath, err => {
@@ -504,6 +496,7 @@ router.put('/product', upload.single("Image"), (req, res) => {
                                         if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
                                             fs.rename(tempPath, targetPath, err => {
                                                 if (err) {status= false; return handleError(err, res);}
+                                                fs.unlink(tempPath, err => {});
                                             });
                                         } else {
                                             fs.unlink(tempPath, err => {
@@ -551,9 +544,7 @@ router.put('/product', upload.single("Image"), (req, res) => {
                                                 ID: sellerproductid[0].ID
                                             }
                                         });
-                                        response(res, undefined).then(
-                                            loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " edit product with productid :" + sellerproductid[0])
-                                        )
+                                        return res.json();
                                     }
 
 
@@ -624,9 +615,7 @@ router.get('/product', (req, res) => {
                     ).then(sellerProducts => {
                             if (!isThisArrayEmpty(sellerProducts)) {
                                 sellerProducts.forEach(getallproducts);
-                                response(res, final).then(
-                                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " get all his/her products ")
-                                )
+                                return res.json(final);
 
                             } else {
                                 return res.status(404).json();
@@ -734,8 +723,6 @@ router.get('/Subtypes', (req, res) => {
                                 WareHouse: {wareHousesfinal},
                                 Operator: {sellerOperatorfinal}
                             }).then(function(){
-                                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].Id + "get all his/her subtypes")
-
                                 }
                             );
 
@@ -1145,9 +1132,7 @@ router.post('/operator/orderProduct', (req, res) =>{
                                                     ID: req.body.ID
                                                 }
                                             }).then(
-                                                response(res, undefined).then(
-                                                    loggerinfo.info("seller operator with id : " + operator.ID + " change orderProduct with id :" + res[0].ID + " operatorStatus to : " + req.body.Status)
-                                                )
+                                                nothing=>{return res.json();}
                                             );
                                         }
                                         else return res.json({"code":704});
@@ -1173,7 +1158,6 @@ router.post('/operator/orderProduct', (req, res) =>{
 
         }
     }catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
         res.status(500).json({"code":500});
 
 
@@ -1228,9 +1212,7 @@ router.get('/operator/product', (req, res) => {
                     ).then(sellerProducts => {
                             if (!isThisArrayEmpty(sellerProducts)) {
                                 sellerProducts.forEach(getallproducts);
-                                response(res, final).then(
-                                    loggerinfo.info(req.connection.remoteAddress + "seller with id : " + seller[0].ID + " get all his/her products ")
-                                )
+                                return res.json(final);
 
                             } else {
                                 return res.status(404).json();
