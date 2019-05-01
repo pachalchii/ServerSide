@@ -43,34 +43,34 @@ var port = process.env.PORT || 1008;
 
 app.listen(port, () => {
     console.log(colors.fg.Green , "                  _           _ _____ _     _    _                   _ _                                _         _ \n" +
-    "                 | |         | /  __ \\ |   (_)  (_)                 | (_)                              (_)       | |\n" +
-    " _ __   __ _  ___| |__   __ _| | /  \\/ |__  _    _ ___    ___  _ __ | |_ _ __   ___    __ _  __ _  __ _ _ _ __   | |\n" +
-    "| '_ \\ / _` |/ __| '_ \\ / _` | | |   | '_ \\| |  | / __|  / _ \\| '_ \\| | | '_ \\ / _ \\  / _` |/ _` |/ _` | | '_ \\  | |\n" +
-    "| |_) | (_| | (__| | | | (_| | | \\__/\\ | | | |  | \\__ \\ | (_) | | | | | | | | |  __/ | (_| | (_| | (_| | | | | | |_|\n" +
-    "| .__/ \\__,_|\\___|_| |_|\\__,_|_|\\____/_| |_|_|  |_|___/  \\___/|_| |_|_|_|_| |_|\\___|  \\__,_|\\__, |\\__,_|_|_| |_| (_)\n" +
-    "| |                                                                                          __/ |                  \n" +
-    "|_|                                                                                         |___/                   " +
+        "                 | |         | /  __ \\ |   (_)  (_)                 | (_)                              (_)       | |\n" +
+        " _ __   __ _  ___| |__   __ _| | /  \\/ |__  _    _ ___    ___  _ __ | |_ _ __   ___    __ _  __ _  __ _ _ _ __   | |\n" +
+        "| '_ \\ / _` |/ __| '_ \\ / _` | | |   | '_ \\| |  | / __|  / _ \\| '_ \\| | | '_ \\ / _ \\  / _` |/ _` |/ _` | | '_ \\  | |\n" +
+        "| |_) | (_| | (__| | | | (_| | | \\__/\\ | | | |  | \\__ \\ | (_) | | | | | | | | |  __/ | (_| | (_| | (_| | | | | | |_|\n" +
+        "| .__/ \\__,_|\\___|_| |_|\\__,_|_|\\____/_| |_|_|  |_|___/  \\___/|_| |_|_|_|_| |_|\\___|  \\__,_|\\__, |\\__,_|_|_| |_| (_)\n" +
+        "| |                                                                                          __/ |                  \n" +
+        "|_|                                                                                         |___/                   " +
         "\r\n",colors.Reset);
 
-console.log(colors.bg.Black , colors.fg.White , "server timeZone : " + new Date().toString() ,  colors.Reset);
-console.log(colors.bg.Green ,  'Node Server listening on port '+port ,  colors.Reset);
+    console.log(colors.bg.Black , colors.fg.White , "server timeZone : " + new Date().toString() ,  colors.Reset);
+    console.log(colors.bg.Green ,  'Node Server listening on port '+port ,  colors.Reset);
     if (databaseStatus){
         console.log( colors.bg.Yellow , "for importing demo content make databaseStatus false after refreshing database ." ,  colors.Reset);
     } else {
         fillDataBase();
     }
 
-/*
-    SmsApi.Send({
-            message: "خدمات پیام کوتاه کاوه نگار",
-            sender: "10004346",
-            receptor: "09127255512"
-        },
-        function(response, status) {
-            console.log(response);
-            console.log(status);
-        });
-*/
+    /*
+        SmsApi.Send({
+                message: "خدمات پیام کوتاه کاوه نگار",
+                sender: "10004346",
+                receptor: "09127255512"
+            },
+            function(response, status) {
+                console.log(response);
+                console.log(status);
+            });
+    */
 
 
 
@@ -81,7 +81,7 @@ io.on('connection', function(socket) {
 
     socket.on('getLocation', data=>{
         if (data.token == null || data.OrderProductID == null){
-            io.emit('answer', {"code":703})
+            socket.emit('answer', {"code":703})
         } else {
             function checkToken(data) {
 
@@ -89,7 +89,7 @@ io.on('connection', function(socket) {
                     try{
                         var decodedJWT = jwt.decode(data.token.toString(), JWT_SECRET);
                         if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
-                            io.emit('answer', {"code":700})
+                            socket.emit('answer', {"code":700})
                             return false
 
                         }else {
@@ -118,7 +118,7 @@ io.on('connection', function(socket) {
                                 }
 
                             }else {
-                                io.emit('answer', {"code":700})
+                                socket.emit('answer', {"code":700})
                             }
                             return searchQuery;
 
@@ -130,7 +130,7 @@ io.on('connection', function(socket) {
 
                     }  catch(err) {
                         loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
-                        io.emit('answer', {"code":700})
+                        socket.emit('answer', {"code":700})
                         return false;
 
                     }
@@ -138,7 +138,7 @@ io.on('connection', function(socket) {
 
 
                 } else {
-                    io.emit('answer', {"code":703})
+                    socket.emit('answer', {"code":703})
                     return false;
                 }
 
@@ -150,7 +150,7 @@ io.on('connection', function(socket) {
                 customer.findAll(searchQuery).then(cust => {
 
                     if (isThisArrayEmpty(cust)) {
-                        io.emit('answer', {"code":700})
+                        socket.emit('answer', {"code":700})
                     }else {
                         if (cust[0].Status){
                             orderProduct.findAll({
@@ -159,7 +159,7 @@ io.on('connection', function(socket) {
                                 }
                             }).then(
                                 orderProduct=>{
-                                    io.emit('answer', {"TrasnportarCurrentLocation ":orderProduct[0].TrasnportarCurrentLocation })
+                                    socket.emit('answer', {"TrasnportarCurrentLocation ":orderProduct[0].TrasnportarCurrentLocation })
 
                                 }
 
@@ -184,7 +184,7 @@ io.on('connection', function(socket) {
 
     socket.on('sendLocation', data=>{
         if (data.token == null || data.location == null){
-            io.emit('answer', {"code":703})
+            socket.emit('answer', {"code":703})
         } else {
             function checkToken(data) {
 
@@ -192,7 +192,7 @@ io.on('connection', function(socket) {
                     try{
                         var decodedJWT = jwt.decode(data.token.toString(), JWT_SECRET);
                         if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
-                            io.emit('answer', {"code":700})
+                            socket.emit('answer', {"code":700})
                             return false
 
                         }else {
@@ -221,7 +221,7 @@ io.on('connection', function(socket) {
                                 }
 
                             }else {
-                                io.emit('answer', {"code":700})
+                                socket.emit('answer', {"code":700})
                             }
                             return searchQuery;
 
@@ -233,7 +233,7 @@ io.on('connection', function(socket) {
 
                     }  catch(err) {
                         loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
-                        io.emit('answer', {"code":700})
+                        socket.emit('answer', {"code":700})
                         return false;
 
                     }
@@ -241,7 +241,7 @@ io.on('connection', function(socket) {
 
 
                 } else {
-                    io.emit('answer', {"code":703})
+                    socket.emit('answer', {"code":703})
                     return false;
                 }
 
@@ -253,7 +253,7 @@ io.on('connection', function(socket) {
                 transportation.findAll(searchQuery).then(tran => {
 
                     if (isThisArrayEmpty(tran)) {
-                        io.emit('answer', {"code":700})
+                        socket.emit('answer', {"code":700})
                     }else {
                         if (tran[0].Status){
                             orderProduct.update({
@@ -263,7 +263,7 @@ io.on('connection', function(socket) {
                                     TransportarID:tran[0].ID
                                 }
                             }).then(
-                                io.emit('answer', {"code":200})
+                                socket.emit('answer', {"code":200})
 
                             )
 
@@ -287,7 +287,7 @@ io.on('connection', function(socket) {
 
     socket.on('sellerOperatorAllProductOrder' , data=>{
         if (data.token == null){
-            io.emit('answer', {"code":703})
+            socket.emit('answer', {"code":703})
         } else {
             function checkToken(data) {
 
@@ -295,7 +295,7 @@ io.on('connection', function(socket) {
                     try{
                         var decodedJWT = jwt.decode(data.token.toString(), JWT_SECRET);
                         if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
-                            io.emit('answer', {"code":700})
+                            socket.emit('answer', {"code":700})
                             return false
 
                         }else {
@@ -324,7 +324,7 @@ io.on('connection', function(socket) {
                                 }
 
                             }else {
-                                io.emit('answer', {"code":700})
+                                socket.emit('answer', {"code":700})
                             }
                             return searchQuery;
 
@@ -336,7 +336,7 @@ io.on('connection', function(socket) {
 
                     }  catch(err) {
                         loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
-                        io.emit('answer', {"code":700})
+                        socket.emit('answer', {"code":700})
                         return false;
 
                     }
@@ -344,7 +344,7 @@ io.on('connection', function(socket) {
 
 
                 } else {
-                    io.emit('answer', {"code":703})
+                    socket.emit('answer', {"code":703})
                     return false;
                 }
 
@@ -356,20 +356,20 @@ io.on('connection', function(socket) {
                 sellerOperator.findAll(searchQuery).then(so => {
 
                     if (isThisArrayEmpty(so)) {
-                        io.emit('answer', {"code":700})
+                        socket.emit('answer', {"code":700})
                     }else {
                         if (so[0].Status)
                         {
                             orderProduct.findAll({where:{
                                     SellerOperatorID:so[0].ID
                                 }}).then(op=>{
-                                io.emit('answer', {"OrderProduct":op})
+                                socket.emit('answer', {"OrderProduct":op})
 
                             });
                         }else
-                            {
-                                return res.status(404).json({"code": 900});
-                            }
+                        {
+                            return res.status(404).json({"code": 900});
+                        }
 
                     }
                 });
@@ -380,9 +380,10 @@ io.on('connection', function(socket) {
         }
     });
 
-    socket.on('customerProductOrder', data=>{
+    socket.on('customerProductOrder', (data)=>{
+        console.log("hi")
         if (data.token == null || data.OrderProductID == null ){
-            io.emit('answer', {"code":703})
+            socket.emit('answer', {"code":703})
         } else {
             function checkToken(data) {
 
@@ -390,7 +391,7 @@ io.on('connection', function(socket) {
                     try{
                         var decodedJWT = jwt.decode(data.token.toString(), JWT_SECRET);
                         if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
-                            io.emit('answer', {"code":700})
+                            socket.emit('answer', {"code":700})
                             return false
 
                         }else {
@@ -419,7 +420,7 @@ io.on('connection', function(socket) {
                                 }
 
                             }else {
-                                io.emit('answer', {"code":700})
+                                socket.emit('answer', {"code":700})
                             }
                             return searchQuery;
 
@@ -431,7 +432,7 @@ io.on('connection', function(socket) {
 
                     }  catch(err) {
                         loggererror.warn(req.connection.remoteAddress +  "cause this erorr : " + err);
-                        io.emit('answer', {"code":700})
+                        socket.emit('answer', {"code":700})
                         return false;
 
                     }
@@ -439,7 +440,7 @@ io.on('connection', function(socket) {
 
 
                 } else {
-                    io.emit('answer', {"code":703})
+                    socket.emit('answer', {"code":703})
                     return false;
                 }
 
@@ -451,12 +452,12 @@ io.on('connection', function(socket) {
                 customer.findAll(searchQuery).then(cust => {
 
                     if (isThisArrayEmpty(cust)) {
-                        io.emit('answer', {"code":700})
+                        socket.emit('answer', {"code":700})
                     }else {
                         if (cust[0].Status){
                             orderProduct.findAll({where: {ID: data.OrderProductID}}).then(
                                 orderp => {
-                                    io.emit('answer', {"Order":orderp})
+                                    socket.emit('answer', {"Order":orderp})
                                 }
                             )
                         }else {

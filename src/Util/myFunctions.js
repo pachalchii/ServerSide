@@ -945,6 +945,20 @@ function checkToken(req, res ) {
 
 }
 
+function checkUser(EncodedToken , Entity , callback) {
+
+    Entity.findAll({EncodedToken}).then(user=>{
+        if (!isThisArrayEmpty(user)) {
+            callback("",user[0]);
+        }else {
+            return res.status(400).json({"code": 700});
+        }
+    })
+
+
+
+}
+
 function filterRequest(req,res,type){
     switch (type) {
         case "orderProduct":
@@ -1085,10 +1099,12 @@ module.exports = {
     filterRequest,
     checkToken,
     loginInfoCheck,
+    checkUser,
     registerInfoCheck
     , fillDataBase
     , addRoleInfoCheck
     , base64_decode
+    ,checkPhone
     , base64_encode
     , isThisArrayEmpty
     , response

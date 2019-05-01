@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {application, support, Seller, customer, sequelize, sellerPhoneNumber, transportation, sellerWareHouse, sellerOperator} = require('../../sequelize');
-const {checkPassword, checkStatus, checkToken, response, isThisArrayEmpty, base64_encode, loginInfoCheck, registerInfoCheck,} = require('../Util/myFunctions');
+const {checkPassword, checkStatus,checkUser, checkToken, checkPhone,response, isThisArrayEmpty, base64_encode, loginInfoCheck, registerInfoCheck} = require('../Util/myFunctions');
 const {SmsApi, upload, loggererror, colors, JWT_SECRET, handleError, loggerinfo} = require('../Util/myVars');
 /*********************************************/
 const multer = require("multer");
@@ -867,34 +867,22 @@ router.post('/login', (req, res) => {
 
 router.post('/phoneNumber', (req, res) => {
     try {
-        var numberOne = "notSetYet";
-        var numberTwo = "notSetYet";
-        var numberThree = "notSetYet";
-        var numberFour = "notSetYet";
-        var numberFive = "notSetYet";
 
-        if (req.body.PhoneNumber1 != null) numberOne = req.body.PhoneNumber1;
-        if (req.body.PhoneNumber2 != null) numberTwo = req.body.PhoneNumber2;
-        if (req.body.PhoneNumber3 != null) numberThree = req.body.PhoneNumber3;
-        if (req.body.PhoneNumber4 != null) numberFour = req.body.PhoneNumber4;
-        if (req.body.PhoneNumber5 != null) numberFive = req.body.PhoneNumber5;
         sequelize.transaction().then(function (t) {
             sellerPhoneNumber.create({
 
-                PhoneNumber1: numberOne,
-                PhoneNumber2: numberTwo,
-                PhoneNumber3: numberThree,
-                PhoneNumber4: numberFour,
-                PhoneNumber5: numberFive,
+                PhoneNumber1: "NotSetYet" || req.body.PhoneNumber1,
+                PhoneNumber2: "NotSetYet" || req.body.PhoneNumber2,
+                PhoneNumber3: "NotSetYet" || req.body.PhoneNumber3,
+                PhoneNumber4: "NotSetYet" || req.body.PhoneNumber4,
+                PhoneNumber5: "NotSetYet" || req.body.PhoneNumber5,
 
             }, {
                 transaction: t
             }).then(savedNumber => {
                 t.commit();
-                response(res, {"data": {"id": savedNumber.ID}}).then(loggerinfo.info(req.connection.remoteAddress + " add a group of phone number with " + savedNumber.ID));
-
+                return res.json({"data": {"id": savedNumber.ID}});
             }).catch(function (error) {
-                loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + error);
                 t.rollback();
                 return res.status(500).json({"code": 500})
             });
@@ -902,123 +890,55 @@ router.post('/phoneNumber', (req, res) => {
 
 
     } catch (e) {
-        loggererror.warn(req.connection.remoteAddress + "cause this erorr : " + e);
         return res.status(500).json({"code": 500})
     }
 });
 
 router.post('/forgetPassword', (req, res) => {
     if (req.body.PhoneNumber == null || req.body.Role == null) {
-        switch (req.body.Role) {
-            case "seller" :
-                Seller.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                    objects => {
-                        if (isThisArrayEmpty(objects)) {
-                            if (objects[0].Status) {
-                                var authcode = Math.floor(Math.random() * 90000) + 10000;
-                                Seller.update({AuthCode: authcode}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                    return res.json();
-                                })
+        if (checkPhone(req,res)){
+            var Entity ="";
+            switch (req.body.Role) {
+                case "seller":
+                    Entity = Seller;
+                    break;
+                case  "customer":
+                    Entity = customer;
+                    break;
+                case "transportation" :
+                    Entity = transportation;
+                    break;
+                case "support"   :
+                    Entity = sellerOperator;
+                    break;
+                case "wareHouse":
+                    Entity = sellerWareHouse;
+                    break;
+                default :
+                    return res.status(404).json({"message": "role is wrong "});
+            }
+            Entity.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
+                objects => {
+                    if (!isThisArrayEmpty(objects)) {
+                        if (objects[0].Status) {
+                            var authcode = Math.floor(Math.random() * 90000) + 10000;
+                            Entity.update({AuthCode: authcode}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
+                                return res.json();
+                            })
 
 
-                            } else {
-                                return res.status(404).json({"code": 900});
-                            }
                         } else {
-                            return res.status(404).json();
-
+                            return res.status(404).json({"code": 900});
                         }
+                    } else {
+                        return res.status(404).json();
+
                     }
-                );
-                break;
-            case "customer":
-                customer.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                    objects => {
-                        if (isThisArrayEmpty(objects)) {
-                            if (objects[0].Status) {
-                                var authcode = Math.floor(Math.random() * 90000) + 10000;
-                                customer.update({AuthCode: authcode}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                    return res.json();
-                                })
-
-
-                            } else {
-                                return res.status(404).json({"code": 900});
-                            }
-                        } else {
-                            return res.status(404).json();
-
-                        }
-                    }
-                );
-                break;
-            case "transportation" :
-                transportation.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                    objects => {
-                        if (isThisArrayEmpty(objects)) {
-                            if (objects[0].Status) {
-                                var authcode = Math.floor(Math.random() * 90000) + 10000;
-                                transportation.update({AuthCode: authcode}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                    return res.json();
-                                })
-
-
-                            } else {
-                                return res.status(404).json({"code": 900});
-                            }
-                        } else {
-                            return res.status(404).json();
-
-                        }
-                    }
-                );
-                break;
-            case "support":
-                support.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                    objects => {
-                        if (isThisArrayEmpty(objects)) {
-                            if (objects[0].Status) {
-                                var authcode = Math.floor(Math.random() * 90000) + 10000;
-                                support.update({AuthCode: authcode}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                    return res.json();
-                                })
-
-
-                            } else {
-                                return res.status(404).json({"code": 900});
-                            }
-                        } else {
-                            return res.status(404).json();
-
-                        }
-                    }
-                );
-                break;
-            case "wareHouse":
-                sellerWareHouse.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                    objects => {
-                        if (isThisArrayEmpty(objects)) {
-                            if (objects[0].Status) {
-                                var authcode = Math.floor(Math.random() * 90000) + 10000;
-                                sellerWareHouse.update({AuthCode: authcode}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                    return res.json();
-                                })
-
-
-                            } else {
-                                return res.status(404).json({"code": 900});
-                            }
-                        } else {
-                            return res.status(404).json();
-
-                        }
-                    }
-                );
-                break;
-            default :
-                return res.status(404).json({"message": "role is wrong "});
+                }
+            );
+        }else {
+            return res.status(404).json({"code": 712});
         }
-
     } else {
         return res.status(404).json({"code": 703});
 
@@ -1030,231 +950,122 @@ router.post('/forgetPassword', (req, res) => {
 router.post('/forgetPassword/submit', (req, res) => {
     if (req.body.PhoneNumber == null || req.body.code == null || req.body.Password == null || req.body.Role == null) {
         if (checkPassword(req, res)) {
-            switch (req.body.Role) {
-                case "seller" :
-                    Seller.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                        objects => {
-                            if (isThisArrayEmpty(objects)) {
-                                if (objects[0].Status) {
-                                    if (objects[0].AuthCode === req.body.code) {
+            if (checkPhone(req,res)){
 
-                                        Seller.update({Password: md5(req.body.Password)}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                            return res.json();
-                                        })
-                                    } else {
-                                        return res.status(404).json({"code": 715});
-                                    }
+                var Entity ="";
+                switch (req.body.Role) {
+                    case "seller":
+                    Entity = Seller;
+                        break;
+                    case  "customer":
+                        Entity = customer;
+                        break;
+                    case "transportation" :
+                        Entity = transportation;
+                        break;
+                    case "support"   :
+                        Entity = sellerOperator;
+                        break;
+                    case "wareHouse":
+                        Entity = sellerWareHouse;
+                        break;
+                    default :
+                        return res.status(404).json({"message": "role is wrong "});
+                }
+                Entity.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
+                    objects => {
+                        if (!isThisArrayEmpty(objects)) {
+                            if (objects[0].Status) {
+                                if (objects[0].AuthCode === req.body.code) {
 
-
+                                    Entity.update({Password: md5(req.body.Password)}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
+                                        return res.json();
+                                    })
                                 } else {
-                                    return res.status(404).json({"code": 900});
+                                    return res.status(404).json({"code": 715});
                                 }
                             } else {
-                                return res.status(404).json();
-
+                                return res.status(404).json({"code": 900});
                             }
+                        } else {
+                            return res.status(404).json();
+
                         }
-                    );
-                    break;
-
-                case "customer":
-                    customer.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                        objects => {
-                            if (isThisArrayEmpty(objects)) {
-                                if (objects[0].Status) {
-                                    if (objects[0].AuthCode === req.body.code) {
-
-                                        customer.update({Password: md5(req.body.Password)}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                            return res.json();
-                                        })
-                                    } else {
-                                        return res.status(404).json({"code": 715});
-                                    }
-
-
-                                } else {
-                                    return res.status(404).json({"code": 900});
-                                }
-                            } else {
-                                return res.status(404).json();
-
-                            }
-                        }
-                    );
-                    break;
-                case "transportation" :
-                    transportation.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                        objects => {
-                            if (isThisArrayEmpty(objects)) {
-                                if (objects[0].Status) {
-                                    if (objects[0].AuthCode === req.body.code) {
-
-                                        transportation.update({Password: md5(req.body.Password)}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                            return res.json();
-                                        })
-                                    } else {
-                                        return res.status(404).json({"code": 715});
-                                    }
-
-
-                                } else {
-                                    return res.status(404).json({"code": 900});
-                                }
-                            } else {
-                                return res.status(404).json();
-
-                            }
-                        }
-                    );
-                    break;
-                case "support":
-                    support.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                        objects => {
-                            if (isThisArrayEmpty(objects)) {
-                                if (objects[0].Status) {
-                                    if (objects[0].AuthCode === req.body.code) {
-
-                                        support.update({Password: md5(req.body.Password)}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                            return res.json();
-                                        })
-                                    } else {
-                                        return res.status(404).json({"code": 715});
-                                    }
-
-
-                                } else {
-                                    return res.status(404).json({"code": 900});
-                                }
-                            } else {
-                                return res.status(404).json();
-
-                            }
-                        }
-                    );
-                    break;
-                case "wareHouse":
-                    sellerWareHouse.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                        objects => {
-                            if (isThisArrayEmpty(objects)) {
-                                if (objects[0].Status) {
-                                    if (objects[0].AuthCode === req.body.code) {
-
-                                        sellerWareHouse.update({Password: md5(req.body.Password)}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                            return res.json();
-                                        })
-                                    } else {
-                                        return res.status(404).json({"code": 715});
-                                    }
-
-
-                                } else {
-                                    return res.status(404).json({"code": 900});
-                                }
-                            } else {
-                                return res.status(404).json();
-
-                            }
-                        }
-                    );
-                    break;
-                default :
-                    return res.status(404).json({"message": "role is wrong "});
+                    }
+                );
+            }else {
+                return res.status(404).json({"code": 712});
             }
-        }
 
+        }else {
+            return res.status(404).json({"code": 712});
+        }
 
     } else {
         return res.status(404).json({"code": 703});
-
     }
 
 
 });
 
 router.post('/tokenCheck', (req, res) => {
-    if (req.body.Role == null) {
+    if (req.body.Role == null || req.body.ClientVersion == null) {
         return res.status(400).json({"code": 703});
-    }
-    if (req.body.ClientVersion == null) {
-        return res.status(400).json({"code": 703});
-    }
-    var searchQuery = checkToken(req, res, req.body.Role);
-    switch (req.body.Role) {
-        case "seller":
-            Seller.findAll(searchQuery).then(seller => {
-                if (isThisArrayEmpty(seller)) {
+    }else {
+        switch (req.body.Role) {
+            case "seller":
 
-                    return res.status(400).json({"code": 700});
-
-                } else {
-                    application.findAll().then(
-                        app => {
-                            if (req.body.ClientVersion === app[0].ClientVersion) {
-                                return res.json({"data": {"forceUpdate": false}});
-                            } else {
-                                return res.json({"data": {"forceUpdate": true}});
+                checkUser(checkToken(req, res, req.body.Role),Seller ,(err,data)=>{
+                    if (!err){
+                        application.findAll().then(
+                            app => {
+                                if (req.body.ClientVersion === app[0].ClientVersion) {
+                                    return res.json({"data": {"forceUpdate": false}});
+                                } else {
+                                    return res.json({"data": {"forceUpdate": true}});
+                                }
                             }
-                        }
-                    );
-                }
-            });
-            break;
-        case "customer":
-            customer.findAll(searchQuery).then(customer => {
-                if (isThisArrayEmpty(customer)) {
+                        );
+                    }
+                });
 
-                    return res.status(400).json({"code": 700});
+                break;
+            case "customer":
+                checkUser(checkToken(req, res, req.body.Role),customer ,(err,data)=>{
+                    if (!err){
+                        application.findAll().then(
+                            app => {
+                                if (req.body.ClientVersion === app[0].ClientVersion) {
+                                    return res.json({"data": {"forceUpdate": false}});
+                                } else {
+                                    return res.json({"data": {"forceUpdate": true}});
+                                }
+                            }
+                        );
+                    }
+                });
+                break;
+            case "transportation":
+                checkUser(checkToken(req, res, req.body.Role),transportation ,(err,data)=>{
+                    if (!err){
+                        application.findAll().then(
+                            app => {
+                                if (req.body.ClientVersion === app[0].ClientVersion) {
+                                    return res.json({"data": {"forceUpdate": false}});
+                                } else {
+                                    return res.json({"data": {"forceUpdate": true}});
+                                }
+                            }
+                        );
+                    }
+                });
+                break;
 
-                } else {
-                    return res.json();
-                }
-            });
-            break;
-        case "operator":
-            sellerOperator.findAll(searchQuery).then(operator => {
-                if (isThisArrayEmpty(operator)) {
+        }
 
-                    return res.status(400).json({"code": 700});
-
-                } else {
-                    return res.json();
-                }
-            });
-            break;
-        case "wareHouse":
-            sellerWareHouse.findAll(searchQuery).then(sellerWareHouse => {
-                if (isThisArrayEmpty(sellerWareHouse)) {
-
-                    return res.status(400).json({"code": 700});
-
-                } else {
-                    return res.json();
-                }
-            });
-            break;
-        case "support":
-            support.findAll(searchQuery).then(support => {
-                if (isThisArrayEmpty(support)) {
-
-                    return res.status(400).json({"code": 700});
-
-                } else {
-                    return res.json();
-                }
-            });
-            break;
-        case "transportation":
-            transportation.findAll(searchQuery).then(transportation => {
-                if (isThisArrayEmpty(transportation)) {
-
-                    return res.status(400).json({"code": 700});
-
-                } else {
-                    return res.json();
-                }
-            });
-            break;
     }
+
+
 
 });
 
