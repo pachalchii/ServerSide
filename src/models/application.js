@@ -11,6 +11,14 @@ module.exports = function(sequelize, DataTypes) {
         ClientVersion: {
             type: DataTypes.STRING(50),
             allowNull: false
+        },
+        UpdateLink: {
+            type: DataTypes.STRING(50),
+            allowNull: false
+        },
+        UpdateMessage: {
+            type: DataTypes.STRING(50),
+            allowNull: false
         }
     }, {
         tableName: 'application'

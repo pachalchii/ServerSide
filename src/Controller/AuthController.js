@@ -907,6 +907,7 @@ router.post('/forgetPassword/request', (req, res) => {
             return res.status(err.HttpCode).json(err.response);
         } else {
             var authcode = Math.floor(Math.random() * 90000) + 10000;
+            //todo sms must be send
             data.update({AuthCode: authcode}).then(() => {
                 return res.json();
             })
@@ -918,62 +919,16 @@ router.post('/forgetPassword/request', (req, res) => {
 });
 
 router.post('/forgetPassword/verify', (req, res) => {
-    if (req.body.PhoneNumber == null || req.body.code == null || req.body.Password == null || req.body.Role == null) {
-        if (checkPassword(req, res)) {
-            if (checkPhone(req, res)) {
 
-                var Entity = "";
-                switch (req.body.Role) {
-                    case "seller":
-                        Entity = Seller;
-                        break;
-                    case  "customer":
-                        Entity = customer;
-                        break;
-                    case "transportation" :
-                        Entity = transportation;
-                        break;
-                    case "support"   :
-                        Entity = sellerOperator;
-                        break;
-                    case "wareHouse":
-                        Entity = sellerWareHouse;
-                        break;
-                    default :
-                        return res.status(404).json({"message": "role is wrong "});
-                }
-                Entity.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                    objects => {
-                        if (!isThisArrayEmpty(objects)) {
-                            if (objects[0].Status) {
-                                if (objects[0].AuthCode === req.body.code) {
-
-                                    Entity.update({Password: md5(req.body.Password)}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                        return res.json();
-                                    })
-                                } else {
-                                    return res.status(404).json({"code": 715});
-                                }
-                            } else {
-                                return res.status(404).json({"code": 900});
-                            }
-                        } else {
-                            return res.status(404).json();
-
-                        }
-                    }
-                );
-            } else {
-                return res.status(404).json({"code": 712});
-            }
-
+    FilteringRequest(req,res,(err,data)=>{
+        if (err){
+            return res.status(err.HttpCode).json(err.response);
         } else {
-            return res.status(404).json({"code": 712});
+            data.update({Password: md5(req.body.Password) , AuthCode:"342241"}).then(()=> {
+                return res.json();
+            })
         }
-
-    } else {
-        return res.status(404).json({"code": 703});
-    }
+    });
 
 
 });
@@ -989,9 +944,9 @@ router.post('/tokenCheck', (req, res) => {
                     application.findOne().then(
                         app => {
                             if (req.body.ClientVersion === app.ClientVersion) {
-                                return res.json({"data": {"forceUpdate": false}});
+                                return res.json({"data": {"forceUpdate": {Status:false}}});
                             } else {
-                                return res.json({"data": {"forceUpdate": true}});
+                                return res.json({"data": {"forceUpdate": {Status:true , UpdateMessage:app.UpdateMessage , newVersion :app.ClientVersion , UpdateLink:app.UpdateLink}}});
                             }
                         }
                     );

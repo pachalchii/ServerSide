@@ -789,6 +789,7 @@ function checkUser(EncodedToken, Entity, callback) {
 
 function FilteringRequest(req, res, callback) {
     var Entity = "";
+    var SwitchStatus = true;
     switch (req.originalUrl.substring(0, 8)) {
         case "/api/v1/":
             switch (req.originalUrl.substring(8).split("/")[0]) {
@@ -823,7 +824,6 @@ function FilteringRequest(req, res, callback) {
                                             callback({HttpCode: 400, response: {"code": 712}});
                                         }
                                         else {
-                                            var SwitchStatus = true;
                                             switch (req.body.Role) {
                                                 case "seller":
                                                     Entity = Seller;
@@ -880,9 +880,77 @@ function FilteringRequest(req, res, callback) {
 
                                     break;
                                 case "verify":
+                                    if (req.body.PhoneNumber != null && req.body.Code != null && req.body.Password != null && req.body.Role != null) {
+                                        if (checkPassword(req, res)) {
+                                            if (checkPhone(req, res)) {
+                                                switch (req.body.Role) {
+                                                    case "seller":
+                                                        Entity = Seller;
+                                                        break;
+                                                    case  "customer":
+                                                        Entity = customer;
+                                                        break;
+                                                    case "transportation" :
+                                                        Entity = transportation;
+                                                        break;
+                                                    case "support"   :
+                                                        Entity = sellerOperator;
+                                                        break;
+                                                    case "wareHouse":
+                                                        Entity = sellerWareHouse;
+                                                        break;
+                                                    default :   SwitchStatus = false; callback({HttpCode: 400, response: {response: "716"}});
+                                                }
+                                                if (SwitchStatus){
+                                                    if (req.body.Role === "seller"){
+                                                        Entity.findOne({where: {OwnerPhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
+                                                            if (UserModel != null) {
+                                                                if (UserModel.Status) {
+                                                                    if (UserModel.AuthCode === req.body.Code) {
+                                                                        callback("",UserModel);
+                                                                    } else {
+                                                                        callback({HttpCode: 404, response: {response: "715"}});
+                                                                    }
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {response: "900"}});
+                                                                }
+                                                            } else {
+                                                                callback({HttpCode: 404, response: {response: "710"}});
+                                                            }
+                                                        });
 
+                                                    }
+                                                    else {
+                                                        Entity.findOne({where: {PhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
+                                                            if (UserModel != null) {
+                                                                if (UserModel.Status) {
+                                                                    if (UserModel.AuthCode === req.body.Code) {
+                                                                        callback("",UserModel);
+                                                                    } else {
+                                                                        callback({HttpCode: 404, response: {response: "715"}});
+                                                                    }
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {response: "900"}});
+                                                                }
+                                                            } else {
+                                                                callback({HttpCode: 404, response: {response: "710"}});
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+                                            } else {
+                                                callback({HttpCode: 404, response: {response: "712"}});
+                                            }
+
+                                        } else {
+                                            callback({HttpCode: 404, response: {response: "712"}});
+                                        }
+
+                                    } else {
+                                        callback({HttpCode: 404, response: {response: "703"}});
+                                    }
                                     break;
-
                             }
 
                             break;
