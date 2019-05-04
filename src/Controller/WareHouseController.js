@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {sequelize,transportation,sellerWareHouse,Seller , cities , sellerType , productGroups , products , sellerProducts , unit ,  car} = require('../../sequelize');
-const {upload,selfDestroyKey , colors } = require('../Util/myVars');
-const {addRoleInfoCheck,base64_encode,checkToken , isThisArrayEmpty } = require("../Util/myFunctions");
+const {upload,selfDestroyKey , colors } = require('../Util/configuration');
+const {addRoleInfoCheck,base64_encode,checkToken , isThisArrayEmpty } = require("../Util/Filter");
 var path = require('path');
 const fs = require("fs");
 var md5 = require('md5');

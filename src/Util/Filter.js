@@ -1,137 +1,117 @@
-const {cities, sellerType, productGroups, products, unit, car} = require('../../sequelize');
-const { orderProduct ,application } = require('../../sequelize');
-const {colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX , JWT_SECRET} = require('./myVars');
+const {cities, sellerType, customer, Seller, sellerOperator, sellerWareHouse, transportation, productGroups, products, unit, car} = require('../../sequelize');
+const {application} = require('../../sequelize');
+const {colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 var jwt = require('jwt-simple');
-var Kavenegar = require('kavenegar');
 var path = require('path');
 const fs = require("fs");
 
-function smsHandler(message,phone) {
+function smsHandler(message, phone) {
     var api = Kavenegar.KavenegarApi({
-        apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'});
+        apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'
+    });
     api.Send({
             message: message,
             sender: "100065995",
             receptor: phone
         },
-        function(response, status) {
+        function (response, status) {
             console.log(response);
             console.log(status);
         });
 
 }
 
-function response(res, json) {
-
-    return new Promise(resolve => {
-        if (json === undefined) {
-            return res.status(200).json();
-        } else {
-            return res.json(json);
-        }
-    });
-}
-
 function base64_encode(file) {
     // read binary data
     var bitmap = fs.readFileSync(file);
     // convert binary data to base64 encoded string
-    return  Buffer.from(bitmap).toString('base64');
-}
-
-function base64_decode(base64str, file) {
-    // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-    var bitmap =  Buffer.from(base64str, 'base64');
-    // write buffer to file
-    fs.writeFileSync(file, bitmap);
-    console.log('******** File created from base64 encoded string ********');
-}
-
-function insertCities(value, index, array) {
-    cities.create(
-        {
-
-            ID: value.ID,
-            Name: value.Name
-        }
-    ).catch(err => {
-        console.log(err)
-    });
-}
-
-function insertTypes(value, index, array) {
-    sellerType.create(
-        {
-
-            ID: value.ID,
-            Type: value.Type
-        }
-    ).catch(err => {
-        console.log(err)
-    });
-}
-
-function insertProductsGroup(value, index, array) {
-    productGroups.create(
-        {
-
-            ID: value.ID,
-            Name: value.Name,
-            ParentID: value.ParentID
-        }
-    ).catch(err => {
-        console.log(err)
-    });
-}
-
-function insertProducts(value, index, array) {
-    products.create(
-        {
-
-            ID: value.ID,
-            Name: value.Name,
-            GroupID: value.GroupID
-        }
-    ).catch(err => {
-        console.log(err)
-    });
-}
-
-function insertUnits(value, index, array) {
-    unit.create(
-        {
-            ID: value.ID,
-            UnitName: value.UnitName
-        }
-    ).catch(err => {
-        console.log(err)
-    });
-}
-
-function insertCarModels(value, index, array) {
-    car.create(
-        {
-            ID: value.ID,
-            Name: value.Name,
-            ParentID: value.ParentID
-        }
-    ).catch(err => {
-        console.log(err)
-    });
+    return Buffer.from(bitmap).toString('base64');
 }
 
 function fillDataBase() {
+    function insertCities(value, index, array) {
+        cities.create(
+            {
+
+                ID: value.ID,
+                Name: value.Name
+            }
+        ).catch(err => {
+            console.log(err)
+        });
+    }
+
+    function insertTypes(value, index, array) {
+        sellerType.create(
+            {
+
+                ID: value.ID,
+                Type: value.Type
+            }
+        ).catch(err => {
+            console.log(err)
+        });
+    }
+
+    function insertProductsGroup(value, index, array) {
+        productGroups.create(
+            {
+
+                ID: value.ID,
+                Name: value.Name,
+                ParentID: value.ParentID
+            }
+        ).catch(err => {
+            console.log(err)
+        });
+    }
+
+    function insertProducts(value, index, array) {
+        products.create(
+            {
+
+                ID: value.ID,
+                Name: value.Name,
+                GroupID: value.GroupID
+            }
+        ).catch(err => {
+            console.log(err)
+        });
+    }
+
+    function insertUnits(value, index, array) {
+        unit.create(
+            {
+                ID: value.ID,
+                UnitName: value.UnitName
+            }
+        ).catch(err => {
+            console.log(err)
+        });
+    }
+
+    function insertCarModels(value, index, array) {
+        car.create(
+            {
+                ID: value.ID,
+                Name: value.Name,
+                ParentID: value.ParentID
+            }
+        ).catch(err => {
+            console.log(err)
+        });
+    }
 
     var city = [
-        {ID: 1,  Name: "آذربایجان شرقی"},
-        {ID: 2,  Name: "اردبیل"},
-        {ID: 3,  Name: "اصفهان"},
-        {ID: 4,  Name: "البرز"},
-        {ID: 5,  Name: "ایلام"},
-        {ID: 6,  Name: "بوشهر"},
-        {ID: 7,  Name: "تهران"},
-        {ID: 8,  Name: "چهارمحال و بختیاری"},
-        {ID: 9,  Name: "خراسان جنوبی"},
+        {ID: 1, Name: "آذربایجان شرقی"},
+        {ID: 2, Name: "اردبیل"},
+        {ID: 3, Name: "اصفهان"},
+        {ID: 4, Name: "البرز"},
+        {ID: 5, Name: "ایلام"},
+        {ID: 6, Name: "بوشهر"},
+        {ID: 7, Name: "تهران"},
+        {ID: 8, Name: "چهارمحال و بختیاری"},
+        {ID: 9, Name: "خراسان جنوبی"},
         {ID: 10, Name: "خراسان رضوی"},
         {ID: 11, Name: "خراسان شمالی"},
         {ID: 12, Name: "خوزستان"},
@@ -223,7 +203,6 @@ function fillDataBase() {
         {ID: 500, Name: "تازه", ParentID: null},
 
 
-
         {ID: 2, Name: "گوساله", ParentID: 500},
 
         {ID: 23, Name: "گوسفند", ParentID: 500},
@@ -269,14 +248,7 @@ function fillDataBase() {
         {ID: 155, Name: "مرغ کامل شکم خالی", ParentID: 52},
 
 
-
-
-
-
-
-
         {ID: 600, Name: "منجمد", ParentID: null},
-
 
 
         {ID: 20, Name: "گوساله", ParentID: 600},
@@ -322,11 +294,6 @@ function fillDataBase() {
         {ID: 1530, Name: "سینه با استخوان بدون پوست", ParentID: 520},
         {ID: 1540, Name: "سینه با استخوان با پوست", ParentID: 520},
         {ID: 1550, Name: "مرغ کامل شکم خالی", ParentID: 520},
-
-
-
-
-
 
 
     ];
@@ -431,7 +398,6 @@ function fillDataBase() {
         {ID: 84, Name: " 2200 گرمی", GroupID: 155},
 
 
-
         {ID: 85, Name: "مرغ کامل شکم خالی درشت", GroupID: 52},
         {ID: 86, Name: "سینه بدون کتف ممتاز", GroupID: 52},
         {ID: 87, Name: "سینه بدون کتف معمولی", GroupID: 52},
@@ -442,7 +408,6 @@ function fillDataBase() {
         {ID: 91, Name: "600 گرمی", GroupID: 90},
         {ID: 92, Name: "1100 گرمی", GroupID: 90},
         {ID: 156, Name: "1100 گرمی", GroupID: 90},
-
 
 
         {ID: 93, Name: "خرده مرغ", GroupID: 52},
@@ -494,28 +459,6 @@ function fillDataBase() {
         {ID: 152, Name: "کالباس", GroupID: 150},
         {ID: 153, Name: "همبرگر و کباب لقمه", GroupID: 150},
         {ID: 154, Name: "غذاهای آماده", GroupID: 150},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         {ID: 300, Name: "قلوه گاه گوساله", GroupID: 20},
@@ -609,7 +552,6 @@ function fillDataBase() {
         {ID: 8400, Name: " 2200 گرمی", GroupID: 1550},
 
 
-
         {ID: 8500, Name: "مرغ کامل شکم خالی درشت", GroupID: 520},
         {ID: 8600, Name: "سینه بدون کتف ممتاز", GroupID: 520},
         {ID: 8700, Name: "سینه بدون کتف معمولی", GroupID: 520},
@@ -622,11 +564,9 @@ function fillDataBase() {
         {ID: 9500, Name: "خمیر مرغ", GroupID: 520},
 
 
-
         {ID: 9100, Name: "600 گرمی", GroupID: 900},
         {ID: 9200, Name: "1100 گرمی", GroupID: 900},
         {ID: 15600, Name: "1100 گرمی", GroupID: 900},
-
 
 
         {ID: 9800, Name: "200 گرمی", GroupID: 970},
@@ -687,8 +627,10 @@ function fillDataBase() {
 
     application.findAll().then(app => {
         if (app[0] === undefined) {
-            application.create({"ID":"1",
-                "ClientVersion":"1.0.0"}).then(
+            application.create({
+                "ID": "1",
+                "ClientVersion": "1.0.0"
+            }).then(
                 console.log(colors.bg.Green, "import  app  demo data done successfuly", colors.Reset)
             );
         } else {
@@ -709,13 +651,13 @@ function checkPhone(req, res) {
         var pattern = new RegExp(PHONENUMBER_REGEX);
         var status = pattern.test(req.body.PhoneNumber);
         if (!status) {
-            res.status(400).json({"code":711});
+            res.status(400).json({"code": 711});
             return false;
-        }else {
+        } else {
             return true;
         }
 
-    }else return true;
+    } else return true;
 
 }
 
@@ -726,12 +668,12 @@ function checkPassword(req, res) {
         if (!status) {
             res.status(400).json({"code": 712});
             return false;
-        }else {
+        } else {
             return true;
         }
 
 
-    }else return true;
+    } else return true;
 
 }
 
@@ -742,11 +684,427 @@ function checkUserName(req, res) {
         if (!status) {
             res.status(400).json({"code": 713});
             return false;
-        }else {
+        } else {
             return true;
         }
 
-    }else return true;
+    } else return true;
+
+}
+
+function checkToken(req, res) {
+
+    if (req.headers['token'] != null) {
+        try {
+            var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
+            if (decodedJWT.Password == null || (decodedJWT.username && decodedJWT.PhoneNumber)) {
+                res.status(400).json({"code": 700});
+                return false
+
+            } else {
+
+                var searchQuery;
+                if (decodedJWT.Username != null) {
+                    searchQuery = {
+                        where: {
+                            Username: decodedJWT.Username, Password: decodedJWT.Password
+                        }
+                    };
+                } else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
+                    try {
+                        searchQuery = {
+                            where: {
+                                PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
+                            }
+                        };
+                    } catch (e) {
+                        searchQuery = {
+                            where: {
+                                OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
+                            }
+                        };
+
+                    }
+
+                } else {
+                    res.status(400).json({"code": 700});
+                }
+                return searchQuery;
+
+
+            }
+
+
+        } catch (err) {
+            res.status(400).json({"code": 700});
+            return false;
+
+        }
+
+
+    } else {
+        res.status(400).json({"code": 703});
+        return false;
+    }
+
+}
+
+function checkLimitTime(res) {
+    var date = new Date();
+    var current_hour = date.getHours();
+    if (!(20 <= current_hour <= 22)) {
+        res.status(404).json({"code": 714});
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function checkStatus(searchQuery, Role) {
+    Role.findAll(searchQuery).then(
+        entity => {
+            if (!isThisArrayEmpty(entity)) {
+                if (!entity[0].Status) {
+                    return res.status(400).json({"code": 900});
+                }
+            } else {
+                return res.status(400).json({"code": 700});
+            }
+        }
+    );
+}
+
+function checkUser(EncodedToken, Entity, callback) {
+
+    Entity.findAll({EncodedToken}).then(user => {
+        if (!isThisArrayEmpty(user)) {
+            callback("", user[0]);
+        } else {
+            return res.status(400).json({"code": 700});
+        }
+    })
+
+
+}
+
+function FilteringRequest(req, res, callback) {
+    var Entity = "";
+    switch (req.originalUrl.substring(0, 8)) {
+        case "/api/v1/":
+            switch (req.originalUrl.substring(8).split("/")[0]) {
+                case "auth":
+                    switch (req.originalUrl.substring(8).split("/")[1]) {
+                        case "tokenCheck":
+                            if (req.body.Role == null || req.body.ClientVersion == null) {
+                                callback({HttpCode: 400, response: {code: "703"}});
+                            } else {
+                                switch (req.body.Role) {
+                                    case "seller":
+                                        Entity = Seller;
+                                        break;
+                                    case "customer":
+                                        Entity = customer;
+                                        break;
+                                    case "transportation":
+                                        Entity = transportation;
+                                        break;
+                                    default :
+                                        callback({HttpCode: 400, response: {code: "716"}});
+
+                                }
+                                callback("", Entity);
+                            }
+                            break;
+                        case "forgetPassword":
+                            switch (req.originalUrl.substring(8).split("/")[2]) {
+                                case "request":
+                                    if (req.body.PhoneNumber != null && req.body.Role != null) {
+                                        if (!checkPhone(req, res)) {
+                                            callback({HttpCode: 400, response: {"code": 712}});
+                                        }
+                                        else {
+                                            var SwitchStatus = true;
+                                            switch (req.body.Role) {
+                                                case "seller":
+                                                    Entity = Seller;
+                                                    break;
+                                                case  "customer":
+                                                    Entity = customer;
+                                                    break;
+                                                case "transportation" :
+                                                    Entity = transportation;
+                                                    break;
+                                                case "support"   :
+                                                    Entity = sellerOperator;
+                                                    break;
+                                                case "wareHouse":
+                                                    Entity = sellerWareHouse;
+                                                    break;
+                                                default :
+                                                    SwitchStatus = false;
+                                                    callback({HttpCode: 400, response: {response: "716"}});
+                                            }
+                                            if (SwitchStatus) {
+                                                if (req.body.Role === "seller") {
+
+                                                    Entity.findOne({where: {OwnerPhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
+                                                        if (UserModel != null) {
+                                                            if (UserModel.Status) {
+                                                                callback("", UserModel);
+                                                            } else {
+                                                                callback({HttpCode: 400, response: {"code": 900}})
+                                                            }
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {"code": 710}});
+                                                        }
+                                                    });
+                                                } else {
+                                                    Entity.findOne({where: {PhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
+                                                        if (UserModel != null) {
+                                                            if (UserModel.Status) {
+                                                                callback("", UserModel);
+                                                            } else {
+                                                                callback({HttpCode: 400, response: {"code": 900}})
+                                                            }
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {"code": 710}});
+                                                        }
+                                                    });
+                                                }
+
+                                            }
+                                        }
+                                    } else {
+                                        callback({HttpCode: 400, response: {"code": 703}});
+                                    }
+
+                                    break;
+                                case "verify":
+
+                                    break;
+
+                            }
+
+                            break;
+
+                    }
+
+                    break;
+
+            }
+            break;
+
+    }
+
+}
+
+function filterRequest(req, res, type) {
+    switch (type) {
+        case "orderProduct":
+            if (req.body.ID == null || req.body.Status == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            }
+            else if (req.body.Status) {
+                if (req.body.WareHouseID == null) {
+                    res.status(404).json({"code": 703});
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+            break;
+        case "WorderProduct":
+            if (req.body.ID == null || req.body.Status == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            }
+            else if (req.body.Status) {
+                if (req.body.TransportarID == null) {
+                    res.status(404).json({"code": 703});
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+            break;
+            break;
+        case "customerAddress":
+            if (req.body.CityID == null || req.body.GoogleMapAddressLink == null || req.body.CompleteAddressDescription == null || req.body.CustomName == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                return true;
+            }
+            break;
+        case "DoOrder":
+            if (req.body.CustomerAddressID == null || req.body.DateTimeErsal == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                var products = [];
+                products = req.body.products;
+                var status = true;
+                var tof = false;
+
+                function productsIteration(value, index, array) {
+                    if (value.SellerProductID == null || value.Supply == null) {
+                        status = false;
+                        if (!tof) {
+                            res.status(400).json({"code": 703});
+                            tof = true;
+                        }
+                    }
+                }
+
+                if (isThisArrayEmpty(products)) {
+                    res.status(400).json({"code": 703});
+                    return false;
+                } else {
+                    products.forEach(productsIteration);
+
+                    return status;
+                }
+            }
+
+            break;
+        case "followUp":
+            if (req.body.HashCode == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                return true;
+            }
+            break;
+        case "editCustomerAddress":
+            if (req.body.CustomerAddressID == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                return true;
+            }
+            break;
+        case "message":
+            console.log("hi")
+            if (req.body.Message == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                return true;
+            }
+            break;
+        case "Smessage":
+            if (req.body.ToID == null || req.body.Message == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                return true;
+            }
+            break;
+        case "search":
+            if (req.body.param == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                return true;
+            }
+            break;
+        case "Survey":
+            if (req.body.OrderID == null || req.body.Support == null || req.body.Transportar == null || req.body.SellerOperator == null || req.body.Seller == null || req.body.PachalChi == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                return true;
+            }
+            break;
+        case "getPhoneNumber":
+            if (req.query.SellerID == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else {
+                return true;
+            }
+            break;
+
+
+        default :
+            console.log("wrong type parameter")
+    }
+}
+
+function addRoleInfoCheck(req, res, role) {
+    switch (role) {
+
+        case "seller":
+            if (req.body.CompanyName == null ||
+                req.body.CompleteAddressDescription == null ||
+                req.body.GoogleMapAddressLink == null ||
+                req.body.OwnerFamilyName == null ||
+                req.body.OwnerName == null ||
+                req.body.OwnerPhoneNumber == null ||
+                req.body.Username == null ||
+                req.body.Password == null ||
+                req.body.CompanyAddressCityID == null ||
+                req.body.PhoneNumberID == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
+            break;
+        case "transportation":
+            if (req.body.AirConditionar == null ||
+                req.body.BirthDate == null ||
+                req.body.Color == null ||
+                req.body.Description == null ||
+                req.body.FamilyName == null ||
+                req.body.Name == null ||
+                req.body.Password == null ||
+                req.body.PelakNumber == null ||
+                req.body.PhoneNumber == null ||
+                req.body.Username == null ||
+                req.body.ModelID == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
+
+            break;
+        case "wareHouse":
+
+            if (req.body.AgentFamilyName == null ||
+                req.body.AgentName == null ||
+                req.body.BirthDate == null ||
+                req.body.CellPhoneNumber == null ||
+                req.body.Password == null ||
+                req.body.PhoneNumber == null ||
+                req.body.Username == null ||
+                req.body.WareHouseCompleteAddressDescription == null ||
+                req.body.WareHouseGoogleMapAddressLink == null ||
+                req.body.WareHouseAddressCityID == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
+
+            break;
+        case "operator" :
+            if (req.body.BirthDate == null ||
+                req.body.FamilyName == null ||
+                req.body.Name == null ||
+                req.body.Password == null ||
+                req.body.PhoneNumber == null ||
+                req.body.Username == null) {
+                res.status(400).json({"code": 703});
+                return false;
+            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
+
+            break;
+
+        default :
+            return res.status(404).json({"message": "invalid role type"});
+    }
+
 
 }
 
@@ -797,10 +1155,10 @@ function loginInfoCheck(req, res) {
         res.status(400).json({"code": 703});
         return false;
     } else {
-        if (checkPassword(req, res)){
+        if (checkPassword(req, res)) {
             if (req.body.PhoneNumber != null) {
                 return checkPhone(req, res);
-            }else {
+            } else {
                 return checkUserName(req, res);
             }
         } else {
@@ -808,305 +1166,27 @@ function loginInfoCheck(req, res) {
             return false
         }
 
-    };
-
-}
-
-function addRoleInfoCheck(req, res, role) {
-    switch (role) {
-
-        case "seller":
-            if (req.body.CompanyName == null ||
-                req.body.CompleteAddressDescription == null ||
-                req.body.GoogleMapAddressLink == null ||
-                req.body.OwnerFamilyName == null ||
-                req.body.OwnerName == null ||
-                req.body.OwnerPhoneNumber == null ||
-                req.body.Username == null ||
-                req.body.Password == null ||
-                req.body.CompanyAddressCityID == null ||
-                req.body.PhoneNumberID == null) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
-            break;
-        case "transportation":
-            if (req.body.AirConditionar == null ||
-                req.body.BirthDate == null ||
-                req.body.Color == null ||
-                req.body.Description == null ||
-                req.body.FamilyName == null ||
-                req.body.Name == null ||
-                req.body.Password == null ||
-                req.body.PelakNumber == null ||
-                req.body.PhoneNumber == null ||
-                req.body.Username == null ||
-                req.body.ModelID == null ) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
-
-            break;
-        case "wareHouse":
-
-            if (req.body.AgentFamilyName == null ||
-                req.body.AgentName == null ||
-                req.body.BirthDate == null ||
-                req.body.CellPhoneNumber == null ||
-                req.body.Password == null ||
-                req.body.PhoneNumber == null ||
-                req.body.Username == null ||
-                req.body.WareHouseCompleteAddressDescription == null ||
-                req.body.WareHouseGoogleMapAddressLink == null ||
-                req.body.WareHouseAddressCityID == null ) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
-
-            break;
-        case "operator" :
-            if (req.body.BirthDate == null ||
-                req.body.FamilyName == null ||
-                req.body.Name == null ||
-                req.body.Password == null ||
-                req.body.PhoneNumber == null ||
-                req.body.Username == null ) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
-
-            break;
-
-        default :
-            return res.status(404).json({"message": "invalid role type"});
     }
-
-
-}
-
-function checkToken(req, res ) {
-
-    if (req.headers['token'] != null) {
-        try{
-            var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
-            if (decodedJWT.Password == null || (decodedJWT.username  && decodedJWT.PhoneNumber )) {
-                res.status(400).json({"code": 700});
-                return false
-
-            }else {
-
-                var searchQuery ;
-                if (decodedJWT.Username != null) {
-                    searchQuery = {
-                        where: {
-                            Username: decodedJWT.Username, Password: decodedJWT.Password
-                        }
-                    };
-                }else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
-                    try {
-                        searchQuery = {
-                            where: {
-                                PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
-                            }
-                        };
-                    }catch (e) {
-                        searchQuery = {
-                            where: {
-                                OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
-                            }
-                        };
-
-                    }
-
-                }else {
-                    res.status(400).json({"code":700});
-                }
-                return searchQuery;
-
-
-            }
-
-
-
-
-        }  catch(err) {
-            res.status(400).json({"code":700});
-            return false;
-
-        }
-
-
-
-    } else {
-        res.status(400).json({"code": 703});
-        return false;
-    }
+    ;
 
 }
 
-function checkUser(EncodedToken , Entity , callback) {
-
-    Entity.findAll({EncodedToken}).then(user=>{
-        if (!isThisArrayEmpty(user)) {
-            callback("",user[0]);
-        }else {
-            return res.status(400).json({"code": 700});
-        }
-    })
-
-
-
-}
-
-function filterRequest(req,res,type){
-    switch (type) {
-        case "orderProduct":
-            if (req.body.ID == null || req.body.Status == null){res.status(400).json({"code": 703}); return false;}
-            else if (req.body.Status){
-                if (req.body.WareHouseID == null){
-                    res.status(404).json({"code":703});
-                    return false;
-                }else{return true;}
-            }else{return true;}
-            break;
-        case "WorderProduct":
-            if (req.body.ID == null || req.body.Status == null){res.status(400).json({"code": 703}); return false;}
-            else if (req.body.Status){
-                if (req.body.TransportarID == null){
-                    res.status(404).json({"code":703});
-                    return false;
-                }else{return true;}
-            }else{return true;}
-            break;
-            break;
-        case "customerAddress":
-            if (req.body.CityID == null || req.body.GoogleMapAddressLink == null || req.body.CompleteAddressDescription == null || req.body.CustomName == null)
-            {
-                res.status(400).json({"code": 703});
-                return false;
-            }else{return true;}
-            break;
-        case "DoOrder":
-            if (req.body.CustomerAddressID == null || req.body.DateTimeErsal == null ){
-                res.status(400).json({"code": 703});
-                return false;
-            } else {
-                var products = [];
-                products = req.body.products;
-                var status =  true;
-                var tof = false;
-                function productsIteration(value, index, array) {
-                    if (value.SellerProductID == null|| value.Supply == null ){
-                        status = false;
-                        if (!tof) {
-                            res.status(400).json({"code": 703});
-                            tof = true;
-                        }
-                    }
-                }
-                if (isThisArrayEmpty(products)) {
-                    res.status(400).json({"code": 703});
-                    return false;
-                }else {
-                    products.forEach(productsIteration);
-
-                    return status;
-                }
-            }
-
-            break;
-        case "followUp":
-            if (req.body.HashCode == null){
-                res.status(400).json({"code": 703});
-                return false;
-            }else{return true;}
-            break;
-        case "editCustomerAddress":
-            if (req.body.CustomerAddressID == null)
-            {
-                res.status(400).json({"code": 703});
-                return false;
-            }else{return true;}
-            break;
-        case "message":
-            console.log("hi")
-            if ( req.body.Message == null ){
-                res.status(400).json({"code": 703});
-                return false;
-            }else{return true;}
-            break;
-        case "Smessage":
-            if ( req.body.ToID == null || req.body.Message == null  ){
-                res.status(400).json({"code": 703});
-                return false;
-            }else{return true;}
-            break;
-        case "search":
-            if (req.body.param == null){
-                res.status(400).json({"code": 703});
-                return false;
-            }else{return true;}
-            break;
-        case "Survey":
-            if (req.body.OrderID == null || req.body.Support == null || req.body.Transportar == null || req.body.SellerOperator == null || req.body.Seller == null || req.body.PachalChi == null){
-                res.status(400).json({"code": 703});
-                return false;
-            }else{return true;}
-            break;
-        case "getPhoneNumber":
-            if (req.query.SellerID == null){
-                res.status(400).json({"code": 703});
-                return false;
-            }else{return true;}
-            break;
-
-
-
-        default : console.log("wrong type parameter")
-    }
-}
-
-function checkLimitTime(res){
-    var date = new Date();
-    var current_hour = date.getHours();
-    if(!(20<=current_hour<=22)){
-        res.status(404).json({"code":714});
-        return false;
-    }else {
-        return true;
-    }
-}
-
-function checkStatus (searchQuery, Role){
-    Role.findAll(searchQuery).then(
-        entity=>{
-            if (!isThisArrayEmpty(entity)) {
-                if (!entity[0].Status){
-                    return res.status(400).json({"code": 900});
-                }
-            }else {
-                return res.status(400).json({"code": 700});
-            }
-        }
-    );
-}
 
 module.exports = {
+
     checkStatus,
-    smsHandler,
     checkLimitTime,
     filterRequest,
+    FilteringRequest,
     checkToken,
     loginInfoCheck,
     checkUser,
-    registerInfoCheck
-    , fillDataBase
-    , addRoleInfoCheck
-    , base64_decode
-    ,checkPhone
-    , base64_encode
-    , isThisArrayEmpty
-    , response
-    ,checkPassword
+    registerInfoCheck,
+    fillDataBase,
+    addRoleInfoCheck,
+    checkPhone,
+    base64_encode,
+    isThisArrayEmpty,
+    checkPassword
 
 };

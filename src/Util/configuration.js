@@ -1,21 +1,21 @@
 const multer = require("multer");
-var Pusher = require('pusher');
-var Kavenegar = require('kavenegar');
+const Pusher = require('pusher');
+const Kavenegar = require('kavenegar');
 
 
 
-var pusher = new Pusher({
+const pusher = new Pusher({
     appId: 719640 ,
     key: "df6e40d402010a993107" ,
     secret:  "fcea536f8bbf208aa730" ,
     cluster: "us2",
 });
 
-var SmsApi = Kavenegar.KavenegarApi({
+const SmsApi = Kavenegar.KavenegarApi({
     apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'
 });
 
-var selfDestroyKey = "755Amirr2205";
+const selfDestroyKey = "755Amirr2205";
 
 const colors = {
     Reset: "\x1b[0m",
@@ -60,13 +60,6 @@ const USERNAME_REGEX ="^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$"
 const upload = multer({
     dest: "./tempUploads"
 });
-
-const handleError = (err, res) => {
-    res
-        .status(500)
-        .contentType("text/plain")
-        .end("Oops! Something went wrong!");
-};
 
 const databaseStatus = false;
 
@@ -128,6 +121,9 @@ const statusCodes ={
     },
     715:{
         message:"کد وارد شده اشتباه است"
+    },
+    716:{
+        message:"پارامتر role که ارسال کردید اشتباه است"
     }
 
 
@@ -135,13 +131,14 @@ const statusCodes ={
 
 };
 
-
+const BaseUrl = "/api/v1";
 
 
 
 module.exports = {
     statusCodes,
     SmsApi,
+    BaseUrl,
     selfDestroyKey,
     databaseStatus,
     colors,
@@ -149,6 +146,5 @@ module.exports = {
     PASSWORD_REGEX,
     PHONENUMBER_REGEX,
     USERNAME_REGEX,
-    upload,
-    handleError
+    upload
 };

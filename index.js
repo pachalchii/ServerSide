@@ -1,36 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {SmsApi,colors,databaseStatus} = require('./src/Util/myVars');
-const {smsHandler,fillDataBase} = require('./src/Util/myFunctions');
-var cors = require('cors');
-
-const {orderProduct ,Seller, customer, transportation ,sellerOperator, sellerProducts} = require('./sequelize');
-
+const {colors,databaseStatus,BaseUrl} = require('./src/Util/configuration');
+const {fillDataBase} = require('./src/Util/Filter');
+const cors = require('cors');
+const {orderProduct , customer, transportation ,sellerOperator} = require('./sequelize');
 const app = express();
+const io = require('socket.io').listen(port);
+
+
 app.use(bodyParser.json());
 app.use(cors());
-var io = require('socket.io').listen(port);
 
-
-var supportController = require('./src/Controller/SupportController');
-var appController = require('./src/Controller/AppController');
-var customerController = require('./src/Controller/CustomerController');
-var AuthController = require('./src/Controller/AuthController');
-var SellerController = require('./src/Controller/SellerController');
-var transportationController = require('./src/Controller/transportationController');
-var warehouseController = require('./src/Controller/WareHouseController');
-
-
-
-app.use('/application', appController);
-app.use('/support', supportController);
-app.use('/customer', customerController);
-app.use('/Auth', AuthController);
-app.use('/seller', SellerController);
-app.use('/transportation',transportationController);
-app.use('/warehouse',warehouseController);
-
-
+app.use( BaseUrl + '/application', require('./src/Controller/AppController') );
+app.use( BaseUrl + '/support', require('./src/Controller/SupportController') );
+app.use( BaseUrl + '/customer', require('./src/Controller/CustomerController') );
+app.use( BaseUrl + '/auth', require('./src/Controller/AuthController') );
+app.use( BaseUrl + '/seller', require('./src/Controller/SellerController') );
+app.use( BaseUrl + '/transportation', require('./src/Controller/transportationController') );
+app.use( BaseUrl + '/warehouse',require('./src/Controller/WareHouseController') );
 
 app.get('/', function(req, res){
     res.send('pachalChi server is running ...');
@@ -38,10 +25,10 @@ app.get('/', function(req, res){
 
 
 
-var port = process.env.PORT || 1008;
-
+var port = process.env.PORT || 6975;
 
 app.listen(port, () => {
+
     console.log(colors.fg.Green , "                  _           _ _____ _     _    _                   _ _                                _         _ \n" +
         "                 | |         | /  __ \\ |   (_)  (_)                 | (_)                              (_)       | |\n" +
         " _ __   __ _  ___| |__   __ _| | /  \\/ |__  _    _ ___    ___  _ __ | |_ _ __   ___    __ _  __ _  __ _ _ _ __   | |\n" +
@@ -59,20 +46,6 @@ app.listen(port, () => {
     } else {
         fillDataBase();
     }
-
-    /*
-        SmsApi.Send({
-                message: "خدمات پیام کوتاه کاوه نگار",
-                sender: "10004346",
-                receptor: "09127255512"
-            },
-            function(response, status) {
-                console.log(response);
-                console.log(status);
-            });
-    */
-
-
 
 });
 

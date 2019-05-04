@@ -29,7 +29,7 @@ const pachalChiAdminSupportsModel = require('./src/models/PachalChiAdmins&Suppor
 
 
 
-const {colors , databaseStatus} = require('./src/Util/myVars');
+const {colors , databaseStatus} = require('./src/Util/configuration');
 
 
 const sequelize = new Sequelize('pachalChi', 'root', '755amir2205', {

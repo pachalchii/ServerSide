@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const { upload, colors} = require('../Util/myVars');
-const {base64_encode, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/myFunctions');
+const { upload, colors} = require('../Util/configuration');
+const {base64_encode, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/Filter');
 
 const {sellerOperator,sellerPhoneNumber, orderNazarSanji, support, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
 const Op = sequelize.Op;

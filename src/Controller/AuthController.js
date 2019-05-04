@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {application, support, Seller, customer, sequelize, sellerPhoneNumber, transportation, sellerWareHouse, sellerOperator} = require('../../sequelize');
-const {checkPassword, checkStatus,checkUser, checkToken, checkPhone, isThisArrayEmpty, base64_encode, loginInfoCheck, registerInfoCheck} = require('../Util/myFunctions');
-const {SmsApi, upload, colors, JWT_SECRET, handleError} = require('../Util/myVars');
+const {checkPassword, checkUser, FilteringRequest, checkToken, checkPhone, isThisArrayEmpty, base64_encode, loginInfoCheck, registerInfoCheck} = require('../Util/Filter');
+const {SmsApi, upload, JWT_SECRET, handleError} = require('../Util/configuration');
 /*********************************************/
 const multer = require("multer");
 var path = require('path');
@@ -39,13 +39,19 @@ router.post('/register', upload.single("Image"), (req, res) => {
                             image = targetPath;
                             if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG") {
                                 fs.rename(tempPath, targetPath, err => {
-                                    if (err) {status = false;
-                                    return handleError(err, res);}
+                                    if (err) {
+                                        status = false;
+                                        return handleError(err, res);
+                                    }
                                 });
-                                fs.unlink(tempPath, err => {});
+                                fs.unlink(tempPath, err => {
+                                });
                             } else {
                                 fs.unlink(tempPath, err => {
-                                    if (err) { status = false ; return handleError(err, res);}
+                                    if (err) {
+                                        status = false;
+                                        return handleError(err, res);
+                                    }
 
                                     return res
                                         .status(403)
@@ -119,14 +125,20 @@ router.post('/register', upload.single("Image"), (req, res) => {
 
                             if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG") {
                                 fs.rename(tempPath, targetPath, err => {
-                                    if (err) {status = false;
-                                    return handleError(err, res);}
-                                    fs.unlink(tempPath, err => {});
+                                    if (err) {
+                                        status = false;
+                                        return handleError(err, res);
+                                    }
+                                    fs.unlink(tempPath, err => {
+                                    });
 
                                 });
                             } else {
                                 fs.unlink(tempPath, err => {
-                                    if (err) {status = false ; return handleError(err, res);}
+                                    if (err) {
+                                        status = false;
+                                        return handleError(err, res);
+                                    }
 
                                     res
                                         .status(403)
@@ -711,7 +723,7 @@ router.post('/login', (req, res) => {
                                     var token = jwt.encode(payload, JWT_SECRET);
 
 
-                                   return res.json({
+                                    return res.json({
                                         "data": {
 
                                             ID: wareHouse[0].PhoneNumberID,
@@ -888,68 +900,32 @@ router.post('/phoneNumber', (req, res) => {
     }
 });
 
-router.post('/forgetPassword', (req, res) => {
-    if (req.body.PhoneNumber == null || req.body.Role == null) {
-        if (checkPhone(req,res)){
-            var Entity ="";
-            switch (req.body.Role) {
-                case "seller":
-                    Entity = Seller;
-                    break;
-                case  "customer":
-                    Entity = customer;
-                    break;
-                case "transportation" :
-                    Entity = transportation;
-                    break;
-                case "support"   :
-                    Entity = sellerOperator;
-                    break;
-                case "wareHouse":
-                    Entity = sellerWareHouse;
-                    break;
-                default :
-                    return res.status(404).json({"message": "role is wrong "});
-            }
-            Entity.findAll({where: {PhoneNumber: req.body.PhoneNumber}}).then(
-                objects => {
-                    if (!isThisArrayEmpty(objects)) {
-                        if (objects[0].Status) {
-                            var authcode = Math.floor(Math.random() * 90000) + 10000;
-                            Entity.update({AuthCode: authcode}, {where: {PhoneNumber: req.body.PhoneNumber}}).then(obj => {
-                                return res.json();
-                            })
+router.post('/forgetPassword/request', (req, res) => {
 
-
-                        } else {
-                            return res.status(404).json({"code": 900});
-                        }
-                    } else {
-                        return res.status(404).json();
-
-                    }
-                }
-            );
-        }else {
-            return res.status(404).json({"code": 712});
+    FilteringRequest(req, res, (err, data) => {
+        if (err) {
+            return res.status(err.HttpCode).json(err.response);
+        } else {
+            var authcode = Math.floor(Math.random() * 90000) + 10000;
+            data.update({AuthCode: authcode}).then(() => {
+                return res.json();
+            })
         }
-    } else {
-        return res.status(404).json({"code": 703});
 
-    }
 
+    });
 
 });
 
-router.post('/forgetPassword/submit', (req, res) => {
+router.post('/forgetPassword/verify', (req, res) => {
     if (req.body.PhoneNumber == null || req.body.code == null || req.body.Password == null || req.body.Role == null) {
         if (checkPassword(req, res)) {
-            if (checkPhone(req,res)){
+            if (checkPhone(req, res)) {
 
-                var Entity ="";
+                var Entity = "";
                 switch (req.body.Role) {
                     case "seller":
-                    Entity = Seller;
+                        Entity = Seller;
                         break;
                     case  "customer":
                         Entity = customer;
@@ -987,11 +963,11 @@ router.post('/forgetPassword/submit', (req, res) => {
                         }
                     }
                 );
-            }else {
+            } else {
                 return res.status(404).json({"code": 712});
             }
 
-        }else {
+        } else {
             return res.status(404).json({"code": 712});
         }
 
@@ -1003,63 +979,26 @@ router.post('/forgetPassword/submit', (req, res) => {
 });
 
 router.post('/tokenCheck', (req, res) => {
-    if (req.body.Role == null || req.body.ClientVersion == null) {
-        return res.status(400).json({"code": 703});
-    }else {
-        switch (req.body.Role) {
-            case "seller":
 
-                checkUser(checkToken(req, res, req.body.Role),Seller ,(err,data)=>{
-                    if (!err){
-                        application.findAll().then(
-                            app => {
-                                if (req.body.ClientVersion === app[0].ClientVersion) {
-                                    return res.json({"data": {"forceUpdate": false}});
-                                } else {
-                                    return res.json({"data": {"forceUpdate": true}});
-                                }
+    FilteringRequest(req, res, (err, data) => {
+        if (err) {
+            return res.status(err.HttpCode).json(err.response);
+        } else {
+            checkUser(checkToken(req, res, req.body.Role), data, (err, data) => {
+                if (!err) {
+                    application.findOne().then(
+                        app => {
+                            if (req.body.ClientVersion === app.ClientVersion) {
+                                return res.json({"data": {"forceUpdate": false}});
+                            } else {
+                                return res.json({"data": {"forceUpdate": true}});
                             }
-                        );
-                    }
-                });
-
-                break;
-            case "customer":
-                checkUser(checkToken(req, res, req.body.Role),customer ,(err,data)=>{
-                    if (!err){
-                        application.findAll().then(
-                            app => {
-                                if (req.body.ClientVersion === app[0].ClientVersion) {
-                                    return res.json({"data": {"forceUpdate": false}});
-                                } else {
-                                    return res.json({"data": {"forceUpdate": true}});
-                                }
-                            }
-                        );
-                    }
-                });
-                break;
-            case "transportation":
-                checkUser(checkToken(req, res, req.body.Role),transportation ,(err,data)=>{
-                    if (!err){
-                        application.findAll().then(
-                            app => {
-                                if (req.body.ClientVersion === app[0].ClientVersion) {
-                                    return res.json({"data": {"forceUpdate": false}});
-                                } else {
-                                    return res.json({"data": {"forceUpdate": true}});
-                                }
-                            }
-                        );
-                    }
-                });
-                break;
-
+                        }
+                    );
+                }
+            });
         }
-
-    }
-
-
+    });
 
 });
 

@@ -1,6 +1,0 @@
-var application  ={
-    backEnd:{
-
-    },
-    frontEnd:{}
-}

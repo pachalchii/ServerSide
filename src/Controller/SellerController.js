@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {checkLimitTime, filterRequest, checkToken, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/myFunctions');
-const {handleError, colors, JWT_SECRET, upload} = require('../Util/myVars');
+const {checkLimitTime, filterRequest, checkToken, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/Filter');
+const {handleError, colors, JWT_SECRET, upload} = require('../Util/configuration');
 const {orderNazarSanji,orderProduct,Order, customer, sellerOperator, sellerPhoneNumber,Seller, sellerProducts, sellerWareHouse, transportation, sequelize, products, unit} = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
