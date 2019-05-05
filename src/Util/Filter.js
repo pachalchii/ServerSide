@@ -4,22 +4,8 @@ const {colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = 
 var jwt = require('jwt-simple');
 var path = require('path');
 const fs = require("fs");
+var md5 = require('md5');
 
-function smsHandler(message, phone) {
-    var api = Kavenegar.KavenegarApi({
-        apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'
-    });
-    api.Send({
-            message: message,
-            sender: "100065995",
-            receptor: phone
-        },
-        function (response, status) {
-            console.log(response);
-            console.log(status);
-        });
-
-}
 
 function base64_encode(file) {
     // read binary data
@@ -629,7 +615,9 @@ function fillDataBase() {
         if (app[0] === undefined) {
             application.create({
                 "ID": "1",
-                "ClientVersion": "1.0.0"
+                "ClientVersion": "1.0.0",
+                "UpdateLink": "1.0.0",
+                "UpdateMessage": "1.0.0"
             }).then(
                 console.log(colors.bg.Green, "import  app  demo data done successfuly", colors.Reset)
             );
@@ -788,6 +776,7 @@ function checkUser(EncodedToken, Entity, callback) {
 }
 
 function FilteringRequest(req, res, callback) {
+
     var Entity = "";
     var SwitchStatus = true;
     switch (req.originalUrl.substring(0, 8)) {
@@ -952,6 +941,494 @@ function FilteringRequest(req, res, callback) {
                                     }
                                     break;
                             }
+
+                            break;
+                        case "phoneNumber":
+                            if (req.body.PhoneNumber1 == null && req.body.PhoneNumber2 == null && req.body.PhoneNumber3 == null && req.body.PhoneNumber4 == null && req.body.PhoneNumber5 == null  )
+                            {
+                                callback({HttpCode: 400, response: {response: "703"}});
+
+                            } else {
+                                callback("","");
+                            }
+
+                        break;
+                        case "login":
+                        function BiuldLoginSearchQuery(req,res, callback) {
+                            if (req.body.PhoneNumber != null){
+                                if (req.body.Role === "seller"){
+                                    callback("",
+                                        {
+                                            where: {
+                                                OwnerPhoneNumber: req.body.PhoneNumber, password: md5(req.body.Password)
+                                            }
+                                        });
+                                }else {
+                                    callback("",
+                                        {
+                                            where: {
+                                                PhoneNumber: req.body.PhoneNumber, password: md5(req.body.Password)
+                                            }
+                                        });
+                                }
+
+
+                            } else if (req.body.Username != null){
+                                callback("",{
+                                    where: {
+                                        Username: req.body.Username, Password: md5(req.body.Password)
+                                    }
+                                }) ;
+                            }
+                        }
+                            if (req.body.Role == null || req.body.Password == null || (req.body.Username == null && req.body.PhoneNumber == null)) {
+                                callback({HttpCode: 400, response: {response: "703"}});
+                            } else {
+                                if (checkPassword(req, res)) {
+                                    var InfoStatus = true;
+                                    if (req.body.PhoneNumber != null) {
+                                        InfoStatus = checkPhone(req, res);
+                                    } else {
+                                        InfoStatus = checkUserName(req, res);
+                                    }
+                                }else {
+                                    InfoStatus = false;
+                                }
+                                if (InfoStatus){
+                                    BiuldLoginSearchQuery(req,res,(err,data)=>{
+                                        if (!err){
+                                            switch (req.body.Role) {
+                                                case "customer":
+                                                    customer.findOne(data).then(customer => {
+                                                        if (customer != null) {
+                                                            var payload = {
+                                                                Username: customer.Username,
+                                                                Password: customer.Password
+                                                            };
+                                                            var base64str = "not Found";
+                                                            try {
+                                                                base64str = base64_encode(customer.Image);
+
+                                                            } catch (e) {
+                                                                base64str = "not Found";
+
+                                                            }
+                                                            var token = jwt.encode(payload, JWT_SECRET);
+                                                            callback("",{
+                                                                "data": {
+                                                                    BirthDate: customer.BirthDate,
+                                                                    Image: base64str,
+                                                                    CompanyName: customer.CompanyName,
+                                                                    Enable: customer.Enable,
+                                                                    Status: customer.Status,
+                                                                    FamilyName: customer.FamilyName,
+                                                                    Name: customer.Name,
+                                                                    PhoneNumber: customer.PhoneNumber,
+                                                                    Point: customer.Point,
+                                                                    RegistrationDateTime: customer.RegistrationDateTime,
+                                                                    Theme: customer.Theme,
+                                                                    Username: customer.Username,
+                                                                    CityID: customer.CityID,
+                                                                    Token: token
+                                                                }
+                                                            });
+
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                        }
+
+                                                    });
+                                                    break;
+                                                case "seller":
+                                                            Seller.findOne(data).then(seller => {
+                                                                if (seller != null) {
+                                                                    var payload = {
+                                                                        OwnerPhoneNumber: seller.OwnerPhoneNumber,
+                                                                        Password: seller.Password,
+                                                                    };
+                                                                    var base64str = "not Found";
+                                                                    try {
+                                                                        base64str = base64_encode(seller.LogoImage);
+
+                                                                    } catch (e) {
+                                                                        base64str = "not Found";
+
+                                                                    }
+                                                                    var token = jwt.encode(payload, JWT_SECRET);
+
+                                                                    callback("",{
+                                                                        "data": {
+
+                                                                            ID: seller.PhoneNumberID,
+                                                                            CompanyName: seller.CompanyName,
+                                                                            CompleteAddressDescription: seller.CompleteAddressDescription,
+                                                                            Enable: seller.Enable,
+                                                                            Point: seller.Point,
+                                                                            RegistrationDateTime: seller.RegistrationDateTime,
+                                                                            GoogleMapAddressLink: seller.GoogleMapAddressLink,
+                                                                            LogoImage: base64str,
+                                                                            OwnerFamilyName: seller.OwnerFamilyName,
+                                                                            OwnerName: seller.OwnerName,
+                                                                            Password: seller.Password,
+                                                                            OwnerPhoneNumber: seller.OwnerPhoneNumber,
+                                                                            Username: seller.Username,
+                                                                            CompanyAddressCityID: seller.CompanyAddressCityID,
+                                                                            PhoneNumberID: seller.PhoneNumberID,
+                                                                            TypeID: seller.TypeID,
+                                                                            Token: token
+                                                                        }
+                                                                    });
+
+
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {response: "710"}});
+                                                                }
+
+
+                                                            });
+                                                    break;
+                                                case "transportation":
+                                                            transportation.findOne(data).then(trans => {
+                                                                if (trans != null) {
+                                                                    var payload = {
+                                                                        PhoneNumber: trans.PhoneNumber,
+                                                                        password: trans.password,
+                                                                        random: Math.random()
+                                                                    };
+
+
+                                                                    var base64str = "not Found";
+                                                                    try {
+                                                                        base64str = base64_encode(trans.Image);
+
+                                                                    } catch (e) {
+                                                                        base64str = "not Found";
+
+                                                                    }
+                                                                    var token = jwt.encode(payload, JWT_SECRET);
+
+                                                                        callback("",{
+                                                                            "data": {
+
+                                                                                ID: trans.PhoneNumberID,
+                                                                                AirConditionar: trans.AirConditionar,
+                                                                                Color: trans.Color,
+                                                                                Description: trans.Description,
+                                                                                FamilyName: trans.FamilyName,
+                                                                                Image: base64str,
+                                                                                Name: trans.Name,
+                                                                                PelakNumber: trans.PelakNumber,
+                                                                                PhoneNumber: trans.PhoneNumber,
+                                                                                Point: trans.Point,
+                                                                                Username: trans.Username,
+                                                                                ModelID: trans.ModelID,
+                                                                                WareHouseID: trans.WareHouseID,
+                                                                                Token: token
+                                                                            }
+                                                                        });
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {response: "710"}});
+                                                                }
+
+
+                                                            });
+
+
+
+                                                    break;
+                                                case "support":
+                                                            support.findOne(data).then(support => {
+                                                                if (support != null) {
+                                                                    var payload = {
+                                                                        PhoneNumber: support.PhoneNumber,
+                                                                        Password: support.Password,
+                                                                        random: Math.random()
+                                                                    };
+
+
+                                                                    var base64str = "not Found";
+                                                                    try {
+                                                                        base64str = base64_encode(support.Image);
+
+                                                                    } catch (e) {
+                                                                        base64str = "not Found";
+
+                                                                    }
+                                                                    var token = jwt.encode(payload, JWT_SECRET);
+
+                                                                    callback("",{
+                                                                        "data": {
+
+                                                                            ID: support.ID,
+                                                                            Image: base64str,
+                                                                            Name: support.Name,
+                                                                            FamilyName: support.FamilyName,
+                                                                            Username: support.Username,
+                                                                            Token: token
+
+                                                                        }
+                                                                    });
+
+                                                                                                        } else {
+                                                                    callback({HttpCode: 404, response: {response: "710"}});
+                                                                }
+
+
+                                                            });
+                                                    break;
+                                                case "wareHouse":
+                                                            sellerWareHouse.findOne(data).then(wareHouse => {
+                                                                if (wareHouse  != null) {
+                                                                    var payload = {
+                                                                        PhoneNumber: wareHouse.PhoneNumber,
+                                                                        Password: wareHouse.Password,
+                                                                        random: Math.random()
+                                                                    };
+
+
+                                                                    var base64str = "not Found";
+                                                                    try {
+                                                                        base64str = base64_encode(wareHouse.Image);
+
+                                                                    } catch (e) {
+                                                                        base64str = "not Found";
+
+                                                                    }
+                                                                    var token = jwt.encode(payload, JWT_SECRET);
+
+                                                                    callback("",{
+                                                                        "data": {
+
+                                                                            ID: wareHouse.PhoneNumberID,
+                                                                            AgentFamilyName: wareHouse.AgentFamilyName,
+                                                                            AgentName: wareHouse.AgentName,
+                                                                            BirthDate: wareHouse.BirthDate,
+                                                                            CellPhoneNumber: wareHouse.CellPhoneNumber,
+                                                                            Image: base64str,
+                                                                            PhoneNumberID: wareHouse.PhoneNumber,
+                                                                            Point: wareHouse.Point,
+                                                                            Username: wareHouse.Username,
+                                                                            WareHouseCompleteAddressDescriptione: wareHouse.WareHouseCompleteAddressDescriptione,
+                                                                            WareHouseGoogleMapAddressLink: wareHouse.WareHouseGoogleMapAddressLink,
+                                                                            WareHouseAddressCityID: wareHouse.WareHouseAddressCityID,
+                                                                            SellerIDr: wareHouse.SellerID,
+                                                                            Token: token
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {response: "710"}});
+                                                                }
+
+
+                                                            });
+                                                    break;
+                                                case "operator":
+                                                            sellerOperator.findAll(data).then(operator => {
+                                                                if (operator != null) {
+                                                                    var payload = {
+                                                                        PhoneNumber: operator.PhoneNumber,
+                                                                        Password: operator.Password,
+                                                                        random: Math.random()
+                                                                    };
+
+
+                                                                    var base64str = "not Found";
+                                                                    try {
+                                                                        base64str = base64_encode(operator.Image);
+
+                                                                    } catch (e) {
+                                                                        base64str = "not Found";
+
+                                                                    }
+                                                                    var token = jwt.encode(payload, JWT_SECRET);
+
+                                                                    callback("",{
+                                                                        "data": {
+
+                                                                            ID: operator.PhoneNumberID,
+                                                                            FamilyName: operator.FamilyName,
+                                                                            Name: operator.Name,
+                                                                            BirthDate: operator.BirthDate,
+                                                                            PhoneNumber: operator.PhoneNumber,
+                                                                            Image: base64str,
+                                                                            Point: operator.Point,
+                                                                            Username: operator.Username,
+                                                                            SellerID: operator.SellerID,
+                                                                            Token: token
+
+
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {response: "710"}});
+                                                                }
+
+
+                                                            });
+                                                    break;
+                                                default:callback({HttpCode: 404, response: {response: "716"}});
+
+                                            }
+                                        }
+                                    });
+                                }
+
+                            }
+                            break;
+                        case "register":
+                        function registerInfoCheck(req, res, role) {
+                            switch (role) {
+                                case "customer":
+                                    if (req.body.BirthDate == null ||
+                                        req.body.CompanyName == null ||
+                                        req.body.FamilyName == null ||
+                                        req.body.Name == null ||
+                                        req.body.Password == null ||
+                                        req.body.PhoneNumber == null ||
+                                        req.body.RegistrationDateTime == null ||
+                                        req.body.Theme == null ||
+                                        req.body.Username == null ||
+                                        req.body.CityID == null
+                                    ) {
+                                        res.status(400).json({"code": 703});
+                                        return false;
+                                    } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
+                                    break;
+
+                                case "seller":
+                                    if (req.body.CompanyName == null ||
+                                        req.body.CompleteAddressDescription == null ||
+                                        req.body.GoogleMapAddressLink == null ||
+                                        req.body.OwnerName == null ||
+                                        req.body.OwnerFamilyName == null ||
+                                        req.body.OwnerPhoneNumber == null ||
+                                        req.body.Username == null ||
+                                        req.body.Password == null ||
+                                        req.body.CompanyAddressCityID == null ||
+                                        req.body.PhoneNumberID == null) {
+                                        res.status(400).json({"code": 703});
+                                        return false;
+                                    } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
+                                    break;
+                            }
+
+
+                        }
+                                if (req.body.Role == null) {
+                                callback({HttpCode: 404, response: {response: "716"}});
+                                } else {
+                                    if (registerInfoCheck(req, res, req.body.Role)) {
+
+                                        switch (req.body.Role) {
+                                            case "customer":
+                                                if (req.file != null) {
+
+                                                    const tempPath = req.file.path;
+                                                    const targetPath = path.join(__dirname, "./../../uploads/customer/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
+                                                    image = targetPath;
+                                                    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG") {
+                                                        fs.rename(tempPath, targetPath, err => {
+                                                            if (err) {
+                                                                console.log(err)
+                                                            }
+                                                        });
+                                                        fs.unlink(tempPath, err => {
+                                                        });
+                                                    } else {
+                                                        fs.unlink(tempPath, err => {
+                                                            if (err) {
+                                                                status = false;
+                                                                return handleError(err, res);
+                                                            }
+
+                                                            return res
+                                                                .status(403)
+                                                                .contentType("text/plain")
+                                                                .end("this format of image is not under support");
+                                                        });
+                                                    }
+
+
+                                                } else {
+                                                    image = "notSetYet";
+                                                }
+                                                callback("",{
+                                                    BirthDate: req.body.BirthDate,
+                                                    CompanyName: req.body.CompanyName,
+                                                    Enable: true,
+                                                    Status: true,
+                                                    FamilyName: req.body.FamilyName,
+                                                    Image: image,
+                                                    Name: req.body.Name,
+                                                    PhoneNumber: req.body.PhoneNumber,
+                                                    Password: md5(req.body.Password),
+                                                    EstablishedDate: req.body.EstablishedDate,
+                                                    Point: 0,
+                                                    RegistrationDateTime: req.body.RegistrationDateTime,
+                                                    Theme: req.body.Theme,
+                                                    Username: req.body.Username,
+                                                    CityID: req.body.CityID
+
+                                                });
+                                                break;
+                                            case "seller":
+                                                    if (req.file != null) {
+                                                        const tempPath = req.file.path;
+                                                        const targetPath = path.join(__dirname, "./../../uploads/seller/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
+                                                        image = targetPath;
+
+                                                        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG") {
+                                                            fs.rename(tempPath, targetPath, err => {
+                                                                if (err) {
+                                                                    console.log(err);
+                                                                }
+
+
+                                                            });
+                                                        } else {
+                                                            fs.unlink(tempPath, err => {
+                                                                if (err) {
+                                                                    status = false;
+                                                                    return handleError(err, res);
+                                                                }
+
+                                                                res
+                                                                    .status(403)
+                                                                    .contentType("text/plain")
+                                                                    .end("this format of image is not under support");
+                                                            });
+                                                        }
+
+                                                    } else {
+                                                        image = "notSetYet";
+                                                    }
+                                                    callback("",{
+                                                        ID: req.body.PhoneNumberID,
+                                                        CompanyName: req.body.CompanyName,
+                                                        CompleteAddressDescription: req.body.CompleteAddressDescription,
+                                                        Status: true,
+                                                        Point: 0,
+                                                        RegistrationDateTime: req.body.RegistrationDateTime,
+                                                        GoogleMapAddressLink: req.body.GoogleMapAddressLink,
+                                                        LogoImage: image,
+                                                        OwnerFamilyName: req.body.OwnerFamilyName,
+                                                        OwnerName: req.body.OwnerName,
+                                                        Password: md5(req.body.Password),
+                                                        OwnerPhoneNumber: req.body.OwnerPhoneNumber,
+                                                        Username: req.body.Username,
+                                                        CompanyAddressCityID: req.body.CompanyAddressCityID,
+                                                        PhoneNumberID: req.body.PhoneNumberID,
+                                                        TypeID: 1
+
+                                                    });
+
+                                                break;
+                                            default:callback({HttpCode: 404, response: {response: "716"}});
+                                        }
+
+                                    }
+                                }
+
 
                             break;
 
@@ -1176,80 +1653,16 @@ function addRoleInfoCheck(req, res, role) {
 
 }
 
-function registerInfoCheck(req, res, role) {
-    switch (role) {
-        case "customer":
-            if (req.body.BirthDate == null ||
-                req.body.CompanyName == null ||
-                req.body.FamilyName == null ||
-                req.body.Name == null ||
-                req.body.Password == null ||
-                req.body.PhoneNumber == null ||
-                req.body.RegistrationDateTime == null ||
-                req.body.Theme == null ||
-                req.body.Username == null ||
-                req.body.CityID == null
-            ) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
-            break;
 
-        case "seller":
-            if (req.body.CompanyName == null ||
-                req.body.CompleteAddressDescription == null ||
-                req.body.GoogleMapAddressLink == null ||
-                req.body.OwnerName == null ||
-                req.body.OwnerFamilyName == null ||
-                req.body.OwnerPhoneNumber == null ||
-                req.body.Username == null ||
-                req.body.Password == null ||
-                req.body.CompanyAddressCityID == null ||
-                req.body.PhoneNumberID == null) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
-            break;
-    }
-
-
-}
-
-function loginInfoCheck(req, res) {
-    if (
-        req.body.Password == null || (req.body.PhoneNumber == null && req.body.Username == null)
-
-    ) {
-        res.status(400).json({"code": 703});
-        return false;
-    } else {
-        if (checkPassword(req, res)) {
-            if (req.body.PhoneNumber != null) {
-                return checkPhone(req, res);
-            } else {
-                return checkUserName(req, res);
-            }
-        } else {
-            res.status(400).json({"code": 712});
-            return false
-        }
-
-    }
-    ;
-
-}
 
 
 module.exports = {
 
-    checkStatus,
     checkLimitTime,
     filterRequest,
     FilteringRequest,
     checkToken,
-    loginInfoCheck,
     checkUser,
-    registerInfoCheck,
     fillDataBase,
     addRoleInfoCheck,
     checkPhone,
