@@ -17,9 +17,9 @@ var jwt = require('jwt-simple');
 
 
 router.post('/register', upload.single("Image"), (req, res) => {
-
     try {
         FilteringRequest(req,res,(err,data)=>{
+
             if (err){
                 return res.status(err.HttpCode).json(err.response);
             } else {

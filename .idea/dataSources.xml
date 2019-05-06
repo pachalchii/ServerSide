@@ -15,5 +15,14 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="PachalChi-docker-SqlServer" uuid="cda78850-1049-4809-8ee0-2f8cc66b83a2">
+      <driver-ref>sqlserver.jtds</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:jtds:sqlserver://localhost:1433</jdbc-url>
+      <driver-properties>
+        <property name="appName" value="DataGrip" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>

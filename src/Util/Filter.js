@@ -1,10 +1,11 @@
 const {cities, sellerType, customer, Seller, sellerOperator, sellerWareHouse, transportation, productGroups, products, unit, car} = require('../../sequelize');
-const {application} = require('../../sequelize');
+const {application,sellerPhoneNumber} = require('../../sequelize');
 const {colors, PHONENUMBER_REGEX, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 var jwt = require('jwt-simple');
 var path = require('path');
 const fs = require("fs");
 var md5 = require('md5');
+const asyncForEach = require('async-await-foreach')
 
 
 function base64_encode(file) {
@@ -748,18 +749,28 @@ function checkLimitTime(res) {
     }
 }
 
-function checkStatus(searchQuery, Role) {
-    Role.findAll(searchQuery).then(
-        entity => {
-            if (!isThisArrayEmpty(entity)) {
-                if (!entity[0].Status) {
-                    return res.status(400).json({"code": 900});
-                }
-            } else {
-                return res.status(400).json({"code": 700});
-            }
+/**
+ * @return {boolean}
+ */
+function CheckForeginKey(res ,array) {
+    var status = true;
+    array.forEach((value)=>{
+        if (value.Id == null || value.Entity == null ){
+            status= false;
+            console.log("incomming array is not in the ideal style");
         }
-    );
+    });
+    if (status) {
+        asyncForEach(array, async item => {
+            item.Entity.findOne({where:{Id:item.Id}}).then(Model=>{
+                if (Model == null) {  status = false;return res.status(400).json({"code":718}); }
+            });
+        }).then(() => {
+            return status;
+        });
+    }else {
+        return false;
+    }
 }
 
 function checkUser(EncodedToken, Entity, callback) {
@@ -1318,114 +1329,118 @@ function FilteringRequest(req, res, callback) {
                                 callback({HttpCode: 404, response: {response: "716"}});
                                 } else {
                                     if (registerInfoCheck(req, res, req.body.Role)) {
+                                            switch (req.body.Role) {
+                                                case "customer":
 
-                                        switch (req.body.Role) {
-                                            case "customer":
-                                                if (req.file != null) {
+                                                    if (CheckForeginKey(res,[{Id:req.body.CityID , Entity:cities}]) !== undefined){
 
-                                                    const tempPath = req.file.path;
-                                                    const targetPath = path.join(__dirname, "./../../uploads/customer/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
-                                                    image = targetPath;
-                                                    if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG") {
-                                                        fs.rename(tempPath, targetPath, err => {
-                                                            if (err) {
-                                                                console.log(err)
+                                                        if (req.file != null) {
+
+                                                            const tempPath = req.file.path;
+                                                            const targetPath = path.join(__dirname, "./../../uploads/customer/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
+                                                            image = targetPath;
+                                                            if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG") {
+                                                                fs.rename(tempPath, targetPath, err => {
+                                                                    if (err) {
+                                                                        console.log(err)
+                                                                    }
+                                                                });
+                                                                fs.unlink(tempPath, err => {
+                                                                });
+                                                            } else {
+                                                                fs.unlink(tempPath, err => {
+                                                                    if (err) {
+                                                                        status = false;
+                                                                        return handleError(err, res);
+                                                                    }
+
+                                                                    return res
+                                                                        .status(403)
+                                                                        .contentType("text/plain")
+                                                                        .end("this format of image is not under support");
+                                                                });
                                                             }
-                                                        });
-                                                        fs.unlink(tempPath, err => {
-                                                        });
-                                                    } else {
-                                                        fs.unlink(tempPath, err => {
-                                                            if (err) {
-                                                                status = false;
-                                                                return handleError(err, res);
-                                                            }
-
-                                                            return res
-                                                                .status(403)
-                                                                .contentType("text/plain")
-                                                                .end("this format of image is not under support");
-                                                        });
-                                                    }
 
 
-                                                } else {
-                                                    image = "notSetYet";
-                                                }
-                                                callback("",{
-                                                    BirthDate: req.body.BirthDate,
-                                                    CompanyName: req.body.CompanyName,
-                                                    Enable: true,
-                                                    Status: true,
-                                                    FamilyName: req.body.FamilyName,
-                                                    Image: image,
-                                                    Name: req.body.Name,
-                                                    PhoneNumber: req.body.PhoneNumber,
-                                                    Password: md5(req.body.Password),
-                                                    EstablishedDate: req.body.EstablishedDate,
-                                                    Point: 0,
-                                                    RegistrationDateTime: req.body.RegistrationDateTime,
-                                                    Theme: req.body.Theme,
-                                                    Username: req.body.Username,
-                                                    CityID: req.body.CityID
-
-                                                });
-                                                break;
-                                            case "seller":
-                                                    if (req.file != null) {
-                                                        const tempPath = req.file.path;
-                                                        const targetPath = path.join(__dirname, "./../../uploads/seller/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
-                                                        image = targetPath;
-
-                                                        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG") {
-                                                            fs.rename(tempPath, targetPath, err => {
-                                                                if (err) {
-                                                                    console.log(err);
-                                                                }
-
-
-                                                            });
                                                         } else {
-                                                            fs.unlink(tempPath, err => {
-                                                                if (err) {
-                                                                    status = false;
-                                                                    return handleError(err, res);
-                                                                }
-
-                                                                res
-                                                                    .status(403)
-                                                                    .contentType("text/plain")
-                                                                    .end("this format of image is not under support");
-                                                            });
+                                                            image = "notSetYet";
                                                         }
+                                                        callback("",{
+                                                            BirthDate: req.body.BirthDate,
+                                                            CompanyName: req.body.CompanyName,
+                                                            Enable: true,
+                                                            Status: true,
+                                                            FamilyName: req.body.FamilyName,
+                                                            Image: image,
+                                                            Name: req.body.Name,
+                                                            PhoneNumber: req.body.PhoneNumber,
+                                                            Password: md5(req.body.Password),
+                                                            EstablishedDate: req.body.EstablishedDate,
+                                                            Point: 0,
+                                                            RegistrationDateTime: req.body.RegistrationDateTime,
+                                                            Theme: req.body.Theme,
+                                                            Username: req.body.Username,
+                                                            CityID: req.body.CityID
 
-                                                    } else {
-                                                        image = "notSetYet";
+                                                        });
+
                                                     }
-                                                    callback("",{
-                                                        ID: req.body.PhoneNumberID,
-                                                        CompanyName: req.body.CompanyName,
-                                                        CompleteAddressDescription: req.body.CompleteAddressDescription,
-                                                        Status: true,
-                                                        Point: 0,
-                                                        RegistrationDateTime: req.body.RegistrationDateTime,
-                                                        GoogleMapAddressLink: req.body.GoogleMapAddressLink,
-                                                        LogoImage: image,
-                                                        OwnerFamilyName: req.body.OwnerFamilyName,
-                                                        OwnerName: req.body.OwnerName,
-                                                        Password: md5(req.body.Password),
-                                                        OwnerPhoneNumber: req.body.OwnerPhoneNumber,
-                                                        Username: req.body.Username,
-                                                        CompanyAddressCityID: req.body.CompanyAddressCityID,
-                                                        PhoneNumberID: req.body.PhoneNumberID,
-                                                        TypeID: 1
+                                                    break;
+                                                case "seller":
+                                                    if(CheckForeginKey(res,[{Id:CompanyAddressCityID,Entity:cities},{Id:PhoneNumberID,Entity:sellerPhoneNumber}])!== undefined){
+                                                        if (req.file != null) {
+                                                            const tempPath = req.file.path;
+                                                            const targetPath = path.join(__dirname, "./../../uploads/seller/" + req.body.Username + path.extname(req.file.originalname).toLowerCase());
+                                                            image = targetPath;
 
-                                                    });
+                                                            if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG") {
+                                                                fs.rename(tempPath, targetPath, err => {
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                    }
 
-                                                break;
-                                            default:callback({HttpCode: 404, response: {response: "716"}});
-                                        }
 
+                                                                });
+                                                            } else {
+                                                                fs.unlink(tempPath, err => {
+                                                                    if (err) {
+                                                                        status = false;
+                                                                        return handleError(err, res);
+                                                                    }
+
+                                                                    res
+                                                                        .status(403)
+                                                                        .contentType("text/plain")
+                                                                        .end("this format of image is not under support");
+                                                                });
+                                                            }
+
+                                                        } else {
+                                                            image = "notSetYet";
+                                                        }
+                                                        callback("",{
+                                                            ID: req.body.PhoneNumberID,
+                                                            CompanyName: req.body.CompanyName,
+                                                            CompleteAddressDescription: req.body.CompleteAddressDescription,
+                                                            Status: true,
+                                                            Point: 0,
+                                                            RegistrationDateTime: req.body.RegistrationDateTime,
+                                                            GoogleMapAddressLink: req.body.GoogleMapAddressLink,
+                                                            LogoImage: image,
+                                                            OwnerFamilyName: req.body.OwnerFamilyName,
+                                                            OwnerName: req.body.OwnerName,
+                                                            Password: md5(req.body.Password),
+                                                            OwnerPhoneNumber: req.body.OwnerPhoneNumber,
+                                                            Username: req.body.Username,
+                                                            CompanyAddressCityID: req.body.CompanyAddressCityID,
+                                                            PhoneNumberID: req.body.PhoneNumberID,
+                                                            TypeID: 1
+
+                                                        });
+                                                    }
+                                                    break;
+                                                default:callback({HttpCode: 404, response: {response: "716"}});
+                                            }
                                     }
                                 }
 
