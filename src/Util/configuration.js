@@ -1,21 +1,5 @@
 const multer = require("multer");
-const Pusher = require('pusher');
-const Kavenegar = require('kavenegar');
 
-
-
-const pusher = new Pusher({
-    appId: 719640 ,
-    key: "df6e40d402010a993107" ,
-    secret:  "fcea536f8bbf208aa730" ,
-    cluster: "us2",
-});
-
-const SmsApi = Kavenegar.KavenegarApi({
-    apikey: '394B54306C322B487455556F65446A4837376B6C4D70454E49624F5252725438'
-});
-
-const selfDestroyKey = "755Amirr2205";
 
 const colors = {
     Reset: "\x1b[0m",
@@ -58,7 +42,7 @@ const PASSWORD_REGEX = "(?=.{8,})" ;
 const USERNAME_REGEX ="^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
 
 const upload = multer({
-    dest: "./tempUploads"
+    dest: "./../../uploads/tempUploads"
 });
 
 const databaseStatus = false;
@@ -130,10 +114,30 @@ const statusCodes ={
     },
     718:{
         message:"ایدی وارد شده یافت نشد"
+    },
+    719:{
+        message:"سایز عکس ارسالی مناسب نمیباشد"
+    },
+    720:{
+        message:"عکس ارسالی در فرمت مناسب نمیباشد"
     }
 
 
 };
+
+const UplodDirs = {
+    "seller":"./../../uploads/seller/",
+    "customer":"./../../uploads/customer/"
+
+};
+
+const ValidImageFormat = [
+    ".png",
+    ".jpg",
+    ".jpeg",
+];
+
+const ImageLimitSize = 100000;
 
 const BaseUrl = "/api/v1";
 
@@ -141,10 +145,11 @@ const BaseUrl = "/api/v1";
 
 module.exports = {
     statusCodes,
-    SmsApi,
     BaseUrl,
-    selfDestroyKey,
+    UplodDirs,
+    ValidImageFormat,
     databaseStatus,
+    ImageLimitSize,
     colors,
     JWT_SECRET,
     PASSWORD_REGEX,

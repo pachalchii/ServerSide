@@ -1,18 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {application, support, Seller, customer, sequelize, sellerPhoneNumber, transportation, sellerWareHouse, sellerOperator} = require('../../sequelize');
-const {checkPassword, checkUser, FilteringRequest, checkToken, checkPhone, isThisArrayEmpty, base64_encode, loginInfoCheck, registerInfoCheck} = require('../Util/Filter');
-const {SmsApi, upload, JWT_SECRET, handleError} = require('../Util/configuration');
+const {application, Seller, customer, sequelize, sellerPhoneNumber} = require('../../sequelize');
+const { checkUser, FilteringRequest, checkToken} = require('../Util/Filter');
+const {upload} = require('../Util/configuration');
 /*********************************************/
-const multer = require("multer");
-var path = require('path');
-const fs = require("fs");
-const http = require("http");
 var md5 = require('md5');
-const Op = sequelize.Op;
-var jwt = require('jwt-simple');
 /*********************************************/
 
 
@@ -26,14 +19,12 @@ router.post('/register', upload.single("Image"), (req, res) => {
                 switch (req.body.Role) {
                     case "seller":
                         sequelize.transaction().then(function (t) {
-                            Seller.create(data, {
-                                transaction: t
-                            }).then(function () {
+                            Seller.create(data, {transaction: t}).then(()=>{
                                 t.commit();
                                 //todo sms must be send
                                 return res.status(200).json()
 
-                            }).catch(function (error) {
+                            }).catch((error)=>{
                                 t.rollback();
                                 if (error.parent.errno === 1062) {
                                     return res.status(400).json({"code":717});
@@ -47,15 +38,15 @@ router.post('/register', upload.single("Image"), (req, res) => {
                         });
                         break;
                     case "customer":
-                        sequelize.transaction().then(function (t) {
+                        sequelize.transaction().then(()=>{
                             customer.create(data, {
                                 transaction: t
-                            }).then(function () {
+                            }).then(()=>{
                                 t.commit();
                                 //todo sms must be send
                                 return res.status(200).json();
 
-                            }).catch(function (error) {
+                            }).catch(()=>{
                                 t.rollback();
                                 if (error.parent.errno === 1062) {
                                     return res.status(400).json({"code":717});
@@ -212,5 +203,3 @@ router.post('/tokenCheck', (req, res) => {
 
 module.exports = router;
 
-//todo handle temp image after uploadinng
-//todo checking size and quality of image
