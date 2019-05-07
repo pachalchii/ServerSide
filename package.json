@@ -1,40 +1,15 @@
 {
-  "name": "codementorx-article",
-  "version": "1.0.0",
-  "description": "repository for sequelize article",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"No test\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mirkojotic/codementorx-sequelize.git"
-  },
-  "keywords": [
-    "sequelize"
-  ],
-  "author": "joticmirko@gmail.com",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mirkojotic/codementorx-sequelize/issues"
-  },
-  "homepage": "https://github.com/mirkojotic/codementorx-sequelize#readme",
+
+  "author": "AmirHosseinVatani75@gmail.com",
+
   "dependencies": {
-    "async": "^2.6.2",
     "async-await-foreach": "^1.0.3",
-    "async-foreach": "^0.1.3",
     "body-parser": "^1.18.2",
-    "cli-spinner": "^0.2.8",
-    "cli-spinners": "^1.3.1",
     "cors": "^2.8.5",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "http": "0.0.0",
-    "install": "^0.12.2",
-    "jsonwebtoken": "^8.4.0",
     "jwt-simple": "^0.5.5",
-    "kavenegar": "^1.1.4",
-    "log4js": "^4.0.2",
     "md5": "^2.2.1",
     "multer": "^1.4.1",
     "mysql2": "^1.5.3",
@@ -42,7 +17,6 @@
     "path": "^0.12.7",
     "pusher": "^2.2.0",
     "randomstring": "^1.1.5",
-    "rimraf": "^2.6.3",
     "sequelize": "^4.37.4",
     "sequelize-auto": "^0.4.29",
     "socket.io": "^2.2.0",
@@ -51,5 +25,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.17.2"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
   }
 }

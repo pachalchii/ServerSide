@@ -212,6 +212,5 @@ router.post('/tokenCheck', (req, res) => {
 
 module.exports = router;
 
-//todo function to find forgein keys
 //todo handle temp image after uploadinng
 //todo checking size and quality of image
