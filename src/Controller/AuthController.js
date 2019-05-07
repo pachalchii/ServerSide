@@ -18,7 +18,7 @@ router.post('/register', upload.single("Image"), (req, res) => {
             } else {
                 switch (req.body.Role) {
                     case "seller":
-                        sequelize.transaction().then(function (t) {
+                        sequelize.transaction().then((t)=>{
                             Seller.create(data, {transaction: t}).then(()=>{
                                 t.commit();
                                 //todo sms must be send
@@ -38,7 +38,7 @@ router.post('/register', upload.single("Image"), (req, res) => {
                         });
                         break;
                     case "customer":
-                        sequelize.transaction().then(()=>{
+                        sequelize.transaction().then((t)=>{
                             customer.create(data, {
                                 transaction: t
                             }).then(()=>{
@@ -46,7 +46,7 @@ router.post('/register', upload.single("Image"), (req, res) => {
                                 //todo sms must be send
                                 return res.status(200).json();
 
-                            }).catch(()=>{
+                            }).catch((error)=>{
                                 t.rollback();
                                 if (error.parent.errno === 1062) {
                                     return res.status(400).json({"code":717});
