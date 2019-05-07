@@ -1,10 +1,10 @@
 const {cities, sellerType, customer, Seller, sellerOperator, sellerWareHouse, transportation, productGroups, products, unit, car} = require('../../sequelize');
 const {application} = require('../../sequelize');
 const {colors, PHONENUMBER_REGEX,ImageLimitSize,ValidImageFormat,UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
-var jwt = require('jwt-simple');
-var path = require('path');
+const jwt = require('jwt-simple');
+const path = require('path');
 const fs = require("fs");
-var md5 = require('md5');
+const md5 = require('md5');
 const asyncForEach = require('async-await-foreach')
 
 
@@ -16,6 +16,7 @@ function base64_encode(file) {
 }
 
 function fillDataBase() {
+
     function insertCities(value, index, array) {
         cities.create(
             {
@@ -125,11 +126,11 @@ function fillDataBase() {
 
     ];
     cities.findAll().then(cities => {
-        if (cities[0] === undefined) {
+        if (cities[0] == undefined) {
             city.forEach(insertCities);
-            console.log(colors.bg.Green, "import  city demo data done successfuly", colors.Reset);
+            console.log(colors.bg.Black, colors.fg.White, "import  city demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red, "import city demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White, "import city demo data canceled .", colors.Reset);
         }
     });
 
@@ -141,9 +142,9 @@ function fillDataBase() {
     sellerType.findAll().then(sellerType => {
         if (sellerType[0] === undefined) {
             type.forEach(insertTypes);
-            console.log(colors.bg.Green, "import  SellerType demo data done successfuly", colors.Reset);
+            console.log(colors.bg.Black, colors.fg.White, "import  SellerType demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red, "import SellerType demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White ,"import SellerType demo data canceled .", colors.Reset);
         }
     });
 
@@ -158,9 +159,9 @@ function fillDataBase() {
     car.findAll().then(car => {
         if (car[0] === undefined) {
             carModelvar.forEach(insertCarModels);
-            console.log(colors.bg.Green, "import  car model demo data done successfuly", colors.Reset);
+            console.log(colors.bg.Black, colors.fg.White, "import  car model demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red, "import car model demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White,"import car model demo data canceled .", colors.Reset);
         }
     });
 
@@ -179,9 +180,9 @@ function fillDataBase() {
     unit.findAll().then(unit => {
         if (unit[0] === undefined) {
             unitvar.forEach(insertUnits);
-            console.log(colors.bg.Green, "import unit demo data done successfuly", colors.Reset);
+            console.log(colors.bg.Black, colors.fg.White, "import unit demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red, "import unit demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red,colors.fg.White, "import unit demo data canceled .", colors.Reset);
         }
     });
 
@@ -287,9 +288,9 @@ function fillDataBase() {
     productGroups.findAll().then(productsgroup => {
         if (productsgroup[0] === undefined) {
             productsGroupvar.forEach(insertProductsGroup);
-            console.log(colors.bg.Green, "import  products Group demo data done successfuly", colors.Reset);
+            console.log(colors.bg.Black, colors.fg.White, "import  products Group demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red, "import  products Group demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red,colors.fg.White, "import  products Group demo data canceled .", colors.Reset);
         }
     });
 
@@ -606,9 +607,9 @@ function fillDataBase() {
     products.findAll().then(products => {
         if (products[0] === undefined) {
             productsvar.forEach(insertProducts);
-            console.log(colors.bg.Green, "import  products  demo data done successfuly", colors.Reset);
+            console.log(colors.bg.Black, colors.fg.White, "import  products  demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red, "import  products  demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red,colors.fg.White, "import  products  demo data canceled .", colors.Reset);
         }
     });
 
@@ -620,10 +621,10 @@ function fillDataBase() {
                 "UpdateLink": "1.0.0",
                 "UpdateMessage": "1.0.0"
             }).then(
-                console.log(colors.bg.Green, "import  app  demo data done successfuly", colors.Reset)
+                console.log(colors.bg.Black, colors.fg.White, "import  app  demo data done successfuly", colors.Reset)
             );
         } else {
-            console.log(colors.bg.Red, "import  app  demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red,colors.fg.White, "import  app  demo data canceled .", colors.Reset);
         }
     });
 
@@ -1665,9 +1666,7 @@ module.exports = {
     checkUser,
     fillDataBase,
     addRoleInfoCheck,
-    checkPhone,
     base64_encode,
     isThisArrayEmpty,
-    checkPassword
 
 };

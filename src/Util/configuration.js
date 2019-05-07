@@ -45,7 +45,9 @@ const upload = multer({
     dest: "./../uploads/tempUploads"
 });
 
-const databaseStatus = false;
+const DevelopMode =  require('minimist')(process.argv.slice(2)).DevelopMode || false;
+
+const DataBaseStatus = require('minimist')(process.argv.slice(2)).DataBaseStatus || "update";
 
 const statusCodes ={
 
@@ -148,7 +150,8 @@ module.exports = {
     BaseUrl,
     UplodDirs,
     ValidImageFormat,
-    databaseStatus,
+    DevelopMode,
+    DataBaseStatus,
     ImageLimitSize,
     colors,
     JWT_SECRET,

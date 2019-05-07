@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+var cluster = require('cluster');
 
 const citiesModel = require('./src/models/cities');
 const SellerModel = require('./src/models/seller');
@@ -27,11 +28,7 @@ const pachalChiAdminSupportsModel = require('./src/models/PachalChiAdmins&Suppor
 
 
 
-
-
-const {colors , databaseStatus} = require('./src/Util/configuration');
-
-
+const {colors} = require('./src/Util/configuration');
 const sequelize = new Sequelize('pachalChi', 'root', '755amir2205', {
     logging: false,
   host: 'localhost',
@@ -39,9 +36,30 @@ const sequelize = new Sequelize('pachalChi', 'root', '755amir2205', {
     port:8889,
     define: {
         timestamps: false
+    },
+    operatorsAliases: false,
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
     }
 
+
+
 });
+
+if (cluster.isMaster) {
+    sequelize.authenticate()
+        .then(() => {
+            console.log(colors.bg.Black, colors.fg.White ,'Connection has been established successfully.',colors.Reset);
+        })
+        .catch(err => {
+            console.error(colors.bg.Black, colors.fg.Red ,'Unable to connect to the database:',colors.Reset);
+            process.exit()
+        });
+}
+
+
 
 const Seller = SellerModel(sequelize, Sequelize);
 const cities = citiesModel(sequelize, Sequelize);
@@ -70,15 +88,6 @@ const Support = supportModel(sequelize,Sequelize);
 const pachalChiAdminSupports = pachalChiAdminSupportsModel(sequelize,Sequelize);
 
 
-
-sequelize.sync({ force: databaseStatus })
-  .then(() => {
-      if (databaseStatus){
-          console.log(colors.bg.Green ,`DataBase droped and create again successfully .`,  colors.Reset)
-      } else {
-          console.log(colors.bg.Yellow ,`DataBase service is up without any Change successfully .`,  colors.Reset)
-      }
-  });
 
 
 
