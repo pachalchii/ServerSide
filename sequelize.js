@@ -28,12 +28,12 @@ const pachalChiAdminSupportsModel = require('./src/models/PachalChiAdmins&Suppor
 
 
 
-const {colors} = require('./src/Util/configuration');
-const sequelize = new Sequelize('pachalChi', 'root', '755amir2205', {
+const {colors,DataBaseInformation} = require('./src/Util/configuration');
+const sequelize = new Sequelize(DataBaseInformation.database, DataBaseInformation.user, DataBaseInformation.password, {
     logging: false,
-  host: 'localhost',
-  dialect: 'mysql',
-    port:8889,
+  host: DataBaseInformation.host,
+  dialect: DataBaseInformation.dialect,
+    port:DataBaseInformation.port,
     define: {
         timestamps: false
     },
@@ -43,8 +43,6 @@ const sequelize = new Sequelize('pachalChi', 'root', '755amir2205', {
         min: 0,
         idle: 10000
     }
-
-
 
 });
 

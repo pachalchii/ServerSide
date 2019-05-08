@@ -143,12 +143,23 @@ const ImageLimitSize = 100000;
 
 const BaseUrl = "/api/v1";
 
+const DataBaseInformation = {
+    host: 'localhost',
+    port:"8889",
+    user: 'root',
+    password: '755amir2205',
+    database: 'pachalChi',
+    dialect: 'mysql'
+
+};
+
 
 
 module.exports = {
     statusCodes,
     BaseUrl,
     UplodDirs,
+    DataBaseInformation,
     ValidImageFormat,
     DevelopMode,
     DataBaseStatus,
