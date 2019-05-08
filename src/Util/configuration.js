@@ -148,11 +148,11 @@ const BaseUrl = "/api/v1";
 
 const DataBaseInformation = {
     host: 'localhost',
-    port:"8889",
-    user: 'root',
-    password: '755amir2205',
-    database: 'pachalChi',
-    dialect: 'mysql'
+    port:"1433",
+    user: 'sa',
+    password: '<7552205>',
+    database: 'PachalChi',
+    dialect: 'mssql'
 
 };
 

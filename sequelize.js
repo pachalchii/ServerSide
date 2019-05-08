@@ -43,14 +43,7 @@ const sequelize = new Sequelize(DataBaseInformation.database, DataBaseInformatio
     port:DataBaseInformation.port,
     define: {
         timestamps: false
-    },
-    operatorsAliases: false,
-    pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
     }
-
 });
 
 if (cluster.isMaster) {

