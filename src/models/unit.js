@@ -1,17 +1,18 @@
-/* jshint indent: 2 */
+/* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Unit', {
-    ID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    UnitName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-  }, {
-    tableName: 'Unit'
-  });
+	return sequelize.define('Unit', {
+		ID: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			primaryKey: true
+		},
+		UnitName: {
+			type: DataTypes.STRING,
+			allowNull: false
+		}
+	}, {
+		tableName: 'Unit',
+		timestamps: false
+	});
 };

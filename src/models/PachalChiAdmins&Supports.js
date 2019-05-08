@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('PachalChiAdmins&Supports', {
-		Id: {
+		ID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true
@@ -19,6 +19,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: false
 		},
+      AuthCode: {
+          type: DataTypes.STRING,
+          allowNull: true},
+
 		UserName: {
 			type: DataTypes.STRING,
 			allowNull: false
@@ -35,10 +39,15 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER,
 			allowNull: true,
 			references: {
-				model: 'PachalChiRoles',
-				key: 'Id'
+				model: 'Roles',
+				key: 'ID'
 			}
 		}
+		,
+		IsForgetPasswordVerified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
 	}, {
 		tableName: 'PachalChiAdmins&Supports',
 		timestamps: false

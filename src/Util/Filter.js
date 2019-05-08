@@ -1,4 +1,4 @@
-const {cities, sellerType, customer, Seller, sellerOperator, sellerWareHouse, transportation, productGroups, products, unit, car} = require('../../sequelize');
+const {cities, sellerType, customer, Seller,sellerPhoneNumber, SellerProductionManager,sellerOperator, sellerWareHouse, transportation, productGroups, products, unit, car} = require('../../sequelize');
 const {application} = require('../../sequelize');
 const {colors, PHONENUMBER_REGEX,ImageLimitSize,ValidImageFormat,UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 const jwt = require('jwt-simple');
@@ -838,6 +838,9 @@ function FilteringRequest(req, res, callback) {
                                     case "customer":
                                         Entity = customer;
                                         break;
+                                    case "productionManager":
+                                        Entity = SellerProductionManager;
+                                        break;
                                     case "transportation":
                                         Entity = transportation;
                                         break;
@@ -912,7 +915,7 @@ function FilteringRequest(req, res, callback) {
 
                                     break;
                                 case "verify":
-                                    if (req.body.PhoneNumber != null && req.body.Code != null && req.body.Password != null && req.body.Role != null) {
+                                    if (req.body.PhoneNumber != null && req.body.Code != null && req.body.Role != null) {
                                         if (checkPassword(req, res)) {
                                             if (checkPhone(req, res)) {
                                                 switch (req.body.Role) {
@@ -928,8 +931,8 @@ function FilteringRequest(req, res, callback) {
                                                     case "support"   :
                                                         Entity = sellerOperator;
                                                         break;
-                                                    case "wareHouse":
-                                                        Entity = sellerWareHouse;
+                                                    case "productionManager":
+                                                        Entity = SellerProductionManager;
                                                         break;
                                                     default :   SwitchStatus = false; callback({HttpCode: 400, response: {response: "716"}});
                                                 }
@@ -962,6 +965,79 @@ function FilteringRequest(req, res, callback) {
                                                                         callback({HttpCode: 404, response: {response: "715"}});
                                                                     }
                                                                 } else {
+                                                                    callback({HttpCode: 404, response: {response: "900"}});
+                                                                }
+                                                            } else {
+                                                                callback({HttpCode: 404, response: {response: "710"}});
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+                                            } else {
+                                                callback({HttpCode: 404, response: {response: "712"}});
+                                            }
+
+                                        } else {
+                                            callback({HttpCode: 404, response: {response: "712"}});
+                                        }
+
+                                    } else {
+                                        callback({HttpCode: 404, response: {response: "703"}});
+                                    }
+                                    break;
+                                case "changePassword":
+                                    if (req.body.PhoneNumber != null  && req.body.Password != null && req.body.Role != null) {
+                                        if (checkPassword(req, res)) {
+                                            if (checkPhone(req, res)) {
+                                                switch (req.body.Role) {
+                                                    case "seller":
+                                                        Entity = Seller;
+                                                        break;
+                                                    case  "customer":
+                                                        Entity = customer;
+                                                        break;
+                                                    case "transportation" :
+                                                        Entity = transportation;
+                                                        break;
+                                                    case "support"   :
+                                                        Entity = sellerOperator;
+                                                        break;
+                                                    case "productionManager":
+                                                        Entity = SellerProductionManager;
+                                                        break;
+                                                    default :   SwitchStatus = false; callback({HttpCode: 400, response: {response: "716"}});
+                                                }
+                                                if (SwitchStatus){
+                                                    if (req.body.Role === "seller"){
+                                                        Entity.findOne({where: {OwnerPhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
+                                                            if (UserModel != null) {
+                                                                if (UserModel.Status) {
+                                                                    if(UserModel.IsForgetPasswordVerified){
+                                                                        callback("",UserModel);
+                                                                    }else {
+                                                                        callback({HttpCode: 404, response: {response: "721"}});
+
+                                                                    }
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {response: "900"}});
+                                                                }
+                                                            } else {
+                                                                callback({HttpCode: 404, response: {response: "710"}});
+                                                            }
+                                                        });
+
+                                                    }
+                                                    else {
+                                                        Entity.findOne({where: {PhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
+                                                            if (UserModel != null) {
+                                                                if (UserModel.Status) {
+                                                                    if(UserModel.IsForgetPasswordVerified){
+                                                                        callback("",UserModel);
+                                                                    }           else {
+                                                                        callback({HttpCode: 404, response: {response: "721"}});
+
+                                                                    }                                                    } else {
                                                                     callback({HttpCode: 404, response: {response: "900"}});
                                                                 }
                                                             } else {
@@ -1219,19 +1295,19 @@ function FilteringRequest(req, res, callback) {
 
                                                             });
                                                     break;
-                                                case "wareHouse":
-                                                            sellerWareHouse.findOne(data).then(wareHouse => {
-                                                                if (wareHouse  != null) {
+                                                case "productionManager":
+                                                            SellerProductionManager.findOne(data).then(SellerProductionManager => {
+                                                                if (SellerProductionManager  != null) {
                                                                     var payload = {
-                                                                        PhoneNumber: wareHouse.PhoneNumber,
-                                                                        Password: wareHouse.Password,
+                                                                        PhoneNumber: SellerProductionManager.PhoneNumber,
+                                                                        Password: SellerProductionManager.Password,
                                                                         random: Math.random()
                                                                     };
 
 
                                                                     var base64str = "not Found";
                                                                     try {
-                                                                        base64str = base64_encode(wareHouse.Image);
+                                                                        base64str = base64_encode(SellerProductionManager.Image);
 
                                                                     } catch (e) {
                                                                         base64str = "not Found";
@@ -1242,19 +1318,16 @@ function FilteringRequest(req, res, callback) {
                                                                     callback("",{
                                                                         "data": {
 
-                                                                            ID: wareHouse.PhoneNumberID,
-                                                                            AgentFamilyName: wareHouse.AgentFamilyName,
-                                                                            AgentName: wareHouse.AgentName,
-                                                                            BirthDate: wareHouse.BirthDate,
-                                                                            CellPhoneNumber: wareHouse.CellPhoneNumber,
+                                                                            ID: SellerProductionManager.PhoneNumberID,
+                                                                            Name: SellerProductionManager.Name,
+                                                                            FamilyName: SellerProductionManager.FamilyName,
+                                                                            BirthDate: SellerProductionManager.BirthDate,
+                                                                            PhoneNumber: SellerProductionManager.PhoneNumber,
                                                                             Image: base64str,
-                                                                            PhoneNumberID: wareHouse.PhoneNumber,
-                                                                            Point: wareHouse.Point,
-                                                                            Username: wareHouse.Username,
-                                                                            WareHouseCompleteAddressDescriptione: wareHouse.WareHouseCompleteAddressDescriptione,
-                                                                            WareHouseGoogleMapAddressLink: wareHouse.WareHouseGoogleMapAddressLink,
-                                                                            WareHouseAddressCityID: wareHouse.WareHouseAddressCityID,
-                                                                            SellerIDr: wareHouse.SellerID,
+                                                                            CellPhoneNumber: SellerProductionManager.CellPhoneNumber,
+                                                                            Status: SellerProductionManager.Status,
+                                                                            Username: SellerProductionManager.Username,
+                                                                            SellerIDr: SellerProductionManager.SellerID,
                                                                             Token: token
                                                                         }
                                                                     });
@@ -1394,7 +1467,7 @@ function FilteringRequest(req, res, callback) {
                                                     });
                                                     break;
                                                 case "seller":
-                                                    CheckForeignKey(res,[{Id:req.body.CityID , Entity:cities}]).then(status=>{
+                                                    CheckForeignKey(res,[{Id:req.body.CompanyAddressCityID , Entity:cities},{Id:req.body.PhoneNumberID , Entity:sellerPhoneNumber}]).then(status=>{
                                                         if (status) {
                                                             var image = "notSetYet";
                                                             ImageHandler(req,res,UplodDirs.seller)
@@ -1406,6 +1479,7 @@ function FilteringRequest(req, res, callback) {
                                                                         CompleteAddressDescription: req.body.CompleteAddressDescription,
                                                                         Status: true,
                                                                         Point: 0,
+                                                                        Enable:true,
                                                                         RegistrationDateTime: req.body.RegistrationDateTime,
                                                                         GoogleMapAddressLink: req.body.GoogleMapAddressLink,
                                                                         LogoImage: image,

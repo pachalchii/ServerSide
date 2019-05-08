@@ -20,7 +20,7 @@ if (cluster.isMaster) {
 
 
     if (DataBaseStatus === "create-drop"){
-
+        sequelize.query('SET FOREIGN_KEY_CHECKS = 0', { raw: true }).then ( function () {
         sequelize.sync({ force: true })
             .then(() => {
                 console.log(colors.bg.Black, colors.fg.White ,`DataBase create-dropped `,  colors.Reset);
@@ -29,14 +29,19 @@ if (cluster.isMaster) {
                     console.log(colors.bg.Black, colors.fg.White ,`starting import demo data : `,  colors.Reset);
                 }
             });
+        });
+
 
     }
     else if (DataBaseStatus === "update"){
+        sequelize.query('SET FOREIGN_KEY_CHECKS = 0', { raw: true }).then ( function () {
         sequelize.sync({ force: false })
             .then(() => {
                 console.log(colors.bg.Black, colors.fg.White ,`Database Updated`,  colors.Reset);
             });
+        });
     }
+
 
     cluster.on('exit', function (worker, code, signal) {
         console.log(colors.bg.Black, colors.fg.White,'Worker %d died', worker.id,colors.fg.White);
@@ -65,7 +70,7 @@ if (cluster.isMaster) {
 
     });
 
-    
+
 } else if (cluster.isWorker){
 
     const express = require('express');

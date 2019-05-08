@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('SellerType', {
-		Id: {
+		ID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true

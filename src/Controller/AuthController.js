@@ -154,7 +154,24 @@ router.post('/forgetPassword/verify', (req, res) => {
             if (err) {
                 return res.status(err.HttpCode).json(err.response);
             } else {
-                data.update({Password: md5(req.body.Password), AuthCode: "342241"}).then(() => {
+                data.update({IsForgetPasswordVerified:true , AuthCode: "342241"}).then(() => {
+                    return res.json();
+                })
+            }
+        });
+    } catch (e) {
+        return res.status(500).json({"code": 500})
+    }
+
+});
+
+router.post('/forgetPassword/changePassword', (req, res) => {
+    try {
+        FilteringRequest(req, res, (err, data) => {
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                data.update({IsForgetPasswordVerified:false,AuthCode:null,Password:md5(req.body.Password) }).then(() => {
                     return res.json();
                 })
             }

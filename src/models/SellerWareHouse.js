@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('SellerWareHouse', {
-		Id: {
+		ID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true
@@ -20,9 +20,20 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'Seller',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
+        IsForgetPasswordVerified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
+      AuthCode: {
+          type: DataTypes.STRING,
+          allowNull: true},
+    Point: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
 		PhoneNumber: {
 			type: DataTypes.STRING,
 			allowNull: false
@@ -44,7 +55,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'Cities',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		WareHouseGoogleMapAddressLink: {

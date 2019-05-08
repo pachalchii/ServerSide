@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('OrderProduct', {
-		Id: {
+		ID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true,
@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true,
 			references: {
 				model: 'Order',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		ForwardingDatetime: {
@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'Addresses',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		FinalDiscount: {
@@ -41,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'TakhfifProduct',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		Supply: {
@@ -53,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'Unit',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		CustomerStatus: {
@@ -65,7 +65,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true,
 			references: {
 				model: 'SellerOperator',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		SellerOperatorStatus: {
@@ -81,7 +81,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true,
 			references: {
 				model: 'SellerWareHouse',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		ProductionManagerStatus: {
@@ -93,7 +93,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true,
 			references: {
 				model: 'Transportation',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		TransportarStatus: {

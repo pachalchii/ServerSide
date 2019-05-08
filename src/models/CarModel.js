@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('CarModel', {
-		Id: {
+		ID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true,
@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true,
 			references: {
 				model: 'CarModel',
-				key: 'Id'
+				key: 'ID'
 			}
 		}
 	}, {

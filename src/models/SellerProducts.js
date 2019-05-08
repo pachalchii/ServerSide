@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('SellerProducts', {
-		Id: {
+		ID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true
@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'Seller',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		ProductID: {
@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'Products',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		UnitOfProduct: {
@@ -32,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'Unit',
-				key: 'Id'
+				key: 'ID'
 			}
 		},
 		Image: {
