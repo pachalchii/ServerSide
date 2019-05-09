@@ -1,5 +1,5 @@
 var cluster = require('cluster');
-const {colors,DataBaseStatus,DevelopMode,DataBaseInformation} = require('./src/Util/configuration');
+const {colors,DataBaseStatus,DevelopMode} = require('./src/Util/configuration');
 const {sequelize} = require('./sequelize');
 const {fillDataBase} = require('./src/Util/Filter');
 const cron = require("node-cron");
@@ -11,12 +11,16 @@ var zipFolder = require('zip-folder');
 if (cluster.isMaster) {
 
 
-
-    var cpuCount = require('os').cpus().length;
-    for (var i = 0; i < cpuCount; i += 1) {
+    if (DevelopMode){
         cluster.fork();
+    } else {
+        var cpuCount = require('os').cpus().length;
+        for (var i = 0; i < cpuCount; i += 1) {
+            cluster.fork();
 
+        }
     }
+
 
 
     if (DataBaseStatus === "create-drop"){

@@ -41,6 +41,8 @@
     "start": "nodemon index.js",
     "update": "nodemon  index.js --DevelopMode 1  --DataBaseStatus update",
     "mock": "nodemon  index.js --DevelopMode 1  --DataBaseStatus create-drop",
-    "drop": "nodemon  index.js --DevelopMode 0  --DataBaseStatus create-drop"
+    "drop": "nodemon  index.js --DevelopMode 0  --DataBaseStatus create-drop",
+    "kill": "sudo killall node"
+
   }
 }

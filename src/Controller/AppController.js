@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {Seller, cities, sellerType, productGroups, products, sellerProducts, unit, car} = require('../../sequelize');
-const {upload, selfDestroyKey, colors} = require('../Util/configuration');
+const {} = require('../Util/configuration');
 const {base64_encode, checkToken, isThisArrayEmpty} = require("../Util/Filter");
 var path = require('path');
 const fs = require("fs");
