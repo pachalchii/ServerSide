@@ -101,7 +101,7 @@ else if (cluster.isWorker){
 
 
 
-    var port = 2525;
+    var port = 2424;
 
     app.listen(port, () => {
         console.log(colors.bg.Black, colors.fg.White ,"worker with id = "+cluster.worker.id+" start working.",  colors.Reset);

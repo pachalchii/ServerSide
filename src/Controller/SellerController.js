@@ -14,61 +14,10 @@ const fs = require("fs");
 const http = require("http");
 
 
+//new
 
 
-//seller or Sales Representative
-
-router.get('/list', (req, res) => {
-    if (req.query.CityID == null) {
-        return res.status(400).json({"message": "cityId not found"});
-    }
-
-    var final = [];
-
-    function testFunction(value, index, array) {
-        var base64str = "not Found";
-        try {
-            base64str = base64_encode(value.LogoImage);
-
-        } catch (e) {
-            base64str = "not Found";
-
-        }
-
-        final[index] = {
-            ID:value.ID,
-            Name: value.CompanyName,
-            Image: base64str,
-            TypeID:value.TypeID,
-            OwnerName:value.OwnerName,
-            OwnerFamilyName:value.OwnerFamilyName,
-            EstablishedDate:value.EstablishedDate,
-            RegistrationDateTime:value.RegistrationDateTime,
-            Point:value.Point,
-            PhoneNumberID:value.PhoneNumberID,
-            CompanyAddressCityID:value.CompanyAddressCityID,
-            CompleteAddressDescription:value.CompleteAddressDescription,
-            GoogleMapAddressLink:value.GoogleMapAddressLink,
-            OwnerPhoneNumber:value.OwnerPhoneNumber
-
-        }
-    }
-
-    Seller.findAll({
-        where: {
-            TypeID: 1,
-            CompanyAddressCityID: req.query.CityID
-        }
-    }).then(seller => {
-        if (!isThisArrayEmpty(seller)) {
-            seller.forEach(testFunction);
-
-        }
-        return res.json(final);
-    });
-
-
-});
+//old
 
 router.get('/Singlelist', (req, res) => {
     if (req.query.SellerID == null) {

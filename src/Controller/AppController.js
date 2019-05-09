@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {Seller, cities, sellerType, productGroups, products, sellerProducts, unit, car} = require('../../sequelize');
+const {Seller, cities, sellerType, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');
 const {} = require('../Util/configuration');
 const {base64_encode, checkToken, isThisArrayEmpty} = require("../Util/Filter");
 var path = require('path');
@@ -21,21 +21,21 @@ router.get('/information/:type', function (req, res) {
                 return res.json(sellertype);
             });
             break;
-        case "productGroup"  :
-            productGroups.findAll().then(productGroups => {
-                return res.json(productGroups);
+        case "productCategories"  :
+            ProductCategories.findAll().then(ProductCategories => {
+                return res.json(ProductCategories);
             });
             break;
-        case "moreproductGroup" :
+        case "products" :
             if (req.query.ID == null) {
                 res.status(400).json({"message": "id not found"});
             } else {
-                products.findAll({where: {GroupID: req.query.ID}}).then(products => {
+                products.findAll({where: {CategoryID: req.query.ID}}).then(products => {
                     return res.json(products);
                 });
             }
             break;
-        case "product":
+        case "sellerProducts":
             if (req.query.ID == null) {
                 res.status(400).json({"message": "id not found"});
             } else {
@@ -114,6 +114,53 @@ router.get('/information/:type', function (req, res) {
                 return res.json(car);
             });
             break;
+        case "sellerList" :
+            if (req.query.CityID == null) {
+                return res.status(400).json({"message": "cityId not found"});
+            }else {
+                var final = [];
+
+                function testFunction(value, index, array) {
+                    var base64str = "not Found";
+                    try {
+                        base64str = base64_encode(value.LogoImage);
+
+                    } catch (e) {
+                        base64str = "not Found";
+
+                    }
+
+                    final[index] = {
+                        ID:value.ID,
+                        Name: value.CompanyName,
+                        Image: base64str,
+                        TypeID:value.TypeID,
+                        OwnerName:value.OwnerName,
+                        OwnerFamilyName:value.OwnerFamilyName,
+                        EstablishedDate:value.EstablishedDate,
+                        RegistrationDateTime:value.RegistrationDateTime,
+                        Point:value.Point,
+                        PhoneNumberID:value.PhoneNumberID,
+                        CompanyAddressCityID:value.CompanyAddressCityID,
+                        CompleteAddressDescription:value.CompleteAddressDescription,
+                        GoogleMapAddressLink:value.GoogleMapAddressLink,
+                        OwnerPhoneNumber:value.OwnerPhoneNumber
+
+                    }
+                }
+                Seller.findAll({
+                    where: {
+                        TypeID: 1,
+                        CompanyAddressCityID: req.query.CityID
+                    }
+                }).then(seller => {
+                    if (!isThisArrayEmpty(seller)) {
+                        seller.forEach(testFunction);
+                    }
+                    return res.json(final);
+                });
+            }
+        break;
         default:
             return res.status(404).json();
     }

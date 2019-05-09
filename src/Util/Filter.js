@@ -1,4 +1,4 @@
-const {cities, sellerType, customer, Seller,ProductCategories,sellerPhoneNumber, SellerProductionManager,sellerOperator, sellerWareHouse, transportation, productGroups, products, unit, car} = require('../../sequelize');
+const {cities, sellerType, customer,addresses, Seller,ProductCategories,sellerPhoneNumber, SellerProductionManager,sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
 const {application} = require('../../sequelize');
 const {colors, PHONENUMBER_REGEX,ImageLimitSize,ValidImageFormat,UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 const jwt = require('jwt-simple');
@@ -400,7 +400,7 @@ function CheckForeignKey(res ,array) {
             }
         });
         asyncForEach(array, async item => {
-            item.Entity.findOne({where:{Id:item.Id}}).then(Model=>{
+           await item.Entity.findOne({where:{Id:item.Id}}).then(Model=>{
                 if (Model == null) {  status = false;return res.status(400).json({"code":718}); }
             });
         }).then(() => {
@@ -773,24 +773,44 @@ function FilteringRequest(req, res, callback) {
 
                                                             }
                                                             var token = jwt.encode(payload, JWT_SECRET);
-                                                            callback("",{
-                                                                "data": {
-                                                                    BirthDate: customer.BirthDate,
-                                                                    Image: base64str,
-                                                                    CompanyName: customer.CompanyName,
-                                                                    Enable: customer.Enable,
-                                                                    Status: customer.Status,
-                                                                    FamilyName: customer.FamilyName,
-                                                                    Name: customer.Name,
-                                                                    PhoneNumber: customer.PhoneNumber,
-                                                                    Point: customer.Point,
-                                                                    RegistrationDateTime: customer.RegistrationDateTime,
-                                                                    Theme: customer.Theme,
-                                                                    Username: customer.Username,
-                                                                    CityID: customer.CityID,
-                                                                    Token: token
+                                                            addresses.findAll({where:{CustomerID:customer.ID}}).then(
+                                                                addresses=>{
+                                                                    var newAdrress  =[];
+                                                                    asyncForEach(addresses,async item =>{
+                                                                        await cities.findOne({where:{ID:item.CityID}}).then(
+                                                                            city=>{
+                                                                                newAdrress.push({
+                                                                                    ID:item.ID,
+                                                                                    GoogleMapAddressLink:item.GoogleMapAddressLink,
+                                                                                    CompleteAddressDescription:item.CompleteAddressDescription,
+                                                                                    CustomName:item.CustomName,
+                                                                                    CityName:city.Name
+                                                                                })
+                                                                            }
+                                                                        );
+                                                                    }).then(answer=>{
+                                                                        callback("",{
+                                                                            "data": {
+                                                                                BirthDate: customer.BirthDate,
+                                                                                Image: base64str,
+                                                                                CompanyName: customer.CompanyName,
+                                                                                Enable: customer.Enable,
+                                                                                Status: customer.Status,
+                                                                                FamilyName: customer.FamilyName,
+                                                                                Name: customer.Name,
+                                                                                PhoneNumber: customer.PhoneNumber,
+                                                                                Point: customer.Point,
+                                                                                RegistrationDateTime: customer.RegistrationDateTime,
+                                                                                Theme: customer.Theme,
+                                                                                Username: customer.Username,
+                                                                                Token: token,
+                                                                                Addressess:newAdrress
+                                                                            }
+                                                                        })
+                                                                    });
+
                                                                 }
-                                                            });
+                                                            );
 
                                                         } else {
                                                             callback({HttpCode: 404, response: {response: "710"}});

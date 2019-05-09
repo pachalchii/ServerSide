@@ -24,10 +24,14 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: false
 		},
-		Supply: {
-			type: DataTypes.STRING,
-			allowNull: true
-		},
+		PrimitiveSupply: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        AddedSupply: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
 		UnitIDOfSupply: {
 			type: DataTypes.INTEGER,
 			allowNull: true,
