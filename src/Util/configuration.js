@@ -103,7 +103,7 @@ const statusCodes ={
         message:"نام کاربری وارد شده در فرمت مناسبی نمیباشد"
     },
     714:{
-        message:"فروشنده عزيز لطفا بين ساعات ٨ تا ١٠ تلاش فرماييد"
+        message:"فروشنده عزيز لطفا در ساعات مجاز تلاش فرماييد"
     },
     715:{
         message:"کد وارد شده اشتباه است"
@@ -125,14 +125,19 @@ const statusCodes ={
     },
     721:{
     message:"شما بیش از یکبار تلاش به تغییر پسورد کرده اید"
-}
+},
+    722:{
+        message:"شما قادر به قیمت گذاری دوباره برای محصولات منجمد در یک روز نیستید"
+    }
 
 
 };
 
 const UplodDirs = {
     "seller":"./../../uploads/seller/",
-    "customer":"./../../uploads/customer/"
+    "customer":"./../../uploads/customer/",
+    "products":"./../../uploads/products/",
+
 
 };
 
@@ -156,11 +161,17 @@ const DataBaseInformation = {
 
 };
 
+const TimeLimit = {
+    start:13,
+    finish:22
+};
+
 
 
 module.exports = {
     statusCodes,
     BaseUrl,
+    TimeLimit,
     UplodDirs,
     DataBaseInformation,
     ValidImageFormat,

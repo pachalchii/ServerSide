@@ -1,6 +1,5 @@
-const {cities, sellerType, customer,addresses, Seller,ProductCategories,sellerPhoneNumber, SellerProductionManager,sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
-const {application} = require('../../sequelize');
-const {colors, PHONENUMBER_REGEX,ImageLimitSize,ValidImageFormat,UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
+const {cities,application, sellerType,PriceAndSupply, sellerProducts, customer,addresses, Seller,ProductCategories,sellerPhoneNumber, SellerProductionManager,sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
+const {colors, PHONENUMBER_REGEX,TimeLimit,ImageLimitSize,ValidImageFormat,UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 const jwt = require('jwt-simple');
 const path = require('path');
 const fs = require("fs");
@@ -322,17 +321,16 @@ function checkUserName(req, res) {
 
 }
 
-function checkToken(req, res) {
+function checkToken(req, res, callback) {
 
-    if (req.headers['token'] != null) {
+    if (req.headers['token'] != null)
+    {
         try {
             var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
-            if (decodedJWT.Password == null || (decodedJWT.username && decodedJWT.PhoneNumber)) {
-                res.status(400).json({"code": 700});
-                return false
-
-            } else {
-
+            if (decodedJWT.Password == null || (decodedJWT.username && decodedJWT.PhoneNumber && decodedJWT.OwnerPhoneNumber)) {
+                callback({HttpCode: 400, response: {"code": 700}});
+            }
+            else {
                 var searchQuery;
                 if (decodedJWT.Username != null) {
                     searchQuery = {
@@ -340,53 +338,47 @@ function checkToken(req, res) {
                             Username: decodedJWT.Username, Password: decodedJWT.Password
                         }
                     };
-                } else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
-                    try {
+                }
+                else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
+                    if (decodedJWT.PhoneNumber !=null){
                         searchQuery = {
                             where: {
                                 PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
                             }
                         };
-                    } catch (e) {
+                    }else {
                         searchQuery = {
                             where: {
                                 OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
                             }
                         };
-
                     }
-
-                } else {
-                    res.status(400).json({"code": 700});
                 }
-                return searchQuery;
-
-
+                else {
+                    callback({HttpCode: 400, response: {"code": 700}});
+                }
+                callback(searchQuery);
             }
-
-
-        } catch (err) {
-            res.status(400).json({"code": 700});
-            return false;
-
+        }
+        catch (err) {
+            callback({HttpCode: 400, response: {"code": 700}});
         }
 
 
-    } else {
-        res.status(400).json({"code": 703});
-        return false;
+    }
+    else {
+        callback({HttpCode: 400, response: {"code": 703}});
     }
 
 }
 
-function checkLimitTime(res) {
+function checkLimitTime(res , callback) {
     var date = new Date();
     var current_hour = date.getHours();
-    if (!(20 <= current_hour <= 22)) {
-        res.status(404).json({"code": 714});
-        return false;
+    if ((TimeLimit.start < current_hour) && ( current_hour < TimeLimit.finish)) {
+        callback("",true);
     } else {
-        return true;
+        callback({HttpCode: 404, response: {"code": 714}});
     }
 }
 
@@ -394,13 +386,13 @@ function CheckForeignKey(res ,array) {
     return new Promise((resolve)=>{
         var status = true;
         array.forEach((value)=>{
-            if (value.Id == null || value.Entity == null ){
+            if (value.ID == null || value.Entity == null ){
                 status= false;
                 console.log("incomming array is not in the ideal style");
             }
         });
         asyncForEach(array, async item => {
-           await item.Entity.findOne({where:{Id:item.Id}}).then(Model=>{
+           await item.Entity.findOne({where:{ID:item.ID}}).then(Model=>{
                 if (Model == null) {  status = false;return res.status(400).json({"code":718}); }
             });
         }).then(() => {
@@ -413,11 +405,11 @@ function CheckForeignKey(res ,array) {
 
 function checkUser(EncodedToken, Entity, callback) {
 
-    Entity.findAll({EncodedToken}).then(user => {
-        if (!isThisArrayEmpty(user)) {
-            callback("", user[0]);
+    Entity.findOne({EncodedToken}).then(user => {
+        if (user != null) {
+            callback("", user);
         } else {
-            return res.status(400).json({"code": 700});
+            callback({HttpCode: 400, response: {"code": 700}});
         }
     })
 
@@ -849,6 +841,7 @@ function FilteringRequest(req, res, callback) {
                                                                             OwnerFamilyName: seller.OwnerFamilyName,
                                                                             OwnerName: seller.OwnerName,
                                                                             Password: seller.Password,
+                                                                            ShowStatus:true,
                                                                             OwnerPhoneNumber: seller.OwnerPhoneNumber,
                                                                             Username: seller.Username,
                                                                             CompanyAddressCityID: seller.CompanyAddressCityID,
@@ -1069,7 +1062,7 @@ function FilteringRequest(req, res, callback) {
                                         res.status(400).json({"code": 703});
                                         return false;
                                     } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
-                                    break;
+
 
                                 case "seller":
                                     if (req.body.CompanyName == null ||
@@ -1085,7 +1078,7 @@ function FilteringRequest(req, res, callback) {
                                         res.status(400).json({"code": 703});
                                         return false;
                                     } else return !(!checkUserName(req, res) || !checkPhone(req, res) || !checkPassword(req, res));
-                                    break;
+
                             }
 
 
@@ -1096,19 +1089,17 @@ function FilteringRequest(req, res, callback) {
                                     if (registerInfoCheck(req, res, req.body.Role)) {
                                             switch (req.body.Role) {
                                                 case "customer":
-                                                    CheckForeignKey(res,[{Id:req.body.CityID , Entity:cities}]).then(status=>{
+                                                    CheckForeignKey(res,[{ID:req.body.CityID , Entity:cities}]).then(status=>{
                                                         if (status){
-                                                            var image = "notSetYet";
                                                            ImageHandler(req,res,UplodDirs.customer)
                                                                .then(Image=>{
-                                                                   image=Image;
                                                                    callback("",{
                                                                    BirthDate: req.body.BirthDate,
                                                                    CompanyName: req.body.CompanyName,
                                                                    Enable: true,
                                                                    Status: true,
                                                                    FamilyName: req.body.FamilyName,
-                                                                   Image: image,
+                                                                   Image: Image,
                                                                    Name: req.body.Name,
                                                                    PhoneNumber: req.body.PhoneNumber,
                                                                    Password: md5(req.body.Password),
@@ -1127,22 +1118,20 @@ function FilteringRequest(req, res, callback) {
                                                     });
                                                     break;
                                                 case "seller":
-                                                    CheckForeignKey(res,[{Id:req.body.CompanyAddressCityID , Entity:cities},{Id:req.body.PhoneNumberID , Entity:sellerPhoneNumber}]).then(status=>{
+                                                    CheckForeignKey(res,[{ID:req.body.CompanyAddressCityID , Entity:cities},{ID:req.body.PhoneNumberID , Entity:sellerPhoneNumber}]).then(status=>{
                                                         if (status) {
-                                                            var image = "notSetYet";
                                                             ImageHandler(req,res,UplodDirs.seller)
                                                                 .then(Image=>{
-                                                                    image=Image;
                                                                     callback("", {
                                                                         ID: req.body.PhoneNumberID,
                                                                         CompanyName: req.body.CompanyName,
                                                                         CompleteAddressDescription: req.body.CompleteAddressDescription,
                                                                         Status: true,
                                                                         Point: 0,
-                                                                        Enable:true,
+                                                                        Enabled:true,
                                                                         RegistrationDateTime: req.body.RegistrationDateTime,
                                                                         GoogleMapAddressLink: req.body.GoogleMapAddressLink,
-                                                                        LogoImage: image,
+                                                                        LogoImage: Image,
                                                                         OwnerFamilyName: req.body.OwnerFamilyName,
                                                                         OwnerName: req.body.OwnerName,
                                                                         Password: md5(req.body.Password),
@@ -1170,7 +1159,197 @@ function FilteringRequest(req, res, callback) {
                     }
 
                     break;
+                case "seller":
+                    switch (req.originalUrl.substring(8).split("/")[1]) {
+                        case "product":
+                            switch (req.method) {
+                                case "POST":
+                                    checkToken(req,res,(data,err)=>{
+                                        if (err){callback(err);}
+                                        else {
+                                            checkUser(data, Seller, (newErr,newData)=>{
+                                                if (newErr){callback(newErr);}
+                                                else {
+                                                        if (newData.Enabled){
+                                                            ImageHandler(req,res,UplodDirs.products)
+                                                                .then(Image=>{
+                                                                    if (req.body.Description == null ||
+                                                                        req.body.Price == null ||
+                                                                        req.body.PriceDateTime == null ||
+                                                                        req.body.SupplyOfProduct == null ||
+                                                                        req.body.UnitOfProduct == null ||
+                                                                        req.body.ProductID == null ||
+                                                                        req.body.UnitID == null
+                                                                    ) {
+                                                                        callback({HttpCode: 400, response: {"code": 703}});
+                                                                    } else {
+                                                                        CheckForeignKey(res,[{ID:req.body.UnitID , Entity:unit},{ID:req.body.ProductID , Entity:products}])
+                                                                            .then(status=>{
+                                                                                if (status){
+                                                                                    callback("",{
+                                                                                        Description: req.body.Description,
+                                                                                        Image: Image,
+                                                                                        Price: req.body.Price,
+                                                                                        PriceDateTime: req.body.PriceDateTime,
+                                                                                        SupplyOfProduct: req.body.SupplyOfProduct,
+                                                                                        UnitOfProduct: req.body.UnitOfProduct,
+                                                                                        ProductID: req.body.ProductID,
+                                                                                        SellerID: newData.ID,
+                                                                                        ShowStatus:true,
+                                                                                        UnitID: req.body.UnitID,
+                                                                                        DiscountFor0TO200 : null ||req.body.DiscountFor0TO200,
+                                                                                        DiscountFor200TO500: null || req.body.DiscountFor200TO500,
+                                                                                        DiscountFor500TO1000:null || req.body.DiscountFor500TO1000,
+                                                                                        DiscountFor1000TOUpper: null || req.body.DiscountFor1000TOUpper
+                                                                                    });
 
+                                                                                }
+                                                                            });
+
+                                                                    }
+
+                                                                })
+                                                                .catch(message=>{
+                                                                    console.log(message);
+                                                                });
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {"code": 900}});
+                                                        }
+                                                }
+
+                                            });
+                                        }
+                                    });
+
+                                    break;
+                                case "GET":
+
+                                    checkToken(req,res,(data,err)=>{
+                                        if (err){callback(err);}
+                                        else {
+                                            checkUser(data, Seller, (newErr,newData)=>{
+                                                if (newErr){callback(newErr);}
+                                                else {
+                                                    if (newData.Enabled){
+                                                        sellerProducts.findAll({where:{SellerID:newData.ID}}).then(sellerProducts=>{
+                                                            callback("",sellerProducts);
+                                                        });
+                                                    } else {
+                                                        callback({HttpCode: 404, response: {"code": 900}});
+                                                    }
+                                                }
+
+                                            });
+                                        }
+                                    });
+
+                                    break;
+                                case "PUT":
+                                    checkLimitTime(res,(Timeerr,Timedata)=>{
+                                        if (Timeerr){
+                                            callback(Timeerr);
+                                        } else {
+                                            if (Timedata){
+                                                checkToken(req,res,(data,err)=>{
+                                                    if (err){callback(err);}
+                                                    else {
+                                                        checkUser(data, Seller, (newErr,newData)=>{
+                                                            if (newErr){callback(newErr);}
+                                                            else {
+                                                                if (newData.Enabled){
+
+                                                                    if (req.body.SellerProductID == null ) {
+                                                                        callback({HttpCode: 400, response: {"code": 703}});
+                                                                    } else {
+                                                                        CheckForeignKey(res,[{ID:req.body.SellerProductID , Entity:sellerProducts}])
+                                                                            .then(status=>{
+                                                                                if (status){
+                                                                                    PriceAndSupply.findAll({
+                                                                                        where:{
+                                                                                            SellerProductID:req.body.SellerProductID,
+                                                                                            DateTime:new Date().toISOString().slice(0,10).toString()
+                                                                                        }
+                                                                                    }).then(PriceAndSupply=>{
+
+                                                                                        if (!isThisArrayEmpty(PriceAndSupply)) {
+
+                                                                                            sellerProducts.findOne({where:{ID:req.body.SellerProductID}}).then(sellerProducts=>{
+                                                                                                products.findOne({where:{ID:sellerProducts.ProductID}}).then(product=>{
+                                                                                                    if (product.Type){
+                                                                                                        if (
+                                                                                                            req.body.SellerProductID == null ||
+                                                                                                            req.body.Price == null ||
+                                                                                                            req.body.Supply == null
+                                                                                                        ) {
+                                                                                                            callback({HttpCode: 400, response: {"code": 703}});
+                                                                                                        }else {
+                                                                                                            callback("",{
+                                                                                                                whatToDo:"update",
+                                                                                                                Entity:PriceAndSupply[0],
+                                                                                                                data:{
+                                                                                                                    SellerProductID: req.body.SellerProductID,
+                                                                                                                    Price: req.body.Price,
+                                                                                                                    AddedSupply: req.body.Supply}
+                                                                                                            });
+                                                                                                        }
+                                                                                                    }else {
+                                                                                                        callback({HttpCode: 400, response: {"code": 722}});
+                                                                                                    }
+                                                                                                });
+                                                                                            });
+
+                                                                                        }
+                                                                                        else {
+                                                                                            if (
+                                                                                                req.body.SellerProductID == null ||
+                                                                                                req.body.Price == null ||
+                                                                                                req.body.Supply == null ||
+                                                                                                req.body.UnitIDOfSupply == null
+                                                                                            ) {
+                                                                                                callback({HttpCode: 400, response: {"code": 703}});
+                                                                                            }else {
+                                                                                                CheckForeignKey(res, [{ID:req.body.UnitIDOfSupply , Entity:unit}]).then(status=>{
+                                                                                                    if (status){
+                                                                                                        callback("",{
+                                                                                                            whatToDo:"create",
+                                                                                                            data:{
+                                                                                                                SellerProductID: req.body.SellerProductID,
+                                                                                                                DateTime: new Date().toISOString().slice(0,10).toString(),
+                                                                                                                Price: req.body.Price,
+                                                                                                                PrimitiveSupply: req.body.Supply,
+                                                                                                                UnitIDOfSupply: req.body.UnitIDOfSupply
+                                                                                                            }
+                                                                                                        });
+                                                                                                    }
+                                                                                                });
+                                                                                            }
+
+                                                                                        }
+                                                                                    });
+
+                                                                                }
+                                                                            });
+
+                                                                    }
+
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {"code": 900}});
+                                                                }
+                                                            }
+
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                    break;
+
+                            }
+                            break;
+
+                    }
+                        break;
             }
             break;
 

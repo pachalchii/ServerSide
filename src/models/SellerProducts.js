@@ -5,8 +5,10 @@ module.exports = function(sequelize, DataTypes) {
 		ID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			primaryKey: true
-		},
+			primaryKey: true,
+            autoIncrement: true
+
+        },
 		SellerID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
@@ -39,6 +41,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
+        ShowStatus: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
 		Description: {
 			type: DataTypes.STRING,
 			allowNull: true

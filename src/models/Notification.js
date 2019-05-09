@@ -5,8 +5,10 @@ module.exports = function(sequelize, DataTypes) {
 		ID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			primaryKey: true
-		},
+			primaryKey: true,
+            autoIncrement: true
+
+        },
 		ToRoleID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
