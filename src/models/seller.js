@@ -61,7 +61,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         Enabled: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.BOOLEAN,
             allowNull: true
         },
         PhoneNumberID: {

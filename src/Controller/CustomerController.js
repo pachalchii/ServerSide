@@ -2,12 +2,72 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const { upload, colors} = require('../Util/configuration');
-const {base64_encode, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/Filter');
+const { } = require('../Util/configuration');
+const {base64_encode,FilteringRequest, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/Filter');
 
-const {sellerOperator,sellerPhoneNumber, orderNazarSanji, support, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
+const {sellerPhoneNumber, orderNazarSanji, support, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
 const Op = sequelize.Op;
+const asyncForEach = require('async-await-foreach');
 
+
+//new
+
+router.post('/order', (req, res) => {
+
+
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                asyncForEach(data, async (item)=>{
+                    await orderProduct.create(item);
+                }).then(()=>{return res.json().status(200);})
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
+
+router.get('/order', (req, res) => {
+
+    var searchQuery = checkToken(req, res);
+    if (searchQuery) {
+
+        customer.findAll(searchQuery).then(customer => {
+
+            if (isThisArrayEmpty(customer)) {
+
+                return res.status(400).json({"code": 700});
+
+            } else {
+                if (customer[0].Status){
+                    Order.findAll({where: {CustomerID: customer[0].ID}}).then(
+                        order => {
+                            return res.status(200).json(order);
+                        }
+                    )
+                }else {
+                    return res.status(404).json({"code": 900});
+                }
+
+
+
+            }
+        });
+
+
+    }
+
+});
+
+
+//old
 
 router.post('/address', (req, res) => {
     var searchQuery = checkToken(req, res);
@@ -168,235 +228,6 @@ router.get('/address', (req, res) => {
     } catch (e) {
         res.status(500).json({"code": 500});
     }
-});
-
-router.post('/order', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    var requestFilter =  filterRequest(req,res,"DoOrder");
-    try {
-        if (searchQuery && requestFilter){
-            customer.findAll(searchQuery).then(
-                customer=>{
-
-                    if (!isThisArrayEmpty(customer)){
-                        var AllNeededProducts =  req.body.products;
-
-                        var status = true;
-                        async function getAllPrice(AllNeededProducts){
-                            var KolMablagh = 0 ;
-                            for (var i =0 ; i<AllNeededProducts.length ; i ++){
-                               await sellerProducts.findAll({where:{ID:AllNeededProducts[i].SellerProductID}}).then(
-                                    product=>{
-                                        if (!isThisArrayEmpty(product)) {
-                                            KolMablagh = KolMablagh + (AllNeededProducts[i].Supply*product[0].Price)
-                                        }
-                                        else{
-                                            res.status(404).json();
-                                            status = false;
-                                        }
-                                    }
-                                );
-                            }
-
-                            return KolMablagh;
-                        }
-                        getAllPrice(AllNeededProducts).then(KolMablagh=>{
-                            if (status){
-                                //******************
-
-
-                                async function getAllTakhfif(AllNeededProducts) {
-                                    var koleTakhfif = 0;
-                                    for (var i = 0 ; i<AllNeededProducts.length ; i++){
-
-                                       await sellerProducts.findAll({where: {ID: AllNeededProducts[i].SellerProductID}}).then(
-                                            sellerProductss => {
-                                                var SellerID = sellerProductss[0].SellerID;
-                                                var ProductID = sellerProductss[0].ProductID;
-                                               takhfifProduct.findAll({
-                                                    where: {
-                                                        ProductID: ProductID
-                                                        , SellerID: SellerID
-                                                    }
-                                                }).then(
-                                                    takhfifProduct => {
-                                                        if (!isThisArrayEmpty(takhfifProduct)) {
-                                                            if (takhfifProduct[0].Start < new Date().getTime() < takhfifProduct[0].Finish && takhfifProduct[0].SupplyOFProduct > 0 && takhfifProduct[0].Enable && takhfifProduct[0].PachalChiStatus) {
-                                                                var ii = AllNeededProducts[i].Supply;
-                                                                if (takhfifProduct[0].SupplyOFProduct > 0) {
-                                                                    for (ii; ii > 0; ii = ii - 1) {
-                                                                        koleTakhfif = koleTakhfif + (takhfifProduct[0].PriceBefore - takhfifProduct[0].PriceAfter);
-                                                                    }
-
-                                                                }
-
-
-                                                            }
-
-
-                                                        }
-
-                                                    }
-                                                );
-
-
-                                            }
-                                        );
-                                    }
-                                return koleTakhfif;
-                                }
-
-                                getAllTakhfif(AllNeededProducts).then(KoleTakhfif=>{
-
-                                        sequelize.transaction().then(function(t) {
-                                            Order.create({
-                                                CustomerID:customer[0].ID,
-                                                OrderDateTime:new Date().getTime(),
-                                                CustomerAddressID:req.body.CustomerAddressID,
-                                                DateTimeErsal:req.body.DateTimeErsal,
-                                                JameKol:KolMablagh,
-                                                JameKolAfterTakhfif:KolMablagh-KoleTakhfif,
-                                                OrderStatus: false,
-                                                HashCode:"hashCode!"
-
-                                            }, {
-                                                transaction: t
-                                            })  .then(savedOrder => {
-                                                t.commit();
-                                                Order.update({HashCode: Math.floor(100000000 + Math.random() * 900000000) + savedOrder.ID}, {where: {ID: savedOrder.ID}})
-                                                    .then(() => {
-
-                                                        async function myFunction(AllNeededProducts){
-
-                                                            for (var i =0 ; i<AllNeededProducts.length ; i=i+1){
-                                                                var THISproduct ="";
-                                                                var THISso ="";
-                                                                await sellerProducts.findAll({where: {ID: AllNeededProducts[i].SellerProductID}}).then(
-                                                                    product => {
-                                                                  THISproduct = product;
-                                                                    }
-                                                                );
-                                                                if (!isThisArrayEmpty(THISproduct)) {
-                                                                   await sellerOperator.findAll().then(
-                                                                        so=>{
-                                                                            THISso=so;
-                                                                        }
-                                                                    );
-                                                                    var item = THISso[Math.floor(Math.random()*THISso.length)];
-                                                                    await orderProduct.create({
-                                                                            SellerOperatorID: item.ID,
-                                                                            SellerOperatorStatus:false,
-                                                                            OrderID: savedOrder.ID,
-                                                                            Takhfif:  AllNeededProducts[i].Supply * THISproduct[0].Price,
-                                                                            ProductID: THISproduct[0].ProductID,
-                                                                            Supply:  AllNeededProducts[i].Supply,
-                                                                            Price:  AllNeededProducts[i].Supply * THISproduct[0].Price,
-                                                                            CustomerStatus: true
-                                                                        }).then((savedorderProduct)=> {
-                                                                            setTimeout(()=>{
-                                                                                orderProduct.findAll({where:{ID:savedorderProduct.ID}}).then(
-                                                                                    op=>{
-                                                                                        if (!op[0].SellerOperatorStatus) {
-                                                                                            orderProduct.update({OrderProductStatus: false},{where:{ID:savedorderProduct.ID}})
-
-                                                                                        }
-                                                                                    }
-                                                                                )
-
-                                                                            },900000)
-
-                                                                        }).catch(function(error) {
-
-                                                                            t.rollback();
-                                                                            return res.status(400).json({"message":"Oops! Something went wrong!"})
-
-                                                                        });
-
-
-
-                                                                }
-
-                                                                else {
-                                                                    res.status(404).json();
-                                                                    status = false;
-                                                                }
-
-                                                            }
-
-
-
-
-                                                        }
-                                                        myFunction(AllNeededProducts).then(()=>{
-                                                            return res.status(200).json();
-                                                        })
-
-                                                        }
-
-                                                    )
-                                                });
-
-
-
-                                            })
-
-                                });
-
-                                //******************
-                            }else {
-                                return res.status(404).json({"code": 703 ,"message":"productId ersali mojod nist"});
-                            }
-
-                        });
-
-                    }else {
-                        return res.status(404).json({"code": 700});
-                    }
-                }
-            );
-
-
-        }
-
-
-    } catch (e) {
-        res.status(500).json({"code": 500});
-
-
-    }
-});
-
-router.get('/order', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    if (searchQuery) {
-
-        customer.findAll(searchQuery).then(customer => {
-
-            if (isThisArrayEmpty(customer)) {
-
-                return res.status(400).json({"code": 700});
-
-            } else {
-                if (customer[0].Status){
-                    Order.findAll({where: {CustomerID: customer[0].ID}}).then(
-                        order => {
-                            return res.status(200).json(order);
-                        }
-                    )
-                }else {
-                    return res.status(404).json({"code": 900});
-                }
-
-
-
-            }
-        });
-
-
-    }
-
 });
 
 router.post('/order/followUp', (req, res) => {

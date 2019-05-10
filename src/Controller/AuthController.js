@@ -121,7 +121,6 @@ router.post('/phoneNumber', (req, res) => {
 
         });
 
-
     } catch (e) {
         return res.status(500).json({"code": 500})
     }

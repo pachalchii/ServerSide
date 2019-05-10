@@ -1,10 +1,10 @@
-const {cities,application, sellerType,PriceAndSupply, sellerProducts, customer,addresses, Seller,ProductCategories,sellerPhoneNumber, SellerProductionManager,sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
-const {colors, PHONENUMBER_REGEX,TimeLimit,ImageLimitSize,ValidImageFormat,UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
+const {cities, application, sellerType,SellerOperator,sequelize, PriceAndSupply, sellerProducts, customer,Order, addresses, Seller, ProductCategories, sellerPhoneNumber, SellerProductionManager, sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
+const {colors, PHONENUMBER_REGEX, TimeLimit, ImageLimitSize, ValidImageFormat, UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 const jwt = require('jwt-simple');
 const path = require('path');
 const fs = require("fs");
 const md5 = require('md5');
-const asyncForEach = require('async-await-foreach')
+const asyncForEach = require('async-await-foreach');
 
 
 function base64_encode(file) {
@@ -58,8 +58,8 @@ function fillDataBase() {
                 ID: value.ID,
                 Name: value.Name,
                 CategoryID: value.CategoryID,
-                Type:null || value.Type ,
-                ParentID:value.ParentID
+                Type: null || value.Type,
+                ParentID: value.ParentID
             }
         ).catch(err => {
             console.log(err)
@@ -143,7 +143,7 @@ function fillDataBase() {
             type.forEach(insertTypes);
             console.log(colors.bg.Black, colors.fg.White, "import  SellerType demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red, colors.fg.White ,"import SellerType demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White, "import SellerType demo data canceled .", colors.Reset);
         }
     });
 
@@ -160,7 +160,7 @@ function fillDataBase() {
             carModelvar.forEach(insertCarModels);
             console.log(colors.bg.Black, colors.fg.White, "import  car model demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red, colors.fg.White,"import car model demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White, "import car model demo data canceled .", colors.Reset);
         }
     });
 
@@ -181,7 +181,7 @@ function fillDataBase() {
             unitvar.forEach(insertUnits);
             console.log(colors.bg.Black, colors.fg.White, "import unit demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red,colors.fg.White, "import unit demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White, "import unit demo data canceled .", colors.Reset);
         }
     });
 
@@ -205,42 +205,42 @@ function fillDataBase() {
             ProductCategoriesvar.forEach(insertProductCategories);
             console.log(colors.bg.Black, colors.fg.White, "import  products Group demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red,colors.fg.White, "import  products Group demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White, "import  products Group demo data canceled .", colors.Reset);
         }
     });
 
     var productsvar = [
 
-        {ID: "1" , Name: "خرده گوساله" , CategoryID: "1" , Type: "0" , ParentID: null },
-        {ID: "2" , Name: "خرده گوساله" , CategoryID: "1" , Type: "1" , ParentID: null },
-        {ID: "3" , Name: "قلوه گاه گوساله" , CategoryID: "1" , Type: "0" , ParentID: null },
-        {ID: "4" , Name: "قلوه گاه گوساله" , CategoryID: "1" , Type: "1" , ParentID: null }
+        {ID: "1", Name: "خرده گوساله", CategoryID: "1", Type: "0", ParentID: null},
+        {ID: "2", Name: "خرده گوساله", CategoryID: "1", Type: "1", ParentID: null},
+        {ID: "3", Name: "قلوه گاه گوساله", CategoryID: "1", Type: "0", ParentID: null},
+        {ID: "4", Name: "قلوه گاه گوساله", CategoryID: "1", Type: "1", ParentID: null}
 
-    /*    {ID: "5" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "6" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "7" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "8" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "9" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "10" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "11" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "12" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "13" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "14" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "15" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "16" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "17" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "18" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "19" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "20" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "21" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "22" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "23" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "24" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "25" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "26" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "27" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-        {ID: "28" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
-*/
+        /*    {ID: "5" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "6" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "7" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "8" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "9" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "10" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "11" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "12" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "13" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "14" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "15" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "16" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "17" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "18" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "19" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "20" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "21" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "22" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "23" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "24" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "25" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "26" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "27" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+            {ID: "28" , Name: "" , CategoryID: "" , Type: "" , ParentID: "" },
+    */
 
     ];
     products.findAll().then(products => {
@@ -248,7 +248,7 @@ function fillDataBase() {
             productsvar.forEach(insertProducts);
             console.log(colors.bg.Black, colors.fg.White, "import  products  demo data done successfuly", colors.Reset);
         } else {
-            console.log(colors.bg.Red,colors.fg.White, "import  products  demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White, "import  products  demo data canceled .", colors.Reset);
         }
     });
 
@@ -263,7 +263,7 @@ function fillDataBase() {
                 console.log(colors.bg.Black, colors.fg.White, "import  app  demo data done successfuly", colors.Reset)
             );
         } else {
-            console.log(colors.bg.Red,colors.fg.White, "import  app  demo data canceled .", colors.Reset);
+            console.log(colors.bg.Red, colors.fg.White, "import  app  demo data canceled .", colors.Reset);
         }
     });
 
@@ -323,8 +323,7 @@ function checkUserName(req, res) {
 
 function checkToken(req, res, callback) {
 
-    if (req.headers['token'] != null)
-    {
+    if (req.headers['token'] != null) {
         try {
             var decodedJWT = jwt.decode(req.headers['token'].toString(), JWT_SECRET);
             if (decodedJWT.Password == null || (decodedJWT.username && decodedJWT.PhoneNumber && decodedJWT.OwnerPhoneNumber)) {
@@ -340,13 +339,13 @@ function checkToken(req, res, callback) {
                     };
                 }
                 else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
-                    if (decodedJWT.PhoneNumber !=null){
+                    if (decodedJWT.PhoneNumber != null) {
                         searchQuery = {
                             where: {
                                 PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
                             }
                         };
-                    }else {
+                    } else {
                         searchQuery = {
                             where: {
                                 OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
@@ -372,31 +371,35 @@ function checkToken(req, res, callback) {
 
 }
 
-function checkLimitTime(res , callback) {
+function checkLimitTime(res, callback) {
     var date = new Date();
     var current_hour = date.getHours();
-    if ((TimeLimit.start < current_hour) && ( current_hour < TimeLimit.finish)) {
-        callback("",true);
+    if ((TimeLimit.start < current_hour) && (current_hour < TimeLimit.finish)) {
+        callback("", true);
     } else {
         callback({HttpCode: 404, response: {"code": 714}});
     }
 }
 
-function CheckForeignKey(res ,array) {
-    return new Promise((resolve)=>{
+function CheckForeignKey(res, array) {
+    return new Promise((resolve) => {
         var status = true;
-        array.forEach((value)=>{
-            if (value.ID == null || value.Entity == null ){
-                status= false;
+        array.forEach((value) => {
+            if (value.ID == null || value.Entity == null) {
+                status = false;
                 console.log("incomming array is not in the ideal style");
             }
         });
         asyncForEach(array, async item => {
-           await item.Entity.findOne({where:{ID:item.ID}}).then(Model=>{
-                if (Model == null) {  status = false;return res.status(400).json({"code":718}); }
+            await item.Entity.findOne({where: {ID: item.ID}}).then(Model => {
+                if (Model == null) {
+                    status = false;
+                }
             });
         }).then(() => {
             resolve(status);
+            if (!status)return res.status(400).json({"code": 718});
+
         });
     });
 
@@ -416,34 +419,36 @@ function checkUser(EncodedToken, Entity, callback) {
 
 }
 
-function ImageHandler(req,res,Dir) {
-    return new Promise((resolve,reject)=>{
+function ImageHandler(req, res, Dir) {
+    return new Promise((resolve, reject) => {
         if (req.file != null) {
             if (req.file.size <= ImageLimitSize) {
                 const tempPath = req.file.path;
                 const targetPath = path.join(__dirname, Dir + req.body.Username + path.extname(req.file.originalname).toLowerCase());
                 image = targetPath;
                 if (ValidImageFormat.indexOf(path.extname(req.file.originalname).toLowerCase()) !== -1) {
-                    fs.rename(tempPath, targetPath, function (err){
+                    fs.rename(tempPath, targetPath, function (err) {
                         if (err) {
-                            fs.unlink(tempPath,()=>{
+                            fs.unlink(tempPath, () => {
                                 reject(err);
                             });
-                        }else {
-                            fs.unlink(tempPath,()=>{
+                        } else {
+                            fs.unlink(tempPath, () => {
                                 resolve(targetPath);
                             });
                         }
                     });
                 } else {
                     fs.unlink(tempPath, err => {
-                        return res.status(400).json({"code":720});
+                        return res.status(400).json({"code": 720});
                     });
                 }
 
 
             }
-            else { return res.status(400).json({"code":719}); }
+            else {
+                return res.status(400).json({"code": 719});
+            }
         } else {
             resolve("notSetYet");
         }
@@ -566,20 +571,28 @@ function FilteringRequest(req, res, callback) {
                                                     case "productionManager":
                                                         Entity = SellerProductionManager;
                                                         break;
-                                                    default :   SwitchStatus = false; callback({HttpCode: 400, response: {response: "716"}});
+                                                    default :
+                                                        SwitchStatus = false;
+                                                        callback({HttpCode: 400, response: {response: "716"}});
                                                 }
-                                                if (SwitchStatus){
-                                                    if (req.body.Role === "seller"){
+                                                if (SwitchStatus) {
+                                                    if (req.body.Role === "seller") {
                                                         Entity.findOne({where: {OwnerPhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
                                                             if (UserModel != null) {
                                                                 if (UserModel.Status) {
                                                                     if (UserModel.AuthCode === req.body.Code) {
-                                                                        callback("",UserModel);
+                                                                        callback("", UserModel);
                                                                     } else {
-                                                                        callback({HttpCode: 404, response: {response: "715"}});
+                                                                        callback({
+                                                                            HttpCode: 404,
+                                                                            response: {response: "715"}
+                                                                        });
                                                                     }
                                                                 } else {
-                                                                    callback({HttpCode: 404, response: {response: "900"}});
+                                                                    callback({
+                                                                        HttpCode: 404,
+                                                                        response: {response: "900"}
+                                                                    });
                                                                 }
                                                             } else {
                                                                 callback({HttpCode: 404, response: {response: "710"}});
@@ -592,12 +605,18 @@ function FilteringRequest(req, res, callback) {
                                                             if (UserModel != null) {
                                                                 if (UserModel.Status) {
                                                                     if (UserModel.AuthCode === req.body.Code) {
-                                                                        callback("",UserModel);
+                                                                        callback("", UserModel);
                                                                     } else {
-                                                                        callback({HttpCode: 404, response: {response: "715"}});
+                                                                        callback({
+                                                                            HttpCode: 404,
+                                                                            response: {response: "715"}
+                                                                        });
                                                                     }
                                                                 } else {
-                                                                    callback({HttpCode: 404, response: {response: "900"}});
+                                                                    callback({
+                                                                        HttpCode: 404,
+                                                                        response: {response: "900"}
+                                                                    });
                                                                 }
                                                             } else {
                                                                 callback({HttpCode: 404, response: {response: "710"}});
@@ -619,7 +638,7 @@ function FilteringRequest(req, res, callback) {
                                     }
                                     break;
                                 case "changePassword":
-                                    if (req.body.PhoneNumber != null  && req.body.Password != null && req.body.Role != null) {
+                                    if (req.body.PhoneNumber != null && req.body.Password != null && req.body.Role != null) {
                                         if (checkPassword(req, res)) {
                                             if (checkPhone(req, res)) {
                                                 switch (req.body.Role) {
@@ -638,21 +657,29 @@ function FilteringRequest(req, res, callback) {
                                                     case "productionManager":
                                                         Entity = SellerProductionManager;
                                                         break;
-                                                    default :   SwitchStatus = false; callback({HttpCode: 400, response: {response: "716"}});
+                                                    default :
+                                                        SwitchStatus = false;
+                                                        callback({HttpCode: 400, response: {response: "716"}});
                                                 }
-                                                if (SwitchStatus){
-                                                    if (req.body.Role === "seller"){
+                                                if (SwitchStatus) {
+                                                    if (req.body.Role === "seller") {
                                                         Entity.findOne({where: {OwnerPhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
                                                             if (UserModel != null) {
                                                                 if (UserModel.Status) {
-                                                                    if(UserModel.IsForgetPasswordVerified){
-                                                                        callback("",UserModel);
-                                                                    }else {
-                                                                        callback({HttpCode: 404, response: {response: "721"}});
+                                                                    if (UserModel.IsForgetPasswordVerified) {
+                                                                        callback("", UserModel);
+                                                                    } else {
+                                                                        callback({
+                                                                            HttpCode: 404,
+                                                                            response: {response: "721"}
+                                                                        });
 
                                                                     }
                                                                 } else {
-                                                                    callback({HttpCode: 404, response: {response: "900"}});
+                                                                    callback({
+                                                                        HttpCode: 404,
+                                                                        response: {response: "900"}
+                                                                    });
                                                                 }
                                                             } else {
                                                                 callback({HttpCode: 404, response: {response: "710"}});
@@ -664,13 +691,20 @@ function FilteringRequest(req, res, callback) {
                                                         Entity.findOne({where: {PhoneNumber: req.body.PhoneNumber}}).then(UserModel => {
                                                             if (UserModel != null) {
                                                                 if (UserModel.Status) {
-                                                                    if(UserModel.IsForgetPasswordVerified){
-                                                                        callback("",UserModel);
-                                                                    }           else {
-                                                                        callback({HttpCode: 404, response: {response: "721"}});
+                                                                    if (UserModel.IsForgetPasswordVerified) {
+                                                                        callback("", UserModel);
+                                                                    } else {
+                                                                        callback({
+                                                                            HttpCode: 404,
+                                                                            response: {response: "721"}
+                                                                        });
 
-                                                                    }                                                    } else {
-                                                                    callback({HttpCode: 404, response: {response: "900"}});
+                                                                    }
+                                                                } else {
+                                                                    callback({
+                                                                        HttpCode: 404,
+                                                                        response: {response: "900"}
+                                                                    });
                                                                 }
                                                             } else {
                                                                 callback({HttpCode: 404, response: {response: "710"}});
@@ -695,26 +729,26 @@ function FilteringRequest(req, res, callback) {
 
                             break;
                         case "phoneNumber":
-                            if (req.body.PhoneNumber1 == null && req.body.PhoneNumber2 == null && req.body.PhoneNumber3 == null && req.body.PhoneNumber4 == null && req.body.PhoneNumber5 == null  )
-                            {
+                            if (req.body.PhoneNumber1 == null && req.body.PhoneNumber2 == null && req.body.PhoneNumber3 == null && req.body.PhoneNumber4 == null && req.body.PhoneNumber5 == null) {
                                 callback({HttpCode: 400, response: {response: "703"}});
 
                             } else {
-                                callback("","");
+                                callback("", "");
                             }
 
-                        break;
+                            break;
                         case "login":
-                        function BiuldLoginSearchQuery(req,res, callback) {
-                            if (req.body.PhoneNumber != null){
-                                if (req.body.Role === "seller"){
+
+                        function BiuldLoginSearchQuery(req, res, callback) {
+                            if (req.body.PhoneNumber != null) {
+                                if (req.body.Role === "seller") {
                                     callback("",
                                         {
                                             where: {
                                                 OwnerPhoneNumber: req.body.PhoneNumber, password: md5(req.body.Password)
                                             }
                                         });
-                                }else {
+                                } else {
                                     callback("",
                                         {
                                             where: {
@@ -724,14 +758,15 @@ function FilteringRequest(req, res, callback) {
                                 }
 
 
-                            } else if (req.body.Username != null){
-                                callback("",{
+                            } else if (req.body.Username != null) {
+                                callback("", {
                                     where: {
                                         Username: req.body.Username, Password: md5(req.body.Password)
                                     }
-                                }) ;
+                                });
                             }
                         }
+
                             if (req.body.Role == null || req.body.Password == null || (req.body.Username == null && req.body.PhoneNumber == null)) {
                                 callback({HttpCode: 400, response: {response: "703"}});
                             } else {
@@ -742,12 +777,12 @@ function FilteringRequest(req, res, callback) {
                                     } else {
                                         InfoStatus = checkUserName(req, res);
                                     }
-                                }else {
+                                } else {
                                     InfoStatus = false;
                                 }
-                                if (InfoStatus){
-                                    BiuldLoginSearchQuery(req,res,(err,data)=>{
-                                        if (!err){
+                                if (InfoStatus) {
+                                    BiuldLoginSearchQuery(req, res, (err, data) => {
+                                        if (!err) {
                                             switch (req.body.Role) {
                                                 case "customer":
                                                     customer.findOne(data).then(customer => {
@@ -765,23 +800,23 @@ function FilteringRequest(req, res, callback) {
 
                                                             }
                                                             var token = jwt.encode(payload, JWT_SECRET);
-                                                            addresses.findAll({where:{CustomerID:customer.ID}}).then(
-                                                                addresses=>{
-                                                                    var newAdrress  =[];
-                                                                    asyncForEach(addresses,async item =>{
-                                                                        await cities.findOne({where:{ID:item.CityID}}).then(
-                                                                            city=>{
+                                                            addresses.findAll({where: {CustomerID: customer.ID}}).then(
+                                                                addresses => {
+                                                                    var newAdrress = [];
+                                                                    asyncForEach(addresses, async item => {
+                                                                        await cities.findOne({where: {ID: item.CityID}}).then(
+                                                                            city => {
                                                                                 newAdrress.push({
-                                                                                    ID:item.ID,
-                                                                                    GoogleMapAddressLink:item.GoogleMapAddressLink,
-                                                                                    CompleteAddressDescription:item.CompleteAddressDescription,
-                                                                                    CustomName:item.CustomName,
-                                                                                    CityName:city.Name
+                                                                                    ID: item.ID,
+                                                                                    GoogleMapAddressLink: item.GoogleMapAddressLink,
+                                                                                    CompleteAddressDescription: item.CompleteAddressDescription,
+                                                                                    CustomName: item.CustomName,
+                                                                                    CityName: city.Name
                                                                                 })
                                                                             }
                                                                         );
-                                                                    }).then(answer=>{
-                                                                        callback("",{
+                                                                    }).then(answer => {
+                                                                        callback("", {
                                                                             "data": {
                                                                                 BirthDate: customer.BirthDate,
                                                                                 Image: base64str,
@@ -796,7 +831,7 @@ function FilteringRequest(req, res, callback) {
                                                                                 Theme: customer.Theme,
                                                                                 Username: customer.Username,
                                                                                 Token: token,
-                                                                                Addressess:newAdrress
+                                                                                Addressess: newAdrress
                                                                             }
                                                                         })
                                                                     });
@@ -811,231 +846,231 @@ function FilteringRequest(req, res, callback) {
                                                     });
                                                     break;
                                                 case "seller":
-                                                            Seller.findOne(data).then(seller => {
-                                                                if (seller != null) {
-                                                                    var payload = {
-                                                                        OwnerPhoneNumber: seller.OwnerPhoneNumber,
-                                                                        Password: seller.Password,
-                                                                    };
-                                                                    var base64str = "not Found";
-                                                                    try {
-                                                                        base64str = base64_encode(seller.LogoImage);
+                                                    Seller.findOne(data).then(seller => {
+                                                        if (seller != null) {
+                                                            var payload = {
+                                                                OwnerPhoneNumber: seller.OwnerPhoneNumber,
+                                                                Password: seller.Password,
+                                                            };
+                                                            var base64str = "not Found";
+                                                            try {
+                                                                base64str = base64_encode(seller.LogoImage);
 
-                                                                    } catch (e) {
-                                                                        base64str = "not Found";
+                                                            } catch (e) {
+                                                                base64str = "not Found";
 
-                                                                    }
-                                                                    var token = jwt.encode(payload, JWT_SECRET);
+                                                            }
+                                                            var token = jwt.encode(payload, JWT_SECRET);
 
-                                                                    callback("",{
-                                                                        "data": {
+                                                            callback("", {
+                                                                "data": {
 
-                                                                            ID: seller.PhoneNumberID,
-                                                                            CompanyName: seller.CompanyName,
-                                                                            CompleteAddressDescription: seller.CompleteAddressDescription,
-                                                                            Enable: seller.Enable,
-                                                                            Point: seller.Point,
-                                                                            RegistrationDateTime: seller.RegistrationDateTime,
-                                                                            GoogleMapAddressLink: seller.GoogleMapAddressLink,
-                                                                            LogoImage: base64str,
-                                                                            OwnerFamilyName: seller.OwnerFamilyName,
-                                                                            OwnerName: seller.OwnerName,
-                                                                            Password: seller.Password,
-                                                                            ShowStatus:true,
-                                                                            OwnerPhoneNumber: seller.OwnerPhoneNumber,
-                                                                            Username: seller.Username,
-                                                                            CompanyAddressCityID: seller.CompanyAddressCityID,
-                                                                            PhoneNumberID: seller.PhoneNumberID,
-                                                                            TypeID: seller.TypeID,
-                                                                            Token: token
-                                                                        }
-                                                                    });
-
-
-                                                                } else {
-                                                                    callback({HttpCode: 404, response: {response: "710"}});
+                                                                    ID: seller.PhoneNumberID,
+                                                                    CompanyName: seller.CompanyName,
+                                                                    CompleteAddressDescription: seller.CompleteAddressDescription,
+                                                                    Enable: seller.Enable,
+                                                                    Point: seller.Point,
+                                                                    RegistrationDateTime: seller.RegistrationDateTime,
+                                                                    GoogleMapAddressLink: seller.GoogleMapAddressLink,
+                                                                    LogoImage: base64str,
+                                                                    OwnerFamilyName: seller.OwnerFamilyName,
+                                                                    OwnerName: seller.OwnerName,
+                                                                    Password: seller.Password,
+                                                                    ShowStatus: true,
+                                                                    OwnerPhoneNumber: seller.OwnerPhoneNumber,
+                                                                    Username: seller.Username,
+                                                                    CompanyAddressCityID: seller.CompanyAddressCityID,
+                                                                    PhoneNumberID: seller.PhoneNumberID,
+                                                                    TypeID: seller.TypeID,
+                                                                    Token: token
                                                                 }
-
-
                                                             });
+
+
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                        }
+
+
+                                                    });
                                                     break;
                                                 case "transportation":
-                                                            transportation.findOne(data).then(trans => {
-                                                                if (trans != null) {
-                                                                    var payload = {
-                                                                        PhoneNumber: trans.PhoneNumber,
-                                                                        password: trans.password,
-                                                                        random: Math.random()
-                                                                    };
+                                                    transportation.findOne(data).then(trans => {
+                                                        if (trans != null) {
+                                                            var payload = {
+                                                                PhoneNumber: trans.PhoneNumber,
+                                                                password: trans.password,
+                                                                random: Math.random()
+                                                            };
 
 
-                                                                    var base64str = "not Found";
-                                                                    try {
-                                                                        base64str = base64_encode(trans.Image);
+                                                            var base64str = "not Found";
+                                                            try {
+                                                                base64str = base64_encode(trans.Image);
 
-                                                                    } catch (e) {
-                                                                        base64str = "not Found";
+                                                            } catch (e) {
+                                                                base64str = "not Found";
 
-                                                                    }
-                                                                    var token = jwt.encode(payload, JWT_SECRET);
+                                                            }
+                                                            var token = jwt.encode(payload, JWT_SECRET);
 
-                                                                        callback("",{
-                                                                            "data": {
+                                                            callback("", {
+                                                                "data": {
 
-                                                                                ID: trans.PhoneNumberID,
-                                                                                AirConditionar: trans.AirConditionar,
-                                                                                Color: trans.Color,
-                                                                                Description: trans.Description,
-                                                                                FamilyName: trans.FamilyName,
-                                                                                Image: base64str,
-                                                                                Name: trans.Name,
-                                                                                PelakNumber: trans.PelakNumber,
-                                                                                PhoneNumber: trans.PhoneNumber,
-                                                                                Point: trans.Point,
-                                                                                Username: trans.Username,
-                                                                                ModelID: trans.ModelID,
-                                                                                WareHouseID: trans.WareHouseID,
-                                                                                Token: token
-                                                                            }
-                                                                        });
-                                                                } else {
-                                                                    callback({HttpCode: 404, response: {response: "710"}});
+                                                                    ID: trans.PhoneNumberID,
+                                                                    AirConditionar: trans.AirConditionar,
+                                                                    Color: trans.Color,
+                                                                    Description: trans.Description,
+                                                                    FamilyName: trans.FamilyName,
+                                                                    Image: base64str,
+                                                                    Name: trans.Name,
+                                                                    PelakNumber: trans.PelakNumber,
+                                                                    PhoneNumber: trans.PhoneNumber,
+                                                                    Point: trans.Point,
+                                                                    Username: trans.Username,
+                                                                    ModelID: trans.ModelID,
+                                                                    WareHouseID: trans.WareHouseID,
+                                                                    Token: token
                                                                 }
-
-
                                                             });
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                        }
 
+
+                                                    });
 
 
                                                     break;
                                                 case "support":
-                                                            support.findOne(data).then(support => {
-                                                                if (support != null) {
-                                                                    var payload = {
-                                                                        PhoneNumber: support.PhoneNumber,
-                                                                        Password: support.Password,
-                                                                        random: Math.random()
-                                                                    };
+                                                    support.findOne(data).then(support => {
+                                                        if (support != null) {
+                                                            var payload = {
+                                                                PhoneNumber: support.PhoneNumber,
+                                                                Password: support.Password,
+                                                                random: Math.random()
+                                                            };
 
 
-                                                                    var base64str = "not Found";
-                                                                    try {
-                                                                        base64str = base64_encode(support.Image);
+                                                            var base64str = "not Found";
+                                                            try {
+                                                                base64str = base64_encode(support.Image);
 
-                                                                    } catch (e) {
-                                                                        base64str = "not Found";
+                                                            } catch (e) {
+                                                                base64str = "not Found";
 
-                                                                    }
-                                                                    var token = jwt.encode(payload, JWT_SECRET);
+                                                            }
+                                                            var token = jwt.encode(payload, JWT_SECRET);
 
-                                                                    callback("",{
-                                                                        "data": {
+                                                            callback("", {
+                                                                "data": {
 
-                                                                            ID: support.ID,
-                                                                            Image: base64str,
-                                                                            Name: support.Name,
-                                                                            FamilyName: support.FamilyName,
-                                                                            Username: support.Username,
-                                                                            Token: token
+                                                                    ID: support.ID,
+                                                                    Image: base64str,
+                                                                    Name: support.Name,
+                                                                    FamilyName: support.FamilyName,
+                                                                    Username: support.Username,
+                                                                    Token: token
 
-                                                                        }
-                                                                    });
-
-                                                                                                        } else {
-                                                                    callback({HttpCode: 404, response: {response: "710"}});
                                                                 }
-
-
                                                             });
+
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                        }
+
+
+                                                    });
                                                     break;
                                                 case "productionManager":
-                                                            SellerProductionManager.findOne(data).then(SellerProductionManager => {
-                                                                if (SellerProductionManager  != null) {
-                                                                    var payload = {
-                                                                        PhoneNumber: SellerProductionManager.PhoneNumber,
-                                                                        Password: SellerProductionManager.Password,
-                                                                        random: Math.random()
-                                                                    };
+                                                    SellerProductionManager.findOne(data).then(SellerProductionManager => {
+                                                        if (SellerProductionManager != null) {
+                                                            var payload = {
+                                                                PhoneNumber: SellerProductionManager.PhoneNumber,
+                                                                Password: SellerProductionManager.Password,
+                                                                random: Math.random()
+                                                            };
 
 
-                                                                    var base64str = "not Found";
-                                                                    try {
-                                                                        base64str = base64_encode(SellerProductionManager.Image);
+                                                            var base64str = "not Found";
+                                                            try {
+                                                                base64str = base64_encode(SellerProductionManager.Image);
 
-                                                                    } catch (e) {
-                                                                        base64str = "not Found";
+                                                            } catch (e) {
+                                                                base64str = "not Found";
 
-                                                                    }
-                                                                    var token = jwt.encode(payload, JWT_SECRET);
+                                                            }
+                                                            var token = jwt.encode(payload, JWT_SECRET);
 
-                                                                    callback("",{
-                                                                        "data": {
+                                                            callback("", {
+                                                                "data": {
 
-                                                                            ID: SellerProductionManager.PhoneNumberID,
-                                                                            Name: SellerProductionManager.Name,
-                                                                            FamilyName: SellerProductionManager.FamilyName,
-                                                                            BirthDate: SellerProductionManager.BirthDate,
-                                                                            PhoneNumber: SellerProductionManager.PhoneNumber,
-                                                                            Image: base64str,
-                                                                            CellPhoneNumber: SellerProductionManager.CellPhoneNumber,
-                                                                            Status: SellerProductionManager.Status,
-                                                                            Username: SellerProductionManager.Username,
-                                                                            SellerIDr: SellerProductionManager.SellerID,
-                                                                            Token: token
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    callback({HttpCode: 404, response: {response: "710"}});
+                                                                    ID: SellerProductionManager.PhoneNumberID,
+                                                                    Name: SellerProductionManager.Name,
+                                                                    FamilyName: SellerProductionManager.FamilyName,
+                                                                    BirthDate: SellerProductionManager.BirthDate,
+                                                                    PhoneNumber: SellerProductionManager.PhoneNumber,
+                                                                    Image: base64str,
+                                                                    CellPhoneNumber: SellerProductionManager.CellPhoneNumber,
+                                                                    Status: SellerProductionManager.Status,
+                                                                    Username: SellerProductionManager.Username,
+                                                                    SellerIDr: SellerProductionManager.SellerID,
+                                                                    Token: token
                                                                 }
-
-
                                                             });
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                        }
+
+
+                                                    });
                                                     break;
                                                 case "operator":
-                                                            sellerOperator.findAll(data).then(operator => {
-                                                                if (operator != null) {
-                                                                    var payload = {
-                                                                        PhoneNumber: operator.PhoneNumber,
-                                                                        Password: operator.Password,
-                                                                        random: Math.random()
-                                                                    };
+                                                    sellerOperator.findAll(data).then(operator => {
+                                                        if (operator != null) {
+                                                            var payload = {
+                                                                PhoneNumber: operator.PhoneNumber,
+                                                                Password: operator.Password,
+                                                                random: Math.random()
+                                                            };
 
 
-                                                                    var base64str = "not Found";
-                                                                    try {
-                                                                        base64str = base64_encode(operator.Image);
+                                                            var base64str = "not Found";
+                                                            try {
+                                                                base64str = base64_encode(operator.Image);
 
-                                                                    } catch (e) {
-                                                                        base64str = "not Found";
+                                                            } catch (e) {
+                                                                base64str = "not Found";
 
-                                                                    }
-                                                                    var token = jwt.encode(payload, JWT_SECRET);
+                                                            }
+                                                            var token = jwt.encode(payload, JWT_SECRET);
 
-                                                                    callback("",{
-                                                                        "data": {
+                                                            callback("", {
+                                                                "data": {
 
-                                                                            ID: operator.PhoneNumberID,
-                                                                            FamilyName: operator.FamilyName,
-                                                                            Name: operator.Name,
-                                                                            BirthDate: operator.BirthDate,
-                                                                            PhoneNumber: operator.PhoneNumber,
-                                                                            Image: base64str,
-                                                                            Point: operator.Point,
-                                                                            Username: operator.Username,
-                                                                            SellerID: operator.SellerID,
-                                                                            Token: token
+                                                                    ID: operator.PhoneNumberID,
+                                                                    FamilyName: operator.FamilyName,
+                                                                    Name: operator.Name,
+                                                                    BirthDate: operator.BirthDate,
+                                                                    PhoneNumber: operator.PhoneNumber,
+                                                                    Image: base64str,
+                                                                    Point: operator.Point,
+                                                                    Username: operator.Username,
+                                                                    SellerID: operator.SellerID,
+                                                                    Token: token
 
 
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    callback({HttpCode: 404, response: {response: "710"}});
                                                                 }
-
-
                                                             });
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                        }
+
+
+                                                    });
                                                     break;
-                                                default:callback({HttpCode: 404, response: {response: "716"}});
+                                                default:
+                                                    callback({HttpCode: 404, response: {response: "716"}});
 
                                             }
                                         }
@@ -1045,6 +1080,7 @@ function FilteringRequest(req, res, callback) {
                             }
                             break;
                         case "register":
+
                         function registerInfoCheck(req, res, role) {
                             switch (role) {
                                 case "customer":
@@ -1083,75 +1119,87 @@ function FilteringRequest(req, res, callback) {
 
 
                         }
-                                if (req.body.Role == null) {
+
+                            if (req.body.Role == null) {
                                 callback({HttpCode: 404, response: {response: "716"}});
-                                } else {
-                                    if (registerInfoCheck(req, res, req.body.Role)) {
-                                            switch (req.body.Role) {
-                                                case "customer":
-                                                    CheckForeignKey(res,[{ID:req.body.CityID , Entity:cities}]).then(status=>{
-                                                        if (status){
-                                                           ImageHandler(req,res,UplodDirs.customer)
-                                                               .then(Image=>{
-                                                                   callback("",{
-                                                                   BirthDate: req.body.BirthDate,
-                                                                   CompanyName: req.body.CompanyName,
-                                                                   Enable: true,
-                                                                   Status: true,
-                                                                   FamilyName: req.body.FamilyName,
-                                                                   Image: Image,
-                                                                   Name: req.body.Name,
-                                                                   PhoneNumber: req.body.PhoneNumber,
-                                                                   Password: md5(req.body.Password),
-                                                                   EstablishedDate: req.body.EstablishedDate,
-                                                                   Point: 0,
-                                                                   RegistrationDateTime: req.body.RegistrationDateTime,
-                                                                   Theme: req.body.Theme,
-                                                                   Username: req.body.Username,
-                                                                   CityID: req.body.CityID
+                            } else {
+                                if (registerInfoCheck(req, res, req.body.Role)) {
+                                    switch (req.body.Role) {
+                                        case "customer":
+                                            CheckForeignKey(res, [{
+                                                ID: req.body.CityID,
+                                                Entity: cities
+                                            }]).then(status => {
+                                                if (status) {
+                                                    ImageHandler(req, res, UplodDirs.customer)
+                                                        .then(Image => {
+                                                            callback("", {
+                                                                BirthDate: req.body.BirthDate,
+                                                                CompanyName: req.body.CompanyName,
+                                                                Enable: true,
+                                                                FamilyName: req.body.FamilyName,
+                                                                Image: Image,
+                                                                Name: req.body.Name,
+                                                                PhoneNumber: req.body.PhoneNumber,
+                                                                Password: md5(req.body.Password),
+                                                                EstablishedDate: req.body.EstablishedDate,
+                                                                Point: 0,
+                                                                RegistrationDateTime: req.body.RegistrationDateTime,
+                                                                Theme: req.body.Theme,
+                                                                Username: req.body.Username,
+                                                                CityID: req.body.CityID
 
-                                                               });})
-                                                               .catch(message=>{
-                                                                   console.log(message);
-                                                               });
-                                                        }
-                                                    });
-                                                    break;
-                                                case "seller":
-                                                    CheckForeignKey(res,[{ID:req.body.CompanyAddressCityID , Entity:cities},{ID:req.body.PhoneNumberID , Entity:sellerPhoneNumber}]).then(status=>{
-                                                        if (status) {
-                                                            ImageHandler(req,res,UplodDirs.seller)
-                                                                .then(Image=>{
-                                                                    callback("", {
-                                                                        ID: req.body.PhoneNumberID,
-                                                                        CompanyName: req.body.CompanyName,
-                                                                        CompleteAddressDescription: req.body.CompleteAddressDescription,
-                                                                        Status: true,
-                                                                        Point: 0,
-                                                                        Enabled:true,
-                                                                        RegistrationDateTime: req.body.RegistrationDateTime,
-                                                                        GoogleMapAddressLink: req.body.GoogleMapAddressLink,
-                                                                        LogoImage: Image,
-                                                                        OwnerFamilyName: req.body.OwnerFamilyName,
-                                                                        OwnerName: req.body.OwnerName,
-                                                                        Password: md5(req.body.Password),
-                                                                        OwnerPhoneNumber: req.body.OwnerPhoneNumber,
-                                                                        Username: req.body.Username,
-                                                                        CompanyAddressCityID: req.body.CompanyAddressCityID,
-                                                                        PhoneNumberID: req.body.PhoneNumberID,
-                                                                        TypeID: 1
+                                                            });
+                                                        })
+                                                        .catch(message => {
+                                                            console.log(message);
+                                                        });
+                                                }
+                                            });
+                                            break;
+                                        case "seller":
+                                            CheckForeignKey(res, [{
+                                                ID: req.body.CompanyAddressCityID,
+                                                Entity: cities
+                                            }, {
+                                                ID: req.body.PhoneNumberID,
+                                                Entity: sellerPhoneNumber
+                                            }]).then(status => {
+                                                if (status) {
+                                                    ImageHandler(req, res, UplodDirs.seller)
+                                                        .then(Image => {
+                                                            callback("", {
+                                                                ID: req.body.PhoneNumberID,
+                                                                CompanyName: req.body.CompanyName,
+                                                                CompleteAddressDescription: req.body.CompleteAddressDescription,
+                                                                Status: true,
+                                                                Point: 0,
+                                                                Enabled: true,
+                                                                RegistrationDateTime: req.body.RegistrationDateTime,
+                                                                GoogleMapAddressLink: req.body.GoogleMapAddressLink,
+                                                                LogoImage: Image,
+                                                                OwnerFamilyName: req.body.OwnerFamilyName,
+                                                                OwnerName: req.body.OwnerName,
+                                                                Password: md5(req.body.Password),
+                                                                OwnerPhoneNumber: req.body.OwnerPhoneNumber,
+                                                                Username: req.body.Username,
+                                                                CompanyAddressCityID: req.body.CompanyAddressCityID,
+                                                                PhoneNumberID: req.body.PhoneNumberID,
+                                                                TypeID: 1
 
-                                                                    });})
-                                                                .catch(message=>{
-                                                                    console.log(message);
-                                                                });
-                                                        }
-                                                    });
-                                                    break;
-                                                default:callback({HttpCode: 404, response: {response: "716"}});
-                                            }
+                                                            });
+                                                        })
+                                                        .catch(message => {
+                                                            console.log(message);
+                                                        });
+                                                }
+                                            });
+                                            break;
+                                        default:
+                                            callback({HttpCode: 404, response: {response: "716"}});
                                     }
                                 }
+                            }
 
 
                             break;
@@ -1164,57 +1212,64 @@ function FilteringRequest(req, res, callback) {
                         case "product":
                             switch (req.method) {
                                 case "POST":
-                                    checkToken(req,res,(data,err)=>{
-                                        if (err){callback(err);}
+                                    checkToken(req, res, (data, err) => {
+                                        if (err) {
+                                            callback(err);
+                                        }
                                         else {
-                                            checkUser(data, Seller, (newErr,newData)=>{
-                                                if (newErr){callback(newErr);}
+                                            checkUser(data, Seller, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
                                                 else {
-                                                        if (newData.Enabled){
-                                                            ImageHandler(req,res,UplodDirs.products)
-                                                                .then(Image=>{
-                                                                    if (req.body.Description == null ||
-                                                                        req.body.Price == null ||
-                                                                        req.body.PriceDateTime == null ||
-                                                                        req.body.SupplyOfProduct == null ||
-                                                                        req.body.UnitOfProduct == null ||
-                                                                        req.body.ProductID == null ||
-                                                                        req.body.UnitID == null
-                                                                    ) {
-                                                                        callback({HttpCode: 400, response: {"code": 703}});
-                                                                    } else {
-                                                                        CheckForeignKey(res,[{ID:req.body.UnitID , Entity:unit},{ID:req.body.ProductID , Entity:products}])
-                                                                            .then(status=>{
-                                                                                if (status){
-                                                                                    callback("",{
-                                                                                        Description: req.body.Description,
-                                                                                        Image: Image,
-                                                                                        Price: req.body.Price,
-                                                                                        PriceDateTime: req.body.PriceDateTime,
-                                                                                        SupplyOfProduct: req.body.SupplyOfProduct,
-                                                                                        UnitOfProduct: req.body.UnitOfProduct,
-                                                                                        ProductID: req.body.ProductID,
-                                                                                        SellerID: newData.ID,
-                                                                                        ShowStatus:true,
-                                                                                        UnitID: req.body.UnitID,
-                                                                                        DiscountFor0TO200 : null ||req.body.DiscountFor0TO200,
-                                                                                        DiscountFor200TO500: null || req.body.DiscountFor200TO500,
-                                                                                        DiscountFor500TO1000:null || req.body.DiscountFor500TO1000,
-                                                                                        DiscountFor1000TOUpper: null || req.body.DiscountFor1000TOUpper
-                                                                                    });
+                                                    if (newData.Enabled) {
+                                                        ImageHandler(req, res, UplodDirs.products)
+                                                            .then(Image => {
+                                                                if (req.body.Description == null ||
+                                                                    req.body.Price == null ||
+                                                                    req.body.PriceDateTime == null ||
+                                                                    req.body.SupplyOfProduct == null ||
+                                                                    req.body.UnitOfProduct == null ||
+                                                                    req.body.ProductID == null ||
+                                                                    req.body.UnitID == null
+                                                                ) {
+                                                                    callback({HttpCode: 400, response: {"code": 703}});
+                                                                } else {
+                                                                    CheckForeignKey(res, [{
+                                                                        ID: req.body.UnitID,
+                                                                        Entity: unit
+                                                                    }, {ID: req.body.ProductID, Entity: products}])
+                                                                        .then(status => {
+                                                                            if (status) {
+                                                                                callback("", {
+                                                                                    Description: req.body.Description,
+                                                                                    Image: Image,
+                                                                                    Price: req.body.Price,
+                                                                                    PriceDateTime: req.body.PriceDateTime,
+                                                                                    SupplyOfProduct: req.body.SupplyOfProduct,
+                                                                                    UnitOfProduct: req.body.UnitOfProduct,
+                                                                                    ProductID: req.body.ProductID,
+                                                                                    SellerID: newData.ID,
+                                                                                    ShowStatus: true,
+                                                                                    UnitID: req.body.UnitID,
+                                                                                    DiscountFor0TO200: null || req.body.DiscountFor0TO200,
+                                                                                    DiscountFor200TO500: null || req.body.DiscountFor200TO500,
+                                                                                    DiscountFor500TO1000: null || req.body.DiscountFor500TO1000,
+                                                                                    DiscountFor1000TOUpper: null || req.body.DiscountFor1000TOUpper
+                                                                                });
 
-                                                                                }
-                                                                            });
+                                                                            }
+                                                                        });
 
-                                                                    }
+                                                                }
 
-                                                                })
-                                                                .catch(message=>{
-                                                                    console.log(message);
-                                                                });
-                                                        } else {
-                                                            callback({HttpCode: 404, response: {"code": 900}});
-                                                        }
+                                                            })
+                                                            .catch(message => {
+                                                                console.log(message);
+                                                            });
+                                                    } else {
+                                                        callback({HttpCode: 404, response: {"code": 900}});
+                                                    }
                                                 }
 
                                             });
@@ -1224,15 +1279,19 @@ function FilteringRequest(req, res, callback) {
                                     break;
                                 case "GET":
 
-                                    checkToken(req,res,(data,err)=>{
-                                        if (err){callback(err);}
+                                    checkToken(req, res, (data, err) => {
+                                        if (err) {
+                                            callback(err);
+                                        }
                                         else {
-                                            checkUser(data, Seller, (newErr,newData)=>{
-                                                if (newErr){callback(newErr);}
+                                            checkUser(data, Seller, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
                                                 else {
-                                                    if (newData.Enabled){
-                                                        sellerProducts.findAll({where:{SellerID:newData.ID}}).then(sellerProducts=>{
-                                                            callback("",sellerProducts);
+                                                    if (newData.Enabled) {
+                                                        sellerProducts.findAll({where: {SellerID: newData.ID}}).then(sellerProducts => {
+                                                            callback("", sellerProducts);
                                                         });
                                                     } else {
                                                         callback({HttpCode: 404, response: {"code": 900}});
@@ -1245,55 +1304,72 @@ function FilteringRequest(req, res, callback) {
 
                                     break;
                                 case "PUT":
-                                    checkLimitTime(res,(Timeerr,Timedata)=>{
-                                        if (Timeerr){
+                                    checkLimitTime(res, (Timeerr, Timedata) => {
+                                        if (Timeerr) {
                                             callback(Timeerr);
                                         } else {
-                                            if (Timedata){
-                                                checkToken(req,res,(data,err)=>{
-                                                    if (err){callback(err);}
+                                            if (Timedata) {
+                                                checkToken(req, res, (data, err) => {
+                                                    if (err) {
+                                                        callback(err);
+                                                    }
                                                     else {
-                                                        checkUser(data, Seller, (newErr,newData)=>{
-                                                            if (newErr){callback(newErr);}
+                                                        checkUser(data, Seller, (newErr, newData) => {
+                                                            if (newErr) {
+                                                                callback(newErr);
+                                                            }
                                                             else {
-                                                                if (newData.Enabled){
+                                                                if (newData.Enabled) {
 
-                                                                    if (req.body.SellerProductID == null ) {
-                                                                        callback({HttpCode: 400, response: {"code": 703}});
+                                                                    if (req.body.SellerProductID == null) {
+                                                                        callback({
+                                                                            HttpCode: 400,
+                                                                            response: {"code": 703}
+                                                                        });
                                                                     } else {
-                                                                        CheckForeignKey(res,[{ID:req.body.SellerProductID , Entity:sellerProducts}])
-                                                                            .then(status=>{
-                                                                                if (status){
+                                                                        CheckForeignKey(res, [{
+                                                                            ID: req.body.SellerProductID,
+                                                                            Entity: sellerProducts
+                                                                        }])
+                                                                            .then(status => {
+                                                                                if (status) {
                                                                                     PriceAndSupply.findAll({
-                                                                                        where:{
-                                                                                            SellerProductID:req.body.SellerProductID,
-                                                                                            DateTime:new Date().toISOString().slice(0,10).toString()
+                                                                                        where: {
+                                                                                            SellerProductID: req.body.SellerProductID,
+                                                                                            DateTime: new Date().toISOString().slice(0, 10).toString()
                                                                                         }
-                                                                                    }).then(PriceAndSupply=>{
+                                                                                    }).then(PriceAndSupply => {
 
                                                                                         if (!isThisArrayEmpty(PriceAndSupply)) {
 
-                                                                                            sellerProducts.findOne({where:{ID:req.body.SellerProductID}}).then(sellerProducts=>{
-                                                                                                products.findOne({where:{ID:sellerProducts.ProductID}}).then(product=>{
-                                                                                                    if (product.Type){
+                                                                                            sellerProducts.findOne({where: {ID: req.body.SellerProductID}}).then(sellerProducts => {
+                                                                                                products.findOne({where: {ID: sellerProducts.ProductID}}).then(product => {
+                                                                                                    if (product.Type) {
                                                                                                         if (
                                                                                                             req.body.SellerProductID == null ||
                                                                                                             req.body.Price == null ||
                                                                                                             req.body.Supply == null
                                                                                                         ) {
-                                                                                                            callback({HttpCode: 400, response: {"code": 703}});
-                                                                                                        }else {
-                                                                                                            callback("",{
-                                                                                                                whatToDo:"update",
-                                                                                                                Entity:PriceAndSupply[0],
-                                                                                                                data:{
+                                                                                                            callback({
+                                                                                                                HttpCode: 400,
+                                                                                                                response: {"code": 703}
+                                                                                                            });
+                                                                                                        } else {
+                                                                                                            callback("", {
+                                                                                                                whatToDo: "update",
+                                                                                                                Entity: PriceAndSupply[0],
+                                                                                                                data: {
                                                                                                                     SellerProductID: req.body.SellerProductID,
                                                                                                                     Price: req.body.Price,
-                                                                                                                    AddedSupply: req.body.Supply}
+                                                                                                                    AddedSupply: req.body.Supply
+                                                                                                                }
                                                                                                             });
                                                                                                         }
-                                                                                                    }else {
-                                                                                                        callback({HttpCode: 400, response: {"code": 722}});
+                                                                                                    } else {
+                                                                                                        callback({
+                                                                                                            HttpCode: 400,
+                                                                                                            response: {"code": 722}
+                                                                                                        });
                                                                                                     }
                                                                                                 });
                                                                                             });
@@ -1306,15 +1382,21 @@ function FilteringRequest(req, res, callback) {
                                                                                                 req.body.Supply == null ||
                                                                                                 req.body.UnitIDOfSupply == null
                                                                                             ) {
-                                                                                                callback({HttpCode: 400, response: {"code": 703}});
-                                                                                            }else {
-                                                                                                CheckForeignKey(res, [{ID:req.body.UnitIDOfSupply , Entity:unit}]).then(status=>{
-                                                                                                    if (status){
-                                                                                                        callback("",{
-                                                                                                            whatToDo:"create",
-                                                                                                            data:{
+                                                                                                callback({
+                                                                                                    HttpCode: 400,
+                                                                                                    response: {"code": 703}
+                                                                                                });
+                                                                                            } else {
+                                                                                                CheckForeignKey(res, [{
+                                                                                                    ID: req.body.UnitIDOfSupply,
+                                                                                                    Entity: unit
+                                                                                                }]).then(status => {
+                                                                                                    if (status) {
+                                                                                                        callback("", {
+                                                                                                            whatToDo: "create",
+                                                                                                            data: {
                                                                                                                 SellerProductID: req.body.SellerProductID,
-                                                                                                                DateTime: new Date().toISOString().slice(0,10).toString(),
+                                                                                                                DateTime: new Date().toISOString().slice(0, 10).toString(),
                                                                                                                 Price: req.body.Price,
                                                                                                                 PrimitiveSupply: req.body.Supply,
                                                                                                                 UnitIDOfSupply: req.body.UnitIDOfSupply
@@ -1349,7 +1431,180 @@ function FilteringRequest(req, res, callback) {
                             break;
 
                     }
-                        break;
+                    break;
+                case "customer":
+                    switch (req.originalUrl.substring(8).split("/")[1]) {
+                        case "order" :
+                            if (req.body.products == null || isThisArrayEmpty(req.body.products)) {
+                                callback({HttpCode: 400, response: {"code": 703}});
+                            } else {
+
+                                var CustomProducts = req.body.products;
+                                var status = true;
+                                var ForigenStatus = true;
+
+                                    asyncForEach(CustomProducts,async (item)=>{
+                                        if (ForigenStatus && status) {
+                                            if (item.SellerProductID == null || item.ForwardingDatetime == null ||
+                                                item.CustomerAddressID == null || item.Supply == null ||
+                                                item.UnitIDOfSupply == null ) {
+                                                status = false;
+                                                callback({HttpCode: 400, response: {"code": 703}});
+                                            } else {
+                                               await CheckForeignKey(res,
+                                                   [{
+                                                    ID: item.SellerProductID,
+                                                    Entity: sellerProducts
+                                                      },
+                                                    {
+                                                        ID:item.CustomerAddressID,
+                                                        Entity: addresses
+                                                    },
+                                                    {
+                                                        ID:item.UnitIDOfSupply,
+                                                        Entity:unit
+                                                    }]
+                                               ).then(answer => {
+                                                    if (!answer) ForigenStatus = false;
+                                                });
+                                            }
+                                        }
+                                    }).then(()=>{
+                                        if (ForigenStatus && status) {
+
+                                            checkToken(req, res, (data, err) => {
+                                                if (err) {
+                                                    callback(err);
+                                                }
+                                                else {
+                                                    checkUser(data, customer, (newErr, newData) => {
+                                                        if (newErr) {
+                                                            callback(newErr);
+                                                        }
+                                                        else {
+                                                            if (newData.Enabled) {
+
+                                                                var TotalOrderProducts = [];
+                                                                var TotalStatus = true;
+
+
+                                                                sequelize.transaction().then(function (t) {
+                                                                    Order.create({
+                                                                        CustomerID:newData.ID,
+                                                                        OrderDateTime:new Date().toString(),
+                                                                        HashCode:new Date().getTime().toString()
+                                                                    }, {
+                                                                        transaction: t
+                                                                    }).then(savedOrder => {
+
+                                                                        asyncForEach(req.body.products , async (item) => {
+                                                                            if (TotalStatus) {
+                                                                                await sellerProducts.findOne({where:{ID:item.SellerProductID}}).then( async sellerProduct=>{
+                                                                                    await sellerOperator.findAll({where:{SellerID:sellerProduct.SellerID}}).then(async operators=>{
+                                                                                        function randomIntInc(low, high) {
+                                                                                            return Math.floor(Math.random() * (high - low + 1) + low)
+                                                                                        }
+                                                                                        var operator = randomIntInc(0,operators.length);
+                                                                                        await products.findOne({where:{ID:sellerProduct.ProductID}}).then( async product=>{
+                                                                                            if (product.Type){
+                                                                                                if (sellerProduct.ShowStatus){
+                                                                                                    var FinalDiscount = 0 ;
+                                                                                                    if (item.Supply < 200 ){FinalDiscount = sellerProduct.DiscountFor0TO200}
+                                                                                                    else if (item.Supply < 500 && item.Supply >200){FinalDiscount = sellerProduct.DiscountFor200TO500}
+                                                                                                    else if (item.Supply < 1000 && item.Supply > 500){FinalDiscount = sellerProduct.DiscountFor500TO1000}
+                                                                                                    else if (item.Supply > 1000){FinalDiscount = sellerProduct.DiscountFor1000TOUpper}
+                                                                                                    TotalOrderProducts.push({
+                                                                                                        OrderID:savedOrder.ID,
+                                                                                                        ForwardingDatetime : item.ForwardingDatetime,
+                                                                                                        CustomerAddressID: item.CustomerAddressID,
+                                                                                                        ProductID : item.SellerProductID,
+                                                                                                        UnitIDOfSupply:item.UnitIDOfSupply,
+                                                                                                        Supply : item.Supply,
+                                                                                                        SumTotal:"0",
+                                                                                                        SellerOperatorID: operator.ID,
+                                                                                                        FinalDiscount: FinalDiscount
+
+
+                                                                                                    });
+
+                                                                                                }else {TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});}
+                                                                                            } else {
+                                                                                                if (sellerProduct.ShowStatus){
+                                                                                                    await PriceAndSupply.findOne({where:{DateTime:new Date().toISOString().slice(0, 10).toString() , SellerProductID: item.SellerProductID }}).then(
+                                                                                                        PriceAndSupply=>{
+                                                                                                            if (PriceAndSupply != null){
+                                                                                                                if (item.Supply > PriceAndSupply.PrimitiveSupply){
+                                                                                                                    TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});
+                                                                                                                } else {
+                                                                                                                    TotalOrderProducts.push({
+                                                                                                                        OrderID:savedOrder.ID,
+                                                                                                                        ForwardingDatetime : item.ForwardingDatetime,
+                                                                                                                        CustomerAddressID: item.CustomerAddressID,
+                                                                                                                        UnitIDOfSupply:item.UnitIDOfSupply,
+                                                                                                                        ProductID : item.SellerProductID,
+                                                                                                                        Supply : item.Supply,
+                                                                                                                        SumTotal:"0",
+                                                                                                                        SellerOperatorID: operator.ID
+
+                                                                                                                    });
+
+                                                                                                                }
+
+                                                                                                            } else {
+                                                                                                                TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});
+                                                                                                            }
+                                                                                                        }
+                                                                                                    );
+                                                                                                }else {TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});}
+
+                                                                                            }
+                                                                                        })
+
+                                                                                    });
+                                                                                });
+                                                                            }
+                                                                        }).then(
+                                                                            ()=>{
+                                                                                if (TotalStatus) {
+                                                                                    t.commit();
+                                                                                    callback("",TotalOrderProducts);
+                                                                                }else {
+                                                                                    t.rollback();
+                                                                                }
+                                                                            }
+                                                                        );
+
+
+                                                                    }).catch(function (error) {
+                                                                        console.log(error)
+                                                                        t.rollback();
+                                                                        return res.status(500).json({"code": 500})
+                                                                    });
+                                                                });
+
+                                                            } else {
+                                                                callback({HttpCode: 404, response: {"code": 900}});
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            })
+
+
+                                        }
+
+
+                                    });
+
+
+
+                            }
+
+                            break;
+
+                    }
+
+                    break;
             }
             break;
 
@@ -1400,37 +1655,7 @@ function filterRequest(req, res, type) {
                 return true;
             }
             break;
-        case "DoOrder":
-            if (req.body.CustomerAddressID == null || req.body.DateTimeErsal == null) {
-                res.status(400).json({"code": 703});
-                return false;
-            } else {
-                var products = [];
-                products = req.body.products;
-                var status = true;
-                var tof = false;
 
-                function productsIteration(value, index, array) {
-                    if (value.SellerProductID == null || value.Supply == null) {
-                        status = false;
-                        if (!tof) {
-                            res.status(400).json({"code": 703});
-                            tof = true;
-                        }
-                    }
-                }
-
-                if (isThisArrayEmpty(products)) {
-                    res.status(400).json({"code": 703});
-                    return false;
-                } else {
-                    products.forEach(productsIteration);
-
-                    return status;
-                }
-            }
-
-            break;
         case "followUp":
             if (req.body.HashCode == null) {
                 res.status(400).json({"code": 703});
@@ -1566,8 +1791,6 @@ function addRoleInfoCheck(req, res, role) {
 
 
 }
-
-
 
 
 module.exports = {
