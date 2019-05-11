@@ -6,9 +6,31 @@ const cron = require("node-cron");
 const fs = require("fs");
 const path = require('path');
 
+const express = require('express');
+const bodyParser = require('body-parser');
+const {BaseUrl} = require('./src/Util/configuration');
+const cors = require('cors');
+const app = express();
+const morgan = require('morgan');
+const helmet = require('helmet');
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'Log/access.log'), { flags: 'a' , interval: '1d' });
+
+app.use(morgan('combined', { stream: accessLogStream }));
+app.use(bodyParser.json());
+app.use(cors());
+app.use(helmet());
+app.use( BaseUrl + '/application', require('./src/Controller/AppController') );
+app.use( BaseUrl + '/support', require('./src/Controller/SupportController') );
+app.use( BaseUrl + '/customer', require('./src/Controller/CustomerController') );
+app.use( BaseUrl + '/auth', require('./src/Controller/AuthController') );
+app.use( BaseUrl + '/seller', require('./src/Controller/SellerController') );
+app.use( BaseUrl + '/transportation', require('./src/Controller/transportationController') );
+app.use( BaseUrl + '/warehouse',require('./src/Controller/WareHouseController') );
+
 var zipFolder = require('zip-folder');
 
 if (cluster.isMaster) {
+
 
 
     if (DevelopMode){
@@ -49,20 +71,25 @@ if (cluster.isMaster) {
 
 
     cron.schedule("59 23 * * *", function() {
-        for (var id in cluster.workers) {
-            cluster.workers[id].kill();
+        try {
+            for (var id in cluster.workers) {
+                cluster.workers[id].kill();
+            }
+
+            var BackUpFileName = new Date();
+
+            zipFolder(path.join(__dirname, '/uploads/'), path.join(__dirname, '/BackUp/')+BackUpFileName+'.zip', function(err) {
+                if(err) {
+                    console.log('oh no!', err);
+                } else {
+                    console.log("hi")
+
+                }
+            });
+        }catch (e) {
+
         }
 
-        var BackUpFileName = new Date();
-
-        zipFolder(path.join(__dirname, '/uploads/'), path.join(__dirname, '/BackUp/')+BackUpFileName+'.zip', function(err) {
-            if(err) {
-                console.log('oh no!', err);
-            } else {
-                console.log("hi")
-
-            }
-        });
 
 
     });
@@ -72,29 +99,6 @@ if (cluster.isMaster) {
 
 else if (cluster.isWorker){
 
-    const express = require('express');
-    const bodyParser = require('body-parser');
-    const {BaseUrl} = require('./src/Util/configuration');
-    const cors = require('cors');
-    const app = express();
-    const io = require('socket.io').listen(port);
-    const morgan = require('morgan');
-    const fs = require("fs");
-    const helmet = require('helmet');
-    const accessLogStream = fs.createWriteStream(path.join(__dirname, 'Log/access.log'), { flags: 'a' , interval: '1d' });
-
-    app.use(morgan('combined', { stream: accessLogStream }));
-    app.use(bodyParser.json());
-    app.use(cors());
-    app.use(helmet());
-    app.use( BaseUrl + '/application', require('./src/Controller/AppController') );
-    app.use( BaseUrl + '/support', require('./src/Controller/SupportController') );
-    app.use( BaseUrl + '/customer', require('./src/Controller/CustomerController') );
-    app.use( BaseUrl + '/auth', require('./src/Controller/AuthController') );
-    app.use( BaseUrl + '/seller', require('./src/Controller/SellerController') );
-    app.use( BaseUrl + '/transportation', require('./src/Controller/transportationController') );
-    app.use( BaseUrl + '/warehouse',require('./src/Controller/WareHouseController') );
-
     app.get('/', function(req, res){
         res.send('pachalChi server is running ...' + cluster.worker.id);
     });
@@ -103,7 +107,8 @@ else if (cluster.isWorker){
 
     var port = 2323;
 
-    app.listen(port, () => {
+
+     app.listen(port, () => {
         console.log(colors.bg.Black, colors.fg.White ,"worker with id = "+cluster.worker.id+" start working.",  colors.Reset);
     });
 

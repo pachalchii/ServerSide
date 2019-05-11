@@ -1,4 +1,4 @@
-const {cities, application, sellerType,SellerOperator,sequelize, PriceAndSupply, sellerProducts, customer,Order, addresses, Seller, ProductCategories, sellerPhoneNumber, SellerProductionManager, sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
+const {cities, application, sellerType,SellerOperator,orderProduct,sequelize, PriceAndSupply, sellerProducts, customer,Order, addresses, Seller, ProductCategories, sellerPhoneNumber, SellerProductionManager, sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
 const {colors, PHONENUMBER_REGEX, TimeLimit, ImageLimitSize, ValidImageFormat, UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 const jwt = require('jwt-simple');
 const path = require('path');
@@ -1136,7 +1136,7 @@ function FilteringRequest(req, res, callback) {
                                                             callback("", {
                                                                 BirthDate: req.body.BirthDate,
                                                                 CompanyName: req.body.CompanyName,
-                                                                Enable: true,
+                                                                Enabled: true,
                                                                 FamilyName: req.body.FamilyName,
                                                                 Image: Image,
                                                                 Name: req.body.Name,
@@ -1169,10 +1169,9 @@ function FilteringRequest(req, res, callback) {
                                                     ImageHandler(req, res, UplodDirs.seller)
                                                         .then(Image => {
                                                             callback("", {
-                                                                ID: req.body.PhoneNumberID,
+                                                                PhoneNumberID: req.body.PhoneNumberID,
                                                                 CompanyName: req.body.CompanyName,
                                                                 CompleteAddressDescription: req.body.CompleteAddressDescription,
-                                                                Status: true,
                                                                 Point: 0,
                                                                 Enabled: true,
                                                                 RegistrationDateTime: req.body.RegistrationDateTime,
@@ -1435,172 +1434,215 @@ function FilteringRequest(req, res, callback) {
                 case "customer":
                     switch (req.originalUrl.substring(8).split("/")[1]) {
                         case "order" :
-                            if (req.body.products == null || isThisArrayEmpty(req.body.products)) {
-                                callback({HttpCode: 400, response: {"code": 703}});
-                            } else {
+                            switch (req.method) {
+                                case "POST":
+                                    if (req.body.products == null || isThisArrayEmpty(req.body.products)) {
+                                        callback({HttpCode: 400, response: {"code": 703}});
+                                    } else {
 
-                                var CustomProducts = req.body.products;
-                                var status = true;
-                                var ForigenStatus = true;
+                                        var CustomProducts = req.body.products;
+                                        var status = true;
+                                        var ForigenStatus = true;
 
-                                    asyncForEach(CustomProducts,async (item)=>{
-                                        if (ForigenStatus && status) {
-                                            if (item.SellerProductID == null || item.ForwardingDatetime == null ||
-                                                item.CustomerAddressID == null || item.Supply == null ||
-                                                item.UnitIDOfSupply == null ) {
-                                                status = false;
-                                                callback({HttpCode: 400, response: {"code": 703}});
-                                            } else {
-                                               await CheckForeignKey(res,
-                                                   [{
-                                                    ID: item.SellerProductID,
-                                                    Entity: sellerProducts
-                                                      },
-                                                    {
-                                                        ID:item.CustomerAddressID,
-                                                        Entity: addresses
-                                                    },
-                                                    {
-                                                        ID:item.UnitIDOfSupply,
-                                                        Entity:unit
-                                                    }]
-                                               ).then(answer => {
-                                                    if (!answer) ForigenStatus = false;
-                                                });
-                                            }
-                                        }
-                                    }).then(()=>{
-                                        if (ForigenStatus && status) {
-
-                                            checkToken(req, res, (data, err) => {
-                                                if (err) {
-                                                    callback(err);
-                                                }
-                                                else {
-                                                    checkUser(data, customer, (newErr, newData) => {
-                                                        if (newErr) {
-                                                            callback(newErr);
-                                                        }
-                                                        else {
-                                                            if (newData.Enabled) {
-
-                                                                var TotalOrderProducts = [];
-                                                                var TotalStatus = true;
-
-
-                                                                sequelize.transaction().then(function (t) {
-                                                                    Order.create({
-                                                                        CustomerID:newData.ID,
-                                                                        OrderDateTime:new Date().toString(),
-                                                                        HashCode:new Date().getTime().toString()
-                                                                    }, {
-                                                                        transaction: t
-                                                                    }).then(savedOrder => {
-
-                                                                        asyncForEach(req.body.products , async (item) => {
-                                                                            if (TotalStatus) {
-                                                                                await sellerProducts.findOne({where:{ID:item.SellerProductID}}).then( async sellerProduct=>{
-                                                                                    await sellerOperator.findAll({where:{SellerID:sellerProduct.SellerID}}).then(async operators=>{
-                                                                                        function randomIntInc(low, high) {
-                                                                                            return Math.floor(Math.random() * (high - low + 1) + low)
-                                                                                        }
-                                                                                        var operator = randomIntInc(0,operators.length);
-                                                                                        await products.findOne({where:{ID:sellerProduct.ProductID}}).then( async product=>{
-                                                                                            if (product.Type){
-                                                                                                if (sellerProduct.ShowStatus){
-                                                                                                    var FinalDiscount = 0 ;
-                                                                                                    if (item.Supply < 200 ){FinalDiscount = sellerProduct.DiscountFor0TO200}
-                                                                                                    else if (item.Supply < 500 && item.Supply >200){FinalDiscount = sellerProduct.DiscountFor200TO500}
-                                                                                                    else if (item.Supply < 1000 && item.Supply > 500){FinalDiscount = sellerProduct.DiscountFor500TO1000}
-                                                                                                    else if (item.Supply > 1000){FinalDiscount = sellerProduct.DiscountFor1000TOUpper}
-                                                                                                    TotalOrderProducts.push({
-                                                                                                        OrderID:savedOrder.ID,
-                                                                                                        ForwardingDatetime : item.ForwardingDatetime,
-                                                                                                        CustomerAddressID: item.CustomerAddressID,
-                                                                                                        ProductID : item.SellerProductID,
-                                                                                                        UnitIDOfSupply:item.UnitIDOfSupply,
-                                                                                                        Supply : item.Supply,
-                                                                                                        SumTotal:"0",
-                                                                                                        SellerOperatorID: operator.ID,
-                                                                                                        FinalDiscount: FinalDiscount
-
-
-                                                                                                    });
-
-                                                                                                }else {TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});}
-                                                                                            } else {
-                                                                                                if (sellerProduct.ShowStatus){
-                                                                                                    await PriceAndSupply.findOne({where:{DateTime:new Date().toISOString().slice(0, 10).toString() , SellerProductID: item.SellerProductID }}).then(
-                                                                                                        PriceAndSupply=>{
-                                                                                                            if (PriceAndSupply != null){
-                                                                                                                if (item.Supply > PriceAndSupply.PrimitiveSupply){
-                                                                                                                    TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});
-                                                                                                                } else {
-                                                                                                                    TotalOrderProducts.push({
-                                                                                                                        OrderID:savedOrder.ID,
-                                                                                                                        ForwardingDatetime : item.ForwardingDatetime,
-                                                                                                                        CustomerAddressID: item.CustomerAddressID,
-                                                                                                                        UnitIDOfSupply:item.UnitIDOfSupply,
-                                                                                                                        ProductID : item.SellerProductID,
-                                                                                                                        Supply : item.Supply,
-                                                                                                                        SumTotal:"0",
-                                                                                                                        SellerOperatorID: operator.ID
-
-                                                                                                                    });
-
-                                                                                                                }
-
-                                                                                                            } else {
-                                                                                                                TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});
-                                                                                                            }
-                                                                                                        }
-                                                                                                    );
-                                                                                                }else {TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});}
-
-                                                                                            }
-                                                                                        })
-
-                                                                                    });
-                                                                                });
-                                                                            }
-                                                                        }).then(
-                                                                            ()=>{
-                                                                                if (TotalStatus) {
-                                                                                    t.commit();
-                                                                                    callback("",TotalOrderProducts);
-                                                                                }else {
-                                                                                    t.rollback();
-                                                                                }
-                                                                            }
-                                                                        );
-
-
-                                                                    }).catch(function (error) {
-                                                                        console.log(error)
-                                                                        t.rollback();
-                                                                        return res.status(500).json({"code": 500})
-                                                                    });
-                                                                });
-
-                                                            } else {
-                                                                callback({HttpCode: 404, response: {"code": 900}});
-                                                            }
-                                                        }
+                                        asyncForEach(CustomProducts,async (item)=>{
+                                            if (ForigenStatus && status) {
+                                                if (item.SellerProductID == null || item.ForwardingDatetime == null ||
+                                                    item.CustomerAddressID == null || item.Supply == null ||
+                                                    item.UnitIDOfSupply == null ) {
+                                                    status = false;
+                                                    callback({HttpCode: 400, response: {"code": 703}});
+                                                } else {
+                                                    await CheckForeignKey(res,
+                                                        [{
+                                                            ID: item.SellerProductID,
+                                                            Entity: sellerProducts
+                                                        },
+                                                            {
+                                                                ID:item.CustomerAddressID,
+                                                                Entity: addresses
+                                                            },
+                                                            {
+                                                                ID:item.UnitIDOfSupply,
+                                                                Entity:unit
+                                                            }]
+                                                    ).then(answer => {
+                                                        if (!answer) ForigenStatus = false;
                                                     });
                                                 }
-                                            })
+                                            }
+                                        }).then(()=>{
+                                            if (ForigenStatus && status) {
+
+                                                checkToken(req, res, (data, err) => {
+                                                    if (err) {
+                                                        callback(err);
+                                                    }
+                                                    else {
+                                                        checkUser(data, customer, (newErr, newData) => {
+                                                            if (newErr) {
+                                                                callback(newErr);
+                                                            }
+                                                            else {
+                                                                if (newData.Enabled) {
+
+                                                                    var TotalOrderProducts = [];
+                                                                    var TotalStatus = true;
 
 
+                                                                    sequelize.transaction().then(function (t) {
+                                                                        Order.create({
+                                                                            CustomerID:newData.ID,
+                                                                            OrderDateTime:new Date().toString(),
+                                                                            HashCode:new Date().getTime().toString()
+                                                                        }, {
+                                                                            transaction: t
+                                                                        }).then(savedOrder => {
+
+                                                                            asyncForEach(req.body.products , async (item) => {
+                                                                                if (TotalStatus) {
+                                                                                    await sellerProducts.findOne({where:{ID:item.SellerProductID}}).then( async sellerProduct=>{
+                                                                                        await sellerOperator.findAll({where:{SellerID:sellerProduct.SellerID}}).then(async operators=>{
+                                                                                            function randomIntInc(low, high) {
+                                                                                                return Math.floor(Math.random() * (high - low + 1) + low)
+                                                                                            }
+                                                                                            var operator = randomIntInc(0,operators.length);
+                                                                                            await products.findOne({where:{ID:sellerProduct.ProductID}}).then( async product=>{
+                                                                                                if (product.Type){
+                                                                                                    if (sellerProduct.ShowStatus){
+                                                                                                        var FinalDiscount = 0 ;
+                                                                                                        if (item.Supply < 200 ){FinalDiscount = sellerProduct.DiscountFor0TO200}
+                                                                                                        else if (item.Supply < 500 && item.Supply >200){FinalDiscount = sellerProduct.DiscountFor200TO500}
+                                                                                                        else if (item.Supply < 1000 && item.Supply > 500){FinalDiscount = sellerProduct.DiscountFor500TO1000}
+                                                                                                        else if (item.Supply > 1000){FinalDiscount = sellerProduct.DiscountFor1000TOUpper}
+                                                                                                        TotalOrderProducts.push({
+                                                                                                            OrderID:savedOrder.ID,
+                                                                                                            ForwardingDatetime : item.ForwardingDatetime,
+                                                                                                            CustomerAddressID: item.CustomerAddressID,
+                                                                                                            ProductID : item.SellerProductID,
+                                                                                                            UnitIDOfSupply:item.UnitIDOfSupply,
+                                                                                                            Supply : item.Supply,
+                                                                                                            SumTotal:"0",
+                                                                                                            SellerOperatorID: operator.ID,
+                                                                                                            FinalDiscount: FinalDiscount
+
+
+                                                                                                        });
+
+                                                                                                    }else {TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});}
+                                                                                                } else {
+                                                                                                    if (sellerProduct.ShowStatus){
+                                                                                                        await PriceAndSupply.findOne({where:{DateTime:new Date().toISOString().slice(0, 10).toString() , SellerProductID: item.SellerProductID }}).then(
+                                                                                                            PriceAndSupply=>{
+                                                                                                                if (PriceAndSupply != null){
+                                                                                                                    if (item.Supply > PriceAndSupply.PrimitiveSupply){
+                                                                                                                        TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});
+                                                                                                                    } else {
+                                                                                                                        TotalOrderProducts.push({
+                                                                                                                            OrderID:savedOrder.ID,
+                                                                                                                            ForwardingDatetime : item.ForwardingDatetime,
+                                                                                                                            CustomerAddressID: item.CustomerAddressID,
+                                                                                                                            UnitIDOfSupply:item.UnitIDOfSupply,
+                                                                                                                            ProductID : item.SellerProductID,
+                                                                                                                            Supply : item.Supply,
+                                                                                                                            SumTotal:"0",
+                                                                                                                            SellerOperatorID: operator.ID
+
+                                                                                                                        });
+
+                                                                                                                    }
+
+                                                                                                                } else {
+                                                                                                                    TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});
+                                                                                                                }
+                                                                                                            }
+                                                                                                        );
+                                                                                                    }else {TotalStatus = false; callback({HttpCode: 404, response: {"code": 723}});}
+
+                                                                                                }
+                                                                                            })
+
+                                                                                        });
+                                                                                    });
+                                                                                }
+                                                                            }).then(
+                                                                                ()=>{
+                                                                                    if (TotalStatus) {
+                                                                                        t.commit();
+                                                                                        callback("",TotalOrderProducts);
+                                                                                    }else {
+                                                                                        t.rollback();
+                                                                                    }
+                                                                                }
+                                                                            );
+
+
+                                                                        }).catch(function (error) {
+                                                                            console.log(error)
+                                                                            t.rollback();
+                                                                            return res.status(500).json({"code": 500})
+                                                                        });
+                                                                    });
+
+                                                                } else {
+                                                                    callback({HttpCode: 404, response: {"code": 900}});
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                })
+
+
+                                            }
+
+
+                                        });
+
+
+
+                                    }
+
+                                    break;
+                                case "GET":
+                                    checkToken(req, res, (data, err) => {
+                                        if (err) {
+                                            callback(err);
                                         }
+                                        else {
+                                            checkUser(data, customer, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
+                                                else {
+                                                    if (newData.Enabled) {
 
+                                                        Order.findAll({where:{CustomerID:newData.ID}}).then(Orders=>{
+                                                            var mine = [] ;
+                                                            asyncForEach(Orders,async (item,index)=>{
+                                                              await  orderProduct.findAll({where:{OrderID:item.ID}}).then(orderProducts=>{
+                                                                  if (!isThisArrayEmpty(orderProducts)){
+                                                                      mine.push({Order : item , OrderProduct : orderProducts});
+                                                                  }else {
+                                                                      mine.push({Order : item , OrderProduct : []});
+                                                                  }
 
+                                                                });
+
+                                                            }).then(()=>{callback("",mine)});
+
+                                                        });
+                                                    } else {
+                                                        callback({HttpCode: 404, response: {"code": 900}});
+                                                    }
+                                                }
+
+                                            });
+                                        }
                                     });
-
+                                    break;
 
 
                             }
 
-                            break;
 
                     }
 

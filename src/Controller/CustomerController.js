@@ -36,30 +36,19 @@ router.post('/order', (req, res) => {
 
 router.get('/order', (req, res) => {
 
-    var searchQuery = checkToken(req, res);
-    if (searchQuery) {
-
-        customer.findAll(searchQuery).then(customer => {
-
-            if (isThisArrayEmpty(customer)) {
-
-                return res.status(400).json({"code": 700});
-
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                console.log(err)
+                return res.status(err.HttpCode).json(err.response);
             } else {
-                if (customer[0].Status){
-                    Order.findAll({where: {CustomerID: customer[0].ID}}).then(
-                        order => {
-                            return res.status(200).json(order);
-                        }
-                    )
-                }else {
-                    return res.status(404).json({"code": 900});
-                }
-
-
-
+               return res.json(data).status(200);
             }
         });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
 
 
     }
