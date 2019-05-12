@@ -169,11 +169,16 @@ const TimeLimit = {
     finish:22
 };
 
+const ServerPort = 2323;
+
+const SocketServerPort = 8080;
 
 
 module.exports = {
     statusCodes,
     BaseUrl,
+    SocketServerPort,
+    ServerPort,
     TimeLimit,
     UplodDirs,
     DataBaseInformation,

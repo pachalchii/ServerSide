@@ -55,49 +55,18 @@ router.get('/order', (req, res) => {
 
 });
 
-
-//old
-
 router.post('/address', (req, res) => {
-    var searchQuery = checkToken(req, res);
-    var AddresFilter = filterRequest(req, res, "customerAddress");
     try {
-        if (searchQuery && AddresFilter) {
-            customer.findAll(searchQuery).then(
-                customer => {
-                    if (!isThisArrayEmpty(customer)) {
-                        if (customer[0].Status){
-                            cities.findAll({where: {ID: req.body.CityID}}).then(
-                                city => {
-                                    if (!isThisArrayEmpty(city)) {
-                                        addresses.create({
-                                            CustomerID: customer[0].ID,
-                                            CityID: req.body.CityID,
-                                            GoogleMapAddressLink: req.body.GoogleMapAddressLink,
-                                            CompleteAddressDescription: req.body.CompleteAddressDescription,
-                                            CustomName: req.body.CustomName
-                                        });
-                                       return res.json();
-
-                                    } else {
-                                        return res.status(404).json();
-                                    }
-                                }
-                            );
-
-
-                        } else {
-                            return res.status(404).json({"code": 900});
-                        }
-
-                    } else {
-                        return res.status(404).json({"code": 700});
-                    }
-                }
-            );
-
-
-        }
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                console.log(err)
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                addresses.create(data).then(()=>{
+                    return res.status(200).json();
+                })
+            }
+        });
 
 
     } catch (e) {
@@ -105,76 +74,23 @@ router.post('/address', (req, res) => {
 
 
     }
+
 
 });
 
 router.put('/address', (req, res) => {
-    var searchQuery = checkToken(req, res);
-    var AddresFilter = filterRequest(req, res, "editCustomerAddress");
     try {
-        if (searchQuery && AddresFilter) {
-            customer.findAll(searchQuery).then(
-                customer => {
-                    if (!isThisArrayEmpty(customer)) {
-                        if (customer[0].Status){
-                            if (req.body.CityID != null) {
-                                cities.findAll({where: {ID: req.body.CityID}}).then(
-                                    city => {
-                                        if (isThisArrayEmpty(city)) {
-                                            return res.status(404).json();
-                                        }
-                                    }
-                                );
-                            }
-                            addresses.findAll({
-                                where: {ID: req.body.CustomerAddressID}
-                            }).then(address => {
-                                if (!isThisArrayEmpty(address)) {
-                                    var CustomerID = address[0].CustomerID;
-                                    var CityID = address[0].CityID;
-                                    var GoogleMapAddressLink = address[0].GoogleMapAddressLink;
-                                    var CompleteAddressDescription = address[0].CompleteAddressDescription;
-                                    var CustomName = address[0].CustomName;
-
-                                    if (req.body.CityID != null) CityID = req.body.CityID;
-                                    if (req.body.GoogleMapAddressLink != null) GoogleMapAddressLink = req.body.GoogleMapAddressLink;
-                                    if (req.body.CompleteAddressDescription != null) CompleteAddressDescription = req.body.CompleteAddressDescription;
-                                    if (req.body.CustomName != null) CustomName = req.body.CustomName;
-                                    if (req.body.CustomerID != null) CustomerID = req.body.CustomerID;
-
-                                    if (req.body.CustomerID != null) {
-                                    }
-                                    addresses.update({
-                                        CustomerID: CustomerID,
-                                        CityID: CityID,
-                                        GoogleMapAddressLink: GoogleMapAddressLink,
-                                        CompleteAddressDescription: CompleteAddressDescription,
-                                        CustomName: CustomName
-                                    }, {
-                                        where: {
-                                            ID: req.body.CustomerAddressID
-                                        }
-                                    });
-                                    return res.json();
-
-                                } else {
-                                    res.status(404).json({"code": 703});
-                                }
-                            });
-
-
-                        }else {
-                            return res.status(404).json({"code": 900});
-                        }
-
-                    } else {
-                        return res.status(404).json({"code": 700});
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                addresses.update(data ,  {
+                    where: {
+                        ID: req.body.CustomerAddressID
                     }
-                }
-            );
-
-
-        }
+                }).then(()=>{return res.json().status(200)});
+            }
+        });
 
 
     } catch (e) {
@@ -184,6 +100,29 @@ router.put('/address', (req, res) => {
     }
 
 });
+
+router.get('/address', (req, res) => {
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json(data).status(200);
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+
+});
+
+
+
+//old
 
 router.get('/address', (req, res) => {
     var searchQuery = checkToken(req, res);

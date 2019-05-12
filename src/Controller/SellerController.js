@@ -32,6 +32,7 @@ router.post('/product', upload.single("Image"), (req, res) => {
 
                     }).catch((error)=>{
                         t.rollback();
+                        console.log(error)
                         return res.status(500).json({"code":500});
                     });
                 });
