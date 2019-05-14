@@ -4,7 +4,7 @@ var router = express.Router();
 /*********************************************/
 const {checkLimitTime, filterRequest, checkToken,FilteringRequest, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/Filter');
 const {handleError, upload} = require('../Util/configuration');
-const {orderNazarSanji,orderProduct,Order, customer, sellerOperator, PriceAndSupply,Seller, sellerProducts, sellerWareHouse, transportation, sequelize, products, unit} = require('../../sequelize');
+const {orderNazarSanji,SellerProductsInServiceCitie,orderProduct,Order, customer, sellerOperator, PriceAndSupply,Seller, sellerProducts, sellerWareHouse, transportation, sequelize, products, unit} = require('../../sequelize');
 /*********************************************/
 var jwt = require('jwt-simple');
 var md5 = require('md5');
@@ -66,6 +66,30 @@ router.put('/product', upload.single("Image"), (req, res) => {
                         data.Entity.update(data.data).then(()=>{return res.json()});
                         break
                 }
+            }
+
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({"code":500});
+    }
+
+
+
+});
+
+router.post('/ServiceCities', (req, res) => {
+
+
+    try {
+
+        FilteringRequest(req,res,(err,data)=>{
+
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                SellerProductsInServiceCitie.create(data).then(()=>{return res.json();})
             }
 
         });

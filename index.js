@@ -193,7 +193,7 @@ if (cluster.isMaster) {
                                                                     FromID: item.FromID,
                                                                     ToID: item.ToID,
                                                                     SeenStatus: item.SeenStatus,
-                                                                    Message: item.Message
+                                                                    Message: item.Message,
                                                                     OperatorName:operator.ID
                                                                 };
                                                                 newChats.push(newItem);

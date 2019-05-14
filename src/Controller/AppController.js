@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {Seller, cities, sellerType,PriceAndSupply, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');
+const {Seller, cities, sellerType,PriceAndSupply,SellerProductsInServiceCitie, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');
 const {} = require('../Util/configuration');
 const {base64_encode, checkToken, isThisArrayEmpty} = require("../Util/Filter");
 var path = require('path');
@@ -30,7 +30,7 @@ router.get('/information/:type', function (req, res) {
             break;
         case "products" :
             if (req.query.ID == null) {
-                res.status(400).json({"message": "id not found"});
+                return res.status(400).json({"code": "703"});
             } else {
                 products.findAll({where: {CategoryID: req.query.ID}}).then(products => {
                     return res.json(products);
@@ -39,20 +39,26 @@ router.get('/information/:type', function (req, res) {
             break;
         case "sellerProducts":
             if (req.query.ID == null) {
-                res.status(400).json({"message": "id not found"});
+                return res.status(400).json({"code": "703"});
             } else {
 
-                sellerProducts.findAll({where: {ProductID: req.query.ID}}).then(products => {
+                sellerProducts.findAll({where: {ProductID: req.query.ID, ShowStatus:true}}).then(products => {
                     var newProducts = [];
                     asyncForEach(products,async item =>{
                         await Seller.findOne({where:{ID:item.SellerID}}).then(async seller=>{
                             item.SellerName = seller.Name;
-                           await  PriceAndSupply.findOne({where:{SellerProductID : item.ID , DateTime :new Date().toISOString().slice(0, 10).toString() }}).then(price =>{
-                                newProducts.push({
-                                    product :item,
-                                    PriceAndSupply :price
+                           await  PriceAndSupply.findOne({where:{SellerProductID : item.ID , DateTime :new Date().toISOString().slice(0, 10).toString() }}).then(async price =>{
+                              await SellerProductsInServiceCitie.findAll({where:{SellerProductID: item.ID}}).then(
+                                   CityServices=>{
+                                       newProducts.push({
+                                           product :item,
+                                           PriceAndSupply :price,
+                                           CityInService:CityServices
 
-                                });
+                                       });
+                                   }
+                               );
+
                             })
                         })
 
@@ -75,7 +81,7 @@ router.get('/information/:type', function (req, res) {
             break;
         case "sellerList" :
             if (req.query.CityID == null) {
-                return res.status(400).json({"message": "cityId not found"});
+                return res.status(400).json({"code": "703"});
             }else {
                 var final = [];
 
@@ -126,18 +132,48 @@ router.get('/information/:type', function (req, res) {
                     ProductCategories.findAll().then(ProductCategories => {
                         unit.findAll().then(unit => {
                             car.findAll().then(car => {
-                                return res.json({
-                                    "city":cities,
-                                    "sellerType":sellertype,
-                                    "ProductCategories":ProductCategories,
-                                    "unit":unit,
-                                    "car":car
+                                products.findAll().then(products=>{
+                                    return res.json({
+                                        "city":cities,
+                                        "sellerType":sellertype,
+                                        "ProductCategories":ProductCategories,
+                                        "unit":unit,
+                                        "car":car,
+                                        "products":products
+                                    });
                                 });
                             });
                         });
                     });
                 });
             });
+            break;
+        case "allSellerProducts":
+            if (req.query.SellerID == null) {
+                return res.status(400).json({"code": "703"});
+            }else {
+                sellerProducts.findAll({where:{SellerID:req.query.SellerID, ShowStatus:true}}).then(
+                   async sellerProducts=>{
+                        var newSellerProducts =[];
+                       await asyncForEach(sellerProducts,async item=>{
+                          await  PriceAndSupply.findOne({where:{SellerProductID:item.ID  , DateTime: new Date().toISOString().slice(0, 10).toString()}}).then(
+                                async Price=>{
+                                    SellerProductsInServiceCitie.findAll({where:{SellerProductID:item.ID}}).then( async SellerProductsInServiceCitie=>{
+                                        await newSellerProducts.push({
+                                            SellerProduct : item,
+                                                PriceAndSupply:Price,
+                                            CityInService : SellerProductsInServiceCitie
+
+                                        });
+                                    });
+                                }
+                            );
+                        }).then(()=>{
+                            return res.json(newSellerProducts);
+                        });
+                    }
+                );
+            }
             break;
 
         default:

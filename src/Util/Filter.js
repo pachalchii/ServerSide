@@ -1,4 +1,4 @@
-const {cities, application, sellerType, SellerOperator, orderProduct, sequelize, PriceAndSupply, sellerProducts, customer, Order, addresses, Seller, ProductCategories, sellerPhoneNumber, SellerProductionManager, sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
+const {cities, application, sellerType,SellerProductsInServiceCitie, SellerOperator, orderProduct, sequelize, PriceAndSupply, sellerProducts, customer, Order, addresses, Seller, ProductCategories, sellerPhoneNumber, SellerProductionManager, sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
 const {colors, PHONENUMBER_REGEX, TimeLimit, ImageLimitSize, ValidImageFormat, UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 const jwt = require('jwt-simple');
 const path = require('path');
@@ -1292,8 +1292,48 @@ function FilteringRequest(req, res, callback) {
                                                 }
                                                 else {
                                                     if (newData.Enabled) {
-                                                        sellerProducts.findAll({where: {SellerID: newData.ID}}).then(sellerProducts => {
-                                                            callback("", sellerProducts);
+                                                        sellerProducts.findAll({where: {SellerID: newData.ID}}).then(async sellerProducts => {
+                                                            newSellerProducts = [];
+                                                            asyncForEach(sellerProducts,async item =>{
+                                                                var base64str = "not Found";
+                                                                try {
+                                                                    base64str = base64_encode(item.Image);
+
+                                                                } catch (e) {
+                                                                    base64str = "not Found";
+
+                                                                }
+                                                               await PriceAndSupply.findAll({where:{
+                                                                   SellerProductID: item.ID
+                                                                   }}).then(async PriceAndSupply=>{
+                                                                await   SellerProductsInServiceCitie.findAll({where:{
+                                                                    SellerProductID: item.ID
+                                                                    }}).then(async SellerProductsInServiceCitie=>{
+                                                                    newSellerProducts.push({
+                                                                        sellerProduct :{
+                                                                            Image: base64str,
+                                                                            SellerID:item.SellerID,
+                                                                            ProductID:item.ProductID,
+                                                                            UnitOfProduct: item.UnitOfProduct,
+                                                                            UnitID:item.UnitID,
+                                                                            ShowStatus:item.ShowStatus,
+                                                                            Description:item.Description,
+                                                                            DiscountFor0TO200: item.DiscountFor0TO200,
+                                                                            DiscountFor200TO500: item.DiscountFor200TO500,
+                                                                            DiscountFor500TO1000: item.DiscountFor500TO1000,
+                                                                            DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
+                                                                        },
+                                                                        PriceAndSupply:PriceAndSupply,
+                                                                        CityInService:SellerProductsInServiceCitie
+
+                                                                    });
+                                                                   });
+                                                               } );
+                                                            }).then(
+                                                                ()=>{
+                                                                    callback("", newSellerProducts);
+                                                                }
+                                                            );
                                                         });
                                                     } else {
                                                         callback({HttpCode: 404, response: {"code": 900}});
@@ -1431,7 +1471,49 @@ function FilteringRequest(req, res, callback) {
 
                             }
                             break;
+                        case "ServiceCities":
+                            checkToken(req, res, (err, data) => {
+                                if (err) {
+                                    callback(err);
+                                }
+                                else {
+                                    checkUser(data, Seller, (newErr, newData) => {
+                                        if (newErr) {
+                                            callback(newErr);
+                                        }
+                                        else {
+                                            if (newData.Enabled) {
+                                                if (req.body.CityID == null || req.body.SellerProductID == null ){
+                                                    callback({HttpCode: 400, response: {code: "703"}});
 
+                                                }else {
+                                                    sellerProducts.findOne({where:{
+                                                        SellerID: newData.ID,
+                                                            ID:req.body.SellerProductID
+                                                        }}).then(sellerproduct=>{
+                                                            if (sellerproduct != null){
+                                                                callback("",{
+                                                                    SellerProductID:req.body.SellerProductID,
+                                                                    CityID:req.body.CityID
+                                                                });
+                                                            } else {
+                                                                callback({HttpCode: 404, response: {"code": 710}});
+                                                            }
+                                                    });
+
+                                                }
+
+                                            } else {
+                                                callback({HttpCode: 404, response: {"code": 900}});
+                                            }
+                                        }
+
+                                    });
+                                }
+                            });
+
+                            break;
+                            break;
                     }
                     break;
                 case "customer":
@@ -1503,6 +1585,11 @@ function FilteringRequest(req, res, callback) {
 
                                                                             asyncForEach(req.body.products, async (item) => {
                                                                                 if (TotalStatus) {
+                                                                                   /* await SellerProductsInServiceCitie.findAll({where:{ID:item.SellerProductID}}).then(
+                                                                                        SellerProductsInServiceCitie=>{
+                                                                                            if (SellerProductsInServiceCitie.indexOf())
+                                                                                        }
+                                                                                    );*/
                                                                                     await sellerProducts.findOne({where: {ID: item.SellerProductID}}).then(async sellerProduct => {
                                                                                         if (sellerProduct.MinToSell >= item.Supply) {
                                                                                             await sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID}}).then(async operators => {
@@ -1565,6 +1652,7 @@ function FilteringRequest(req, res, callback) {
                                                                                                                                 response: {"code": 723}
                                                                                                                             });
                                                                                                                         } else {
+
                                                                                                                             TotalOrderProducts.push({
                                                                                                                                 OrderID: savedOrder.ID,
                                                                                                                                 ForwardingDatetime: item.ForwardingDatetime,
@@ -1608,8 +1696,7 @@ function FilteringRequest(req, res, callback) {
                                                                                         }
                                                                                     });
                                                                                 }
-                                                                            }).then(
-                                                                                () => {
+                                                                            }).then(() => {
                                                                                     if (TotalStatus) {
                                                                                         t.commit();
                                                                                         callback("", TotalOrderProducts);
@@ -1835,7 +1922,7 @@ function FilteringRequest(req, res, callback) {
                                     }
                                     else {
                                         if (newData.Enabled) {
-                                            orderProduct.findAll({where:{DeleteStatus: false , SellerOperatorStatus : true, SellerOperatorFinalStatus: : false}}).then(orderProduct=>{
+                                            orderProduct.findAll({where:{DeleteStatus: false , SellerOperatorStatus : true, SellerOperatorFinalStatus:  false}}).then(orderProduct=>{
 
 
                                                 //todo must be compelete
@@ -1860,7 +1947,7 @@ function FilteringRequest(req, res, callback) {
 
     }
 
-    function filterRequest(req, res, type) {
+function filterRequest(req, res, type) {
         switch (type) {
             case "orderProduct":
                 if (req.body.ID == null || req.body.Status == null) {
@@ -1958,7 +2045,7 @@ function FilteringRequest(req, res, callback) {
         }
     }
 
-    function addRoleInfoCheck(req, res, role) {
+function addRoleInfoCheck(req, res, role) {
         switch (role) {
 
             case "seller":
