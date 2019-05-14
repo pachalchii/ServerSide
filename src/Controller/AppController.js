@@ -50,8 +50,28 @@ router.get('/information/:type', function (req, res) {
                            await  PriceAndSupply.findOne({where:{SellerProductID : item.ID , DateTime :new Date().toISOString().slice(0, 10).toString() }}).then(async price =>{
                               await SellerProductsInServiceCitie.findAll({where:{SellerProductID: item.ID}}).then(
                                    CityServices=>{
+                                       var base64str = "not Found";
+                                       try {
+                                           base64str = base64_encode(item.Image);
+
+                                       } catch (e) {
+                                           base64str = "not Found";
+
+                                       }
                                        newProducts.push({
-                                           product :item,
+                                           product :{
+                                               Image: base64str,
+                                               SellerID:item.SellerID,
+                                               ProductID:item.ProductID,
+                                               UnitOfProduct: item.UnitOfProduct,
+                                               UnitID:item.UnitID,
+                                               ShowStatus:item.ShowStatus,
+                                               Description:item.Description,
+                                               DiscountFor0TO200: item.DiscountFor0TO200,
+                                               DiscountFor200TO500: item.DiscountFor200TO500,
+                                               DiscountFor500TO1000: item.DiscountFor500TO1000,
+                                               DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
+                                           },
                                            PriceAndSupply :price,
                                            CityInService:CityServices
 
@@ -159,12 +179,36 @@ router.get('/information/:type', function (req, res) {
                           await  PriceAndSupply.findOne({where:{SellerProductID:item.ID  , DateTime: new Date().toISOString().slice(0, 10).toString()}}).then(
                                 async Price=>{
                                     SellerProductsInServiceCitie.findAll({where:{SellerProductID:item.ID}}).then( async SellerProductsInServiceCitie=>{
-                                        await newSellerProducts.push({
-                                            SellerProduct : item,
-                                                PriceAndSupply:Price,
-                                            CityInService : SellerProductsInServiceCitie
+                                        var base64str = "not Found";
+                                        try {
+                                            base64str = base64_encode(item.Image);
 
-                                        });
+                                        } catch (e) {
+                                            base64str = "not Found";
+
+                                        }
+                                     await   products.findOne({where:{ID: item.ProductID}}).then(async category=>{
+                                         await newSellerProducts.push({
+                                             SellerProduct : {
+                                                 Image: base64str,
+                                                 SellerID:item.SellerID,
+                                                 CategoryID: category.ID,
+                                                 ProductID:item.ProductID,
+                                                 UnitOfProduct: item.UnitOfProduct,
+                                                 UnitID:item.UnitID,
+                                                 ShowStatus:item.ShowStatus,
+                                                 Description:item.Description,
+                                                 DiscountFor0TO200: item.DiscountFor0TO200,
+                                                 DiscountFor200TO500: item.DiscountFor200TO500,
+                                                 DiscountFor500TO1000: item.DiscountFor500TO1000,
+                                                 DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
+                                             },
+                                             PriceAndSupply:Price,
+                                             CityInService : SellerProductsInServiceCitie
+
+                                         });
+
+                                     });
                                     });
                                 }
                             );

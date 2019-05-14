@@ -1585,11 +1585,20 @@ function FilteringRequest(req, res, callback) {
 
                                                                             asyncForEach(req.body.products, async (item) => {
                                                                                 if (TotalStatus) {
-                                                                                   /* await SellerProductsInServiceCitie.findAll({where:{ID:item.SellerProductID}}).then(
-                                                                                        SellerProductsInServiceCitie=>{
-                                                                                            if (SellerProductsInServiceCitie.indexOf())
+                                                                                    await SellerProductsInServiceCitie.findAll({where:{ID:item.SellerProductID}}).then(
+                                                                                       async SellerProductsInServiceCitie=>{
+                                                                                          await  addresses.findAll({where:{ID:item.CustomerAddressID}}).then(async Address=>{
+                                                                                                  if (SellerProductsInServiceCitie.indexOf(Address.CityID) === -1){
+                                                                                                      TotalStatus = false
+                                                                                                      callback({
+                                                                                                          HttpCode: 404,
+                                                                                                          response: {"code": 723}
+                                                                                                      });
+                                                                                                  }
+
+                                                                                            });
                                                                                         }
-                                                                                    );*/
+                                                                                    );
                                                                                     await sellerProducts.findOne({where: {ID: item.SellerProductID}}).then(async sellerProduct => {
                                                                                         if (sellerProduct.MinToSell >= item.Supply) {
                                                                                             await sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID}}).then(async operators => {
