@@ -127,10 +127,16 @@ const statusCodes ={
     message:"شما بیش از یکبار تلاش به تغییر پسورد کرده اید"
     },
     722:{
-        message:"شما قادر به قیمت گذاری دوباره برای محصولات منجمد در یک روز نیستید"
+        message:"شما قادر به قیمت گذاری دوباره برای محصولات در یک روز نیستید"
     },
     723:{
         message:"مشکلی در محصولات انتخابی موجود است"
+    },
+    724:{
+        message:"این شهر از قبل اضافه شده بود"
+    },
+    725:{
+        message:"شما در این مرحله دیگر قادر به لفو سفارش نیستید"
     }
 
 
@@ -165,7 +171,7 @@ const DataBaseInformation = {
 };
 
 const TimeLimit = {
-    start:13,
+    start:11,
     finish:22
 };
 
@@ -173,12 +179,21 @@ const ServerPort = 2323;
 
 const SocketServerPort = 8080;
 
+const TimeCounterForOperatorAnswering = 30 * 60 * 1000 ;
+
+const TimeRemainingForOperatorAlert = 20 * 60 * 1000 ;
+
+const TimeToDoingPayment = 60 * 60 * 1000 ;
+
 
 module.exports = {
     statusCodes,
     BaseUrl,
     SocketServerPort,
+    TimeToDoingPayment,
     ServerPort,
+    TimeRemainingForOperatorAlert,
+    TimeCounterForOperatorAnswering,
     TimeLimit,
     UplodDirs,
     DataBaseInformation,

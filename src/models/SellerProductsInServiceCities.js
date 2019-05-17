@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true
+			autoIncrement: true,
 		},
 		SellerProductID: {
 			type: DataTypes.INTEGER,
@@ -14,16 +14,20 @@ module.exports = function(sequelize, DataTypes) {
 			references: {
 				model: 'SellerProducts',
 				key: 'ID'
-			}
-		},
+			},
+            unique:true
+
+        },
 		CityID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			references: {
 				model: 'Cities',
 				key: 'ID'
-			}
-		}
+			},
+            unique:true
+
+        }
 	}, {
 		tableName: 'SellerProductsInServiceCities',
 		timestamps: false

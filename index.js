@@ -1,6 +1,6 @@
 var cluster = require('cluster');
 const {colors,ServerPort,SocketServerPort,DataBaseStatus,DevelopMode} = require('./src/Util/configuration');
-const {sequelize ,ChatOnOrderProduct,customer,Seller,orderProduct,sellerOperator} = require('./sequelize');
+const {sequelize ,ChatOnOrderProduct,transportation,SellerProductionManager,customer,Seller,orderProduct,sellerOperator} = require('./sequelize');
 const {fillDataBase ,checkUser} = require('./src/Util/Filter');
 const cron = require("node-cron");
 const fs = require("fs");
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
 app.use( BaseUrl + '/application', require('./src/Controller/AppController') );
-app.use( BaseUrl + '/support', require('./src/Controller/SupportController') );
+app.use( BaseUrl + '/sellerOperator', require('./src/Controller/sellerOperatorController') );
 app.use( BaseUrl + '/customer', require('./src/Controller/CustomerController') );
 app.use( BaseUrl + '/auth', require('./src/Controller/AuthController') );
 app.use( BaseUrl + '/seller', require('./src/Controller/SellerController') );
@@ -90,6 +90,129 @@ if (cluster.isMaster) {
     const io = require('socket.io')(server);
     io.on('connection', client => {
 
+        client.on('disconnect', function () {
+            client.Entity.update({SocketID: null , Status: false});
+        });
+
+        client.on('online',(data,callbackFn)=> {
+
+            function checkToken(token, callback) {
+
+                if (token != null) {
+                    try {
+                        var decodedJWT = jwt.decode(token, JWT_SECRET);
+                        if (decodedJWT.Password == null || (decodedJWT.username && decodedJWT.PhoneNumber && decodedJWT.OwnerPhoneNumber)) {
+                            callback({HttpCode: 400, response: {"code": 700}});
+                        }
+                        else {
+                            var searchQuery;
+                            if (decodedJWT.Username != null) {
+                                searchQuery = {
+                                    where: {
+                                        Username: decodedJWT.Username, Password: decodedJWT.Password
+                                    }
+                                };
+                                callback("",searchQuery);
+                            }
+                            else if (decodedJWT.PhoneNumber != null || decodedJWT.OwnerPhoneNumber != null) {
+                                if (decodedJWT.PhoneNumber != null) {
+                                    searchQuery = {
+                                        where: {
+                                            PhoneNumber: decodedJWT.PhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+                                } else {
+                                    searchQuery = {
+                                        where: {
+                                            OwnerPhoneNumber: decodedJWT.OwnerPhoneNumber, Password: decodedJWT.Password
+                                        }
+                                    };
+                                }
+                                callback("",searchQuery);
+                            }
+                            else {
+                                callback({HttpCode: 400, response: {"code": 700}});
+                            }
+
+                        }
+                    }
+                    catch (err) {
+                        callback({HttpCode: 400, response: {"code": 700}});
+                    }
+
+
+                }
+                else {
+                    callback({HttpCode: 400, response: {"code": 703}});
+                }
+
+            }
+
+            try {
+                var Decodeddata = JSON.parse(JSON.stringify(data));
+                if (Decodeddata.token ==null || Decodeddata.Role == null){
+                    client.send(JSON.stringify({"message":"parameters not sended"}));
+                } else {
+                    var Entity = '';
+                    switch (Decodeddata.Role) {
+                        case "seller":
+                            Entity = Seller;
+                            break;
+                        case  "customer":
+                            Entity = customer;
+                            break;
+                        case "transportation" :
+                            Entity = transportation;
+                            break;
+                        case "support"   :
+                            Entity = sellerOperator;
+                            break;
+                        case "productionManager":
+                            Entity = SellerProductionManager;
+                            break;
+                        default :
+                            callbackFn(JSON.stringify({"code":"716"}));
+                    }
+
+                    checkToken(Decodeddata.token, (err, data) => {
+                                        if (err) {
+                                            callbackFn(JSON.stringify({"code":"700"}));
+                                        }
+                                        else {
+                                            checkUser(data, Entity, (newErr, newData1) => {
+                                                if (newErr) {
+                                                    callbackFn(JSON.stringify({"code":"700"}));
+                                                }
+                                                else {
+                                                    if (newData1.Enabled) {
+                                                        newData1.update({Status:true , SocketID : client.id }).then(()=>{
+                                                            client.Entity = newData1;
+                                                            callbackFn(JSON.stringify({"code":"200"}));
+                                                        });
+
+                                                    }
+                                                    else {callbackFn(JSON.stringify({"code":"900"}));}
+                                                }
+
+
+                                            })
+
+
+                                        }
+                                    });
+
+
+
+                }
+            }catch (e) {
+
+                callbackFn(JSON.stringify({"message":"500"}));
+
+            }
+
+
+        });
+
         client.on('checkToken', (data,callbackFn) => {
 
             function checkToken(token, callback) {
@@ -143,6 +266,7 @@ if (cluster.isMaster) {
                 }
 
             }
+
             try {
                 var Decodeddata = JSON.parse(JSON.stringify(data));
                 if (Decodeddata.token ==null || Decodeddata.OrderProductID == null){
@@ -229,6 +353,15 @@ if (cluster.isMaster) {
 
 
         });
+
+
+
+
+
+
+
+
+
 
         client.on('sendMessage' , (data,callbackFn) => {
 

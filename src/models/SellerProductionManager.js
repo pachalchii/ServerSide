@@ -20,6 +20,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: true
         },
+
 		SellerID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

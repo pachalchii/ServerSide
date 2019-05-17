@@ -26,10 +26,9 @@ router.post('/product', upload.single("Image"), (req, res) => {
                 return res.status(err.HttpCode).json(err.response);
             } else {
                 sequelize.transaction().then((t)=>{
-                    sellerProducts.create(data, {transaction: t}).then(()=>{
+                    sellerProducts.create(data, {transaction: t}).then(savedProduct=>{
                         t.commit();
-                        return res.status(200).json()
-
+                        return res.status(200).json({"ID":savedProduct.ID})
                     }).catch((error)=>{
                         t.rollback();
                         console.log(error)
@@ -50,7 +49,7 @@ router.post('/product', upload.single("Image"), (req, res) => {
 
 });
 
-router.put('/product', upload.single("Image"), (req, res) => {
+router.put('/Pricing' , (req, res) => {
 
     try {
 
@@ -66,30 +65,6 @@ router.put('/product', upload.single("Image"), (req, res) => {
                         data.Entity.update(data.data).then(()=>{return res.json()});
                         break
                 }
-            }
-
-        });
-
-    } catch (e) {
-        console.log(e);
-        return res.status(500).json({"code":500});
-    }
-
-
-
-});
-
-router.post('/ServiceCities', (req, res) => {
-
-
-    try {
-
-        FilteringRequest(req,res,(err,data)=>{
-
-            if (err){
-                return res.status(err.HttpCode).json(err.response);
-            } else {
-                SellerProductsInServiceCitie.create(data).then(()=>{return res.json();})
             }
 
         });
@@ -126,6 +101,115 @@ router.get('/product', (req, res) => {
 
 
 });
+
+router.put('/product',(req,res)=>{
+
+    try {
+
+        FilteringRequest(req,res,(err,data)=>{
+
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                data.update({
+                        Description: req.body.Description || data.Description,
+                        DiscountFor0TO200: req.body.DiscountFor0TO200 || data.DiscountFor0TO200,
+                        DiscountFor200TO500: req.body.DiscountFor200TO500 || data.DiscountFor200TO500,
+                        DiscountFor500TO1000: req.body.DiscountFor500TO1000 || data.DiscountFor500TO1000,
+                        DiscountFor1000TOUpper: req.body.DiscountFor1000TOUpper || data.DiscountFor1000TOUpper,
+                        MinToSell: req.body.MinToSell || data.MinToSell,
+                        UnitOfProduct : req.body.UnitOfProduct || data.UnitOfProduct,
+                        SupplyOFProduct: req.body.SupplyOFProduct || data.SupplyOFProduct,
+                        ShowStatus: req.body.ShowStatus || data.ShowStatus
+                    }
+                ).then(()=>{return res.json();});
+                return res.json();
+            }
+
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({"code":500});
+    }
+
+});
+
+router.post('/CancleOrderProduct',(req,res)=>{
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                data.update({DeleteStatus: true , SellerReason:  req.body.SellerReason}).then(async ()=>{
+                    await  Order.findOne({where:{ID:data.OrderID}}).then(async order=>{
+                        await  PriceAndSupply.findAll({where:{DateTime:new Date().toISOString().slice(0, 10).toString() ,SellerProductID : data.ProductID }}).then(async price=>{
+                            await  order.update({SumTotal : order.SumTotal - data.SumTotal , OnlineFee :order.OnlineFee - data.OnlineFee ,  InplaceFee :order.InplaceFee - data.InplaceFee || null}).then(()=>{
+                                return res.json();
+                            });
+
+                        })
+                    });
+                });
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
+
+router.post('/ServiceCities', (req, res) => {
+
+
+    try {
+
+        FilteringRequest(req,res,(err,data)=>{
+
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                SellerProductsInServiceCitie.create(data).then(()=>{return res.json();})
+            }
+
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({"code":500});
+    }
+
+
+
+});
+
+router.get('/Role', (req, res) => {
+
+
+    try {
+
+        FilteringRequest(req,res,(err,data)=>{
+
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                data[0].create(data[1]).then(()=>{return res.json()})
+            }
+
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({"code":500});
+    }
+
+
+
+});
+
 
 //old
 
@@ -562,108 +646,6 @@ router.get('/orderProduct', (req, res) => {
 
 });
 
-router.get('/Order', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    if (searchQuery) {
-        if (req.body.OrderID == null){
-            return res.status(400).json({"code": 703});
-        } else {
-            Seller.findAll(searchQuery).then(seller => {
-
-                if (isThisArrayEmpty(seller)) {
-
-
-                    return res.status(400).json({"code": 700});
-
-                } else {
-                    if (seller[0].Status){
-                        Order.findAll({where:{
-                                ID:req.body.OrderID
-                            }}).then(
-                            order=>{
-                                return res.json(order);
-                            }
-
-                        );
-
-
-
-                    } else {
-                        return res.status(404).json({"code": 900});
-                    }
-
-
-
-                }
-            });
-        }
-
-
-
-
-    }
-
-
-});
-
-router.get('/OrderDetail', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    if (searchQuery) {
-        if (req.body.OrderID == null){
-            return res.status(400).json({"code": 703});
-        } else {
-            Seller.findAll(searchQuery).then(seller => {
-
-                if (isThisArrayEmpty(seller)) {
-
-
-                    return res.status(400).json({"code": 700});
-
-                } else {
-                    if (seller[0].Status){
-                        Order.findAll({where:{
-                                ID:req.body.OrderID
-                            }}).then(
-                            order=>{
-                                customer.findAll({where:{ID:order[0].CustomerID}}).then(
-                                    customerres=>{
-                                        orderNazarSanji.findAll({where:{ID:order[0].NazarSanjiID}}).then(
-                                            orderNazarSanjires=>{
-                                                return res.json({
-                                                    nazarsanji:orderNazarSanjires,
-                                                    customer: customerres
-                                                });
-                                            }
-                                        )
-
-                                    }
-                                )
-                            }
-
-                        );
-
-
-
-                    } else {
-                        return res.status(404).json({"code": 900});
-                    }
-
-
-
-                }
-            });
-        }
-
-
-
-
-    }
-
-
-});
-
 router.post('/disableUser', (req, res) => {
     var searchQuery = checkToken(req, res);
     if (searchQuery) {
@@ -780,234 +762,6 @@ router.post('/enableUser', (req, res) => {
     }
 
 });
-
-
-
-
-
-//operator
-
-
-router.post('/operator/product', upload.single("Image"), (req, res) => {
-
-    var timeStatus = checkLimitTime(res);
-    var searchQuery = checkToken(req, res);
-    if (searchQuery && timeStatus) {
-
-        sellerOperator.findAll(searchQuery).then(selleroperator => {
-
-            if (isThisArrayEmpty(selleroperator)) {
-
-                return res.status(400).json({"code": 700});
-
-            } else {
-                if (selleroperator[0].Status){
-
-                    if (req.file != null) {
-                        const tempPath = req.file.path;
-                        const targetPath = path.join(__dirname, "./../../uploads/products/" + Math.random() + path.extname(req.file.originalname).toLowerCase());
-                        image = targetPath;
-                        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".PNG" || path.extname(req.file.originalname).toLowerCase() === ".JPG" ) {
-                            fs.rename(tempPath, targetPath, err => {
-                                if (err) return handleError(err, res);
-                            });
-                        } else {
-                            fs.unlink(tempPath, err => {
-                                if (err) return handleError(err, res);
-
-                                return res
-                                    .status(403)
-                                    .contentType("text/plain")
-                                    .end("this format of image is not under support");
-                            });
-                        }
-
-                    } else {
-                        image = "notSetYet";
-                    }
-
-                    if (req.body.Description == null ||
-                        req.body.Price == null ||
-                        req.body.PriceDateTime == null ||
-                        req.body.SupplyOfProduct == null ||
-                        req.body.UnitOfProduct == null ||
-                        req.body.ProductID == null ||
-                        req.body.UnitID == null
-                    ) {
-                        res.status(400).json({"code": 703});
-                    } else {
-                        var status = true;
-                        products.findAll({where: {id: req.body.ProductID}}).then(
-                            products => {
-                                if (!isThisArrayEmpty(products)) {
-                                    unit.findAll({where: {ID: req.body.UnitID}}).then(unit => {
-                                        if (isThisArrayEmpty(unit)) {
-                                            status= false;
-                                            return res.status(404).json();
-
-                                        }
-                                    })
-                                } else {
-                                    status=false;
-                                    return res.status(404).json();
-                                }
-                            }
-                        );
-                        if (status){
-                            sellerProducts.create({
-                                Description: req.body.Description,
-                                Image: image,
-                                Price: req.body.Price,
-                                PriceDateTime: req.body.PriceDateTime,
-                                SupplyOfProduct: req.body.SupplyOfProduct,
-                                UnitOfProduct: req.body.UnitOfProduct,
-                                ProductID: req.body.ProductID,
-                                SellerID: selleroperator[0].SellerID,
-                                UnitID: req.body.UnitID
-
-                            });
-                            return res.status(200).json();
-                        }
-
-
-
-                    }
-
-                } else {
-                    return res.status(404).json({"code": 900});
-                }
-
-            }
-        });
-
-
-    }
-
-
-});
-
-router.post('/operator/orderProduct', (req, res) =>{
-    var searchQuery = checkToken(req, res);
-    var filteringStatus = filterRequest(req, res, "orderProduct");
-    try {
-        if (searchQuery && filteringStatus) {
-            sellerOperator.findAll(searchQuery).then(operator => {
-                if (!isThisArrayEmpty(operator)) {
-                    if (operator[0].Status){
-                        orderProduct.findAll({where: {ID: req.body.ID}}).then(res => {
-                            if (!isThisArrayEmpty(res)) {
-                                if (res[0].SellerOperatorID === operator.ID) {
-                                    sellerWareHouse.findAll({where:{ID:req.body.WareHouseID}}).then(wareHouse=>{
-                                        if (!isThisArrayEmpty(wareHouse)) {
-                                            orderProduct.update({
-                                                SellerOperatorStatus: req.body.Status,
-                                                WareHouseID:req.body.WareHouseID
-                                            }, {
-                                                where: {
-                                                    ID: req.body.ID
-                                                }
-                                            }).then(
-                                                nothing=>{return res.json();}
-                                            );
-                                        }
-                                        else return res.json({"code":704});
-                                    })
-                                }
-                                else {
-                                    return res.status(400).json({"code": 702});
-                                }
-                            } else {
-                                res.status(404).json({"code": 701});
-                                return false;
-                            }
-
-                        });
-                    } else {
-                        return res.status(404).json({"code": 900});
-                    }
-
-                } else {
-                    return res.status(404).json({"code": 700});
-                }
-            });
-
-        }
-    }catch (e) {
-        res.status(500).json({"code":500});
-
-
-    }
-
-});
-
-router.get('/operator/product', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    if (searchQuery) {
-
-        sellerOperator.findAll(searchQuery).then(seller => {
-
-            if (isThisArrayEmpty(seller)) {
-
-                return res.status(400).json({"code": 700});
-
-            } else {
-                if (seller[0].Status){
-                    var final = [];
-
-                    function getallproducts(value, index, array) {
-                        var base64str = "not Found";
-                        try {
-                            base64str = base64_encode(value.Image);
-
-                        } catch (e) {
-                            base64str = "not Found";
-
-                        }
-
-                        final[index] = {
-                            ID: value.ID,
-                            Description: value.Description,
-                            Price: value.Price,
-                            PriceDateTime: value.PriceDateTime,
-                            SupplyOfProduct: value.SupplyOfProduct,
-                            UnitOfProduct: value.UnitOfProduct,
-                            ProductID: value.ProductID,
-                            SellerID: value.SellerID,
-                            UnitID: value.UnitID,
-                            Image: base64str
-                        }
-                    }
-                    sellerProducts.findAll(
-                        {
-                            where: {
-                                SellerID: seller[0].SellerID
-                            }
-                        }
-                    ).then(sellerProducts => {
-                            if (!isThisArrayEmpty(sellerProducts)) {
-                                sellerProducts.forEach(getallproducts);
-                                return res.json(final);
-
-                            } else {
-                                return res.status(404).json();
-                            }
-                        }
-                    );
-                } else {
-                    return res.status(404).json({"code": 900});
-                }
-
-
-            }
-        });
-
-
-    }
-
-});
-
-
 
 
 module.exports = router;

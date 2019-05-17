@@ -94,7 +94,7 @@ const Roles = RolesModel(sequelize,Sequelize);
 
 
 module.exports = {
-    pachalChiAdminSupports,Support,Order,ProductCategories,Roles,SellerProductsInServiceCitie,SellerProductionManager,
+    pachalChiAdminSupports,Support,Order,Sequelize,ProductCategories,Roles,SellerProductsInServiceCitie,SellerProductionManager,
     sequelize,application,AlarmsOnSellerProducts,PriceAndSupply,ChatOnOrderProduct,
     Seller,cities,addresses,car,customer,orderNazarSanji,orderPardakht,orderProduct,Notification,
     sellerOperator,products,sellerPhoneNumber,sellerProducts,sellerType,sellerWareHouse,support,takhfifProduct,

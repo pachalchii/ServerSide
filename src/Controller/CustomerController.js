@@ -2,10 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const { } = require('../Util/configuration');
+const {TimeCounterForOperatorAnswering ,TimeRemainingForOperatorAlert  } = require('../Util/configuration');
 const {base64_encode,FilteringRequest, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/Filter');
 
-const {sellerPhoneNumber, orderNazarSanji, support, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
+const {sellerPhoneNumber, orderNazarSanji,sellerOperator, support,PriceAndSupply, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
 const Op = sequelize.Op;
 const asyncForEach = require('async-await-foreach');
 
@@ -20,9 +20,71 @@ router.post('/order', (req, res) => {
             if (err){
                 return res.status(err.HttpCode).json(err.response);
             } else {
+                var OrderID = data[0].OrderID;
+
                 asyncForEach(data, async (item)=>{
                     await orderProduct.create(item);
-                }).then(()=>{return res.json().status(200);})
+                }).then(()=>{
+                    setTimeout(function(){
+
+                        orderProduct.findAll({where:{OrderID:OrderID}}).then(orderProduct=>{
+                            asyncForEach(orderProduct,async item =>{
+                                products.findOne({where:{ID:item.ProductID}}).then(products=>{
+                                    if (products.Type){
+                                        if (!(item.SellerOperatorStatus && item.ProductionManagerStatus)){
+                                            sellerOperator.findOne({where:{ID:item.SellerOperatorID}}).then(operator=>{
+                                                if (operator.Status){
+                                                    //todo notif
+                                                } else {
+                                                    //todo sms
+                                                }
+                                            })
+                                        }
+                                    }else if (!products.Type || products.Type ==null) {
+                                        if (!(item.SellerOperatorStatus)){
+
+                                            sellerOperator.findOne({where:{ID:item.SellerOperatorID}}).then(operator=>{
+                                                if (operator.Status){
+                                                    //todo notif
+                                                } else {
+                                                    //todo sms
+                                                }
+                                            })
+
+                                        }
+                                    }
+                                });
+
+                            })
+
+
+                        });
+
+                    }, TimeRemainingForOperatorAlert);
+                    setTimeout(function(){
+
+                        orderProduct.findAll({where:{OrderID:OrderID}}).then(orderProduct=>{
+                            asyncForEach(orderProduct,async item =>{
+                                products.findOne({where:{ID:item.ProductID}}).then(products=>{
+                                    if (products.Type){
+                                        if (!(item.SellerOperatorStatus && item.ProductionManagerStatus)){
+                                            item.update({DeleteStatus: true , ReasonOFDelete: "kotahi az operator va PM bode"})
+                                        }
+                                    }else if (!products.Type || products.Type ==null) {
+                                        if (!(item.SellerOperatorStatus)){
+                                            item.update({DeleteStatus: true , ReasonOFDelete: "kotahi az operator bode"})
+                                        }
+                                    }
+                                });
+                            })
+
+
+                        });
+
+                    }, TimeCounterForOperatorAnswering);
+                    return res.json().status(200);
+
+                })
             }
         });
 
@@ -59,7 +121,6 @@ router.post('/address', (req, res) => {
     try {
         FilteringRequest(req,res,(err,data)=>{
             if (err){
-                console.log(err)
                 return res.status(err.HttpCode).json(err.response);
             } else {
                 addresses.create(data).then(()=>{
@@ -119,6 +180,73 @@ router.get('/address', (req, res) => {
     }
 
 });
+
+router.post('/CancleOrder',(req,res)=>{
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                data.update({OrderStatus: false}).then(()=>{return res.json();});
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
+
+router.post('/CancleOrderProduct',(req,res)=>{
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                data.update({DeleteStatus: true , CustomerReason:  req.body.CustomerReason}).then(async ()=>{
+                  await  Order.findOne({where:{ID:data.OrderID}}).then(async order=>{
+                      await  PriceAndSupply.findAll({where:{DateTime:new Date().toISOString().slice(0, 10).toString() ,SellerProductID : data.ProductID }}).then(async price=>{
+                        await  order.update({SumTotal : order.SumTotal - data.SumTotal , OnlineFee :order.OnlineFee - data.OnlineFee ,  InplaceFee :order.InplaceFee - data.InplaceFee || null}).then(()=>{
+                              return res.json();
+                          });
+
+                      })
+                    });
+                });
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
+
+router.get('/OrderProductTimer', (req, res) => {
+
+    try {
+
+        FilteringRequest(req, res, (err, data) => {
+
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json({"Time": data});
+            }
+
+        });
+
+    } catch (e) {
+        return res.status(500).json({"code": 500});
+    }
+
+
+});
+
 
 
 

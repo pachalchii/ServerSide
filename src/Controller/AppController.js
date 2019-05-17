@@ -42,40 +42,56 @@ router.get('/information/:type', function (req, res) {
                 return res.status(400).json({"code": "703"});
             } else {
 
-                sellerProducts.findAll({where: {ProductID: req.query.ID, ShowStatus:true}}).then(products => {
+                sellerProducts.findAll({where: {ProductID: req.query.ID, ShowStatus:true}}).then(customizeProduct => {
                     var newProducts = [];
-                    asyncForEach(products,async item =>{
+                    asyncForEach(customizeProduct,async item =>{
                         await Seller.findOne({where:{ID:item.SellerID}}).then(async seller=>{
-                            item.SellerName = seller.Name;
                            await  PriceAndSupply.findOne({where:{SellerProductID : item.ID , DateTime :new Date().toISOString().slice(0, 10).toString() }}).then(async price =>{
                               await SellerProductsInServiceCitie.findAll({where:{SellerProductID: item.ID}}).then(
-                                   CityServices=>{
-                                       var base64str = "not Found";
-                                       try {
-                                           base64str = base64_encode(item.Image);
+                                  async CityServices=>{
+                                    await  products.findOne({where:{ID:item.ProductID}}).then( async product=>{
 
-                                       } catch (e) {
-                                           base64str = "not Found";
+                                          var base64str = "not Found";
+                                          try {
+                                              base64str = base64_encode(item.Image);
 
-                                       }
-                                       newProducts.push({
-                                           product :{
-                                               Image: base64str,
-                                               SellerID:item.SellerID,
-                                               ProductID:item.ProductID,
-                                               UnitOfProduct: item.UnitOfProduct,
-                                               UnitID:item.UnitID,
-                                               ShowStatus:item.ShowStatus,
-                                               Description:item.Description,
-                                               DiscountFor0TO200: item.DiscountFor0TO200,
-                                               DiscountFor200TO500: item.DiscountFor200TO500,
-                                               DiscountFor500TO1000: item.DiscountFor500TO1000,
-                                               DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
-                                           },
-                                           PriceAndSupply :price,
-                                           CityInService:CityServices
+                                          } catch (e) {
+                                              base64str = "not Found";
 
-                                       });
+                                          }
+                                          var base64str1 = "not Found";
+                                          try {
+                                              base64str1 = base64_encode(seller.LogoImage);
+                                          } catch (e) {
+                                              base64str1 = "not Found";
+
+                                          }
+                                          newProducts.push({
+                                              Seller:{
+                                                  Image:base64str1,
+                                                  Name:seller.CompanyName
+                                              },
+                                              Product :{
+                                                  Type:product.Type,
+                                                  ProductName : product.Name,
+                                                  Image: base64str,
+                                                  SellerID:item.SellerID,
+                                                  ProductID:item.ProductID,
+                                                  UnitOfProduct: item.UnitOfProduct,
+                                                  UnitID:item.UnitID,
+                                                  MinToSell:item.MinToSell,
+                                                  ShowStatus:item.ShowStatus,
+                                                  Description:item.Description,
+                                                  DiscountFor0TO200: item.DiscountFor0TO200,
+                                                  DiscountFor200TO500: item.DiscountFor200TO500,
+                                                  DiscountFor500TO1000: item.DiscountFor500TO1000,
+                                                  DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
+                                              },
+                                              PriceAndSupply :price,
+                                              CityInService:CityServices
+
+                                          });
+                                      });
                                    }
                                );
 
@@ -172,13 +188,13 @@ router.get('/information/:type', function (req, res) {
             if (req.query.SellerID == null) {
                 return res.status(400).json({"code": "703"});
             }else {
-                sellerProducts.findAll({where:{SellerID:req.query.SellerID, ShowStatus:true}}).then(
+               sellerProducts.findAll({where:{SellerID:req.query.SellerID, ShowStatus:true}}).then(
                    async sellerProducts=>{
                         var newSellerProducts =[];
                        await asyncForEach(sellerProducts,async item=>{
                           await  PriceAndSupply.findOne({where:{SellerProductID:item.ID  , DateTime: new Date().toISOString().slice(0, 10).toString()}}).then(
                                 async Price=>{
-                                    SellerProductsInServiceCitie.findAll({where:{SellerProductID:item.ID}}).then( async SellerProductsInServiceCitie=>{
+                                 await   SellerProductsInServiceCitie.findAll({where:{SellerProductID:item.ID}}).then( async SellerProductsInServiceCitie=>{
                                         var base64str = "not Found";
                                         try {
                                             base64str = base64_encode(item.Image);
@@ -187,26 +203,30 @@ router.get('/information/:type', function (req, res) {
                                             base64str = "not Found";
 
                                         }
-                                     await   products.findOne({where:{ID: item.ProductID}}).then(async category=>{
-                                         await newSellerProducts.push({
-                                             SellerProduct : {
-                                                 Image: base64str,
-                                                 SellerID:item.SellerID,
-                                                 CategoryID: category.ID,
-                                                 ProductID:item.ProductID,
-                                                 UnitOfProduct: item.UnitOfProduct,
-                                                 UnitID:item.UnitID,
-                                                 ShowStatus:item.ShowStatus,
-                                                 Description:item.Description,
-                                                 DiscountFor0TO200: item.DiscountFor0TO200,
-                                                 DiscountFor200TO500: item.DiscountFor200TO500,
-                                                 DiscountFor500TO1000: item.DiscountFor500TO1000,
-                                                 DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
-                                             },
-                                             PriceAndSupply:Price,
-                                             CityInService : SellerProductsInServiceCitie
+                                     await   products.findOne({where:{ID: item.ProductID}}).then(async product=>{
+                                         await ProductCategories.findOne({where:{ID:product.CategoryID}}).then(async category=>{
+                                             await newSellerProducts.push({
+                                                 SellerProduct : {
+                                                     Image: base64str,
+                                                     SellerID:item.SellerID,
+                                                     CategoryID: category.ID,
+                                                     ProductID:item.ProductID,
+                                                     UnitOfProduct: item.UnitOfProduct,
+                                                     UnitID:item.UnitID,
+                                                     ShowStatus:item.ShowStatus,
+                                                     Description:item.Description,
+                                                     DiscountFor0TO200: item.DiscountFor0TO200,
+                                                     DiscountFor200TO500: item.DiscountFor200TO500,
+                                                     DiscountFor500TO1000: item.DiscountFor500TO1000,
+                                                     DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
+                                                 },
+                                                 PriceAndSupply:Price,
+                                                 CityInService : SellerProductsInServiceCitie
 
+                                             });
                                          });
+
+
 
                                      });
                                     });
@@ -219,6 +239,57 @@ router.get('/information/:type', function (req, res) {
                 );
             }
             break;
+        case "SingleSellerProducts":
+            if (req.query.SellerProductID == null) {
+                return res.status(400).json({"code": "703"});
+            }else {
+                sellerProducts.findOne({where:{ID:req.query.SellerProductID, ShowStatus:true}}).then(
+                    async sellerProducts=>{
+                            await  PriceAndSupply.findAll({where:{SellerProductID:sellerProducts.ID}}).then(
+                                async Price=>{
+                                    await   SellerProductsInServiceCitie.findAll({where:{SellerProductID:sellerProducts.ID}}).then( async SellerProductsInServiceCitie=>{
+                                        var base64str = "not Found";
+                                        try {
+                                            base64str = base64_encode(sellerProducts.Image);
+
+                                        } catch (e) {
+                                            base64str = "not Found";
+
+                                        }
+                                        await   products.findOne({where:{ID: sellerProducts.ProductID}}).then(async product=>{
+                                            await ProductCategories.findOne({where:{ID:product.CategoryID}}).then(async category=>{
+                                                return res.json({
+                                                    SellerProduct : {
+                                                        Image: base64str,
+                                                        SellerID:sellerProducts.SellerID,
+                                                        CategoryID: category.ID,
+                                                        MinToSell:sellerProducts.MinToSell,
+                                                        ProductID:sellerProducts.ProductID,
+                                                        UnitOfProduct: sellerProducts.UnitOfProduct,
+                                                        UnitID:sellerProducts.UnitID,
+                                                        ShowStatus:sellerProducts.ShowStatus,
+                                                        Description:sellerProducts.Description,
+                                                        DiscountFor0TO200: sellerProducts.DiscountFor0TO200,
+                                                        DiscountFor200TO500: sellerProducts.DiscountFor200TO500,
+                                                        DiscountFor500TO1000: sellerProducts.DiscountFor500TO1000,
+                                                        DiscountFor1000TOUpper: sellerProducts.DiscountFor1000TOUpper,
+                                                    },
+                                                    PriceAndSupply:Price,
+                                                    CityInService : SellerProductsInServiceCitie
+
+                                                });
+                                            })
+
+                                        });
+                                    });
+                                }
+                            );
+
+                    }
+                );
+            }
+            break;
+
 
         default:
             return res.status(404).json();
