@@ -25,6 +25,7 @@ router.post('/register', upload.single("Image"), (req, res) => {
                                 return res.status(200).json()
 
                             }).catch((error)=>{
+                                console.log(error)
                                 t.rollback();
                                 if (error.parent.errno === 1062) {
                                     return res.status(400).json({"code":717});

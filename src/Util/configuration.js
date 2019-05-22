@@ -35,117 +35,123 @@ const colors = {
 
 const JWT_SECRET = "755Amirr2205";
 
-const PHONENUMBER_REGEX = "^(\\+98|0)?9\\d{9}$" ;
+const PHONENUMBER_REGEX = "^(\\+98|0)?9\\d{9}$";
 
-const PASSWORD_REGEX = "(?=.{8,})" ;
+const PASSWORD_REGEX = "(?=.{8,})";
 
-const USERNAME_REGEX ="^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
+const USERNAME_REGEX = "^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
 
 const upload = multer({
     dest: "./../uploads/tempUploads"
 });
 
-const DevelopMode =  require('minimist')(process.argv.slice(2)).DevelopMode || false;
+const DevelopMode = require('minimist')(process.argv.slice(2)).DevelopMode || false;
 
 const DataBaseStatus = require('minimist')(process.argv.slice(2)).DataBaseStatus || "update";
 
-const statusCodes ={
+const statusCodes = {
 
-    900:{
-        message:"حساب کاربری شما غیر فعال شده است ."
+    900: {
+        message: "حساب کاربری شما غیر فعال شده است ."
     },
-    700:{
-        message:"نشست حساب کاربری شما منقضی شده است ."
+    700: {
+        message: "نشست حساب کاربری شما منقضی شده است ."
     }
     ,
-    500:{
-        message:"مشكلي در سمت سرور برنامه رخ داده است ، لطفا بعدا تلاش كنيد"
+    500: {
+        message: "مشكلي در سمت سرور برنامه رخ داده است ، لطفا بعدا تلاش كنيد"
     }
     ,
-    701:{
-        message:"سفارش مربوطه با اطلاعات فرستاده شده يافت نشد"
+    701: {
+        message: "سفارش مربوطه با اطلاعات فرستاده شده يافت نشد"
     }
     ,
-    702:{
-        message:"اين سفارش خريد مربوط به حساب شما نميباشد"
+    702: {
+        message: "اين سفارش خريد مربوط به حساب شما نميباشد"
     },
-    703:{
-        message:"بعضي از پارامتر هاي لازم براي انجام فرايند ارسال نشده است"
+    703: {
+        message: "بعضي از پارامتر هاي لازم براي انجام فرايند ارسال نشده است"
     },
-    704:{
-        message:"مسئول انبار با اين مشخصات يافت نشد"
+    704: {
+        message: "مسئول انبار با اين مشخصات يافت نشد"
     },
-    705:{
-        message:"فروشنده مورد نظر قبلا ثبت شده است"
+    705: {
+        message: "فروشنده مورد نظر قبلا ثبت شده است"
     },
-    706:{
-        message:"اين مسئول انبار قبلا در سيستم ثبت شده است"
+    706: {
+        message: "اين مسئول انبار قبلا در سيستم ثبت شده است"
     },
-    707:{
-        message:"اين مسئول حمل و نقل قبلا در سيستم ثبت شده است"
+    707: {
+        message: "اين مسئول حمل و نقل قبلا در سيستم ثبت شده است"
     },
-    708:{
-        message:"اين اپراتور فروش قبلا در سيستم ثبت شده است"
+    708: {
+        message: "اين اپراتور فروش قبلا در سيستم ثبت شده است"
     },
-    709:{
-        message:"اين محصول براي اين راننده نميباشد"
+    709: {
+        message: "اين محصول براي اين راننده نميباشد"
     },
-    710:{
-        message:"درخواست مورد نظر يافت نشد"
+    710: {
+        message: "درخواست مورد نظر يافت نشد"
     },
-    711:{
-        message:"شماره وارد شده در فرمت مناسبی نمیباشد"
+    711: {
+        message: "شماره وارد شده در فرمت مناسبی نمیباشد"
     },
-    712:{
-        message:"پسورد وارد شده در فرمت مناسبی نمیباشد"
+    712: {
+        message: "پسورد وارد شده در فرمت مناسبی نمیباشد"
     },
-    713:{
-        message:"نام کاربری وارد شده در فرمت مناسبی نمیباشد"
+    713: {
+        message: "نام کاربری وارد شده در فرمت مناسبی نمیباشد"
     },
-    714:{
-        message:"فروشنده عزيز لطفا در ساعات مجاز تلاش فرماييد"
+    714: {
+        message: "فروشنده عزيز لطفا در ساعات مجاز تلاش فرماييد"
     },
-    715:{
-        message:"کد وارد شده اشتباه است"
+    715: {
+        message: "کد وارد شده اشتباه است"
     },
-    716:{
-        message:"پارامتر role که ارسال کردید اشتباه است"
+    716: {
+        message: "پارامتر role که ارسال کردید اشتباه است"
     },
-    717:{
-        message:"حساب کاربری با این اطلاعات قبلا ثبت نام کرده است"
+    717: {
+        message: "حساب کاربری با این اطلاعات قبلا ثبت نام کرده است"
     },
-    718:{
-        message:"ایدی وارد شده یافت نشد"
+    718: {
+        message: "ایدی وارد شده یافت نشد"
     },
-    719:{
-        message:"سایز عکس ارسالی مناسب نمیباشد"
+    719: {
+        message: "سایز عکس ارسالی مناسب نمیباشد"
     },
-    720:{
-        message:"عکس ارسالی در فرمت مناسب نمیباشد"
+    720: {
+        message: "عکس ارسالی در فرمت مناسب نمیباشد"
     },
-    721:{
-    message:"شما بیش از یکبار تلاش به تغییر پسورد کرده اید"
+    721: {
+        message: "شما بیش از یکبار تلاش به تغییر پسورد کرده اید"
     },
-    722:{
-        message:"شما قادر به قیمت گذاری دوباره برای محصولات در یک روز نیستید"
+    722: {
+        message: "شما قادر به قیمت گذاری دوباره برای محصولات در یک روز نیستید"
     },
-    723:{
-        message:"مشکلی در محصولات انتخابی موجود است"
+    723: {
+        message: "مشکلی در محصولات انتخابی موجود است"
     },
-    724:{
-        message:"این شهر از قبل اضافه شده بود"
+    724: {
+        message: "این شهر از قبل اضافه شده بود"
     },
-    725:{
-        message:"شما در این مرحله دیگر قادر به لفو سفارش نیستید"
+    725: {
+        message: "شما در این مرحله دیگر قادر به لفو سفارش نیستید"
+    },
+    726: {
+        message: "حساب کاربری شما آنلاین نمیباشد"
+    },
+    727: {
+        message: "شما در روز های جمعه مجاز به ایجاد تغییرات در سامانه نیستید"
     }
 
 
 };
 
 const UplodDirs = {
-    "seller":"./../../uploads/seller/",
-    "customer":"./../../uploads/customer/",
-    "products":"./../../uploads/products/",
+    "seller": "./../../uploads/seller/",
+    "customer": "./../../uploads/customer/",
+    "products": "./../../uploads/products/",
 
 
 };
@@ -162,7 +168,7 @@ const BaseUrl = "/api/v1";
 
 const DataBaseInformation = {
     host: 'localhost',
-    port:"1433",
+    port: "1433",
     user: 'sa',
     password: '<7552205>',
     database: 'PachalChi',
@@ -171,19 +177,19 @@ const DataBaseInformation = {
 };
 
 const TimeLimit = {
-    start:11,
-    finish:22
+    start: 11,
+    finish: 22
 };
 
 const ServerPort = 2323;
 
 const SocketServerPort = 8080;
 
-const TimeCounterForOperatorAnswering = 30 * 60 * 1000 ;
+const TimeCounterForOperatorAnswering = 30 * 60 * 1000;
 
-const TimeRemainingForOperatorAlert = 20 * 60 * 1000 ;
+const TimeRemainingForOperatorAlert = 20 * 60 * 1000;
 
-const TimeToDoingPayment = 60 * 60 * 1000 ;
+const TimeToDoingPayment = 60 * 60 * 1000;
 
 
 module.exports = {

@@ -172,7 +172,8 @@ router.post('/ServiceCities', (req, res) => {
             if (err){
                 return res.status(err.HttpCode).json(err.response);
             } else {
-                SellerProductsInServiceCitie.create(data).then(()=>{return res.json();})
+                console.log(data)
+                SellerProductsInServiceCitie.create({ SellerProductID: 1, CityID: 3 }).then(()=>{return res.json();})
             }
 
         });

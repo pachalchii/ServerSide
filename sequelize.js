@@ -22,7 +22,7 @@ const unitModel = require('./src/models/unit');
 const applicationModel = require('./src/models/application');
 const orderModel = require('./src/models/Order');
 const pachalChiAdminSupportsModel = require('./src/models/PachalChiAdmins&Supports');
-
+const TransportationManagerModel = require('./src/models/TransportationManager');
 const AlarmsOnSellerProductsModel = require('./src/models/AlarmsOnSellerProducts');
 const ChatOnOrderProductModel = require('./src/models/ChatOnOrderProduct');
 const NotificationModel = require('./src/models/Notification');
@@ -46,19 +46,10 @@ const sequelize = new Sequelize(DataBaseInformation.database, DataBaseInformatio
     }
 });
 
-if (cluster.isMaster) {
-    sequelize.authenticate()
-        .then(() => {
-            console.log(colors.bg.Black, colors.fg.White ,'Connection has been established successfully.',colors.Reset);
-        })
-        .catch(err => {
-            console.error(colors.bg.Black, colors.fg.Red ,'Unable to connect to the database:',colors.Reset);
-            process.exit()
-        });
-}
 
 
 
+const TransportationManager = TransportationManagerModel(sequelize, Sequelize);
 const Seller = SellerModel(sequelize, Sequelize);
 const cities = citiesModel(sequelize, Sequelize);
 const addresses = addressesModel(sequelize, Sequelize);
@@ -94,7 +85,7 @@ const Roles = RolesModel(sequelize,Sequelize);
 
 
 module.exports = {
-    pachalChiAdminSupports,Support,Order,Sequelize,ProductCategories,Roles,SellerProductsInServiceCitie,SellerProductionManager,
+    pachalChiAdminSupports,TransportationManager,Support,Order,Sequelize,ProductCategories,Roles,SellerProductsInServiceCitie,SellerProductionManager,
     sequelize,application,AlarmsOnSellerProducts,PriceAndSupply,ChatOnOrderProduct,
     Seller,cities,addresses,car,customer,orderNazarSanji,orderPardakht,orderProduct,Notification,
     sellerOperator,products,sellerPhoneNumber,sellerProducts,sellerType,sellerWareHouse,support,takhfifProduct,

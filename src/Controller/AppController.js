@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {Seller, cities, sellerType,PriceAndSupply,SellerProductsInServiceCitie, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');
-const {} = require('../Util/configuration');
+const {statusCodes} = require('../Util/configuration');
 const {base64_encode, checkToken, isThisArrayEmpty} = require("../Util/Filter");
 var path = require('path');
 const fs = require("fs");
@@ -288,6 +288,9 @@ router.get('/information/:type', function (req, res) {
                     }
                 );
             }
+            break;
+        case "statusCodes":
+            return res.json(statusCodes);
             break;
 
 

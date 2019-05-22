@@ -20,7 +20,14 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: true
         },
-
+        SocketID: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        Enabled: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
 		SellerID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

@@ -14,9 +14,7 @@ module.exports = function(sequelize, DataTypes) {
 			references: {
 				model: 'SellerProducts',
 				key: 'ID'
-			},
-            unique:true
-
+			}
         },
 		CityID: {
 			type: DataTypes.INTEGER,
@@ -24,9 +22,7 @@ module.exports = function(sequelize, DataTypes) {
 			references: {
 				model: 'Cities',
 				key: 'ID'
-			},
-            unique:true
-
+			}
         }
 	}, {
 		tableName: 'SellerProductsInServiceCities',

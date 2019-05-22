@@ -32,6 +32,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
+        SocketID: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         OwnerName: {
             type: DataTypes.STRING,
             allowNull: false
@@ -58,6 +62,10 @@ module.exports = function (sequelize, DataTypes) {
         },
         Point: {
             type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        Status: {
+            type: DataTypes.BOOLEAN,
             allowNull: true
         },
         Enabled: {

@@ -247,122 +247,73 @@ router.get('/OrderProductTimer', (req, res) => {
 
 });
 
+router.get('/Alarm', (req, res) => {
 
+    try {
+
+        FilteringRequest(req, res, (err, data) => {
+
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json(data);
+            }
+
+        });
+
+    } catch (e) {
+        return res.status(500).json({"code": 500});
+    }
+
+
+});
+
+router.post('/Alarm', (req, res) => {
+
+    try {
+
+        FilteringRequest(req, res, (err, data) => {
+
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json();
+            }
+
+        });
+
+    } catch (e) {
+        return res.status(500).json({"code": 500});
+    }
+
+
+});
+
+router.post('/FinalStatus', (req, res) => {
+
+    try {
+
+        FilteringRequest(req, res, (err, data) => {
+
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json();
+            }
+
+        });
+
+    } catch (e) {
+        return res.status(500).json({"code": 500});
+    }
+
+
+});
 
 
 //old
 
-router.get('/address', (req, res) => {
-    var searchQuery = checkToken(req, res);
-    try {
-        if (searchQuery) {
-            customer.findAll(searchQuery).then(
-                customer => {
-                    if (!isThisArrayEmpty(customer)) {
-                        if (customer[0].Status){
-                            addresses.findAll({where: {CustomerID: customer[0].ID}}).then(
-                                addresses => {
-                                    return res.json(addresses);
-                                }
-                            )
 
-                        }else {
-                            return res.status(404).json({"code": 900});
-                        }
-
-
-                    } else {
-                        return res.status(404).json({"code": 700});
-                    }
-                }
-            );
-
-
-        }
-
-
-    } catch (e) {
-        res.status(500).json({"code": 500});
-    }
-});
-
-router.post('/order/followUp', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    var requestFilter = filterRequest(req, res, "followUp");
-
-    if (searchQuery && requestFilter) {
-
-        customer.findAll(searchQuery).then(customer => {
-
-            if (isThisArrayEmpty(customer)) {
-
-                return res.status(400).json({"code": 700});
-
-            } else {
-                if (customer[0].Status){
-
-                    Order.findAll({HashCode: req.body.HashCode, CustomerID: customer[0].ID}).then(
-                        order => {
-                            if (!isThisArrayEmpty(order)) {
-
-                                orderProduct.findAll({where: {OrderID: order[0].ID}}).then(productOrder => {
-                                    return res.status(200).json(productOrder);
-                                })
-
-
-                            } else {
-                                return res.status(404).json({"code": 404});
-                            }
-                        }
-                    );
-                }else {
-                    return res.status(404).json({"code": 900});
-                }
-
-
-            }
-        });
-
-
-    }
-
-});
-
-router.get('/message', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    if (searchQuery) {
-
-        customer.findAll(searchQuery).then(customer => {
-
-            if (isThisArrayEmpty(customer)) {
-
-                return res.status(400).json({"code": 700});
-
-            } else {
-                if (customer[0].Status){
-                    chat.findAll({
-                        where: {
-                            [Op.or]: [{ToID: "222" + customer[0].ID}, {FromID: "222" + customer[0].ID}]
-                        }
-                    }).then(
-                        message => {
-                            return res.status(200).json(message);
-                        }
-                    )
-
-                }else {
-                    return res.status(404).json({"code": 900});
-                }
-
-            }
-        });
-
-
-    }
-
-});
 
 router.post('/search', (req, res) => {
     var requestFilter = filterRequest(req, res, "search")
@@ -398,60 +349,6 @@ router.post('/search', (req, res) => {
 
 
     }
-});
-
-router.post('/message', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    var requestFilter = filterRequest(req, res, "message");
-
-    if (searchQuery && requestFilter) {
-
-        customer.findAll(searchQuery).then(customer => {
-
-            if (isThisArrayEmpty(customer)) {
-
-                return res.status(400).json({"code": 700});
-
-            } else {
-                if (customer[0].Status){
-                    var supportId = "notsetyet";
-
-                    support.findAll().then(
-                        sup => {
-                            function supportiter(value) {
-                                if (value.status) {
-                                    supportId = value.ID
-                                }
-                            }
-
-                            sup.forEach(supportiter);
-                            if (supportId === "notsetyet") {
-                                supportId = sup[0];
-                            }
-                        }
-                    );
-
-                    chat.create({
-                        FromID: "222" + customer[0].ID,
-                        ToID: supportId,
-                        Message: req.body.Message,
-                        DateTimeSend: new Date().getTime()
-
-                    });
-                    return res.json();
-                }else {
-                    return res.status(404).json({"code": 900});
-                }
-
-            }
-
-
-        });
-
-
-    }
-
 });
 
 router.get('/off', (req, res) => {

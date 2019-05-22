@@ -1,4 +1,4 @@
-const {cities, application, sellerType,Sequelize,orderPardakht, SellerProductsInServiceCitie, SellerOperator, orderProduct, sequelize, PriceAndSupply, sellerProducts, customer, Order, addresses, Seller, ProductCategories, sellerPhoneNumber, SellerProductionManager, sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
+const {cities, application, sellerType,Sequelize,AlarmsOnSellerProducts,TransportationManager,orderPardakht, SellerProductsInServiceCitie, orderProduct, sequelize, PriceAndSupply, sellerProducts, customer, Order, addresses, Seller, ProductCategories, sellerPhoneNumber, SellerProductionManager, sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
 const {colors, PHONENUMBER_REGEX, TimeLimit, ImageLimitSize, ValidImageFormat, UplodDirs, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 const jwt = require('jwt-simple');
 const path = require('path');
@@ -405,15 +405,22 @@ function CheckForeignKey(res, array) {
 
         });
     });
-
-
 }
 
 function checkUser(EncodedToken, Entity, callback) {
 
         Entity.findOne(EncodedToken).then(user => {
             if (user != null) {
-                callback("", user);
+                if (user.Status){
+                    if (user.Enabled) {
+                        callback("", user);
+                    }else {
+                        callback({HttpCode: 400, response: {"code": 900}});
+                    }
+
+                }else {
+                    callback({HttpCode: 400, response: {"code": 726}});
+                }
             } else {
                 callback({HttpCode: 400, response: {"code": 700}});
             }
@@ -489,6 +496,9 @@ function FilteringRequest(req, res, callback) {
                                     case "sellerOperator":
                                         Entity = sellerOperator;
                                         break;
+                                    case "transportationManager":
+                                        Entity = TransportationManager;
+                                        break
                                     default :
                                         callback({HttpCode: 400, response: {code: "716"}});
 
@@ -520,6 +530,9 @@ function FilteringRequest(req, res, callback) {
                                                 case "wareHouse":
                                                     Entity = sellerWareHouse;
                                                     break;
+                                                case "transportationManager":
+                                                    Entity = TransportationManager;
+                                                    break
                                                 default :
                                                     SwitchStatus = false;
                                                     callback({HttpCode: 400, response: {response: "716"}});
@@ -579,6 +592,9 @@ function FilteringRequest(req, res, callback) {
                                                     case "productionManager":
                                                         Entity = SellerProductionManager;
                                                         break;
+                                                    case "transportationManager":
+                                                        Entity = TransportationManager;
+                                                        break
                                                     default :
                                                         SwitchStatus = false;
                                                         callback({HttpCode: 400, response: {response: "716"}});
@@ -665,6 +681,9 @@ function FilteringRequest(req, res, callback) {
                                                     case "productionManager":
                                                         Entity = SellerProductionManager;
                                                         break;
+                                                    case "transportationManager":
+                                                        Entity = TransportationManager;
+                                                        break
                                                     default :
                                                         SwitchStatus = false;
                                                         callback({HttpCode: 400, response: {response: "716"}});
@@ -848,7 +867,7 @@ function FilteringRequest(req, res, callback) {
                                                             );
 
                                                         } else {
-                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                            callback({HttpCode: 404, response: {code: "710"}});
                                                         }
 
                                                     });
@@ -893,7 +912,7 @@ function FilteringRequest(req, res, callback) {
 
 
                                                         } else {
-                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                            callback({HttpCode: 404, response: {code: "710"}});
                                                         }
 
 
@@ -939,7 +958,7 @@ function FilteringRequest(req, res, callback) {
                                                                 }
                                                             });
                                                         } else {
-                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                            callback({HttpCode: 404, response: {code: "710"}});
                                                         }
 
 
@@ -981,7 +1000,7 @@ function FilteringRequest(req, res, callback) {
                                                             });
 
                                                         } else {
-                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                            callback({HttpCode: 404, response: {code: "710"}});
                                                         }
 
 
@@ -1006,25 +1025,29 @@ function FilteringRequest(req, res, callback) {
 
                                                             }
                                                             var token = jwt.encode(payload, JWT_SECRET);
+                                                            Seller.findOne({where:{ID:SellerProductionManager.SellerID}}).then(seller=> {
+                                                                callback("", {
+                                                                    "data": {
 
-                                                            callback("", {
-                                                                "data": {
+                                                                        ID: SellerProductionManager.PhoneNumberID,
+                                                                        Name: SellerProductionManager.Name,
+                                                                        FamilyName: SellerProductionManager.FamilyName,
+                                                                        BirthDate: SellerProductionManager.Birthdate,
+                                                                        PhoneNumber: SellerProductionManager.PhoneNumber,
+                                                                        Image: base64str,
+                                                                        CellPhoneNumber: SellerProductionManager.CellPhoneNumber,
+                                                                        Status: SellerProductionManager.Status,
+                                                                        Username: SellerProductionManager.Username,
+                                                                        SellerIDr: SellerProductionManager.SellerID,
+                                                                        CompanyName:seller.CompanyName,
+                                                                        Token: token
+                                                                    }
+                                                                });
 
-                                                                    ID: SellerProductionManager.PhoneNumberID,
-                                                                    Name: SellerProductionManager.Name,
-                                                                    FamilyName: SellerProductionManager.FamilyName,
-                                                                    BirthDate: SellerProductionManager.BirthDate,
-                                                                    PhoneNumber: SellerProductionManager.PhoneNumber,
-                                                                    Image: base64str,
-                                                                    CellPhoneNumber: SellerProductionManager.CellPhoneNumber,
-                                                                    Status: SellerProductionManager.Status,
-                                                                    Username: SellerProductionManager.Username,
-                                                                    SellerIDr: SellerProductionManager.SellerID,
-                                                                    Token: token
-                                                                }
                                                             });
+
                                                         } else {
-                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                            callback({HttpCode: 404, response: {code: "710"}});
                                                         }
 
 
@@ -1032,6 +1055,55 @@ function FilteringRequest(req, res, callback) {
                                                     break;
                                                 case "sellerOperator":
                                                     sellerOperator.findOne(data).then(operator => {
+                                                        if (operator != null) {
+                                                            var payload = {
+                                                                PhoneNumber: operator.PhoneNumber,
+                                                                Password: operator.Password,
+                                                                random: Math.random()
+                                                            };
+
+
+                                                            var base64str = "not Found";
+                                                            try {
+                                                                base64str = base64_encode(operator.Image);
+
+                                                            } catch (e) {
+                                                                base64str = "not Found";
+
+                                                            }
+                                                            var token = jwt.encode(payload, JWT_SECRET);
+                                                            Seller.findOne({where:{ID:operator.SellerID}}).then(seller=>{
+
+
+                                                                callback("", {
+                                                                    "data": {
+
+                                                                        ID: operator.PhoneNumberID,
+                                                                        FamilyName: operator.FamilyName,
+                                                                        Name: operator.Name,
+                                                                        BirthDate: operator.Birthdate,
+                                                                        PhoneNumber: operator.PhoneNumber,
+                                                                        Image: base64str,
+                                                                        Point: operator.Point,
+                                                                        Username: operator.Username,
+                                                                        SellerID: operator.SellerID,
+                                                                        CompanyName:seller.CompanyName,
+                                                                        Token: token
+
+
+                                                                    }
+                                                                });
+                                                            });
+
+                                                        } else {
+                                                            callback({HttpCode: 404, response: {code: "710"}});
+                                                        }
+
+
+                                                    });
+                                                    break;
+                                                case "transportationManager":
+                                                    TransportationManager.findOne(data).then(operator => {
                                                         if (operator != null) {
                                                             var payload = {
                                                                 PhoneNumber: operator.PhoneNumber,
@@ -1068,14 +1140,13 @@ function FilteringRequest(req, res, callback) {
                                                                 }
                                                             });
                                                         } else {
-                                                            callback({HttpCode: 404, response: {response: "710"}});
+                                                            callback({HttpCode: 404, response: {code: "710"}});
                                                         }
 
 
-                                                    });
-                                                    break;
+                                                    });                                                    break
                                                 default:
-                                                    callback({HttpCode: 404, response: {response: "716"}});
+                                                    callback({HttpCode: 404, response: {code: "716"}});
 
                                             }
                                         }
@@ -1126,7 +1197,7 @@ function FilteringRequest(req, res, callback) {
                         }
 
                             if (req.body.Role == null) {
-                                callback({HttpCode: 404, response: {response: "716"}});
+                                callback({HttpCode: 404, response: {code: "716"}});
                             } else {
                                 if (registerInfoCheck(req, res, req.body.Role)) {
                                     switch (req.body.Role) {
@@ -1149,6 +1220,7 @@ function FilteringRequest(req, res, callback) {
                                                                 Password: md5(req.body.Password),
                                                                 EstablishedDate: req.body.EstablishedDate,
                                                                 Point: 0,
+                                                                Status:false,
                                                                 RegistrationDateTime: req.body.RegistrationDateTime,
                                                                 Theme: req.body.Theme,
                                                                 Username: req.body.Username,
@@ -1182,13 +1254,13 @@ function FilteringRequest(req, res, callback) {
                                                                 RegistrationDateTime: req.body.RegistrationDateTime,
                                                                 GoogleMapAddressLink: req.body.GoogleMapAddressLink,
                                                                 LogoImage: Image,
+                                                                Status:false,
                                                                 OwnerFamilyName: req.body.OwnerFamilyName,
                                                                 OwnerName: req.body.OwnerName,
                                                                 Password: md5(req.body.Password),
                                                                 OwnerPhoneNumber: req.body.OwnerPhoneNumber,
                                                                 Username: req.body.Username,
                                                                 CompanyAddressCityID: req.body.CompanyAddressCityID,
-                                                                PhoneNumberID: req.body.PhoneNumberID,
                                                                 TypeID: 1
 
                                                             });
@@ -1200,7 +1272,7 @@ function FilteringRequest(req, res, callback) {
                                             });
                                             break;
                                         default:
-                                            callback({HttpCode: 404, response: {response: "716"}});
+                                            callback({HttpCode: 404, response: {code: "716"}});
                                     }
                                 }
                             }
@@ -1226,7 +1298,6 @@ function FilteringRequest(req, res, callback) {
                                                     callback(newErr);
                                                 }
                                                 else {
-                                                    if (newData.Enabled) {
                                                         ImageHandler(req, res, UplodDirs.products)
                                                             .then(Image => {
                                                                 if (req.body.Description == null ||
@@ -1269,9 +1340,6 @@ function FilteringRequest(req, res, callback) {
                                                             .catch(message => {
                                                                 console.log(message);
                                                             });
-                                                    } else {
-                                                        callback({HttpCode: 404, response: {"code": 900}});
-                                                    }
                                                 }
 
                                             });
@@ -1290,9 +1358,9 @@ function FilteringRequest(req, res, callback) {
                                                     callback(newErr);
                                                 }
                                                 else {
-                                                    if (newData.Enabled) {
+
                                                         sellerProducts.findAll({where: {SellerID: newData.ID}}).then(async sellerProducts => {
-                                                            newSellerProducts = [];
+                                                           var  newSellerProducts = [];
                                                             asyncForEach(sellerProducts, async item => {
                                                                 var base64str = "not Found";
                                                                 try {
@@ -1302,10 +1370,9 @@ function FilteringRequest(req, res, callback) {
                                                                     base64str = "not Found";
 
                                                                 }
-                                                                await PriceAndSupply.findOne({
+                                                                await PriceAndSupply.findAll({
                                                                     where: {
-                                                                        SellerProductID: item.ID,
-                                                                        DateTime: new Date().toISOString().slice(0, 10).toString()
+                                                                        SellerProductID: item.ID
                                                                     }
                                                                 }).then(async PriceAndSupply => {
                                                                     await SellerProductsInServiceCitie.findAll({
@@ -1329,7 +1396,7 @@ function FilteringRequest(req, res, callback) {
                                                                                 DiscountFor500TO1000: item.DiscountFor500TO1000,
                                                                                 DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
                                                                             },
-                                                                            PriceAndSupply: PriceAndSupply,
+                                                                            PriceAndSupply: PriceAndSupply[PriceAndSupply.length-1],
                                                                             CityInService: SellerProductsInServiceCitie
 
                                                                         });
@@ -1341,9 +1408,6 @@ function FilteringRequest(req, res, callback) {
                                                                 }
                                                             );
                                                         });
-                                                    } else {
-                                                        callback({HttpCode: 404, response: {"code": 900}});
-                                                    }
                                                 }
 
                                             });
@@ -1362,7 +1426,6 @@ function FilteringRequest(req, res, callback) {
                                                     callback(newErr);
                                                 }
                                                 else {
-                                                    if (newData.Enabled) {
                                                                     if (req.body.SellerProductID == null){
                                                                         callback({HttpCode: 404, response: {"code": 703}});
                                                                     } else {
@@ -1382,13 +1445,6 @@ function FilteringRequest(req, res, callback) {
                                                                         );
                                                                     }
 
-
-
-
-
-                                                    } else {
-                                                        callback({HttpCode: 404, response: {"code": 900}});
-                                                    }
                                                 }
 
                                             });
@@ -1408,7 +1464,6 @@ function FilteringRequest(req, res, callback) {
                                             callback(newErr);
                                         }
                                         else {
-                                            if (newData.Enabled) {
                                                 if (req.body.OrderProductID == null || req.body.SellerReason == null){
                                                     callback({HttpCode: 404, response: {"code": "404"}});
                                                 }else {
@@ -1436,10 +1491,6 @@ function FilteringRequest(req, res, callback) {
                                                     });
                                                 }
 
-
-                                            } else {
-                                                callback({HttpCode: 404, response: {"code": 900}});
-                                            }
                                         }
 
                                     });
@@ -1458,7 +1509,6 @@ function FilteringRequest(req, res, callback) {
                                             callback(newErr);
                                         }
                                         else {
-                                            if (newData.Enabled) {
                                                 if (req.body.CityID == null || req.body.SellerProductID == null ){
                                                     callback({HttpCode: 400, response: {code: "703"}});
 
@@ -1478,10 +1528,6 @@ function FilteringRequest(req, res, callback) {
                                                     });
 
                                                 }
-
-                                            } else {
-                                                callback({HttpCode: 404, response: {"code": 900}});
-                                            }
                                         }
 
                                     });
@@ -1621,8 +1667,6 @@ function FilteringRequest(req, res, callback) {
                                             callback(newErr);
                                         }
                                         else {
-                                            if (newData.Enabled) {
-
                                                 if (req.body.Role == null) {
                                                     callback({
                                                         HttpCode: 400,
@@ -1828,17 +1872,12 @@ function FilteringRequest(req, res, callback) {
 
 
                                                             break;
-
                                                         default :
                                                             return res.status(404).json({"message": "invalid role type"});
                                                     }
 
                                                 }
 
-
-                                            } else {
-                                                callback({HttpCode: 404, response: {"code": 900}});
-                                            }
                                         }
 
                                     });
@@ -1903,7 +1942,6 @@ function FilteringRequest(req, res, callback) {
                                                                 callback(newErr);
                                                             }
                                                             else {
-                                                                if (newData.Enabled) {
 
                                                                     var TotalOrderProducts = [];
                                                                     var TotalStatus = true;
@@ -1922,16 +1960,19 @@ function FilteringRequest(req, res, callback) {
                                                                                 if (TotalStatus) {
                                                                                     await SellerProductsInServiceCitie.findAll({where: {ID: item.SellerProductID}}).then(
                                                                                         async SellerProductsInServiceCitie => {
-                                                                                            await addresses.findOne({where: {ID: item.CustomerAddressID}}).then(async Address => {
+                                                                                            await addresses.findAll({where: {ID: item.CustomerAddressID}}).then(async Address => {
                                                                                                var AdreessStatus = false;
-                                                                                                SellerProductsInServiceCitie.forEach(async item =>{
-                                                                                                    if (item.CityID === Address.CityID) {
-                                                                                                        AdreessStatus = true;
-                                                                                                    }
-                                                                                               });
+                                                                                                Address.forEach(async SubItem=>{
+                                                                                                    SellerProductsInServiceCitie.forEach(async item =>{
+                                                                                                        if (item.CityID === SubItem.CityID) {
+                                                                                                            AdreessStatus = true;
+                                                                                                        }
+                                                                                                    });
+                                                                                                    });
+
                                                                                                 if (!AdreessStatus){
                                                                                                     TotalStatus = false;
-                                                                                                    console.log("hi1")
+                                                                                                    console.log("hi1");
                                                                                                     callback({
                                                                                                         HttpCode: 404,
                                                                                                         response: {"code": 723}
@@ -1943,7 +1984,7 @@ function FilteringRequest(req, res, callback) {
                                                                                         }
                                                                                     );
                                                                                     await sellerProducts.findOne({where: {ID: item.SellerProductID}}).then(async sellerProduct => {
-                                                                                        if (sellerProduct.MinToSell >= item.Supply) {
+                                                                                        if (sellerProduct.MinToSell <= item.Supply) {
                                                                                             await sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID , Status:true}}).then(async operators => {
                                                                                                 function randomIntInc(low, high) {
                                                                                                     return Math.floor(Math.random() * (high - low + 1) + low)
@@ -2007,7 +2048,8 @@ function FilteringRequest(req, res, callback) {
                                                                                                             }).then(
                                                                                                                 PriceAndSupply => {
                                                                                                                     if (PriceAndSupply != null) {
-                                                                                                                        if (item.Supply > PriceAndSupply.PrimitiveSupply) {
+
+                                                                                                                        if (parseInt(item.Supply) > parseInt(PriceAndSupply.PrimitiveSupply)) {
                                                                                                                             TotalStatus = false;
                                                                                                                             console.log("hi3")
                                                                                                                             callback({
@@ -2091,9 +2133,6 @@ function FilteringRequest(req, res, callback) {
                                                                         });
                                                                     });
 
-                                                                } else {
-                                                                    callback({HttpCode: 404, response: {"code": 900}});
-                                                                }
                                                             }
                                                         });
                                                     }
@@ -2120,8 +2159,6 @@ function FilteringRequest(req, res, callback) {
                                                     callback(newErr);
                                                 }
                                                 else {
-                                                    if (newData.Enabled) {
-
                                                         Order.findAll({where: {CustomerID: newData.ID}}).then(Orders => {
                                                             var mine = [];
                                                             asyncForEach(Orders, async (item, index) => {
@@ -2142,17 +2179,12 @@ function FilteringRequest(req, res, callback) {
                                                             });
 
                                                         });
-                                                    } else {
-                                                        callback({HttpCode: 404, response: {"code": 900}});
-                                                    }
                                                 }
 
                                             });
                                         }
                                     });
                                     break;
-
-
                             }
                             break;
                         case "address" :
@@ -2172,7 +2204,6 @@ function FilteringRequest(req, res, callback) {
                                                         callback(newErr);
                                                     }
                                                     else {
-                                                        if (newData.Enabled) {
                                                             cities.findAll({where: {ID: req.body.CityID}}).then(
                                                                 city => {
                                                                     if (!isThisArrayEmpty(city)) {
@@ -2193,9 +2224,6 @@ function FilteringRequest(req, res, callback) {
                                                                 }
                                                             );
 
-                                                        } else {
-                                                            callback({HttpCode: 404, response: {"code": 900}});
-                                                        }
                                                     }
 
                                                 });
@@ -2217,7 +2245,6 @@ function FilteringRequest(req, res, callback) {
                                                         callback(newErr);
                                                     }
                                                     else {
-                                                        if (newData.Enabled) {
                                                             addresses.findAll({
                                                                 where: {ID: req.body.CustomerAddressID}
                                                             }).then(address => {
@@ -2234,9 +2261,6 @@ function FilteringRequest(req, res, callback) {
                                                                     callback({HttpCode: 404, response: {"code": 703}});
                                                                 }
                                                             });
-                                                        } else {
-                                                            callback({HttpCode: 404, response: {"code": 900}});
-                                                        }
                                                     }
 
                                                 });
@@ -2256,18 +2280,12 @@ function FilteringRequest(req, res, callback) {
                                                     callback(newErr);
                                                 }
                                                 else {
-                                                    if (newData.Enabled) {
                                                         addresses.findAll({where: {CustomerID: newData.ID}}).then(
                                                             addresess => {
                                                                 callback("", addresess);
 
                                                             }
                                                         );
-
-
-                                                    } else {
-                                                        callback({HttpCode: 404, response: {"code": 900}});
-                                                    }
                                                 }
 
                                             });
@@ -2290,7 +2308,6 @@ function FilteringRequest(req, res, callback) {
                                             callback(newErr);
                                         }
                                         else {
-                                            if (newData.Enabled) {
                                                if (req.body.OrderID == null){
                                                    callback({HttpCode: 404, response: {"code": "404"}});
                                                }else {
@@ -2313,11 +2330,6 @@ function FilteringRequest(req, res, callback) {
                                                        }
                                                    });
                                                }
-
-
-                                            } else {
-                                                callback({HttpCode: 404, response: {"code": 900}});
-                                            }
                                         }
 
                                     });
@@ -2336,7 +2348,6 @@ function FilteringRequest(req, res, callback) {
                                             callback(newErr);
                                         }
                                         else {
-                                            if (newData.Enabled) {
                                                 if (req.body.OrderProductID == null || req.body.CustomerReason == null){
                                                     callback({HttpCode: 404, response: {"code": "404"}});
                                                 }else {
@@ -2364,10 +2375,6 @@ function FilteringRequest(req, res, callback) {
                                                     });
                                                 }
 
-
-                                            } else {
-                                                callback({HttpCode: 404, response: {"code": 900}});
-                                            }
                                         }
 
                                     });
@@ -2418,7 +2425,124 @@ function FilteringRequest(req, res, callback) {
                             });
 
                             break;
+                        case "Alarm" :
+                            switch (req.method) {
+                                case "POST":
+                                    if (req.body.SellerProductID == null) {
+                                        callback({HttpCode: 404, response: {"code": "703"}});
 
+                                    } else {
+                                        checkToken(req, res, (err, data) => {
+                                            if (err) {
+                                                callback(err);
+                                            }
+                                            else {
+                                                checkUser(data, customer, (newErr, newData) => {
+                                                    if (newErr) {
+                                                        callback(newErr);
+                                                    }
+                                                    else {
+                                                        CheckForeignKey(res,[{ID:req.body.SellerProductID , Entity:sellerProducts}]).then(status=>{
+
+                                                            if (status){
+                                                                AlarmsOnSellerProducts.create({
+                                                                    CustomerID:newData.ID,
+                                                                    SeenStatus: false,
+                                                                    SellerProductID:req.body.SellerProductID
+                                                                }).then(()=>{
+                                                                    callback("","");
+                                                                })
+                                                            }
+                                                        });
+
+
+
+                                                    }
+
+                                                });
+                                            }
+                                        });
+                                    }
+                                    break;
+                                case "GET":
+                                    checkToken(req, res, (err, data) => {
+                                        if (err) {
+                                            callback(err);
+                                        }
+                                        else {
+                                            checkUser(data, customer, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
+                                                else {
+                                                    AlarmsOnSellerProducts.findAll({where: {CustomerID: newData.ID , SeenStatus:false}}).then(
+                                                        alarm => {
+                                                            var newItem = [];
+                                                            asyncForEach(alarm,async item =>{
+                                                               await PriceAndSupply.findOne({where:{
+                                                                        DateTime: new Date().toISOString().slice(0, 10).toString(),
+                                                                        SellerProductID: item.SellerProductID
+                                                                    }}).then(async price=>{
+                                                                     await   sellerProducts.findOne({where:{ID:item.SellerProductID}}).then( async sellerP=>{
+                                                                         await products.findOne({where:{ID:sellerP.ProductID}}).then(async product=>{
+                                                                             if (price != null && price.PrimitiveSupply >0 ){
+                                                                                 await  newItem.push({
+                                                                                     SellerProductID:item.SellerProductID,
+                                                                                     Supply:true,
+                                                                                     SellerProductName : product.Name
+                                                                                 });
+                                                                                 item.update({SeenStatus:true});
+                                                                             } else {
+                                                                                 await newItem.push({
+                                                                                     SellerProductID:item.SellerProductID,
+                                                                                     Supply:false,
+                                                                                     SellerProductName : product.Name
+
+                                                                                 });
+                                                                             }
+                                                                         });
+                                                                        });
+
+                                                                });
+                                                            }).then(()=>{
+                                                                callback("", newItem);
+                                                            });
+
+                                                        }
+                                                    );
+                                                }
+
+                                            });
+                                        }
+                                    });
+
+                                    break;
+                            }
+
+
+                            break;
+                        case "FinalStatus":
+                            checkToken(req, res, (err, data) => {
+                                if (err) {
+                                    callback(err);
+                                }
+                                else {
+                                    checkUser(data, customer, (newErr, newData) => {
+                                        if (newErr) {
+                                            callback(newErr);
+                                        }
+                                        else {
+                                            if (req.body.OrderProdutID == null  ){
+                                                callback({HttpCode: 404, response: {"code": "404"}});
+                                            }else {
+                                                orderProduct.update({CustomerFinalStatus: true },{where:{ID:req.body.OrderProdutID}}).then(()=>{callback("","")})
+                                            }
+                                        }
+
+                                    });
+                                }
+                            });
+                            break;
 
                     }
 
@@ -2599,7 +2723,79 @@ function FilteringRequest(req, res, callback) {
                                }
                            });
                            break;
+                       case "product":
+                           switch (req.method) {
+                               case "GET":
 
+                                   checkToken(req, res, (err, data) => {
+                                       if (err) {
+                                           callback(err);
+                                       }
+                                       else {
+                                           checkUser(data, SellerProductionManager, (newErr, newData) => {
+                                               if (newErr) {
+                                                   callback(newErr);
+                                               }
+                                               else {
+
+                                                   sellerProducts.findAll({where: {SellerID: newData.SellerID}}).then(async sellerProducts => {
+                                                       var newSellerProducts = [];
+                                                       asyncForEach(sellerProducts, async item => {
+                                                           var base64str = "not Found";
+                                                           try {
+                                                               base64str = base64_encode(item.Image);
+
+                                                           } catch (e) {
+                                                               base64str = "not Found";
+
+                                                           }
+                                                           await PriceAndSupply.findAll({
+                                                               where: {
+                                                                   SellerProductID: item.ID
+                                                               }
+                                                           }).then(async PriceAndSupply => {
+                                                               await SellerProductsInServiceCitie.findAll({
+                                                                   where: {
+                                                                       SellerProductID: item.ID
+                                                                   }
+                                                               }).then(async SellerProductsInServiceCitie => {
+                                                                   newSellerProducts.push({
+                                                                       sellerProduct: {
+                                                                           ID:item.ID,
+                                                                           Image: base64str,
+                                                                           SellerID: item.SellerID,
+                                                                           ProductID: item.ProductID,
+                                                                           UnitOfProduct: item.UnitOfProduct,
+                                                                           UnitID: item.UnitID,
+                                                                           MinToSell:item.MinToSell,
+                                                                           ShowStatus: item.ShowStatus,
+                                                                           Description: item.Description,
+                                                                           DiscountFor0TO200: item.DiscountFor0TO200,
+                                                                           DiscountFor200TO500: item.DiscountFor200TO500,
+                                                                           DiscountFor500TO1000: item.DiscountFor500TO1000,
+                                                                           DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
+                                                                       },
+                                                                       PriceAndSupply: PriceAndSupply[PriceAndSupply.length-1],
+                                                                       CityInService: SellerProductsInServiceCitie
+
+                                                                   });
+                                                               });
+                                                           });
+                                                       }).then(
+                                                           () => {
+                                                               callback("", newSellerProducts);
+                                                           }
+                                                       );
+                                                   });
+                                               }
+
+                                           });
+                                       }
+                                   });
+                                   break;
+
+                           }
+                           break;
 
 
                    }
@@ -2866,7 +3062,57 @@ function FilteringRequest(req, res, callback) {
                                                 }
                                                 else {
                                                     orderProduct.findAll({where:{SellerOperatorID: newData.ID ,DeleteStatus:false, CustomerStatus:true, SellerOperatorStatus:null}}).then(orderProducts=>{
-                                                        callback("",orderProducts);
+                                                        var NewOrderProducts = [];
+                                                        asyncForEach(orderProducts, async item => {
+                                                          await Order.findOne({where:{
+                                                               ID:item.OrderID
+                                                               }}).then(async order=>{
+                                                                  await customer.findOne({where:{ID:order.CustomerID}}).then(async NEWcustomer=>{
+                                                                      await PriceAndSupply.findOne({where:{ DateTime : new Date().toISOString().slice(0, 10).toString() , SellerProductID : item.ProductID}}).then(async Price=>{
+                                                                          await sellerProducts.findOne({where:{ID:item.ProductID}}).then(async sellerProduct=>{
+                                                                              await products.findOne({where:{ID:sellerProduct.ProductID}}).then(async product=>{
+
+                                                                                  NewOrderProducts.push({
+                                                                                      ID : item.ID,
+                                                                                      RemainingTime:order.OrderDateTime,
+                                                                                      OrderID:item.OrderID,
+                                                                                      ForwardingDatetime:item.ForwardingDatetime,
+                                                                                      TurnOfForwarding :item.TurnOfForwarding,
+                                                                                      CustomerAddressID : item.CustomerAddressID,
+                                                                                      FinalDiscount: item.FinalDiscount,
+                                                                                      ProductID:item.ProductID,
+                                                                                      DemendSupply: item.Supply,
+                                                                                      UnitOfProduct:item.UnitOfProduct,
+                                                                                      UnitIDOfSupply:item.UnitIDOfSupply,
+                                                                                      CustomerStatus:item.CustomerStatus,
+                                                                                      SellerOperatorFinalStatus:item.SellerOperatorFinalStatus,
+                                                                                      SellerOperatorStatus:item.SellerOperatorStatus,
+                                                                                      SellerOperatorID:item.SellerOperatorID,
+                                                                                      WareHouseID:item.WareHouseID,
+                                                                                      TransportarID:item.TransportarID,
+                                                                                      ProductionManagerStatus: item.ProductionManagerStatus,
+                                                                                      CustomerFinalStatus: item.CustomerFinalStatus,
+                                                                                      SumTotal:item.SumTotal,
+                                                                                      OnlineFee: item.OnlineFee,
+                                                                                      InplaceFee: item.InplaceFee,
+                                                                                      AvailableSupply:Price,
+                                                                                      CustomerName:NEWcustomer.Name,
+                                                                                      product:product
+
+
+
+
+                                                                                  })
+                                                                          });
+                                                                          });
+                                                                      });
+                                                                   });
+                                                           });
+
+                                                        }).then(()=>{
+                                                            callback("",NewOrderProducts);
+
+                                                        });
 
                                                     });
 
@@ -3016,10 +3262,299 @@ function FilteringRequest(req, res, callback) {
                                 }
                             });
                             break;
+                        case "SubType":
+                            checkToken(req, res, (err, data) => {
+                                if (err) {
+                                    callback(err);
+                                }
+                                else {
+                                    checkUser(data, sellerOperator, (newErr, newData) => {
+                                        if (newErr) {
+                                            callback(newErr);
+                                        }
+                                        else {
+                                            if (req.body.OrderProductID == null || req.body.OnlineFee == null || req.body.InplaceFee == null){
+                                                callback({HttpCode: 404, response: {"code": 703}});
+                                            }else {
+                                                 sellerOperator.findAll({where:{SellerID: newData.SellerID}}).then(async SO=>{
+                                                     await Seller.findAll({where:{ParentID:newData.SellerID}}).then(async S =>{
+                                                         await SellerProductionManager.findAll({where:{SellerID:newData.SellerID}}).then(async PM=>{
+                                                            await WareHouse.findAll({where:{SellerID:newData.SellerID}}).then(async WH=>{
+                                                                var TP = [];
+                                                                await asyncForEach(WH,async item=>{
+                                                                   await transportation.findAll({where:{WareHouseID: item.ID}}).then(
+                                                                       async Trans=>{
+                                                                            if (Trans != null){
+                                                                               await TP.push(Trans);
+                                                                            }
+                                                                        }
+                                                                    );
+                                                                });
+                                                                callback("",{
+                                                                    sellerOperator :SO,
+                                                                    seller :S,
+                                                                    productManager:PM,
+                                                                    wareHouses : WH,
+                                                                    Transportaration : TP
+                                                                });
+                                                            })
+                                                         })
 
+                                                     });
 
+                                                 });
+
+                                            }
+                                        }
+
+                                    });
+                                }
+                            });
+                            break;
+                        case "product":
+                            switch (req.method) {
+                                case "GET":
+
+                                    checkToken(req, res, (err, data) => {
+                                        if (err) {
+                                            callback(err);
+                                        }
+                                        else {
+                                            checkUser(data, sellerOperator, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
+                                                else {
+
+                                                    sellerProducts.findAll({where: {SellerID: newData.SellerID}}).then(async sellerProducts => {
+                                                        var newSellerProducts = [];
+                                                        asyncForEach(sellerProducts, async item => {
+                                                            var base64str = "not Found";
+                                                            try {
+                                                                base64str = base64_encode(item.Image);
+
+                                                            } catch (e) {
+                                                                base64str = "not Found";
+
+                                                            }
+                                                            await PriceAndSupply.findAll({
+                                                                where: {
+                                                                    SellerProductID: item.ID
+                                                                }
+                                                            }).then(async PriceAndSupply => {
+                                                                await SellerProductsInServiceCitie.findAll({
+                                                                    where: {
+                                                                        SellerProductID: item.ID
+                                                                    }
+                                                                }).then(async SellerProductsInServiceCitie => {
+                                                                    newSellerProducts.push({
+                                                                        sellerProduct: {
+                                                                            ID:item.ID,
+                                                                            Image: base64str,
+                                                                            SellerID: item.SellerID,
+                                                                            ProductID: item.ProductID,
+                                                                            UnitOfProduct: item.UnitOfProduct,
+                                                                            UnitID: item.UnitID,
+                                                                            MinToSell:item.MinToSell,
+                                                                            ShowStatus: item.ShowStatus,
+                                                                            Description: item.Description,
+                                                                            DiscountFor0TO200: item.DiscountFor0TO200,
+                                                                            DiscountFor200TO500: item.DiscountFor200TO500,
+                                                                            DiscountFor500TO1000: item.DiscountFor500TO1000,
+                                                                            DiscountFor1000TOUpper: item.DiscountFor1000TOUpper,
+                                                                        },
+                                                                        PriceAndSupply: PriceAndSupply[PriceAndSupply.length-1],
+                                                                        CityInService: SellerProductsInServiceCitie
+
+                                                                    });
+                                                                });
+                                                            });
+                                                        }).then(
+                                                            () => {
+                                                                callback("", newSellerProducts);
+                                                            }
+                                                        );
+                                                    });
+                                                }
+
+                                            });
+                                        }
+                                    });
+                                    break;
+
+                            }
+                            break;
                     }
 
+                    break;
+                case "transportationManager":
+                    switch (req.originalUrl.substring(8).split("/")[1].split("?").shift()) {
+                        case "orderProduct":
+                            checkToken(req, res, (err, data) => {
+                                if (err) {
+                                    callback(err);
+                                }
+                                else {
+                                    checkUser(data, TransportationManager, (newErr, newData) => {
+                                        if (newErr) {
+                                            callback(newErr);
+                                        }
+                                        else {
+
+                                            orderProduct.findAll({
+                                                where: {
+                                                    SellerOperatorFinalStatus:true
+                                                }
+                                            }).then(orderProduct => {
+                                                callback(orderProduct)
+
+                                            })
+
+                                        }
+
+                                    });
+                                }
+                            });
+                            break;
+                        case "transportation":
+                            switch (req.method) {
+                                case "GET":
+                                    checkToken(req, res, (err, data) => {
+                                        if (err) {
+                                            callback(err);
+                                        }
+                                        else {
+                                            checkUser(data, TransportationManager, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
+                                                else {
+                                                    sellerWareHouse.findAll({where:{SellerID:newData.SellerID}}).then(async wareHouses=>{
+                                                        var transportations = [];
+                                                        asyncForEach(wareHouses,async item =>{
+                                                            transportation.findAll({where:{WareHouseID:item.ID}}).then(async trans=>{
+                                                                asyncForEach(trans,async item=>{
+                                                                    await transportations.push(item);
+                                                                })
+                                                            })
+                                                        })
+                                                    }).then(()=>{
+                                                        callback("",transportations);
+                                                    });
+
+                                                }
+
+                                            });
+                                        }
+                                    });
+                                    break;
+                                case "POST":
+                                    checkToken(req, res, (err, data) => {
+                                        if (err) {
+                                            callback(err);
+                                        }
+                                        else {
+                                            checkUser(data, TransportationManager, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
+                                                else {
+                                                    if (req.body.TransportationID != null || req.body.OrderProdutID != null){
+                                                        CheckForeignKey(res,[{ID:req.body.OrderProdutID,Entity:orderProduct},{ID:req.body.TransportationID, Entity:transportation}]).then(status=>{
+                                                            if (status){
+                                                                orderProduct.findOne({where:{ID:req.body.OrderProdutID}}).then(async orderP=>{
+                                                                    await orderP.update({TransportarID:req.body.TransportationID }).then(()=>{callback("","");});
+                                                                })
+                                                            }
+                                                        });
+
+                                                    } else {
+                                                        callback({HttpCode: 400, response: {response: "703"}});
+                                                    }
+
+                                                }
+
+                                            });
+                                        }
+                                    });
+                                    break;
+                            }
+
+                            break;
+                    }
+                    break;
+                case "transportation":
+                    switch (req.originalUrl.substring(8).split("/")[1].split("?").shift()) {
+                        case "orderProduct":
+                            switch (req.method) {
+                                case "GET":
+                                    checkToken(req, res, (err, data) => {
+                                        if (err) {
+                                            callback(err);
+                                        }
+                                        else {
+                                            checkUser(data, transportation, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
+                                                else {
+
+                                                    orderProduct.findAll({
+                                                        where: {
+                                                            TransportarID:newData.ID
+                                                        }
+                                                    }).then(orderProduct => {
+                                                        callback(orderProduct)
+
+                                                    })
+
+                                                }
+
+                                            });
+                                        }
+                                    });
+                                    break;
+                                case "POST":
+                                    checkToken(req, res, (err, data) => {
+                                        if (err) {
+                                            callback(err);
+                                        }
+                                        else {
+                                            checkUser(data, transportation, (newErr, newData) => {
+                                                if (newErr) {
+                                                    callback(newErr);
+                                                }
+                                                else {
+
+                                                    if (req.body.ID == null ){
+                                                        callback({HttpCode: 400, response: {"code": 703}});
+                                                    } else {
+                                                        orderProduct.findAll({where:{
+                                                                ID:req.body.ID
+                                                            }}).then(order =>{
+                                                            if (!isThisArrayEmpty(order)){
+                                                                if (order[0].TransportarID === tran[0].ID){
+                                                                    order[0].update({TransportarStatus: true}).then(
+                                                                        transportation.update({Status : false},{where:{ID:tran[0].ID}}).then(nothing=>{callback("","");})
+                                                                    );
+                                                                } else {
+                                                                    callback({HttpCode: 400, response: {"code": 709}});
+                                                                }                                       }else {
+                                                                callback({HttpCode: 400, response: {"code": 710}});
+
+                                                            }
+                                                        })
+                                                    }
+
+                                                }
+
+                                            });
+                                        }
+                                    });
+                                    break;
+                            }
+                            break;
+                    }
                     break;
             }
             break;

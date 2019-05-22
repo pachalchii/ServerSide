@@ -62,6 +62,14 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true
         },
+        Enabled: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
+        SocketID: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         Image: {
             type: DataTypes.STRING,
             allowNull: true
