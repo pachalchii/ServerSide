@@ -1,7 +1,7 @@
 var cluster = require('cluster');
 const {colors,ServerPort,SocketServerPort,DataBaseStatus,DevelopMode} = require('./src/Util/configuration');
 const {sequelize ,ChatOnOrderProduct,transportation,TransportationManager,SellerProductionManager,customer,Seller,orderProduct,sellerOperator} = require('./sequelize');
-const {fillDataBase ,checkUser} = require('./src/Util/Filter');
+const {fillDataBase } = require('./src/Util/Filter');
 const cron = require("node-cron");
 const fs = require("fs");
 const path = require('path');
@@ -93,6 +93,22 @@ else if (cluster.isWorker){
     console.log(colors.bg.Black, colors.fg.White ,"socket server is up in port : "+ SocketServerPort,colors.Reset)
 
     io.on('connection', client => {
+
+        function checkUser(EncodedToken, Entity, callback) {
+
+            Entity.findOne(EncodedToken).then(user => {
+                if (user != null) {
+                                callback("", user);
+                } else {
+                    callback({HttpCode: 400, response: {"code": 700}});
+                }
+            }).catch(()=>{
+                callback({HttpCode: 400, response: {"code": 700}});
+            })
+
+
+        }
+
 
         function checkToken(token, callback) {
 
@@ -192,11 +208,13 @@ else if (cluster.isWorker){
 
                     checkToken(Decodeddata.token, (err, data) => {
                         if (err) {
+                            console.log(err);
                             client.emit('onlineAnswer',JSON.stringify({"code":"700"}));
                         }
                         else {
                             checkUser(data, Entity, (newErr, newData1) => {
                                 if (newErr) {
+                                    console.log(newErr);
                                     client.emit('onlineAnswer',JSON.stringify({"code":"700"}));
                                 }
                                 else {

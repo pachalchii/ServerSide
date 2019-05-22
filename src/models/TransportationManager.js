@@ -30,6 +30,14 @@ module.exports = function (sequelize, DataTypes) {
                 key: 'ID'
             }
         },
+        WareHouseID: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'SellerWareHouse',
+                key: 'ID'
+            }
+        },
         Username: {
             type: DataTypes.STRING,
             allowNull: false
@@ -67,7 +75,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         }
     }, {
-        tableName: 'SellerOperator',
+        tableName: 'TransportationManager',
         timestamps: false
     });
 };

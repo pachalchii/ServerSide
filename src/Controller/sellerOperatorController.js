@@ -34,7 +34,6 @@ router.get('/product', (req, res) => {
 
 });
 
-
 router.put('/Pricing', (req, res) => {
 
     try {

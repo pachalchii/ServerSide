@@ -396,6 +396,7 @@ function CheckForeignKey(res, array) {
         asyncForEach(array, async item => {
             await item.Entity.findOne({where: {ID: item.ID}}).then(Model => {
                 if (Model == null) {
+
                     status = false;
                 }
             });
@@ -411,15 +412,24 @@ function checkUser(EncodedToken, Entity, callback) {
 
         Entity.findOne(EncodedToken).then(user => {
             if (user != null) {
-                if (user.Status){
+                if (Entity !== customer){
+                    if (!user.Status){
+
+                        if (user.Enabled) {
+                            callback("", user);
+                        }else {
+                            callback({HttpCode: 400, response: {"code": 900}});
+                        }
+
+                    }else {
+                        callback({HttpCode: 400, response: {"code": 726}});
+                    }
+                }else {
                     if (user.Enabled) {
                         callback("", user);
                     }else {
                         callback({HttpCode: 400, response: {"code": 900}});
                     }
-
-                }else {
-                    callback({HttpCode: 400, response: {"code": 726}});
                 }
             } else {
                 callback({HttpCode: 400, response: {"code": 700}});
@@ -1960,24 +1970,23 @@ function FilteringRequest(req, res, callback) {
                                                                                 if (TotalStatus) {
                                                                                     await SellerProductsInServiceCitie.findAll({where: {ID: item.SellerProductID}}).then(
                                                                                         async SellerProductsInServiceCitie => {
-                                                                                            await addresses.findAll({where: {ID: item.CustomerAddressID}}).then(async Address => {
+                                                                                            await addresses.findOne({where: {ID: item.CustomerAddressID}}).then(async Address => {
                                                                                                var AdreessStatus = false;
-                                                                                                Address.forEach(async SubItem=>{
-                                                                                                    SellerProductsInServiceCitie.forEach(async item =>{
-                                                                                                        if (item.CityID === SubItem.CityID) {
+                                                                                               await SellerProductsInServiceCitie.forEach(async SubItem=>{
+                                                                                                        if (Address.CityID === SubItem.CityID) {
                                                                                                             AdreessStatus = true;
                                                                                                         }
                                                                                                     });
-                                                                                                    });
+                                                                                                   if (!AdreessStatus){
+                                                                                                       TotalStatus = false;
+                                                                                                       console.log("hi1");
+                                                                                                       callback({
+                                                                                                           HttpCode: 404,
+                                                                                                           response: {"code": 723}
+                                                                                                       });
+                                                                                                   }
 
-                                                                                                if (!AdreessStatus){
-                                                                                                    TotalStatus = false;
-                                                                                                    console.log("hi1");
-                                                                                                    callback({
-                                                                                                        HttpCode: 404,
-                                                                                                        response: {"code": 723}
-                                                                                                    });
-                                                                                                }
+
 
 
                                                                                             });
@@ -1985,12 +1994,13 @@ function FilteringRequest(req, res, callback) {
                                                                                     );
                                                                                     await sellerProducts.findOne({where: {ID: item.SellerProductID}}).then(async sellerProduct => {
                                                                                         if (sellerProduct.MinToSell <= item.Supply) {
-                                                                                            await sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID , Status:true}}).then(async operators => {
+                                                                                            await sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID}}).then(async operators => {
                                                                                                 function randomIntInc(low, high) {
                                                                                                     return Math.floor(Math.random() * (high - low + 1) + low)
                                                                                                 }
 
                                                                                                 var operator = randomIntInc(0, operators.length - 1);
+
                                                                                                 await products.findOne({where: {ID: sellerProduct.ProductID}}).then(async product => {
                                                                                                     if (product.Type) {
                                                                                                         if (sellerProduct.ShowStatus) {
@@ -2057,18 +2067,28 @@ function FilteringRequest(req, res, callback) {
                                                                                                                                 response: {"code": 723}
                                                                                                                             });
                                                                                                                         } else {
-                                                                                                                            totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
-                                                                                                                            TotalOrderProducts.push({
-                                                                                                                                OrderID: savedOrder.ID,
-                                                                                                                                ForwardingDatetime: item.ForwardingDatetime,
-                                                                                                                                CustomerAddressID: item.CustomerAddressID,
-                                                                                                                                UnitIDOfSupply: item.UnitIDOfSupply,
-                                                                                                                                ProductID: item.SellerProductID,
-                                                                                                                                Supply: item.Supply,
-                                                                                                                                SumTotal: item.Supply * PriceAndSupply.Price,
-                                                                                                                                SellerOperatorID: operator.ID
+                                                                                                                             sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID}}).then(async operators => {
+                                                                                                                                function randomIntInc(low, high) {
+                                                                                                                                    return Math.floor(Math.random() * (high - low + 1) + low)
+                                                                                                                                }
 
+                                                                                                                                var operator = randomIntInc(0, operators.length - 1);
+                                                                                                                                 totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
+                                                                                                                                 TotalOrderProducts.push({
+                                                                                                                                     OrderID: savedOrder.ID,
+                                                                                                                                     ForwardingDatetime: item.ForwardingDatetime,
+                                                                                                                                     CustomerAddressID: item.CustomerAddressID,
+                                                                                                                                     UnitIDOfSupply: item.UnitIDOfSupply,
+                                                                                                                                     SellerOperatorID:operators[operator].ID,
+                                                                                                                                     Seen:false,
+                                                                                                                                     CustomerStatus:true,
+                                                                                                                                     DeleteStatus:false,
+                                                                                                                                     ProductID: item.SellerProductID,
+                                                                                                                                     Supply: item.Supply,
+                                                                                                                                     SumTotal: item.Supply * PriceAndSupply.Price
+                                                                                                                                 });
                                                                                                                             });
+
 
                                                                                                                         }
 
@@ -2486,18 +2506,28 @@ function FilteringRequest(req, res, callback) {
                                                                      await   sellerProducts.findOne({where:{ID:item.SellerProductID}}).then( async sellerP=>{
                                                                          await products.findOne({where:{ID:sellerP.ProductID}}).then(async product=>{
                                                                              if (price != null && price.PrimitiveSupply >0 ){
-                                                                                 await  newItem.push({
-                                                                                     SellerProductID:item.SellerProductID,
-                                                                                     Supply:true,
-                                                                                     SellerProductName : product.Name
+                                                                                await Seller.findOne({where:{ID:sellerP.SellerID}}).then(async seller=>{
+                                                                                    console.log(seller)
+                                                                                     await  newItem.push({
+                                                                                           SellerName:seller.CompanyName,
+                                                                                           SellerImage:seller.LogoImage,
+                                                                                         SellerProductID:item.SellerProductID,
+                                                                                         Supply:true,
+                                                                                         SellerProductName : product.Name
+                                                                                     });
+                                                                                     item.update({SeenStatus:true});
                                                                                  });
-                                                                                 item.update({SeenStatus:true});
-                                                                             } else {
-                                                                                 await newItem.push({
-                                                                                     SellerProductID:item.SellerProductID,
-                                                                                     Supply:false,
-                                                                                     SellerProductName : product.Name
 
+                                                                             } else {
+                                                                                 await Seller.findOne({where:{ID:sellerP.SellerID}}).then(async seller=>{
+                                                                                   await  newItem.push({
+                                                                                         SellerName:seller.Name,
+                                                                                         SellerImage:seller.Image,
+                                                                                         SellerProductID:item.SellerProductID,
+                                                                                         Supply:false,
+                                                                                         SellerProductName : product.Name
+                                                                                     });
+                                                                                     item.update({SeenStatus:true});
                                                                                  });
                                                                              }
                                                                          });
@@ -2563,7 +2593,26 @@ function FilteringRequest(req, res, callback) {
                                                }
                                                else {
                                                    orderProduct.findAll({where:{SellerOperatorStatus:null, ProductionManagerStatus:null ,DeleteStatus:false, CustomerStatus:true}}).then(orderProducts=>{
-                                                       callback("",orderProducts);
+                                                     var newItems = [];
+                                                       asyncForEach(orderProducts,async item =>{
+                                                           item.update({ProductionManagerStatus:true});
+                                                        await   sellerProducts.findOne({where:{ID:item.ProductID}}).then(async SP=>{
+                                                              await products.findOne({where:{ID:SP.ProductID}}).then(async P=>{
+                                                                 await PriceAndSupply.findOne({where:{SellerProductID:SP.ID , DateTime:new Date().toISOString().slice(0, 10).toString()}}).then(async price =>{
+                                                                     if (P.type){
+                                                                         await  newItem.push({
+                                                                             orderProduct:item,
+                                                                             SellerProduct:SP,
+                                                                             Product:P,
+                                                                             Price:price
+                                                                         });
+                                                                     }
+                                                                  });
+                                                               });
+
+                                                           });
+                                                       });
+                                                       callback("",newItems);
 
                                                    });
 
@@ -3061,7 +3110,7 @@ function FilteringRequest(req, res, callback) {
                                                     callback(newErr);
                                                 }
                                                 else {
-                                                    orderProduct.findAll({where:{SellerOperatorID: newData.ID ,DeleteStatus:false, CustomerStatus:true, SellerOperatorStatus:null}}).then(orderProducts=>{
+                                                    orderProduct.findAll({where:{SellerOperatorID: newData.ID ,DeleteStatus:false, CustomerStatus:true}}).then(orderProducts=>{
                                                         var NewOrderProducts = [];
                                                         asyncForEach(orderProducts, async item => {
                                                           await Order.findOne({where:{
@@ -3071,38 +3120,77 @@ function FilteringRequest(req, res, callback) {
                                                                       await PriceAndSupply.findOne({where:{ DateTime : new Date().toISOString().slice(0, 10).toString() , SellerProductID : item.ProductID}}).then(async Price=>{
                                                                           await sellerProducts.findOne({where:{ID:item.ProductID}}).then(async sellerProduct=>{
                                                                               await products.findOne({where:{ID:sellerProduct.ProductID}}).then(async product=>{
+                                                                                  await orderPardakht.findOne({where:{ID:order.PardakhtID}}).then(async pardakht=>{
+                                                                                          orderPardakht.findOne({where:{ID:order.PardakhtID}}).then(pardakht=>{
+                                                                                              if (pardakht != null){
+                                                                                                    NewOrderProducts.push({
+                                                                                                      ID : item.ID,
+                                                                                                      RemainingTime:order.OrderDateTime,
+                                                                                                      OrderID:item.OrderID,
+                                                                                                      PardakhtRemainingTime:pardakht.DateTime,
+                                                                                                      ForwardingDatetime:item.ForwardingDatetime,
+                                                                                                      TurnOfForwarding :item.TurnOfForwarding,
+                                                                                                      CustomerAddressID : item.CustomerAddressID,
+                                                                                                      FinalDiscount: item.FinalDiscount,
+                                                                                                      ProductID:item.ProductID,
+                                                                                                      DemendSupply: item.Supply,
+                                                                                                      UnitOfProduct:item.UnitOfProduct,
+                                                                                                      UnitIDOfSupply:item.UnitIDOfSupply,
+                                                                                                      CustomerStatus:item.CustomerStatus,
+                                                                                                      SellerOperatorFinalStatus:item.SellerOperatorFinalStatus,
+                                                                                                      SellerOperatorStatus:item.SellerOperatorStatus,
+                                                                                                      SellerOperatorID:item.SellerOperatorID,
+                                                                                                      WareHouseID:item.WareHouseID,
+                                                                                                      TransportarID:item.TransportarID,
+                                                                                                      ProductionManagerStatus: item.ProductionManagerStatus,
+                                                                                                      CustomerFinalStatus: item.CustomerFinalStatus,
+                                                                                                      SumTotal:item.SumTotal,
+                                                                                                      OnlineFee: item.OnlineFee,
+                                                                                                      InplaceFee: item.InplaceFee,
+                                                                                                      AvailableSupply:Price,
+                                                                                                      CustomerName:NEWcustomer.Name,
+                                                                                                      product:product,
+                                                                                                      pardakht:pardakht
 
-                                                                                  NewOrderProducts.push({
-                                                                                      ID : item.ID,
-                                                                                      RemainingTime:order.OrderDateTime,
-                                                                                      OrderID:item.OrderID,
-                                                                                      ForwardingDatetime:item.ForwardingDatetime,
-                                                                                      TurnOfForwarding :item.TurnOfForwarding,
-                                                                                      CustomerAddressID : item.CustomerAddressID,
-                                                                                      FinalDiscount: item.FinalDiscount,
-                                                                                      ProductID:item.ProductID,
-                                                                                      DemendSupply: item.Supply,
-                                                                                      UnitOfProduct:item.UnitOfProduct,
-                                                                                      UnitIDOfSupply:item.UnitIDOfSupply,
-                                                                                      CustomerStatus:item.CustomerStatus,
-                                                                                      SellerOperatorFinalStatus:item.SellerOperatorFinalStatus,
-                                                                                      SellerOperatorStatus:item.SellerOperatorStatus,
-                                                                                      SellerOperatorID:item.SellerOperatorID,
-                                                                                      WareHouseID:item.WareHouseID,
-                                                                                      TransportarID:item.TransportarID,
-                                                                                      ProductionManagerStatus: item.ProductionManagerStatus,
-                                                                                      CustomerFinalStatus: item.CustomerFinalStatus,
-                                                                                      SumTotal:item.SumTotal,
-                                                                                      OnlineFee: item.OnlineFee,
-                                                                                      InplaceFee: item.InplaceFee,
-                                                                                      AvailableSupply:Price,
-                                                                                      CustomerName:NEWcustomer.Name,
-                                                                                      product:product
+
+
+                                                                                                  })
+                                                                                              } else {
+                                                                                                    NewOrderProducts.push({
+                                                                                                      ID : item.ID,
+                                                                                                      RemainingTime:order.OrderDateTime,
+                                                                                                      OrderID:item.OrderID,
+                                                                                                      ForwardingDatetime:item.ForwardingDatetime,
+                                                                                                      TurnOfForwarding :item.TurnOfForwarding,
+                                                                                                      CustomerAddressID : item.CustomerAddressID,
+                                                                                                      FinalDiscount: item.FinalDiscount,
+                                                                                                      ProductID:item.ProductID,
+                                                                                                      DemendSupply: item.Supply,
+                                                                                                      UnitOfProduct:item.UnitOfProduct,
+                                                                                                      UnitIDOfSupply:item.UnitIDOfSupply,
+                                                                                                      CustomerStatus:item.CustomerStatus,
+                                                                                                      SellerOperatorFinalStatus:item.SellerOperatorFinalStatus,
+                                                                                                      SellerOperatorStatus:item.SellerOperatorStatus,
+                                                                                                      SellerOperatorID:item.SellerOperatorID,
+                                                                                                      WareHouseID:item.WareHouseID,
+                                                                                                      TransportarID:item.TransportarID,
+                                                                                                      ProductionManagerStatus: item.ProductionManagerStatus,
+                                                                                                      CustomerFinalStatus: item.CustomerFinalStatus,
+                                                                                                      SumTotal:item.SumTotal,
+                                                                                                      OnlineFee: item.OnlineFee,
+                                                                                                      InplaceFee: item.InplaceFee,
+                                                                                                      AvailableSupply:Price,
+                                                                                                      CustomerName:NEWcustomer.Name,
+                                                                                                      product:product,
+                                                                                                      pardakht:pardakht
 
 
 
+                                                                                                  })                                                                                              }
+                                                                                          });
 
                                                                                   })
+
                                                                           });
                                                                           });
                                                                       });
@@ -3165,11 +3253,12 @@ function FilteringRequest(req, res, callback) {
                                             callback(newErr);
                                         }
                                         else {
-                                            if (req.body.OrderProductID == null || req.body.Status == null){
+                                            if (req.body.OrderProductID == null || req.body.Status == null || req.body.WareHouseID == null){
                                                 callback({HttpCode: 404, response: {"code": 703}});
                                             }else {
 
                                                 orderProduct.findOne({where:{ ID : req.body.OrderProductID }}).then(orderProducts=>{
+                                                    orderProducts.update({WareHouseID:req.body.WareHouseID});
                                                     Order.findOne({where:{ID:orderProducts.OrderID}}).then(order=>{
                                                         callback("",order);
                                                     });
@@ -3273,29 +3362,30 @@ function FilteringRequest(req, res, callback) {
                                             callback(newErr);
                                         }
                                         else {
-                                            if (req.body.OrderProductID == null || req.body.OnlineFee == null || req.body.InplaceFee == null){
-                                                callback({HttpCode: 404, response: {"code": 703}});
-                                            }else {
+
                                                  sellerOperator.findAll({where:{SellerID: newData.SellerID}}).then(async SO=>{
-                                                     await Seller.findAll({where:{ParentID:newData.SellerID}}).then(async S =>{
+                                                     await Seller.findAll({where:{SellerParentID:newData.SellerID}}).then(async S =>{
                                                          await SellerProductionManager.findAll({where:{SellerID:newData.SellerID}}).then(async PM=>{
-                                                            await WareHouse.findAll({where:{SellerID:newData.SellerID}}).then(async WH=>{
-                                                                var TP = [];
-                                                                await asyncForEach(WH,async item=>{
-                                                                   await transportation.findAll({where:{WareHouseID: item.ID}}).then(
-                                                                       async Trans=>{
-                                                                            if (Trans != null){
-                                                                               await TP.push(Trans);
+                                                            await sellerWareHouse.findAll({where:{SellerID:newData.SellerID}}).then(async WH=>{
+                                                                await TransportationManager.findAll().then(async TM=>{
+                                                                    var TP = [];
+                                                                    await asyncForEach(WH,async item=>{
+                                                                        await transportation.findAll({where:{WareHouseID: item.ID}}).then(
+                                                                            async Trans=>{
+                                                                                if (Trans != null){
+                                                                                    await TP.push(Trans);
+                                                                                }
                                                                             }
-                                                                        }
-                                                                    );
-                                                                });
-                                                                callback("",{
-                                                                    sellerOperator :SO,
-                                                                    seller :S,
-                                                                    productManager:PM,
-                                                                    wareHouses : WH,
-                                                                    Transportaration : TP
+                                                                        );
+                                                                    });
+                                                                    callback("",{
+                                                                        sellerOperator :SO,
+                                                                        seller :S,
+                                                                        productManager:PM,
+                                                                        wareHouses : WH,
+                                                                        Transportaration : TP,
+                                                                        TransportationManager:TM
+                                                                    });
                                                                 });
                                                             })
                                                          })
@@ -3304,7 +3394,7 @@ function FilteringRequest(req, res, callback) {
 
                                                  });
 
-                                            }
+
                                         }
 
                                     });
@@ -3400,13 +3490,33 @@ function FilteringRequest(req, res, callback) {
                                             callback(newErr);
                                         }
                                         else {
-
+                                            // todo inja bug e
                                             orderProduct.findAll({
                                                 where: {
-                                                    SellerOperatorFinalStatus:true
+                                                    WareHouseID: newData.WareHouseID,
+                                                    SellerOperatorFinalStatus:true,
+                                                    OnlineFee:0
                                                 }
                                             }).then(orderProduct => {
-                                                callback(orderProduct)
+                                                var newItem = [];
+                                                asyncForEach(orderProduct,async item =>{
+                                                    if (item.OnlineFee === 0){
+                                                       await newItem.push(item);
+                                                    } else {
+                                                        await order.findOne({where:{ID:item.OrderID}}).then(async Order=>{
+                                                            if (Order.PardakhtID != null){
+                                                              await  orderPardakht.findOne({where:Order.PardakhtID}).then(async pardakht=>{
+                                                                    if (pardakht.CodePeygiri != null){
+                                                                      await  newItem.push(item);
+                                                                    }
+                                                                })
+                                                            }
+
+                                                        })
+                                                    }
+                                                });
+
+                                                callback(newItem)
 
                                             })
 
