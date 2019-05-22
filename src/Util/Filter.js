@@ -413,7 +413,7 @@ function checkUser(EncodedToken, Entity, callback) {
         Entity.findOne(EncodedToken).then(user => {
             if (user != null) {
                 if (Entity !== customer){
-                    if (!user.Status){
+                    if (user.Status){
 
                         if (user.Enabled) {
                             callback("", user);
