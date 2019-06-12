@@ -143,15 +143,36 @@ const statusCodes = {
     },
     727: {
         message: "شما در روز های جمعه مجاز به ایجاد تغییرات در سامانه نیستید"
+    },
+    728: {
+        message: "پسورد قدیم و جدید یکسان نمیباشد"
     }
 
 
 };
 
+function AlramMessages(event,Variables) {
+    switch (event) {
+        case "ForgetPassword": return  Variables+"کد فراموشی رمز عبور شما : ";
+        case "SellerOperatorAlarm" : return "تنها ۱۰ دقیقه مانده از فرصت شما برای تایید سفارش :"+Variables;
+        case "PostOrder": return "سفارش شما با کد پیگیری زیر ثبت شد :"+Variables;
+        case "Register": return "ثبت نام شما با موفقیت انجام شد";
+        case "FinalStatus":return "محموله شما تحویل گردیده شد";
+        case "AddRole": return "شما در سامانه پاچالچی ثبت نام شدید";
+        case "transportation": return"بار شما اماده است";
+    }
+
+
+}
+
 const UplodDirs = {
     "seller": "./../../uploads/seller/",
     "customer": "./../../uploads/customer/",
     "products": "./../../uploads/products/",
+    "wareHouse": "./../../uploads/wareHouse/",
+    "operator": "./../../uploads/operator/",
+    "productionManager":"./../../uploads/productionManager/",
+    "TransportationManager":"./../../uploads/TransportationManager/"
 
 
 };
@@ -187,6 +208,8 @@ const SocketServerPort = 8080;
 
 const TimeCounterForOperatorAnswering = 30 * 60 * 1000;
 
+const TokenExpiredTimeLimit = 30 * 60 * 1000;
+
 const TimeRemainingForOperatorAlert = 20 * 60 * 1000;
 
 const TimeToDoingPayment = 60 * 60 * 1000;
@@ -206,8 +229,10 @@ module.exports = {
     ValidImageFormat,
     DevelopMode,
     DataBaseStatus,
+    AlramMessages,
     ImageLimitSize,
     colors,
+    TokenExpiredTimeLimit,
     JWT_SECRET,
     PASSWORD_REGEX,
     PHONENUMBER_REGEX,

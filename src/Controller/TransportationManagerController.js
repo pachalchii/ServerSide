@@ -68,6 +68,25 @@ router.post('/transportation' , ( req , res )=>{
 
 });
 
+router.post('/accept', (req, res) => {
+
+
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                data.update({Policy:true}).then(()=>{return res.json();});
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
 
 
 

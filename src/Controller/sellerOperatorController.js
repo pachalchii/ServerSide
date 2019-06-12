@@ -8,7 +8,6 @@ const asyncForEach = require('async-await-foreach');
 const {chat, support, orderProduct, Seller, orderPardakht, PriceAndSupply, SellerProductsInServiceCitie, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
 const Op = sequelize.Op;
 
-//new
 
 router.get('/product', (req, res) => {
 
@@ -145,6 +144,33 @@ router.post('/ServiceCities', (req, res) => {
 
 });
 
+router.post('/ServiceCitiesDelete', (req, res) => {
+
+
+    try {
+
+        FilteringRequest(req, res, (err, data) => {
+
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                SellerProductsInServiceCitie.destroy({where:{ID:data.ID}}).then(() => {
+                    return res.json();
+                }).catch(e => {
+                    console.log(e)
+                    return res.status(400).json({"code": 724});
+                })
+            }
+
+        });
+
+    } catch (e) {
+        return res.status(500).json({"code": 500});
+    }
+
+
+});
+
 router.post('/CancleOrderProduct', (req, res) => {
     try {
         FilteringRequest(req, res, (err, data) => {
@@ -263,7 +289,49 @@ router.put('/Order', (req, res) => {
                             });
                         });
                     }else {
-                        return res.json();
+                        await orderProduct.findAll({where: {OrderID: data.ID}}).then(async orderProducts => {
+                            var status = true;
+                            await asyncForEach(orderProducts, async item => {
+                                if (item.SellerOperatorFinalStatus == null) {
+                                    status = false;
+                                }
+                            }).then(() => {
+                                    if (status) {
+                                        //todo sms and notif
+                                        data.update({OrderStatus: true}).then(async () => {
+                                            await sequelize.transaction().then(function (t) {
+                                                orderPardakht.create({
+                                                    Mablagh: data.SumTotal,
+                                                    DateTime: new Date().toString()
+                                                }, {
+                                                    transaction: t
+                                                }).then(savedPardakht => {
+                                                    data.update({PardakhtID: savedPardakht.ID});
+                                                    t.commit();
+                                                    setTimeout(function () {
+                                                        orderPardakht.findOne({where: {ID: savedPardakht.ID}}).then(pardakht => {
+                                                                if (pardakht.CodePeygiri == null) {
+                                                                    data.update({OrderStatus: false});
+                                                                }
+                                                            }
+                                                        );
+                                                    }, TimeToDoingPayment);
+                                                    return res.json();
+                                                }).catch(function (error) {
+                                                    t.rollback();
+                                                    return res.status(500).json({"code": 500});
+                                                });
+                                            });
+                                        })
+                                    } else {
+                                        return res.json()
+                                    }
+
+                                }
+                            );
+
+                        });
+
                     }
                 });
 
@@ -298,49 +366,15 @@ router.put('/FinalOrder', (req, res) => {
                                     InplaceFee: data.InplaceFee - orderProducts.InplaceFee || null
                                 });
 
-                        }
-                        await orderProduct.findAll({where: {OrderID: data.ID}}).then(async orderProducts => {
-                            var status = true;
-                            await asyncForEach(orderProducts, async item => {
-                                if (item.SellerOperatorFinalStatus == null) {
-                                    status = false;
-                                }
-                            }).then(() => {
-                                    if (status) {
-                                        //todo sms and notif
-                                        data.update({OrderStatus: true}).then(async () => {
-                                           await sequelize.transaction().then(function (t) {
-                                                orderPardakht.create({
-                                                    Mablagh: data.SumTotal,
-                                                    DateTime: new Date().toString()
-                                                }, {
-                                                    transaction: t
-                                                }).then(savedPardakht => {
-                                                    data.update({PardakhtID: savedPardakht.ID});
-                                                    t.commit();
-                                                    setTimeout(function () {
-                                                        orderPardakht.findOne({where: {ID: savedPardakht.ID}}).then(pardakht => {
-                                                                if (pardakht.CodePeygiri == null) {
-                                                                    data.update({OrderStatus: false});
-                                                                }
-                                                            }
-                                                        );
-                                                    }, TimeToDoingPayment);
-                                                    return res.json();
-                                                }).catch(function (error) {
-                                                    t.rollback();
-                                                    return res.status(500).json({"code": 500});
-                                                });
-                                            });
-                                        })
-                                    } else {
-                                        return res.json()
-                                    }
+                        }else
+                            {
+                                PriceAndSupply.findOne({where:{SellerProductID:req.body.OrderProductID , DateTime: new Date().toISOString().slice(0, 10).toString()}}).then(PS=>{
 
-                                }
-                            );
-
-                        });
+                                    PS.update({PrimitiveSupply : PS.PrimitiveSupply - orderProducts.SumTotal }).then(()=>{
+                                        return res.json();
+                                    });
+                                });
+                            }
                     });
                 });
             }
@@ -353,82 +387,6 @@ router.put('/FinalOrder', (req, res) => {
 });
 
 
-
-
-
-//old
-
-router.get('/message', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    if (searchQuery) {
-
-        support.findAll(searchQuery).then(support => {
-
-            if (isThisArrayEmpty(support)) {
-
-                return res.status(400).json({"code": 700});
-
-            } else {
-                if (support[0].Status) {
-
-                    chat.findAll({where: {[Op.or]: [{ToID: "111" + support[0].ID}, {FromID: "111" + support[0].ID}]}}).then(
-                        message => {
-                            return res.status(200).json(message);
-                        }
-                    )
-
-                } else {
-                    return res.status(404).json({"code": 900});
-
-                }
-
-            }
-        });
-
-
-    }
-
-});
-
-router.post('/message', (req, res) => {
-
-    var searchQuery = checkToken(req, res);
-    var requestFilter = filterRequest(req, res, "Smessage");
-
-    if (searchQuery && requestFilter) {
-
-        support.findAll(searchQuery).then(support => {
-
-            if (isThisArrayEmpty(support)) {
-
-                return res.status(400).json({"code": 700});
-
-            } else {
-                if (support[0].Status) {
-                    chat.create({
-                        FromID: "111" + support[0].ID,
-                        ToID: "222" + req.body.ToID,
-                        Message: req.body.Message,
-                        DateTimeSend: new Date().getTime()
-
-                    });
-                    return res.json();
-                } else {
-                    return res.status(400).json({"code": 700});
-
-                }
-
-            }
-
-
-        });
-
-
-    }
-
-});
-
-
 module.exports = router;
+
 

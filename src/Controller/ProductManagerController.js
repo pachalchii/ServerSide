@@ -2,11 +2,31 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {Seller, transportation, orderProduct} = require('../../sequelize');
+const {Seller, transportation,PriceAndSupply, orderProduct} = require('../../sequelize');
 const {upload, JWT_SECRET, colors} = require('../Util/configuration');
 const {checkToken, isThisArrayEmpty, FilteringRequest} = require("../Util/Filter");
 /*********************************************/
 var jwt = require('jwt-simple');
+
+router.post('/accept', (req, res) => {
+
+
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                data.update({Policy:true}).then(()=>{return res.json();});
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
 
 router.get('/product', (req, res) => {
 

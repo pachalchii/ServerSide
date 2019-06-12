@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {Seller, cities, sellerType,PriceAndSupply,SellerProductsInServiceCitie, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');
+const {Seller, cities,application, sellerType,PriceAndSupply,SellerProductsInServiceCitie, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');
 const {statusCodes} = require('../Util/configuration');
 const {base64_encode, checkToken, isThisArrayEmpty} = require("../Util/Filter");
 var path = require('path');
@@ -10,6 +10,7 @@ const fs = require("fs");
 const rimraf = require("rimraf");
 const asyncForEach = require('async-await-foreach');
 /*********************************************/
+
 router.get('/information/:type', function (req, res) {
     switch (req.params.type) {
 
@@ -296,6 +297,26 @@ router.get('/information/:type', function (req, res) {
 
         default:
             return res.status(404).json();
+    }
+});
+
+router.post('/information/applicationLink',(req,res)=>{
+    if (req.body.PhoneNumber){
+        var Kavenegar = require('kavenegar');
+        var api = Kavenegar.KavenegarApi({
+            apikey: '38304E493253685735793161654676314C497056347073715775654A45726771'
+        });
+        application.findAll().then(app=>{
+            api.Send({
+                    message: app[0].UpdateLink ,
+                    sender: "10004346",
+                    receptor: req.body.PhoneNumber
+                },
+                function (response, status) {
+                    return res.json();
+                });
+        });
+
     }
 });
 

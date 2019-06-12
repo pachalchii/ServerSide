@@ -30,6 +30,11 @@ module.exports = function (sequelize, DataTypes) {
                 key: 'ID'
             }
         },
+        Policy: {
+            default:false,
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
         WareHouseID: {
             type: DataTypes.INTEGER,
             allowNull: false,
