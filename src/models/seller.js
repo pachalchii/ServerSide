@@ -48,6 +48,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
+        PartTime2: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         EstablishedDate: {
             type: DataTypes.STRING,
             allowNull: true
@@ -65,6 +69,11 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         Status: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
+        Policy: {
+            default:false,
             type: DataTypes.BOOLEAN,
             allowNull: true
         },

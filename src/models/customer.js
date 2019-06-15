@@ -10,16 +10,16 @@ module.exports = function (sequelize, DataTypes) {
         },
         Name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         FamilyName: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
 
         Username: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         AuthCode: {
             type: DataTypes.STRING,
@@ -27,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         Password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         SocketID: {
             type: DataTypes.STRING,
@@ -59,7 +59,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         RegistrationDateTime: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         PhoneNumber: {
             type: DataTypes.STRING,
