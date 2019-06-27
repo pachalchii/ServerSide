@@ -1,17 +1,10 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {checkLimitTime, filterRequest,sendSMS, checkToken,FilteringRequest, isThisArrayEmpty, base64_encode, addRoleInfoCheck} = require('../Util/Filter');
-const {handleError,AlramMessages, upload} = require('../Util/configuration');
-const {orderNazarSanji,SellerProductsInServiceCitie,orderProduct,Order, customer, sellerOperator, PriceAndSupply,Seller, sellerProducts, sellerWareHouse, transportation, sequelize, products, unit} = require('../../sequelize');
-/*********************************************/
-var jwt = require('jwt-simple');
-var md5 = require('md5');
-const multer = require("multer");
-var path = require('path');
-const fs = require("fs");
-const http = require("http");
+const {sendSMS,FilteringRequest} = require('../Util/Filter');
+const {AlramMessages, upload} = require('../Util/configuration');
+const {SellerProductsInServiceCitie,Order, PriceAndSupply,Seller, sellerProducts, sequelize} = require('../../sequelize');
+
 
 router.post('/product', upload.single("Image"), (req, res) => {
 
@@ -44,6 +37,17 @@ router.post('/product', upload.single("Image"), (req, res) => {
 
 
 
+});
+
+router.get('/Singlelist',(req,res)=>{
+    Seller.findOne({where:{ID:req.query.SellerID}}).then(seller=>{
+        if (seller != null){
+            return res.json(seller)
+        }else {
+            return res.status(404)
+        }
+
+    });
 });
 
 router.put('/Pricing' , (req, res) => {

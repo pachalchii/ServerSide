@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {Seller, cities,application, sellerType,PriceAndSupply,SellerProductsInServiceCitie, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');

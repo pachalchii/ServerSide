@@ -1,7 +1,7 @@
 var cluster = require('cluster');
 const {colors, ServerPort, SocketServerPort, DataBaseStatus, TimeCounterForOperatorAnswering, DevelopMode} = require('./src/Util/configuration');
 const {sequelize, ChatOnOrderProduct, transportation, TransportationManager, SellerProductionManager, customer, Seller, orderProduct, sellerOperator} = require('./sequelize');
-const {fillDataBase} = require('./src/Util/Filter');
+const {fillDataBase, sendOnTelegramChannel} = require('./src/Util/Filter');
 const cron = require("node-cron");
 const fs = require("fs");
 const path = require('path');
@@ -15,9 +15,105 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'Log/access.log'), {flags: 'a', interval: '1d'});
 var zipFolder = require('zip-folder');
+var os = require('os');
+var request = require('request');
 
 
 if (cluster.isMaster) {
+
+    cron.schedule("59 23 * * *", function () {
+
+        try {
+            var BackUpFileName = new Date().toISOString().slice(0, 10).toString();
+
+            zipFolder(path.join(__dirname, '/uploads/'), path.join(__dirname, '/BackUp/') + BackUpFileName + '-images.zip', function (err) {
+                if (err) {
+                    sendOnTelegramChannel("فراند بکاپ شبانه در تاریخ " + new Date() + " با شکست مواجه شد");
+                } else {
+                    zipFolder(path.join(__dirname, '/Log/'), path.join(__dirname, '/BackUp/') + BackUpFileName + '-logs.zip', function (err) {
+                        if (err) {
+                            sendOnTelegramChannel("فراند بکاپ شبانه در تاریخ " + new Date() + " با شکست مواجه شد");
+                        } else {
+                            zipFolder(path.join(__dirname, '/BackUp/'), path.join(__dirname, '/BackUp/') + BackUpFileName + '-backup.zip', function (err) {
+                                if (err) {
+                                    sendOnTelegramChannel("فراند بکاپ شبانه در تاریخ " + BackUpFileName + " با شکست مواجه شد");
+                                } else {
+                                    fs.unlink(path.join(__dirname, '/BackUp/') + BackUpFileName + '-logs.zip', (err) => {
+                                        fs.unlink(path.join(__dirname, '/BackUp/') + BackUpFileName + '-images.zip', (err) => {
+                                            fs.truncate(path.join(__dirname, '/Log/access.log'), 0, function () {
+
+                                                var access_token = "yn0joM0ZKHAAAAAAAAAAFHbGWHz2REkiknt2_lqjHq5qQt78uj-SqryQYaEfvp2v";
+                                                var filename =  BackUpFileName + '-images.zip';
+                                                var content = fs.readFileSync(path.join(__dirname, '/BackUp/') + BackUpFileName + '-backup.zip');
+                                                let optionss = {
+                                                    method: "POST",
+                                                    url: 'https://content.dropboxapi.com/2/files/upload',
+                                                    headers: {
+                                                        "Content-Type": "application/octet-stream",
+                                                        "Authorization": "Bearer " + access_token,
+                                                        "Dropbox-API-Arg": "{\"path\": \"/backUps/" + BackUpFileName + '-backup.zip' + "\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false}",
+                                                    },
+                                                    body: content
+                                                };
+
+                                                request(optionss, function (err, res, body) {
+                                                    fs.unlink(path.join(__dirname, '/BackUp/') + BackUpFileName + '-backup.zip',(err)=>{});
+                                                        if (err){
+                                                        sendOnTelegramChannel("فراند بکاپ شبانه در تاریخ " + BackUpFileName + " با شکست مواجه شد");
+                                                    } else {
+                                                        sendOnTelegramChannel("فراند بکاپ شبانه در تاریخ " + BackUpFileName + " با موفقیت انجام شد");
+
+                                                    }
+                                                });
+                                            })
+                                        });
+                                    });
+
+                                }
+                            });
+
+                        }
+                    });
+
+                }
+            });
+        } catch (e) {
+            console.log(e)
+        }
+
+
+    });
+
+    cron.schedule('30 * * * *', () => {
+        String.prototype.toHHMMSS = function () {
+            var sec_num = parseInt(this, 10); // don't forget the second param
+            var hours = Math.floor(sec_num / 3600);
+            var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+            var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+            var time = hours + ':' + minutes + ':' + seconds;
+            return time;
+        };
+        var time = process.uptime();
+        var uptime = (time + "").toHHMMSS();
+        var text =
+            "  مدت زمان عمر سرور:" + uptime + "\r\n" +
+            "  تعداد هسته های پردازنده:" + os.cpus().length + "\r\n" +
+            " مموری سیستم عامل:" + os.totalmem() + "\r\n" +
+            " مموری آزاد سیستم:" + os.freemem() + "\r\n";
+        sendOnTelegramChannel(text);
+
+    });
+
 
     sequelize.authenticate()
         .then(() => {
@@ -48,60 +144,37 @@ if (cluster.isMaster) {
                     });
             }
             cluster.on('exit', function (worker, code, signal) {
+
                 console.log(colors.bg.Black, colors.fg.White, 'Worker %d died', worker.id, colors.fg.White);
                 cluster.fork();
             });
-            /*cron.schedule("59 23 * * *", function() {
-                try {
-                    for (var id in cluster.workers) {
-                        cluster.workers[id].kill();
-                    }
 
-                    var BackUpFileName = new Date();
 
-                    zipFolder(path.join(__dirname, '/uploads/'), path.join(__dirname, '/BackUp/')+BackUpFileName+'.zip', function(err) {
-                        if(err) {
-                            console.log('oh no!', err);
-                        } else {
-                            console.log("hi")
+            /* cron.schedule("30 9 * * *", function () {
 
-                        }
+                 setTimeout(function () {
+                    orderProduct.findAll({DeleteStatus:false , SellerOperatorStatus:null}).then(async OP=>{
+                        await asyncForEach(OP,async item =>{
+                            var thisYear =  new Date().getFullYear();
+                            var itemDate =  new Date(item.OrderDateTime);
+                        })
+
                     });
-                }catch (e) {
 
-                }
-
+                 }, TimeCounterForOperatorAnswering);
 
 
-            });*/
+             })
 
-           /* cron.schedule("30 9 * * *", function () {
-
-                setTimeout(function () {
-                   orderProduct.findAll({DeleteStatus:false , SellerOperatorStatus:null}).then(async OP=>{
-                       await asyncForEach(OP,async item =>{
-                           var thisYear =  new Date().getFullYear();
-                           var itemDate =  new Date(item.OrderDateTime);
-                       })
-
-                   });
-
-                }, TimeCounterForOperatorAnswering);
-
-
-            })
-
-        })
-        .catch(err => {
-            console.error(colors.bg.Black, colors.fg.Red, 'Unable to connect to the database:', colors.Reset);
-            process.exit()
-        });*/
+         })
+         .catch(err => {
+             console.error(colors.bg.Black, colors.fg.Red, 'Unable to connect to the database:', colors.Reset);
+             process.exit()
+         });*/
 
 
 
-
-
-});
+        });
 
 }
 
@@ -600,7 +673,7 @@ else if (cluster.isWorker) {
         app.use(BaseUrl + '/seller', require('./src/Controller/SellerController'));
         app.use(BaseUrl + '/transportationManager', require('./src/Controller/TransportationManagerController'));
         app.use(BaseUrl + '/transportation', require('./src/Controller/transportationController'));
-        // app.use( BaseUrl + '/warehouse',require('./src/Controller/WareHouseController') );
+        //app.use( BaseUrl + '/warehouse',require('./src/Controller/WareHouseController') );
         app.use(BaseUrl + '/productManager', require('./src/Controller/ProductManagerController'));
 
 

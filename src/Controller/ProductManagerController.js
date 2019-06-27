@@ -1,12 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {Seller, transportation,PriceAndSupply, orderProduct} = require('../../sequelize');
-const {upload, JWT_SECRET, colors} = require('../Util/configuration');
-const {checkToken, isThisArrayEmpty, FilteringRequest} = require("../Util/Filter");
+const {PriceAndSupply} = require('../../sequelize');
+const { FilteringRequest} = require("../Util/Filter");
 /*********************************************/
-var jwt = require('jwt-simple');
 
 router.post('/accept', (req, res) => {
 

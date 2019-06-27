@@ -1,12 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
 const {TimeCounterForOperatorAnswering ,AlramMessages,TimeRemainingForOperatorAlert  } = require('../Util/configuration');
-const {base64_encode,FilteringRequest,SendAlarm,sendSMS, filterRequest, isThisArrayEmpty, checkToken} = require('../Util/Filter');
-
-const {sellerPhoneNumber, orderNazarSanji,sellerOperator, support,PriceAndSupply, chat, orderProduct, Seller, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
-const Op = sequelize.Op;
+const {FilteringRequest,SendAlarm} = require('../Util/Filter');
+const {sellerOperator,PriceAndSupply, orderProduct, products, sequelize, Order, addresses} = require('../../sequelize');
 const asyncForEach = require('async-await-foreach');
 
 

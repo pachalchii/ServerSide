@@ -1,12 +1,10 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 var router = express.Router();
 /*********************************************/
-const {upload, colors, TimeToDoingPayment} = require('../Util/configuration');
-const {filterRequest, isThisArrayEmpty, FilteringRequest, checkToken} = require('../Util/Filter');
+const { TimeToDoingPayment} = require('../Util/configuration');
+const {FilteringRequest} = require('../Util/Filter');
 const asyncForEach = require('async-await-foreach');
-const {chat, support, orderProduct, Seller, orderPardakht, PriceAndSupply, SellerProductsInServiceCitie, products, sequelize, takhfifProduct, sellerProducts, Order, cities, addresses, customer} = require('../../sequelize');
-const Op = sequelize.Op;
+const { orderProduct, orderPardakht, PriceAndSupply, SellerProductsInServiceCitie, sequelize,Order} = require('../../sequelize');
 
 
 router.get('/product', (req, res) => {
@@ -292,7 +290,7 @@ router.put('/Order', (req, res) => {
                         await orderProduct.findAll({where: {OrderID: data.ID}}).then(async orderProducts => {
                             var status = true;
                             await asyncForEach(orderProducts, async item => {
-                                if (item.SellerOperatorFinalStatus == null) {
+                                if (item.SellerOperatorStatus == null) {
                                     status = false;
                                 }
                             }).then(() => {
