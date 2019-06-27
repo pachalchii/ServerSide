@@ -61,6 +61,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        MaxToSell: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
 		DiscountFor500TO1000: {
 			type: DataTypes.INTEGER,
 			allowNull: true

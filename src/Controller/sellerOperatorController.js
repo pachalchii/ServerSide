@@ -98,12 +98,34 @@ router.put('/ProductInfo', (req, res) => {
                         DiscountFor500TO1000: req.body.DiscountFor500TO1000 || data.DiscountFor500TO1000,
                         DiscountFor1000TOUpper: req.body.DiscountFor1000TOUpper || data.DiscountFor1000TOUpper,
                         MinToSell: req.body.MinToSell || data.MinToSell,
-                        UnitOfProduct: req.body.UnitOfProduct || data.UnitOfProduct,
+                         MaxToSell: req.body.MaxToSell || data.MaxToSell,
+                         UnitOfProduct: req.body.UnitOfProduct || data.UnitOfProduct,
                         ShowStatus: req.body.ShowStatus || data.ShowStatus
                     }
                 ).then(() => {
                     return res.json();
                 });
+                return res.json();
+            }
+
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({"code": 500});
+    }
+
+});
+
+router.put('/OrderProductInfo', (req, res) => {
+
+    try {
+
+        FilteringRequest(req, res, (err, data) => {
+
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
                 return res.json();
             }
 

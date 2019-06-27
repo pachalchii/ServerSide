@@ -16,6 +16,14 @@ module.exports = function(sequelize, DataTypes) {
 				key: 'ID'
 			}
 		},
+        ProvidedSupply:{
+            type: DataTypes.INTEGER,
+            allowNull: true
+		},
+		TransportationFare:{
+            type: DataTypes.INTEGER,
+            allowNull: true
+		},
 		ForwardingDatetime: {
 			type: DataTypes.STRING,
 			allowNull: true

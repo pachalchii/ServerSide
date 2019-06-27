@@ -1,5 +1,5 @@
 var cluster = require('cluster');
-const {colors, ServerPort, SocketServerPort, DataBaseStatus, TimeCounterForOperatorAnswering, DevelopMode} = require('./src/Util/configuration');
+const {colors, ServerPort, SocketServerPort, DataBaseStatus, DevelopMode} = require('./src/Util/configuration');
 const {sequelize, ChatOnOrderProduct, transportation, TransportationManager, SellerProductionManager, customer, Seller, orderProduct, sellerOperator} = require('./sequelize');
 const {fillDataBase, sendOnTelegramChannel} = require('./src/Util/Filter');
 const cron = require("node-cron");
@@ -402,7 +402,6 @@ else if (cluster.isWorker) {
                                                                     OperatorImage: operator.Image || null
 
                                                                 };
-                                                                console.log("hi")
                                                                 await newChats.push(newItem);
                                                             }
                                                         );

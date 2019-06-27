@@ -146,6 +146,9 @@ const statusCodes = {
     },
     728: {
         message: "پسورد قدیم و جدید یکسان نمیباشد"
+    },
+    729: {
+        message: "شما فقط در ساعات خاصی قادر به قیمت گذاری منجمد وارداتی هستید"
     }
 
 
@@ -202,6 +205,12 @@ const TimeLimit = {
     finish: 22
 };
 
+const MonjamedVaredatiTimeLimit = [
+    11,
+    13,
+    15
+    ];
+
 const ServerPort = 2323;
 
 const SocketServerPort = 8080;
@@ -231,6 +240,7 @@ module.exports = {
     DataBaseStatus,
     AlramMessages,
     ImageLimitSize,
+    MonjamedVaredatiTimeLimit,
     colors,
     TokenExpiredTimeLimit,
     JWT_SECRET,

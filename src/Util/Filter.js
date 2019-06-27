@@ -1,5 +1,5 @@
 const {cities, application, sellerType, Sequelize, AlarmsOnSellerProducts, TransportationManager, orderPardakht, SellerProductsInServiceCitie, orderProduct, sequelize, PriceAndSupply, sellerProducts, customer, Order, addresses, Seller, ProductCategories, sellerPhoneNumber, SellerProductionManager, sellerOperator, sellerWareHouse, transportation, products, unit, car} = require('../../sequelize');
-const {colors, PHONENUMBER_REGEX, TimeLimit, ImageLimitSize, AlramMessages, ValidImageFormat, UplodDirs, TokenExpiredTimeLimit, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
+const {colors, PHONENUMBER_REGEX, TimeLimit,MonjamedVaredatiTimeLimit, ImageLimitSize, AlramMessages, ValidImageFormat, UplodDirs, TokenExpiredTimeLimit, PASSWORD_REGEX, USERNAME_REGEX, JWT_SECRET} = require('./configuration');
 const jwt = require('jwt-simple');
 const path = require('path');
 const fs = require("fs");
@@ -1608,6 +1608,7 @@ function FilteringRequest(req, res, callback) {
                                                             if (req.body.Description == null ||
                                                                 req.body.SupplyOfProduct == null ||
                                                                 req.body.MinToSell == null ||
+                                                                req.body.MaxToSell == null ||
                                                                 req.body.UnitOfProduct == null ||
                                                                 req.body.ProductID == null ||
                                                                 req.body.UnitID == null
@@ -1624,6 +1625,7 @@ function FilteringRequest(req, res, callback) {
                                                                                 Description: req.body.Description,
                                                                                 Image: Image,
                                                                                 MinToSell: req.body.MinToSell,
+                                                                                MaxToSell:req.body.MaxToSell,
                                                                                 SupplyOfProduct: req.body.SupplyOfProduct,
                                                                                 UnitOfProduct: req.body.UnitOfProduct,
                                                                                 ProductID: req.body.ProductID,
@@ -2403,7 +2405,7 @@ function FilteringRequest(req, res, callback) {
                                         asyncForEach(CustomProducts, async (item) => {
                                             if (ForigenStatus && status) {
                                                 if (item.SellerProductID == null || item.ForwardingDatetime == null ||
-                                                    item.CustomerAddressID == null || item.Supply == null ||
+                                                    item.CustomerAddressID == null || item.Supply == null || item.TurnOfForwarding == null||
                                                     item.UnitIDOfSupply == null) {
                                                     status = false;
                                                     callback({HttpCode: 400, response: {"code": 703}});
@@ -2462,10 +2464,10 @@ function FilteringRequest(req, res, callback) {
                                                                                     await SellerProductsInServiceCitie.findAll({where: {SellerProductID: item.SellerProductID}}).then(
                                                                                         async SellerProductsInServiceCitie => {
                                                                                             await addresses.findOne({where: {ID: item.CustomerAddressID}}).then(async Address => {
-                                                                                                var AdreessStatus = false;
+                                                                                                var AdreessStatus = true;
                                                                                                await asyncForEach(SellerProductsInServiceCitie, async item => {
                                                                                                     if (Address.CityID === item.CityID) {
-                                                                                                        AdreessStatus = true;
+                                                                                                        AdreessStatus = false;
                                                                                                     }
                                                                                                 }).then(() => {
                                                                                                     if (!AdreessStatus) {
@@ -2483,94 +2485,210 @@ function FilteringRequest(req, res, callback) {
                                                                                         }
                                                                                     );
                                                                                     await sellerProducts.findOne({where: {ID: item.SellerProductID}}).then(async sellerProduct => {
-                                                                                        if (sellerProduct.MinToSell <= item.Supply) {
-                                                                                            await sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID}}).then(async operators => {
-                                                                                                function randomIntInc(low, high) {
-                                                                                                    return Math.floor(Math.random() * (high - low + 1) + low)
-                                                                                                }
-
-                                                                                                var operator = randomIntInc(0, operators.length - 1);
-
-                                                                                                await products.findOne({where: {ID: sellerProduct.ProductID}}).then(async product => {
-                                                                                                    if (product.Type) {
-                                                                                                        if (sellerProduct.ShowStatus) {
-                                                                                                            var FinalDiscount = 0;
-                                                                                                            if (item.Supply < 200) {
-                                                                                                                FinalDiscount = sellerProduct.DiscountFor0TO200
-                                                                                                            }
-                                                                                                            else if (item.Supply < 500 && item.Supply > 200) {
-                                                                                                                FinalDiscount = sellerProduct.DiscountFor200TO500
-                                                                                                            }
-                                                                                                            else if (item.Supply < 1000 && item.Supply > 500) {
-                                                                                                                FinalDiscount = sellerProduct.DiscountFor500TO1000
-                                                                                                            }
-                                                                                                            else if (item.Supply > 1000) {
-                                                                                                                FinalDiscount = sellerProduct.DiscountFor1000TOUpper
-                                                                                                            }
-                                                                                                            await PriceAndSupply.findOne({
-                                                                                                                where: {
-                                                                                                                    DateTime: new Date().toISOString().slice(0, 10).toString(),
-                                                                                                                    SellerProductID: item.SellerProductID
-                                                                                                                }
-                                                                                                            }).then(async PriceAndSupply => {
-                                                                                                                totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
-                                                                                                               await TotalOrderProducts.push({
-                                                                                                                    OrderID: savedOrder.ID,
-                                                                                                                    SellerOperatorID: operators[operator].ID,
-                                                                                                                    ForwardingDatetime: item.ForwardingDatetime,
-                                                                                                                    CustomerAddressID: item.CustomerAddressID,
-                                                                                                                    ProductID: item.SellerProductID,
-                                                                                                                    UnitIDOfSupply: item.UnitIDOfSupply,
-                                                                                                                    Supply: item.Supply,
-                                                                                                                    Seen: false,
-                                                                                                                    CustomerStatus: true,
-                                                                                                                    DeleteStatus: false,
-                                                                                                                    SumTotal: item.Supply * PriceAndSupply.Price,
-                                                                                                                    FinalDiscount: FinalDiscount
-                                                                                                                });
-                                                                                                            });
-
-
-                                                                                                        } else {
-                                                                                                            TotalStatus = false;
-                                                                                                            console.log("hi2")
-                                                                                                            callback({
-                                                                                                                HttpCode: 404,
-                                                                                                                response: {"code": 723}
-                                                                                                            });
+                                                                                        if (sellerProduct.MinToSell <= item.Supply <=sellerProduct.MaxToSelll) {
+                                                                                            await sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID , Status : true}}).then(async operators => {
+                                                                                                if (isThisArrayEmpty(operators)){
+                                                                                                    await sellerOperator.findAll().then(async OfflineOperators=>{
+                                                                                                        function randomIntInc(low, high) {
+                                                                                                            return Math.floor(Math.random() * (high - low + 1) + low)
                                                                                                         }
-                                                                                                    }
-                                                                                                    else {
-                                                                                                        if (sellerProduct.ShowStatus) {
-                                                                                                            await PriceAndSupply.findOne({
-                                                                                                                where: {
-                                                                                                                    DateTime: new Date().toISOString().slice(0, 10).toString(),
-                                                                                                                    SellerProductID: item.SellerProductID
-                                                                                                                }
-                                                                                                            }).then(
-                                                                                                               async  PriceAndSupply => {
-                                                                                                                    if (PriceAndSupply != null) {
+                                                                                                        var operator = randomIntInc(0, OfflineOperators.length - 1);
+                                                                                                        await products.findOne({where: {ID: sellerProduct.ProductID}}).then(async product => {
+                                                                                                            if (product.Type) {
+                                                                                                                if (sellerProduct.ShowStatus) {
+                                                                                                                    var FinalDiscount = 0;
+                                                                                                                    if (item.Supply < 200) {
+                                                                                                                        FinalDiscount = sellerProduct.DiscountFor0TO200
+                                                                                                                    }
+                                                                                                                    else if (item.Supply < 500 && item.Supply > 200) {
+                                                                                                                        FinalDiscount = sellerProduct.DiscountFor200TO500
+                                                                                                                    }
+                                                                                                                    else if (item.Supply < 1000 && item.Supply > 500) {
+                                                                                                                        FinalDiscount = sellerProduct.DiscountFor500TO1000
+                                                                                                                    }
+                                                                                                                    else if (item.Supply > 1000) {
+                                                                                                                        FinalDiscount = sellerProduct.DiscountFor1000TOUpper
+                                                                                                                    }
+                                                                                                                    await PriceAndSupply.findOne({
+                                                                                                                        where: {
+                                                                                                                            DateTime: new Date().toISOString().slice(0, 10).toString(),
+                                                                                                                            SellerProductID: item.SellerProductID
+                                                                                                                        }
+                                                                                                                    }).then(async PriceAndSupply => {
+                                                                                                                        totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
+                                                                                                                        await TotalOrderProducts.push({
+                                                                                                                            OrderID: savedOrder.ID,
+                                                                                                                            SellerOperatorID: operators[operator].ID,
+                                                                                                                            ForwardingDatetime: item.ForwardingDatetime,
+                                                                                                                            CustomerAddressID: item.CustomerAddressID,
+                                                                                                                            ProductID: item.SellerProductID,
+                                                                                                                            TurnOfForwarding:item.TurnOfForwarding,
+                                                                                                                            UnitIDOfSupply: item.UnitIDOfSupply,
+                                                                                                                            Supply: item.Supply,
+                                                                                                                            Seen: false,
+                                                                                                                            CustomerStatus: true,
+                                                                                                                            DeleteStatus: false,
+                                                                                                                            SumTotal: item.Supply * PriceAndSupply.Price,
+                                                                                                                            FinalDiscount: FinalDiscount
+                                                                                                                        });
+                                                                                                                    });
 
-                                                                                                                        if (parseInt(item.Supply) > parseInt(PriceAndSupply.PrimitiveSupply)) {
-                                                                                                                            TotalStatus = false;
-                                                                                                                            console.log("hi3")
-                                                                                                                            callback({
-                                                                                                                                HttpCode: 404,
-                                                                                                                                response: {"code": 723}
-                                                                                                                            });
-                                                                                                                        } else {
-                                                                                                                          await  sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID}}).then(async operators => {
-                                                                                                                                function randomIntInc(low, high) {
-                                                                                                                                    return Math.floor(Math.random() * (high - low + 1) + low)
+
+                                                                                                                } else {
+                                                                                                                    TotalStatus = false;
+                                                                                                                    console.log("hi2")
+                                                                                                                    callback({
+                                                                                                                        HttpCode: 404,
+                                                                                                                        response: {"code": 723}
+                                                                                                                    });
+                                                                                                                }
+                                                                                                            }
+                                                                                                            else {
+                                                                                                                if (sellerProduct.ShowStatus) {
+                                                                                                                    await PriceAndSupply.findOne({
+                                                                                                                        where: {
+                                                                                                                            DateTime: new Date().toISOString().slice(0, 10).toString(),
+                                                                                                                            SellerProductID: item.SellerProductID
+                                                                                                                        }
+                                                                                                                    }).then(
+                                                                                                                        async  PriceAndSupply => {
+                                                                                                                            if (PriceAndSupply != null) {
+
+                                                                                                                                if (parseInt(item.Supply) > parseInt(PriceAndSupply.PrimitiveSupply)) {
+                                                                                                                                    TotalStatus = false;
+                                                                                                                                    console.log("hi3")
+                                                                                                                                    callback({
+                                                                                                                                        HttpCode: 404,
+                                                                                                                                        response: {"code": 723}
+                                                                                                                                    });
+                                                                                                                                } else {
+
+                                                                                                                                    totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
+                                                                                                                                    await  TotalOrderProducts.push({
+                                                                                                                                        OrderID: savedOrder.ID,
+                                                                                                                                        ForwardingDatetime: item.ForwardingDatetime,
+                                                                                                                                        CustomerAddressID: item.CustomerAddressID,
+                                                                                                                                        UnitIDOfSupply: item.UnitIDOfSupply,
+                                                                                                                                        TurnOfForwarding:item.TurnOfForwarding,
+                                                                                                                                        SellerOperatorID: operators[operator].ID,
+                                                                                                                                        Seen: false,
+                                                                                                                                        CustomerStatus: true,
+                                                                                                                                        DeleteStatus: false,
+                                                                                                                                        ProductID: item.SellerProductID,
+                                                                                                                                        Supply: item.Supply,
+                                                                                                                                        SumTotal: item.Supply * PriceAndSupply.Price
+                                                                                                                                    });
+
+
+
                                                                                                                                 }
 
-                                                                                                                                var operator = randomIntInc(0, operators.length - 1);
+                                                                                                                            } else {
+                                                                                                                                TotalStatus = false;
+                                                                                                                                console.log("hi4")
+                                                                                                                                callback({
+                                                                                                                                    HttpCode: 404,
+                                                                                                                                    response: {"code": 723}
+                                                                                                                                });
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    );
+                                                                                                                } else {
+
+                                                                                                                    TotalStatus = false;
+                                                                                                                    console.log("hi5");
+                                                                                                                    callback({
+                                                                                                                        HttpCode: 404,
+                                                                                                                        response: {"code": 723}
+                                                                                                                    });
+                                                                                                                }
+
+                                                                                                            }
+                                                                                                        })
+                                                                                                    });
+                                                                                                }else {
+                                                                                                    function randomIntInc(low, high) {
+                                                                                                        return Math.floor(Math.random() * (high - low + 1) + low)
+                                                                                                    }
+                                                                                                    var operator = randomIntInc(0, operators.length - 1);
+
+                                                                                                    await products.findOne({where: {ID: sellerProduct.ProductID}}).then(async product => {
+                                                                                                        if (product.Type) {
+                                                                                                            if (sellerProduct.ShowStatus) {
+                                                                                                                var FinalDiscount = 0;
+                                                                                                                if (item.Supply < 200) {
+                                                                                                                    FinalDiscount = sellerProduct.DiscountFor0TO200
+                                                                                                                }
+                                                                                                                else if (item.Supply < 500 && item.Supply > 200) {
+                                                                                                                    FinalDiscount = sellerProduct.DiscountFor200TO500
+                                                                                                                }
+                                                                                                                else if (item.Supply < 1000 && item.Supply > 500) {
+                                                                                                                    FinalDiscount = sellerProduct.DiscountFor500TO1000
+                                                                                                                }
+                                                                                                                else if (item.Supply > 1000) {
+                                                                                                                    FinalDiscount = sellerProduct.DiscountFor1000TOUpper
+                                                                                                                }
+                                                                                                                await PriceAndSupply.findOne({
+                                                                                                                    where: {
+                                                                                                                        DateTime: new Date().toISOString().slice(0, 10).toString(),
+                                                                                                                        SellerProductID: item.SellerProductID
+                                                                                                                    }
+                                                                                                                }).then(async PriceAndSupply => {
+                                                                                                                    totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
+                                                                                                                    await TotalOrderProducts.push({
+                                                                                                                        OrderID: savedOrder.ID,
+                                                                                                                        SellerOperatorID: operators[operator].ID,
+                                                                                                                        ForwardingDatetime: item.ForwardingDatetime,
+                                                                                                                        CustomerAddressID: item.CustomerAddressID,
+                                                                                                                        ProductID: item.SellerProductID,
+                                                                                                                        TurnOfForwarding:item.TurnOfForwarding,
+                                                                                                                        UnitIDOfSupply: item.UnitIDOfSupply,
+                                                                                                                        Supply: item.Supply,
+                                                                                                                        Seen: false,
+                                                                                                                        CustomerStatus: true,
+                                                                                                                        DeleteStatus: false,
+                                                                                                                        SumTotal: item.Supply * PriceAndSupply.Price,
+                                                                                                                        FinalDiscount: FinalDiscount
+                                                                                                                    });
+                                                                                                                });
+
+
+                                                                                                            } else {
+                                                                                                                TotalStatus = false;
+                                                                                                                console.log("hi2")
+                                                                                                                callback({
+                                                                                                                    HttpCode: 404,
+                                                                                                                    response: {"code": 723}
+                                                                                                                });
+                                                                                                            }
+                                                                                                        }
+                                                                                                        else {
+                                                                                                            if (sellerProduct.ShowStatus) {
+                                                                                                                await PriceAndSupply.findOne({
+                                                                                                                    where: {
+                                                                                                                        DateTime: new Date().toISOString().slice(0, 10).toString(),
+                                                                                                                        SellerProductID: item.SellerProductID
+                                                                                                                    }
+                                                                                                                }).then(
+                                                                                                                    async  PriceAndSupply => {
+                                                                                                                        if (PriceAndSupply != null) {
+
+                                                                                                                            if (parseInt(item.Supply) > parseInt(PriceAndSupply.PrimitiveSupply)) {
+                                                                                                                                TotalStatus = false;
+                                                                                                                                console.log("hi3")
+                                                                                                                                callback({
+                                                                                                                                    HttpCode: 404,
+                                                                                                                                    response: {"code": 723}
+                                                                                                                                });
+                                                                                                                            } else {
+
                                                                                                                                 totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
-                                                                                                                               await  TotalOrderProducts.push({
+                                                                                                                                await  TotalOrderProducts.push({
                                                                                                                                     OrderID: savedOrder.ID,
                                                                                                                                     ForwardingDatetime: item.ForwardingDatetime,
                                                                                                                                     CustomerAddressID: item.CustomerAddressID,
                                                                                                                                     UnitIDOfSupply: item.UnitIDOfSupply,
+                                                                                                                                    TurnOfForwarding:item.TurnOfForwarding,
                                                                                                                                     SellerOperatorID: operators[operator].ID,
                                                                                                                                     Seen: false,
                                                                                                                                     CustomerStatus: true,
@@ -2579,34 +2697,34 @@ function FilteringRequest(req, res, callback) {
                                                                                                                                     Supply: item.Supply,
                                                                                                                                     SumTotal: item.Supply * PriceAndSupply.Price
                                                                                                                                 });
+
+
+
+                                                                                                                            }
+
+                                                                                                                        } else {
+                                                                                                                            TotalStatus = false;
+                                                                                                                            console.log("hi4")
+                                                                                                                            callback({
+                                                                                                                                HttpCode: 404,
+                                                                                                                                response: {"code": 723}
                                                                                                                             });
-
-
                                                                                                                         }
-
-                                                                                                                    } else {
-                                                                                                                        TotalStatus = false;
-                                                                                                                        console.log("hi4")
-                                                                                                                        callback({
-                                                                                                                            HttpCode: 404,
-                                                                                                                            response: {"code": 723}
-                                                                                                                        });
                                                                                                                     }
-                                                                                                                }
-                                                                                                            );
-                                                                                                        } else {
+                                                                                                                );
+                                                                                                            } else {
 
-                                                                                                            TotalStatus = false;
-                                                                                                            console.log("hi5");
-                                                                                                            callback({
-                                                                                                                HttpCode: 404,
-                                                                                                                response: {"code": 723}
-                                                                                                            });
+                                                                                                                TotalStatus = false;
+                                                                                                                console.log("hi5");
+                                                                                                                callback({
+                                                                                                                    HttpCode: 404,
+                                                                                                                    response: {"code": 723}
+                                                                                                                });
+                                                                                                            }
+
                                                                                                         }
-
-                                                                                                    }
-                                                                                                })
-
+                                                                                                    })
+                                                                                                }
                                                                                             });
                                                                                         } else {
                                                                                             TotalStatus = false;
@@ -3559,82 +3677,186 @@ function FilteringRequest(req, res, callback) {
                                                             }])
                                                                 .then(status => {
                                                                     if (status) {
-                                                                        PriceAndSupply.findAll({
-                                                                            where: {
-                                                                                SellerProductID: req.body.SellerProductID,
-                                                                                DateTime: new Date().toISOString().slice(0, 10).toString()
-                                                                            }
-                                                                        }).then(PriceAndSupply => {
+                                                                        sellerProducts.findOne({where:{ID:req.body.SellerProductID}}).then(async SP=>{
+                                                                            await products.findOne({where:{ID:SP.ProductID}}).then(async P=>{
+                                                                                if (P.CategoryID === 3){
+                                                                                   await PriceAndSupply.findAll({
+                                                                                        where: {
+                                                                                            SellerProductID: req.body.SellerProductID,
+                                                                                            DateTime: new Date().toISOString().slice(0, 10).toString()
+                                                                                        }
+                                                                                    }).
+                                                                                    then( async PriceAndSupply => {
+                                                                                        
+                                                                                        var statuss =  false;
+                                                                                       var date = new Date();
+                                                                                       var current_hour = date.getHours();
+                                                                                       var current_Minutes = date.getMinutes();
+                                                                                       await asyncForEach(MonjamedVaredatiTimeLimit,async item =>{
+                                                                                            if ( parseInt(current_hour) === item) {
+                                                                                                if (30<parseInt(current_Minutes)<40) {
+                                                                                                    statuss = true ;
+                                                                                                }
+                                                                                            }
+                                                                                        }).then(()=>{
+                                                                                            if (statuss){
+                                                                                                if (!isThisArrayEmpty(PriceAndSupply)) {
 
-                                                                            if (!isThisArrayEmpty(PriceAndSupply)) {
+                                                                                                    sellerProducts.findOne({where: {ID: req.body.SellerProductID}}).then(sellerProducts => {
+                                                                                                        products.findOne({where: {ID: sellerProducts.ProductID}}).then(product => {
+                                                                                                            if (product.Type) {
+                                                                                                                if (
+                                                                                                                    req.body.SellerProductID == null ||
+                                                                                                                    req.body.Price == null ||
+                                                                                                                    req.body.Supply == null
+                                                                                                                ) {
+                                                                                                                    callback({
+                                                                                                                        HttpCode: 400,
+                                                                                                                        response: {"code": 703}
+                                                                                                                    });
+                                                                                                                } else {
+                                                                                                                    callback("", {
+                                                                                                                        whatToDo: "update",
+                                                                                                                        Entity: PriceAndSupply[0],
+                                                                                                                        data: {
+                                                                                                                            SellerProductID: req.body.SellerProductID,
+                                                                                                                            Price: req.body.Price,
+                                                                                                                            AddedSupply: req.body.Supply
+                                                                                                                        }
+                                                                                                                    });
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                callback({
+                                                                                                                    HttpCode: 400,
+                                                                                                                    response: {"code": 722}
+                                                                                                                });
+                                                                                                            }
+                                                                                                        });
+                                                                                                    });
 
-                                                                                sellerProducts.findOne({where: {ID: req.body.SellerProductID}}).then(sellerProducts => {
-                                                                                    products.findOne({where: {ID: sellerProducts.ProductID}}).then(product => {
-                                                                                        if (product.Type) {
+                                                                                                }
+                                                                                                else {
+                                                                                                    if (
+                                                                                                        req.body.SellerProductID == null ||
+                                                                                                        req.body.Price == null ||
+                                                                                                        req.body.Supply == null ||
+                                                                                                        req.body.UnitIDOfSupply == null
+                                                                                                    ) {
+                                                                                                        callback({
+                                                                                                            HttpCode: 400,
+                                                                                                            response: {"code": 703}
+                                                                                                        });
+                                                                                                    } else {
+                                                                                                        CheckForeignKey(res, [{
+                                                                                                            ID: req.body.UnitIDOfSupply,
+                                                                                                            Entity: unit
+                                                                                                        }]).then(status => {
+                                                                                                            if (status) {
+                                                                                                                callback("", {
+                                                                                                                    whatToDo: "create",
+                                                                                                                    data: {
+                                                                                                                        SellerProductID: req.body.SellerProductID,
+                                                                                                                        DateTime: new Date().toISOString().slice(0, 10).toString(),
+                                                                                                                        Price: req.body.Price,
+                                                                                                                        PrimitiveSupply: req.body.Supply,
+                                                                                                                        UnitIDOfSupply: req.body.UnitIDOfSupply
+                                                                                                                    }
+                                                                                                                });
+                                                                                                            }
+                                                                                                        });
+                                                                                                    }
+
+                                                                                                }
+                                                                                            } else {
+                                                                                                callback({
+                                                                                                    HttpCode: 400,
+                                                                                                    response: {"code": 729}
+                                                                                                });
+                                                                                            }
+
+                                                                                       });
+                                                                                    });
+                                                                                }
+                                                                                else {
+                                                                                   await PriceAndSupply.findAll({
+                                                                                        where: {
+                                                                                            SellerProductID: req.body.SellerProductID,
+                                                                                            DateTime: new Date().toISOString().slice(0, 10).toString()
+                                                                                        }
+                                                                                    }).
+                                                                                    then(PriceAndSupply => {
+
+                                                                                        if (!isThisArrayEmpty(PriceAndSupply)) {
+
+                                                                                            sellerProducts.findOne({where: {ID: req.body.SellerProductID}}).then(sellerProducts => {
+                                                                                                products.findOne({where: {ID: sellerProducts.ProductID}}).then(product => {
+                                                                                                    if (product.Type) {
+                                                                                                        if (
+                                                                                                            req.body.SellerProductID == null ||
+                                                                                                            req.body.Price == null ||
+                                                                                                            req.body.Supply == null
+                                                                                                        ) {
+                                                                                                            callback({
+                                                                                                                HttpCode: 400,
+                                                                                                                response: {"code": 703}
+                                                                                                            });
+                                                                                                        } else {
+                                                                                                            callback("", {
+                                                                                                                whatToDo: "update",
+                                                                                                                Entity: PriceAndSupply[0],
+                                                                                                                data: {
+                                                                                                                    SellerProductID: req.body.SellerProductID,
+                                                                                                                    Price: req.body.Price,
+                                                                                                                    AddedSupply: req.body.Supply
+                                                                                                                }
+                                                                                                            });
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        callback({
+                                                                                                            HttpCode: 400,
+                                                                                                            response: {"code": 722}
+                                                                                                        });
+                                                                                                    }
+                                                                                                });
+                                                                                            });
+
+                                                                                        }
+                                                                                        else {
                                                                                             if (
                                                                                                 req.body.SellerProductID == null ||
                                                                                                 req.body.Price == null ||
-                                                                                                req.body.Supply == null
+                                                                                                req.body.Supply == null ||
+                                                                                                req.body.UnitIDOfSupply == null
                                                                                             ) {
                                                                                                 callback({
                                                                                                     HttpCode: 400,
                                                                                                     response: {"code": 703}
                                                                                                 });
                                                                                             } else {
-                                                                                                callback("", {
-                                                                                                    whatToDo: "update",
-                                                                                                    Entity: PriceAndSupply[0],
-                                                                                                    data: {
-                                                                                                        SellerProductID: req.body.SellerProductID,
-                                                                                                        Price: req.body.Price,
-                                                                                                        AddedSupply: req.body.Supply
+                                                                                                CheckForeignKey(res, [{
+                                                                                                    ID: req.body.UnitIDOfSupply,
+                                                                                                    Entity: unit
+                                                                                                }]).then(status => {
+                                                                                                    if (status) {
+                                                                                                        callback("", {
+                                                                                                            whatToDo: "create",
+                                                                                                            data: {
+                                                                                                                SellerProductID: req.body.SellerProductID,
+                                                                                                                DateTime: new Date().toISOString().slice(0, 10).toString(),
+                                                                                                                Price: req.body.Price,
+                                                                                                                PrimitiveSupply: req.body.Supply,
+                                                                                                                UnitIDOfSupply: req.body.UnitIDOfSupply
+                                                                                                            }
+                                                                                                        });
                                                                                                     }
                                                                                                 });
                                                                                             }
-                                                                                        } else {
-                                                                                            callback({
-                                                                                                HttpCode: 400,
-                                                                                                response: {"code": 722}
-                                                                                            });
-                                                                                        }
-                                                                                    });
-                                                                                });
 
-                                                                            }
-                                                                            else {
-                                                                                if (
-                                                                                    req.body.SellerProductID == null ||
-                                                                                    req.body.Price == null ||
-                                                                                    req.body.Supply == null ||
-                                                                                    req.body.UnitIDOfSupply == null
-                                                                                ) {
-                                                                                    callback({
-                                                                                        HttpCode: 400,
-                                                                                        response: {"code": 703}
-                                                                                    });
-                                                                                } else {
-                                                                                    CheckForeignKey(res, [{
-                                                                                        ID: req.body.UnitIDOfSupply,
-                                                                                        Entity: unit
-                                                                                    }]).then(status => {
-                                                                                        if (status) {
-                                                                                            callback("", {
-                                                                                                whatToDo: "create",
-                                                                                                data: {
-                                                                                                    SellerProductID: req.body.SellerProductID,
-                                                                                                    DateTime: new Date().toISOString().slice(0, 10).toString(),
-                                                                                                    Price: req.body.Price,
-                                                                                                    PrimitiveSupply: req.body.Supply,
-                                                                                                    UnitIDOfSupply: req.body.UnitIDOfSupply
-                                                                                                }
-                                                                                            });
                                                                                         }
                                                                                     });
                                                                                 }
-
-                                                                            }
+                                                                            });
                                                                         });
-
                                                                     }
                                                                 });
 
@@ -3807,7 +4029,6 @@ function FilteringRequest(req, res, callback) {
                                                     callback(newErr);
                                                 }
                                                 else {
-                                                    console.log(newData.ID)
                                                     orderProduct.findAll({
                                                         where: {
                                                             SellerOperatorID: newData.ID,
@@ -4222,6 +4443,52 @@ function FilteringRequest(req, res, callback) {
                             });
 
                             break;
+                        case "OrderProductInfo":
+                            checkToken(req, res, (err, data) => {
+                                if (err) {
+                                    callback(err);
+                                }
+                                else {
+                                    checkUser(data, sellerOperator, (newErr, newData) => {
+                                        if (newErr) {
+                                            callback(newErr);
+                                        }
+                                        else {
+
+
+                                            if (req.body.OrderProductID == null || req.body.ProvidedSupply == null || req.body.TransportationFare == null ) {
+                                                callback({HttpCode: 404, response: {"code": 703}});
+                                            } else {
+
+                                                orderProduct.findOne({where:{ID:req.body.OrderProductID}}).then(orderP=>{
+                                                    if (orderP != null){
+                                                        var TransportationFare = null | req.body.TransportationFare;
+                                                        var ProvidedSupply = req.body.ProvidedSupply;
+                                                        var FinalDiscount = orderP.FinalDiscount | req.body.FinalDiscount;
+                                                        var TurnOfForwarding = orderP.TurnOfForwarding | req.body.TurnOfForwarding;
+                                                        orderP.update({
+                                                            TransportationFare: TransportationFare,
+                                                            ProvidedSupply:ProvidedSupply,
+                                                            FinalDiscount:FinalDiscount,
+                                                            TurnOfForwarding:TurnOfForwarding
+                                                        }).then(()=>{callback("","");});
+                                                    } else {
+                                                        callback({HttpCode: 404, response: {"code": 710}});
+
+                                                    }
+
+                                                });
+
+
+                                            }
+
+
+                                        }
+
+                                    });
+                                }
+                            });
+                            break
 
                     }
 
@@ -4709,16 +4976,13 @@ function SendAlarm(Entity, Message) {
 
 module.exports = {
 
-    checkLimitTime,
     sendSMS,
     SendAlarm,
-    sendNotification,
     FilteringRequest,
     sendOnTelegramChannel,
     checkToken,
     checkUser,
     fillDataBase,
-    addRoleInfoCheck,
     base64_encode,
     isThisArrayEmpty,
 
