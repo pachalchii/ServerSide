@@ -149,6 +149,9 @@ const statusCodes = {
     },
     729: {
         message: "شما فقط در ساعات خاصی قادر به قیمت گذاری منجمد وارداتی هستید"
+    },
+    730: {
+        message: "مقدار پرداخت انلاین در منجمد وارداتی نمیتواند بیشتر از ۸۰٪ مقدار کل باشد"
     }
 
 
@@ -170,6 +173,7 @@ function AlramMessages(event,Variables) {
 
 const UplodDirs = {
     "seller": "./../../uploads/seller/",
+    "slider": "./../../uploads/sliders/",
     "customer": "./../../uploads/customer/",
     "products": "./../../uploads/products/",
     "wareHouse": "./../../uploads/wareHouse/",

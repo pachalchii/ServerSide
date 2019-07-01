@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 /*********************************************/
-const {Seller, cities,application, sellerType,PriceAndSupply,SellerProductsInServiceCitie, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');
+const {Seller, cities,application,sellerPhoneNumber, sellerType,PriceAndSupply,SellerProductsInServiceCitie, ProductCategories, products, sellerProducts, unit, car} = require('../../sequelize');
 const {statusCodes} = require('../Util/configuration');
 const {base64_encode, checkToken, isThisArrayEmpty} = require("../Util/Filter");
 var path = require('path');
@@ -13,6 +13,57 @@ const asyncForEach = require('async-await-foreach');
 router.get('/information/:type', function (req, res) {
     switch (req.params.type) {
 
+        case "sliders":
+            application.findOne({where:{ID:1}}).then(app=>{
+                var base64str1 = "not Found";
+                try {
+                    base64str1 = base64_encode(app.Slider1);
+
+                } catch (e) {
+                    base64str1 = "not Found";
+
+                }
+                var base64str2 = "not Found";
+                try {
+                    base64str2 = base64_encode(app.Slider2);
+
+                } catch (e) {
+                    base64str2 = "not Found";
+
+                }
+                var base64str3 = "not Found";
+                try {
+                    base64str3 = base64_encode(app.Slider3);
+
+                } catch (e) {
+                    base64str3 = "not Found";
+
+                }
+                var base64str4 = "not Found";
+                try {
+                    base64str4 = base64_encode(app.Slider4);
+
+                } catch (e) {
+                    base64str4 = "not Found";
+
+                }
+                var base64str5 = "not Found";
+                try {
+                    base64str5 = base64_encode(app.Slider5);
+
+                } catch (e) {
+                    base64str5 = "not Found";
+
+                }
+                return res.json({
+                    Slider1:base64str1,
+                    Slider2:base64str2,
+                    Slider3:base64str3,
+                    Slider4:base64str4,
+                    Slider5:base64str5
+                });
+            });
+            break;
         case "city":
             cities.findAll().then(cities => {
                 return res.json(cities);
@@ -80,6 +131,7 @@ router.get('/information/:type', function (req, res) {
                                                   UnitOfProduct: item.UnitOfProduct,
                                                   UnitID:item.UnitID,
                                                   MinToSell:item.MinToSell,
+                                                  MaxToSell:item.MaxToSell,
                                                   ShowStatus:item.ShowStatus,
                                                   Description:item.Description,
                                                   DiscountFor0TO200: item.DiscountFor0TO200,
@@ -318,6 +370,96 @@ router.post('/information/applicationLink',(req,res)=>{
 
     }
 });
+
+router.get('/products' , (req,res)=>{
+
+    PriceAndSupply.findAll({where:{DateTime:new Date().toISOString().slice(0, 10).toString()}}).then(async PS=>{
+        let outPut = [];
+        await asyncForEach(PS,async item=>{
+            await sellerProducts.findOne({where:{ID:item.SellerProductID}}).then(async SP=>{
+                await products.findOne({where:{ID:SP.ProductID}}).then(async P=>{
+                    await Seller.findOne({where:{ID:SP.SellerID}}).then(async S=>{
+                        var base64str = "not Found";
+                        try {
+                            base64str = base64_encode(SP.Image);
+
+                        } catch (e) {
+                            base64str = "not Found";
+
+                        }
+                        var base64str1 = "not Found";
+                        try {
+                            base64str1 = base64_encode(S.LogoImage);
+
+                        } catch (e) {
+                            base64str1 = "not Found";
+
+                        }
+                        await outPut.push(
+                            {
+                                sellerProduct :SP,
+                                PriceAndSupply :item,
+                                Product :P,
+                                productImage :base64str,
+                                Seller:{
+                                    image:base64str1,
+                                    name:S.CompanyName
+                                }
+                            }
+                        );
+                    });
+                });
+            })
+        }).then(()=>{
+            return res.json(outPut);
+        });
+
+
+
+
+
+    });
+});
+
+router.get('/sellers' , (req,res)=>{
+
+    Seller.findAll().then(async S=>{
+        let outPut = [];
+        asyncForEach(S,async item =>{
+            await sellerPhoneNumber.findOne({where:{ID:item.PhoneNumberID}}).then(async PN=>{
+                var base64str = "not Found";
+                try {
+                    base64str = base64_encode(item.LogoImage);
+
+                } catch (e) {
+                    base64str = "not Found";
+
+                }
+                await outPut.push(
+                    {
+                        image : base64str,
+                        CompanyName :item.CompanyName,
+                        CompleteAddressDescription :item.CompleteAddressDescription,
+                        GoogleMapAddressLink :item.GoogleMapAddressLink,
+                        OwnerName :item.OwnerName,
+                        OwnerFamilyName :item.OwnerFamilyName,
+                        OwnerPhoneNumber :item.OwnerPhoneNumber,
+                        PartTime2 :item.PartTime2,
+                        CompanyAddressCityID :item.CompanyAddressCityID,
+                        PhoneNumberID : PN
+
+                    }
+                );
+            });
+        }).then(
+            ()=>{
+                return res.json(outPut);
+            }
+        );
+    });
+
+});
+
 
 module.exports = router;
 

@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         WareHouseID: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'SellerWareHouse',
                 key: 'ID'
@@ -24,13 +24,17 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: true
         },
+        TransportationType: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
         FamilyName: {
             type: DataTypes.STRING,
             allowNull: false
         },
         Username: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
 
         AuthCode: {
@@ -39,7 +43,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         Password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Birthdate: {
             type: DataTypes.STRING,
@@ -79,11 +83,11 @@ module.exports = function (sequelize, DataTypes) {
         },
         Color: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         PelakNumber: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         AirConditionar: {
             type: DataTypes.BOOLEAN,

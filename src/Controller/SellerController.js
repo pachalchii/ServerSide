@@ -144,7 +144,7 @@ router.put('/product',(req,res)=>{
                         DiscountFor200TO500: req.body.DiscountFor200TO500 || data.DiscountFor200TO500,
                         DiscountFor500TO1000: req.body.DiscountFor500TO1000 || data.DiscountFor500TO1000,
                         DiscountFor1000TOUpper: req.body.DiscountFor1000TOUpper || data.DiscountFor1000TOUpper,
-                        MinToSell: req.body.MinToSell || data.MinToSell,                        MinToSell: req.body.MinToSell || data.MinToSell,
+                        MinToSell: req.body.MinToSell || data.MinToSell,
                         MaxToSell: req.body.MaxToSell || data.MaxToSell,
                         UnitOfProduct : req.body.UnitOfProduct || data.UnitOfProduct,
                         SupplyOFProduct: req.body.SupplyOFProduct || data.SupplyOFProduct,

@@ -47,7 +47,7 @@ router.put('/Pricing', (req, res) => {
                         break;
                     case "update":
                         return res.json({code: 722});
-                        break
+                        break;
                 }
             }
 
@@ -126,7 +126,18 @@ router.put('/OrderProductInfo', (req, res) => {
             if (err) {
                 return res.status(err.HttpCode).json(err.response);
             } else {
-                return res.json();
+                if (req.body.ProvidedSupply != null){
+                    orderProduct.findOne({where:{ID:req.body.OrderProdutID}}).then(OP=>{
+                        Order.findOne({ID:OP.OrderID}).then(O=>{
+                            O.update({SumTotal:O.SumTotal - OP.sumTotal + req.body.ProvidedSupply}).then(()=>{
+                                OP.update({SumTotal:req.body.ProvidedSupply}).then(()=>{
+                                    return res.json();
+                                });
+                            });
+                        });
+                    });
+                }
+
             }
 
         });
@@ -406,6 +417,59 @@ router.put('/FinalOrder', (req, res) => {
 
 });
 
+router.post('/ScatteredTransportation', (req, res) => {
+    try {
+        FilteringRequest(req, res, (err, data) => {
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json({data});
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
+
+router.post('/ExactSupply', (req, res) => {
+    try {
+        FilteringRequest(req, res, (err, data) => {
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json();
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
+
+router.put('/ScatteredTransportation', (req, res) => {
+    try {
+        FilteringRequest(req, res, (err, data) => {
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json({data});
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+});
 
 module.exports = router;
 
