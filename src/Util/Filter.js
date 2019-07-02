@@ -10,9 +10,7 @@ const Op = Sequelize.Op;
 
 
 function base64_encode(file) {
-    // read binary data
     var bitmap = fs.readFileSync(file);
-    // convert binary data to base64 encoded string
     return Buffer.from(bitmap).toString('base64');
 }
 
@@ -2422,6 +2420,7 @@ function FilteringRequest(req, res, callback) {
                                     if (isThisArrayEmpty(req.body.products)) {
                                         callback({HttpCode: 400, response: {"code": 703}});
                                     } else {
+                                        global.SameOperator = [] ;
 
                                         var CustomProducts = req.body.products;
                                         var status = true;
@@ -2497,10 +2496,9 @@ function FilteringRequest(req, res, callback) {
                                                                                                 }).then(() => {
                                                                                                     if (!AdreessStatus) {
                                                                                                         TotalStatus = false;
-                                                                                                        console.log("hi1");
                                                                                                         callback({
-                                                                                                            HttpCode: 404,
-                                                                                                            response: {"code": 723}
+                                                                                                            HttpCode: 400,
+                                                                                                            response: {"code": 731}
                                                                                                         });
                                                                                                     }
                                                                                                 });
@@ -2512,13 +2510,17 @@ function FilteringRequest(req, res, callback) {
                                                                                     await sellerProducts.findOne({where: {ID: item.SellerProductID}}).then(async sellerProduct => {
                                                                                         if ((parseInt(sellerProduct.MinToSell )<= item.Supply)  && (item.Supply<= parseInt(sellerProduct.MaxToSell))) {
                                                                                             await sellerOperator.findAll({where: {SellerID: sellerProduct.SellerID , Status : true}}).then(async operators => {
+
                                                                                                 if (isThisArrayEmpty(operators)) {
                                                                                                     await sellerOperator.findAll({where:{SellerID: sellerProduct.SellerID }}).then(async OfflineOperators=>{
                                                                                                         function randomIntInc(low, high) {
                                                                                                             return Math.floor(Math.random() * (high - low + 1) + low)
                                                                                                         }
                                                                                                         var counter = randomIntInc(0, OfflineOperators.length - 1);
-                                                                                                        await products.findOne({where: {ID: sellerProduct.ProductID}}).then(async product => {
+                                                                                                        if ( typeof global.SameOperator[sellerProduct.SellerID] === 'undefined'){
+                                                                                                            global.SameOperator[sellerProduct.SellerID] = OfflineOperators[counter];
+                                                                                                        }
+                                                                                                            await products.findOne({where: {ID: sellerProduct.ProductID}}).then(async product => {
                                                                                                             if (product.Type) {
                                                                                                                 if (sellerProduct.ShowStatus) {
                                                                                                                     var FinalDiscount = 0;
@@ -2541,9 +2543,10 @@ function FilteringRequest(req, res, callback) {
                                                                                                                         }
                                                                                                                     }).then(async PriceAndSupply => {
                                                                                                                         totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
+
                                                                                                                         await TotalOrderProducts.push({
                                                                                                                             OrderID: savedOrder.ID,
-                                                                                                                            SellerOperatorID: OfflineOperators[counter].ID,
+                                                                                                                            SellerOperatorID: global.SameOperator[sellerProduct.SellerID].ID,
                                                                                                                             ForwardingDatetime: item.ForwardingDatetime,
                                                                                                                             CustomerAddressID: item.CustomerAddressID,
                                                                                                                             ProductID: item.SellerProductID,
@@ -2561,10 +2564,9 @@ function FilteringRequest(req, res, callback) {
 
                                                                                                                 } else {
                                                                                                                     TotalStatus = false;
-                                                                                                                    console.log("hi2")
                                                                                                                     callback({
-                                                                                                                        HttpCode: 404,
-                                                                                                                        response: {"code": 723}
+                                                                                                                        HttpCode: 400,
+                                                                                                                        response: {"code": 732}
                                                                                                                     });
                                                                                                                 }
                                                                                                             }
@@ -2581,10 +2583,9 @@ function FilteringRequest(req, res, callback) {
 
                                                                                                                                 if (parseInt(item.Supply) > parseInt(PriceAndSupply.PrimitiveSupply)) {
                                                                                                                                     TotalStatus = false;
-                                                                                                                                    console.log("hi3")
                                                                                                                                     callback({
-                                                                                                                                        HttpCode: 404,
-                                                                                                                                        response: {"code": 723}
+                                                                                                                                        HttpCode: 400,
+                                                                                                                                        response: {"code": 733}
                                                                                                                                     });
                                                                                                                                 } else {
 
@@ -2595,7 +2596,7 @@ function FilteringRequest(req, res, callback) {
                                                                                                                                         CustomerAddressID: item.CustomerAddressID,
                                                                                                                                         UnitIDOfSupply: item.UnitIDOfSupply,
                                                                                                                                         TurnOfForwarding:item.TurnOfForwarding,
-                                                                                                                                        SellerOperatorID: OfflineOperators[counter].ID,
+                                                                                                                                        SellerOperatorID: global.SameOperator[sellerProduct.SellerID].ID,
                                                                                                                                         Seen: false,
                                                                                                                                         CustomerStatus: true,
                                                                                                                                         DeleteStatus: false,
@@ -2610,10 +2611,9 @@ function FilteringRequest(req, res, callback) {
 
                                                                                                                             } else {
                                                                                                                                 TotalStatus = false;
-                                                                                                                                console.log("hi4")
                                                                                                                                 callback({
                                                                                                                                     HttpCode: 404,
-                                                                                                                                    response: {"code": 723}
+                                                                                                                                    response: {"code": 734}
                                                                                                                                 });
                                                                                                                             }
                                                                                                                         }
@@ -2621,10 +2621,9 @@ function FilteringRequest(req, res, callback) {
                                                                                                                 } else {
 
                                                                                                                     TotalStatus = false;
-                                                                                                                    console.log("hi5");
                                                                                                                     callback({
-                                                                                                                        HttpCode: 404,
-                                                                                                                        response: {"code": 723}
+                                                                                                                        HttpCode: 400,
+                                                                                                                        response: {"code": 732}
                                                                                                                     });
                                                                                                                 }
 
@@ -2632,11 +2631,16 @@ function FilteringRequest(req, res, callback) {
                                                                                                         })
                                                                                                     });
                                                                                                 }
+
                                                                                                 else {
                                                                                                     function randomIntInc(low, high) {
                                                                                                         return Math.floor(Math.random() * (high - low + 1) + low)
                                                                                                     }
-                                                                                                    var operator = randomIntInc(0, operators.length - 1);await products.findOne({where: {ID: sellerProduct.ProductID}}).then(async product => {
+                                                                                                    var operator = randomIntInc(0, operators.length - 1);
+                                                                                                    if ( typeof global.SameOperator[sellerProduct.SellerID] === 'undefined'){
+                                                                                                        global.SameOperator[sellerProduct.SellerID] = operators[operator];
+                                                                                                    }
+                                                                                                    await products.findOne({where: {ID: sellerProduct.ProductID}}).then(async product => {
                                                                                                         if (product.Type) {
                                                                                                             if (sellerProduct.ShowStatus) {
                                                                                                                 var FinalDiscount = 0;
@@ -2661,7 +2665,7 @@ function FilteringRequest(req, res, callback) {
                                                                                                                     totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
                                                                                                                     await TotalOrderProducts.push({
                                                                                                                         OrderID: savedOrder.ID,
-                                                                                                                        SellerOperatorID: operators[operator].ID,
+                                                                                                                        SellerOperatorID: global.SameOperator[sellerProduct.SellerID].ID,
                                                                                                                         ForwardingDatetime: item.ForwardingDatetime,
                                                                                                                         CustomerAddressID: item.CustomerAddressID,
                                                                                                                         ProductID: item.SellerProductID,
@@ -2679,10 +2683,9 @@ function FilteringRequest(req, res, callback) {
 
                                                                                                             } else {
                                                                                                                 TotalStatus = false;
-                                                                                                                console.log("hi2")
                                                                                                                 callback({
-                                                                                                                    HttpCode: 404,
-                                                                                                                    response: {"code": 723}
+                                                                                                                    HttpCode: 400,
+                                                                                                                    response: {"code": 732}
                                                                                                                 });
                                                                                                             }
                                                                                                         }
@@ -2699,13 +2702,14 @@ function FilteringRequest(req, res, callback) {
 
                                                                                                                             if (parseInt(item.Supply) > parseInt(PriceAndSupply.PrimitiveSupply)) {
                                                                                                                                 TotalStatus = false;
-                                                                                                                                console.log("hi3")
                                                                                                                                 callback({
-                                                                                                                                    HttpCode: 404,
-                                                                                                                                    response: {"code": 723}
+                                                                                                                                    HttpCode: 400,
+                                                                                                                                    response: {"code": 733}
                                                                                                                                 });
                                                                                                                             } else {
-
+                                                                                                                                if ( typeof global.SameOperator[sellerProduct.SellerID] === 'undefined'){
+                                                                                                                                    global.SameOperator[sellerProduct.SellerID] = operators[operator];
+                                                                                                                                }
                                                                                                                                 totalSum = totalSum + (item.Supply * PriceAndSupply.Price);
                                                                                                                                 await  TotalOrderProducts.push({
                                                                                                                                     OrderID: savedOrder.ID,
@@ -2713,7 +2717,7 @@ function FilteringRequest(req, res, callback) {
                                                                                                                                     CustomerAddressID: item.CustomerAddressID,
                                                                                                                                     UnitIDOfSupply: item.UnitIDOfSupply,
                                                                                                                                     TurnOfForwarding:item.TurnOfForwarding,
-                                                                                                                                    SellerOperatorID: operators[operator].ID,
+                                                                                                                                    SellerOperatorID: global.SameOperator[sellerProduct.SellerID].ID,
                                                                                                                                     Seen: false,
                                                                                                                                     CustomerStatus: true,
                                                                                                                                     DeleteStatus: false,
@@ -2728,10 +2732,9 @@ function FilteringRequest(req, res, callback) {
 
                                                                                                                         } else {
                                                                                                                             TotalStatus = false;
-                                                                                                                            console.log("hi4")
                                                                                                                             callback({
-                                                                                                                                HttpCode: 404,
-                                                                                                                                response: {"code": 723}
+                                                                                                                                HttpCode: 400,
+                                                                                                                                response: {"code": 734}
                                                                                                                             });
                                                                                                                         }
                                                                                                                     }
@@ -2739,23 +2742,26 @@ function FilteringRequest(req, res, callback) {
                                                                                                             } else {
 
                                                                                                                 TotalStatus = false;
-                                                                                                                console.log("hi5");
                                                                                                                 callback({
-                                                                                                                    HttpCode: 404,
-                                                                                                                    response: {"code": 723}
+                                                                                                                    HttpCode: 400,
+                                                                                                                    response: {"code": 732}
                                                                                                                 });
                                                                                                             }
 
                                                                                                         }
                                                                                                     })
                                                                                                 }
+
+
+
                                                                                             });
                                                                                         } else {
+
+
                                                                                             TotalStatus = false;
-                                                                                            console.log("hi6")
                                                                                             callback({
                                                                                                 HttpCode: 404,
-                                                                                                response: {"code": 723}
+                                                                                                response: {"code": 735}
                                                                                             });
                                                                                         }
                                                                                     });
@@ -5792,8 +5798,7 @@ function sendSMS(Entity, Message) {
                 receptor: Entity.OwnerPhoneNumber
             },
             function (response, status) {
-                console.log(response);
-                console.log(status);
+
             });
     } else {
         api.Send({
@@ -5803,8 +5808,7 @@ function sendSMS(Entity, Message) {
             },
             function (response, status) {
 
-                console.log(response);
-                console.log(status);
+
 
             });
     }
