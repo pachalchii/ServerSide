@@ -1,13 +1,12 @@
 const express = require('express');
-var router = express.Router();
+let router = express.Router();
 /*********************************************/
 const {TimeCounterForOperatorAnswering ,AlramMessages,TimeRemainingForOperatorAlert  } = require('../Util/configuration');
 const {FilteringRequest,SendAlarm} = require('../Util/Filter');
-const {sellerOperator,PriceAndSupply, orderProduct, products, sequelize, Order, addresses} = require('../../sequelize');
+const {sellerOperator,PriceAndSupply, orderProduct, products, Order, addresses} = require('../../sequelize');
 const asyncForEach = require('async-await-foreach');
 
 
-//new
 
 
 router.post('/order', (req, res) => {
@@ -18,16 +17,18 @@ router.post('/order', (req, res) => {
             if (err){
                 return res.status(err.HttpCode).json(err.response);
             } else {
-                var OrderID = data[0].OrderID;
+                let OrderID = data[0].ID;
 
                 asyncForEach(data[1], async (item)=>{
                     await orderProduct.create(item);
                 }).then(()=>{
 
-                    setTimeout(function(){
 
-                        if (new Date().getHours() < 5 ){
-                            orderProduct.findAll({where:{OrderID:OrderID}}).then(orderProduct=>{asyncForEach(orderProduct,async item =>{
+                        if (new Date().getHours() < 17 ){
+
+                            setTimeout(function(){
+
+                                orderProduct.findAll({where:{OrderID:data[0].ID}}).then(orderProduct=>{asyncForEach(orderProduct,async item =>{
                                 products.findOne({where:{ID:item.ProductID}}).then(products=>{
                                     if (products.Type){
                                         if (!(item.SellerOperatorStatus && item.ProductionManagerStatus)){
@@ -50,23 +51,25 @@ router.post('/order', (req, res) => {
 
 
                             });
+
+                            }, TimeRemainingForOperatorAlert);
+
                         }
 
 
-                    }, TimeRemainingForOperatorAlert);
 
                     setTimeout(function(){
-                        if (new Date().getHours() < 5 ) {
-                            orderProduct.findAll({where:{OrderID:OrderID}}).then(orderProduct=>{
+                       console.log("done")
+                            orderProduct.findAll({where:{OrderID:data[0].ID}}).then(orderProduct=>{
                                 asyncForEach(orderProduct,async item =>{
                                     products.findOne({where:{ID:item.ProductID}}).then(products=>{
                                         if (products.Type){
-                                            if (!(item.SellerOperatorStatus && item.ProductionManagerStatus)){
-                                                item.update({ SellerOperatorStatus:false ,SellerOperatorFinalStatus:false , DeleteStatus: true , ReasonOFDelete: "kotahi az operator va PM bode"})
+                                            if ((item.SellerOperatorStatus) == null){
+                                                item.update({ SellerOperatorStatus:false  , DeleteStatus: true , ReasonOFDelete: "متاسفانه مدت زمان اپراتور برای تایید سفارش به پایان رسیده است."})
                                             }
                                         }else if (!products.Type || products.Type ==null) {
                                             if (!(item.SellerOperatorStatus)){
-                                                item.update({SellerOperatorStatus:false , SellerOperatorFinalStatus:false ,DeleteStatus: true , ReasonOFDelete: "kotahi az operator bode"})
+                                                item.update({SellerOperatorStatus:false ,DeleteStatus: true , ReasonOFDelete: "متاسفانه مدت زمان اپراتور برای تایید سفارش به پایان رسیده است."})
                                             }
                                         }
                                     });
@@ -74,7 +77,7 @@ router.post('/order', (req, res) => {
 
 
                             });
-                        }
+
 
                     }, TimeCounterForOperatorAnswering);
 
@@ -123,6 +126,47 @@ router.post('/address', (req, res) => {
                 addresses.create(data).then(()=>{
                     return res.status(200).json();
                 })
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+
+
+});
+
+router.post('/Star', (req, res) => {
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json();
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
+
+
+});
+
+router.post('/payment', (req, res) => {
+    try {
+        FilteringRequest(req,res,(err,data)=>{
+            if (err){
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+
+                    return res.status(200).json(data);
             }
         });
 
@@ -254,6 +298,27 @@ router.get('/Alarm', (req, res) => {
                 return res.status(err.HttpCode).json(err.response);
             } else {
                 return res.json(data);
+            }
+
+        });
+
+    } catch (e) {
+        return res.status(500).json({"code": 500});
+    }
+
+
+});
+
+router.delete('/Alarm', (req, res) => {
+
+    try {
+
+        FilteringRequest(req, res, (err, data) => {
+
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json();
             }
 
         });

@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		OrderProdutID: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
+			allowNull: true,
 			references: {
 				model: 'OrderProduct',
 				key: 'ID'
@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		FromID: {
 			type: DataTypes.INTEGER,
-			allowNull: false
+			allowNull: true
 		},
 		ToRole: {
 			type: DataTypes.BOOLEAN,

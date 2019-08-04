@@ -1,24 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="adding cityInservice check in do order for customer + some image problem">
-      <change afterPath="$PROJECT_DIR$/uploads/customer/alireza107.png" afterDir="false" />
+    <list default="true" id="2ab2cbc6-2ce3-4754-99e9-3b83f07b177f" name="Default Changelist" comment="adding MaxTosell to products and apis + adding ProvidedSupply + addinng TransportationFare + adding monjamed yakhzade Time Limit to add suply + deleting additional console.log">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/235d19d0-276b-4cb5-b324-77541bbae963.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/235d19d0-276b-4cb5-b324-77541bbae963.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/OfferTour.tIpZ6w.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/OfferTour.tIpZ6w.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/OfferTour.tIpZ6w/schema/dbo.sYMBAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/OfferTour.tIpZ6w/schema/dbo.sYMBAA.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/offertour.tPb1cw.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/offertour.tPb1cw.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/offertour.tPb1cw/schema/dbo.sYMBAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/offertour.tPb1cw/schema/dbo.sYMBAA.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/offertour.tPb1cw/schema/dbo.sYMBAA.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/3beca75e-c768-42a9-94a2-bdacafa5a24d/storage_v2/_src_/database/offertour.tPb1cw/schema/dbo.sYMBAA.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mongoSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mongoSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pachalChi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pachalChi.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:17:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:18:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:19:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:20:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:21:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:22:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:23:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:24:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:25:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:26:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:27:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:28:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:29:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 16:30:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackUp/Wed May 08 2019 23:59:00 GMT+0430 (Iran Daylight Time).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/dataBase/export.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/dataBase/export.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/jsonModel/pachalChi.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/jsonModel/pachalChi.postman_collection.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/addresses.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/addresses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/application.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/application.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/car_model.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/car_model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/cities.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/cities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/customer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/order_nazar_sanji.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/order_nazar_sanji.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/order_pardakht.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/order_pardakht.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/order_product.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/order_product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/pachal_chi_roles.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/pachal_chi_roles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/product_groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/product_groups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/seller.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/seller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/seller_operator.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/seller_operator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/seller_phone_number.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/seller_phone_number.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/seller_products.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/seller_products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/seller_type.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/seller_type.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/seller_ware_house.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/seller_ware_house.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/takhfif_product.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/takhfif_product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/transportation.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/transportation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/models/unit.js" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/models/unit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/old files/old models.zip" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/old files/old models.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documation/roadMap/base.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Documation/roadMap/base.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sequelize.js" beforeDir="false" afterPath="$PROJECT_DIR$/sequelize.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AppController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AppController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AuthController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CustomerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CustomerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PachalchiController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PachalchiController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ProductManagerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProductManagerController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SellerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SellerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SupportController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/sellerOperatorController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TransportationManagerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TransportationManagerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/sellerOperatorController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/sellerOperatorController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/transportationController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/transportationController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Filter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/configuration.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/configuration.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/AlarmsOnSellerProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AlarmsOnSellerProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/CarModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/CarModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/ChatOnOrderProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ChatOnOrderProduct.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/OrderNazarSanji.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/OrderNazarSanji.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/OrderPardakht.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/OrderPardakht.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/OrderProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/OrderProduct.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/PachalChiAdmins&amp;Supports.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/PachalChiAdmins&amp;Supports.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/PriceAndSupply.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/PriceAndSupply.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/ProductCategories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ProductCategories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Roles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Roles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/SellerOperator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SellerOperator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/SellerPhoneNumber.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SellerPhoneNumber.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/SellerProductionManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SellerProductionManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/SellerProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SellerProducts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/SellerProductsInServiceCities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SellerProductsInServiceCities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/SellerType.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SellerType.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/SellerWareHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SellerWareHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/TakhfifProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/TakhfifProduct.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/TransportationManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/TransportationManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/addresses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/addresses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/application.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/application.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/cities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/cities.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/customer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/seller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/seller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/transportation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/transportation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/unit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/unit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/customer/1558533660692.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/customer/1558533660692.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/customer/alireza107.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/customer/alireza107.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/customer/pass4ad5d2f4.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/customer/pass4ad5d2f4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/operator/1559112302131.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/operator/1559112302131.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/operator/1559112632996.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/operator/1559112632996.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1558363769982.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/1558363769982.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1561886137349.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/1561886137349.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/seller/1559112648894.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/seller/1559112648894.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/seller/1559112713982.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/seller/1559112713982.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/seller/sellerTest1.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/seller/sellerTest1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/sliders/1561886260958.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/sliders/1561886260958.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/sliders/1561886274326.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/sliders/1561886274326.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/sliders/1561886282836.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/sliders/1561886282836.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/sliders/1561886289337.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/sliders/1561886289337.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/sliders/1561886328634.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/sliders/1561886328634.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/sliders/1561886370767.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/sliders/1561886370767.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/sliders/1561886390907.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/sliders/1561886390907.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/wareHouse/1559113114611.png" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/wareHouse/1559113114611.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -112,111 +216,128 @@
     <session id="-940590212">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="43" />
-          <entry key="project.open.time.1" value="4" />
-          <entry key="project.open.time.10" value="3" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.12" value="2" />
-          <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.14" value="1" />
-          <entry key="project.open.time.15" value="2" />
-          <entry key="project.open.time.17" value="2" />
-          <entry key="project.open.time.18" value="1" />
-          <entry key="project.open.time.2" value="8" />
-          <entry key="project.open.time.20" value="3" />
-          <entry key="project.open.time.23" value="1" />
-          <entry key="project.open.time.25" value="1" />
-          <entry key="project.open.time.26" value="1" />
-          <entry key="project.open.time.27" value="1" />
-          <entry key="project.open.time.3" value="3" />
+          <entry key="project.closed" value="105" />
+          <entry key="project.open.time.1" value="5" />
+          <entry key="project.open.time.10" value="4" />
+          <entry key="project.open.time.11" value="8" />
+          <entry key="project.open.time.12" value="5" />
+          <entry key="project.open.time.13" value="6" />
+          <entry key="project.open.time.14" value="3" />
+          <entry key="project.open.time.15" value="4" />
+          <entry key="project.open.time.16" value="3" />
+          <entry key="project.open.time.17" value="3" />
+          <entry key="project.open.time.18" value="4" />
+          <entry key="project.open.time.19" value="2" />
+          <entry key="project.open.time.2" value="10" />
+          <entry key="project.open.time.20" value="5" />
+          <entry key="project.open.time.21" value="2" />
+          <entry key="project.open.time.22" value="3" />
+          <entry key="project.open.time.23" value="5" />
+          <entry key="project.open.time.25" value="3" />
+          <entry key="project.open.time.26" value="2" />
+          <entry key="project.open.time.27" value="2" />
+          <entry key="project.open.time.29" value="2" />
+          <entry key="project.open.time.3" value="4" />
+          <entry key="project.open.time.30" value="1" />
+          <entry key="project.open.time.32" value="1" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.36" value="1" />
-          <entry key="project.open.time.4" value="2" />
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.6" value="2" />
+          <entry key="project.open.time.4" value="5" />
+          <entry key="project.open.time.5" value="3" />
+          <entry key="project.open.time.6" value="4" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="4" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="49" />
+          <entry key="project.open.time.8" value="5" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="111" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="addresses" value="6" />
-          <entry key="alarmsonsellerproducts" value="1" />
-          <entry key="chatonorderproduct" value="5" />
-          <entry key="customer" value="8" />
+          <entry key="addresses" value="9" />
+          <entry key="alarmsonsellerproducts" value="17" />
+          <entry key="application" value="2" />
+          <entry key="chatonorderproduct" value="24" />
+          <entry key="cities" value="1" />
+          <entry key="customer" value="19" />
           <entry key="dbo" value="1" />
-          <entry key="gitignore" value="3" />
-          <entry key="jpg" value="3" />
-          <entry key="js" value="1161" />
-          <entry key="json" value="20" />
-          <entry key="log" value="49" />
+          <entry key="gitignore" value="4" />
+          <entry key="html" value="3" />
+          <entry key="jpg" value="4" />
+          <entry key="js" value="1773" />
+          <entry key="json" value="29" />
+          <entry key="log" value="56" />
           <entry key="notification" value="3" />
-          <entry key="order" value="28" />
+          <entry key="order" value="38" />
           <entry key="ordernazarsanji" value="2" />
-          <entry key="orderpardakht" value="15" />
-          <entry key="orderproduct" value="50" />
-          <entry key="pachalchiadmins&amp;amp;supports" value="1" />
-          <entry key="png" value="4" />
-          <entry key="priceandsupply" value="15" />
-          <entry key="productcategories" value="4" />
-          <entry key="products" value="9" />
+          <entry key="orderpardakht" value="16" />
+          <entry key="orderproduct" value="95" />
+          <entry key="pachalchiadmins&amp;amp;supports" value="12" />
+          <entry key="png" value="5" />
+          <entry key="priceandsupply" value="35" />
+          <entry key="productcategories" value="8" />
+          <entry key="products" value="19" />
           <entry key="randomstring" value="1" />
-          <entry key="roles" value="1" />
-          <entry key="seller" value="12" />
-          <entry key="selleroperator" value="13" />
-          <entry key="sellerphonenumber" value="1" />
-          <entry key="sellerproductionmanager" value="2" />
-          <entry key="sellerproducts" value="40" />
-          <entry key="sellerproductsinservicecities" value="7" />
-          <entry key="sellerwarehouse" value="2" />
-          <entry key="sql" value="14" />
+          <entry key="roles" value="2" />
+          <entry key="seller" value="48" />
+          <entry key="selleroperator" value="34" />
+          <entry key="sellerphonenumber" value="2" />
+          <entry key="sellerproductionmanager" value="4" />
+          <entry key="sellerproducts" value="59" />
+          <entry key="sellerproductsinservicecities" value="15" />
+          <entry key="sellertype" value="1" />
+          <entry key="sellerwarehouse" value="11" />
+          <entry key="sql" value="15" />
+          <entry key="support" value="1" />
           <entry key="takhfifproduct" value="2" />
           <entry key="task" value="1" />
-          <entry key="transportation" value="1" />
-          <entry key="ts" value="2" />
-          <entry key="unit" value="1" />
+          <entry key="transportation" value="10" />
+          <entry key="transportationmanager" value="6" />
+          <entry key="ts" value="3" />
+          <entry key="unit" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Database Element" value="229" />
-          <entry key="Image" value="7" />
-          <entry key="JSON" value="20" />
-          <entry key="JavaScript" value="1162" />
-          <entry key="Log" value="49" />
+          <entry key="Database Element" value="497" />
+          <entry key="Git file" value="1" />
+          <entry key="HTML" value="3" />
+          <entry key="Image" value="9" />
+          <entry key="JSON" value="29" />
+          <entry key="JavaScript" value="1774" />
+          <entry key="Log" value="56" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="SQL" value="12" />
-          <entry key="Scratch" value="2" />
-          <entry key="TypeScript" value="2" />
+          <entry key="Scratch" value="3" />
+          <entry key="TypeScript" value="3" />
           <entry key="UML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cell" value="405" />
-          <entry key="js" value="60977" />
+          <entry key="cell" value="842" />
+          <entry key="html" value="252" />
+          <entry key="js" value="97574" />
           <entry key="json" value="208" />
           <entry key="log" value="1" />
-          <entry key="sql" value="14" />
+          <entry key="sql" value="75" />
           <entry key="task" value="85" />
-          <entry key="txt" value="1653" />
+          <entry key="txt" value="2596" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+          <entry key="HTML" value="252" />
           <entry key="JSON" value="208" />
-          <entry key="JavaScript" value="60977" />
+          <entry key="JavaScript" value="97574" />
           <entry key="Log" value="1" />
-          <entry key="PLAIN_TEXT" value="1738" />
-          <entry key="SQL" value="14" />
-          <entry key="Scratch" value="405" />
+          <entry key="PLAIN_TEXT" value="2681" />
+          <entry key="SQL" value="44" />
+          <entry key="Scratch" value="873" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="TypeScriptServerServiceImpl" value="2" />
+          <entry key="TypeScriptServerServiceImpl" value="3" />
         </counts>
       </usages-collector>
     </session>
@@ -226,67 +347,43 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Util/Filter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="1632" column="70" lean-forward="true" selection-start-line="1632" selection-start-column="70" selection-end-line="1632" selection-end-column="70" />
+            <state relative-caret-position="258">
+              <caret line="2849" column="77" lean-forward="true" selection-start-line="2849" selection-start-column="77" selection-end-line="2849" selection-end-column="77" />
               <folding>
                 <element signature="n#!!block;n#base64_encode#0" />
                 <element signature="n#!!block;n#fillDataBase#0" />
-                <element signature="n#!!block;n#insertCities#0;n#!!block;n#fillDataBase#0" />
-                <element signature="n#!!block;n#insertTypes#0;n#!!block;n#fillDataBase#0" />
-                <element signature="n#!!block;n#insertUnits#0;n#!!block;n#fillDataBase#0" />
-                <element signature="n#!!block;n#insertCarModels#0;n#!!block;n#fillDataBase#0" />
-                <element signature="n#!!block;n#isThisArrayEmpty#0" />
                 <element signature="n#!!block;n#checkPhone#0" />
                 <element signature="n#!!block;n#checkPassword#0" />
+                <element signature="n#!!block;n#sendOnTelegramChannel#0" />
                 <element signature="n#!!block;n#checkUserName#0" />
                 <element signature="n#!!block;n#checkToken#0" />
                 <element signature="n#!!block;n#checkLimitTime#0" />
                 <element signature="n#!!block;n#CheckForeignKey#0" />
                 <element signature="n#!!block;n#checkUser#0" />
                 <element signature="n#!!block;n#ImageHandler#0" />
-                <element signature="e#15935#66490#0" />
-                <element signature="e#16046#17464#0" />
-                <element signature="e#17489#34591#0" />
-                <element signature="e#34616#35074#0" />
-                <element signature="e#35099#58155#0" />
-                <element signature="e#66620#80197#0" />
-                <element signature="e#66718#71735#0" />
-                <element signature="e#80222#83316#0" />
-                <element signature="e#83341#85704#0" />
-                <element signature="e#85729#95841#0" />
-                <element signature="e#96858#100967#0" />
-                <element signature="e#100996#105053#0" />
-                <element signature="e#105082#108690#0" />
-                <element signature="e#95909#140512#0" />
-                <element signature="e#140529#153782#0" />
-                <element signature="e#153799#179993#0" />
-                <element signature="n#!!block;n#filterRequest#0" />
+                <element signature="e#16456#94174#0" />
+                <element signature="e#94191#148983#0" />
+                <element signature="e#149231#197507#0" />
+                <element signature="e#250361#279125#0" />
+                <element signature="e#254430#255916#0" />
+                <element signature="e#256007#262990#0" />
+                <element signature="e#263015#273362#0" />
+                <element signature="e#279142#379521#0" />
+                <element signature="e#379538#396921#0" />
+                <element signature="n#!!block;n#addRoleInfoCheck#0" />
+                <element signature="n#!!block;n#sendSMS#0" />
+                <element signature="n#!!block;n#sendNotification#0" />
+                <element signature="n#!!block;n#SendAlarm#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
+        <entry file="file://$PROJECT_DIR$/src/Controller/ProductManagerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
-              <caret line="277" column="20" selection-start-line="277" selection-start-column="20" selection-end-line="483" selection-end-column="21" />
-              <folding>
-                <element signature="e#892#1680#0" />
-                <element signature="e#1722#2388#0" />
-                <element signature="e#2429#2773#0" />
-                <element signature="e#2810#4071#0" />
-                <element signature="e#4120#5125#0" />
-                <element signature="e#5173#5567#0" />
-                <element signature="e#5619#6929#0" />
-                <element signature="e#7599#11708#0" />
-                <element signature="e#11737#15794#0" />
-                <element signature="e#15823#19431#0" />
-                <element signature="e#19801#23943#0" />
-                <element signature="e#23989#24714#0" />
-                <element signature="e#27322#29234#0" />
-                <element signature="e#29279#31187#0" />
-              </folding>
+            <state relative-caret-position="-896">
+              <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -297,41 +394,42 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>loggererror</find>
-      <find>Logger</find>
-      <find>logger</find>
-      <find>response</find>
-      <find>Oo</find>
-      <find>up without any Change</find>
-      <find>asyncForEach</find>
-      <find>checkUser</find>
-      <find>DataTypes.INTEGER</find>
-      <find>INTEGER</find>
+      <find>sendSMs</find>
+      <find>if(De</find>
+      <find>AuthCode</find>
+      <find>check</find>
+      <find>ImageHandler</find>
+      <find>function base64_encode\(file\) \{\n    try \{\n        var bitmap \= fs\.readFileSync\(file\)\;\n        return Buffer\.from\(bitmap\)\.toString\(\'base64\'\)\;\n    \}catch \(e\) \{\n        return \&quot;not found\&quot;\n    \}\n\n\}\n</find>
+      <find>DateTim</find>
+      <find>bad</find>
+      <find>savedUs</find>
+      <find>forgetpas</find>
+      <find>sendSMS</find>
+      <find>703</find>
+      <find>Pardalht</find>
+      <find>encode</find>
+      <find>URL</find>
+      <find>Primiti</find>
+      <find>kotahi</find>
+      <find>customer paym</find>
+      <find>710</find>
+      <find>transportationMana</find>
+      <find>InfoStatus</find>
+      <find>'Product</find>
+      <find>globalV</find>
       <find>transa</find>
-      <find>saved</find>
-      <find>Stat</find>
-      <find>Status</find>
-      <find>checkToken</find>
-      <find>checkTok</find>
-      <find>conso</find>
-      <find>404</find>
-      <find>callback({                                                                                                                             HttpCode: 404,                                                                                                                             response: {&quot;code&quot;: 723}                                                                                                                         });</find>
-      <find>{&quot;code&quot;: 723}</find>
-      <find>Seen</find>
-      <find>req.body.Role</find>
-      <find>DateTime</find>
-      <find>Op.or</find>
-      <find>Op</find>
-      <find>SocketID</find>
-      <find>ala</find>
-      <find>transportation</find>
-      <find>500</find>
-      <find>Enabled</find>
+      <find>console.log</find>
+      <find>base64_encode</find>
+      <find>base64</find>
+      <find>forgin</find>
+      <find>CheckForeignKey</find>
+      <find>TransportarID</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -349,6 +447,8 @@
       <replace>BIGINT</replace>
       <replace>Number</replace>
       <replace>BIGINT(11)</replace>
+      <replace>let</replace>
+      <replace>Pardakht</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/node_modules</dir>
@@ -368,23 +468,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/models/OrderNazarSanji.js" />
-        <option value="$PROJECT_DIR$/src/models/OrderPardakht.js" />
-        <option value="$PROJECT_DIR$/src/models/Products.js" />
-        <option value="$PROJECT_DIR$/src/models/SellerPhoneNumber.js" />
-        <option value="$PROJECT_DIR$/src/models/CarModel.js" />
-        <option value="$PROJECT_DIR$/src/models/PachalChiRoles.js" />
-        <option value="$PROJECT_DIR$/src/models/TakhfifProduct.js" />
-        <option value="$PROJECT_DIR$/src/models/Chat.js" />
-        <option value="$PROJECT_DIR$/Documation/dataBase/export.sql" />
-        <option value="$PROJECT_DIR$/src/Util/myVars.js" />
-        <option value="$PROJECT_DIR$/src/test.js" />
-        <option value="$PROJECT_DIR$/src/Util/myFunctions.js" />
-        <option value="$PROJECT_DIR$/src/Controller/WareHouseController.js" />
         <option value="$PROJECT_DIR$/test/ModelGenerator.js" />
         <option value="$PROJECT_DIR$/Log/access.log" />
         <option value="$PROJECT_DIR$/test/Main.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/task" />
         <option value="$PROJECT_DIR$/src/models/PriceAndSupply.js" />
         <option value="$PROJECT_DIR$/src/models/Notification.js" />
@@ -393,31 +479,45 @@
         <option value="$PROJECT_DIR$/src/models/SellerType.js" />
         <option value="$PROJECT_DIR$/src/models/Unit.js" />
         <option value="$PROJECT_DIR$/src/models/Addresses.js" />
-        <option value="$PROJECT_DIR$/src/models/application.js" />
-        <option value="$PROJECT_DIR$/src/models/SellerProducts.js" />
         <option value="$PROJECT_DIR$/src/Controller/SocketController.js" />
-        <option value="$PROJECT_DIR$/src/Controller/AuthController.js" />
         <option value="$PROJECT_DIR$/src/Controller/SupportController.js" />
-        <option value="$PROJECT_DIR$/src/models/SellerProductsInServiceCities.js" />
-        <option value="$PROJECT_DIR$/src/models/PachalChiAdmins&amp;Supports.js" />
-        <option value="$PROJECT_DIR$/src/models/Support.js" />
-        <option value="$PROJECT_DIR$/src/models/Transportation.js" />
-        <option value="$PROJECT_DIR$/src/models/Customer.js" />
-        <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/src/models/Seller.js" />
-        <option value="$PROJECT_DIR$/src/models/SellerOperator.js" />
-        <option value="$PROJECT_DIR$/sequelize.js" />
-        <option value="$PROJECT_DIR$/src/models/SellerProductionManager.js" />
-        <option value="$PROJECT_DIR$/src/Controller/ProductManagerController.js" />
-        <option value="$PROJECT_DIR$/src/Util/configuration.js" />
-        <option value="$PROJECT_DIR$/src/models/OrderProduct.js" />
         <option value="$PROJECT_DIR$/src/models/Order.js" />
-        <option value="$PROJECT_DIR$/src/Controller/AppController.js" />
-        <option value="$PROJECT_DIR$/src/Controller/CustomerController.js" />
-        <option value="$PROJECT_DIR$/src/Controller/sellerOperatorController.js" />
-        <option value="$PROJECT_DIR$/src/Controller/transportationController.js" />
+        <option value="$PROJECT_DIR$/src/models/SellerProductsInServiceCities.js" />
+        <option value="$PROJECT_DIR$/Test/Main.js" />
+        <option value="$PROJECT_DIR$/src/Util/SocketServer.js" />
+        <option value="$PROJECT_DIR$/src/models/Support.js" />
+        <option value="$PROJECT_DIR$/sequelize.js" />
+        <option value="$PROJECT_DIR$/../../pachalchi-web-master/package.json" />
+        <option value="$PROJECT_DIR$/src/models/SellerOperator.js" />
+        <option value="$PROJECT_DIR$/src/models/SellerProductionManager.js" />
         <option value="$PROJECT_DIR$/src/models/SellerWareHouse.js" />
+        <option value="$PROJECT_DIR$/src/models/TransportationManager.js" />
+        <option value="$PROJECT_DIR$/src/models/Customer.js" />
+        <option value="$PROJECT_DIR$/src/models/Seller.js" />
+        <option value="$PROJECT_DIR$/src/models/SellerProducts.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/models/PachalChiAdmins&amp;Supports.js" />
+        <option value="$PROJECT_DIR$/src/Controller/Pachalchi.js" />
+        <option value="$PROJECT_DIR$/src/models/application.js" />
+        <option value="$PROJECT_DIR$/src/models/Transportation.js" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/cda78850-1049-4809-8ee0-2f8cc66b83a2/console.sql" />
+        <option value="$PROJECT_DIR$/src/models/ChatOnOrderProduct.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/src/Controller/PachalchiController.js" />
+        <option value="$PROJECT_DIR$/src/models/Products.js" />
+        <option value="$PROJECT_DIR$/src/testfotDummies.html" />
+        <option value="$PROJECT_DIR$/src/Util/configuration.js" />
         <option value="$PROJECT_DIR$/src/Controller/SellerController.js" />
+        <option value="$PROJECT_DIR$/src/Controller/transportationController.js" />
+        <option value="$PROJECT_DIR$/src/Controller/TransportationManagerController.js" />
+        <option value="$PROJECT_DIR$/src/models/OrderProduct.js" />
+        <option value="$PROJECT_DIR$/src/Controller/CustomerController.js" />
+        <option value="$PROJECT_DIR$/src/models/OrderNazarSanji.js" />
+        <option value="$PROJECT_DIR$/src/Controller/sellerOperatorController.js" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/src/Controller/AppController.js" />
+        <option value="$PROJECT_DIR$/src/Controller/AuthController.js" />
+        <option value="$PROJECT_DIR$/src/Controller/ProductManagerController.js" />
         <option value="$PROJECT_DIR$/src/Util/Filter.js" />
       </list>
     </option>
@@ -436,7 +536,7 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -448,17 +548,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
             <path>
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="Log" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -471,32 +567,21 @@
               <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="Controller" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
-            <path>
-              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Util" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PachalChi-Artifact" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="uploads" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql&#10;sqlserver" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/macbook/Desktop/Projects/pachalchi/src/Controller/SellerController.js" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/macbook/Desktop/Projects/pachalchi/src/models/Customer.js" />
     <property name="ToolWindowMongo Explorer.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="add_unversioned_files" value="$PROJECT_DIR$/Log/access.log" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/node_modules/sequelize/lib/dialects/mssql/query.js&#10;/Users/macbook/Desktop/Projects/pachalchi/Log/access.log" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554556970108" />
     <property name="database.console.LAST_STATE" value="false" />
@@ -506,16 +591,16 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Controller" />
+      <recent name="$PROJECT_DIR$/src/Controller/Old" />
       <recent name="$PROJECT_DIR$/test" />
       <recent name="$PROJECT_DIR$/uploads" />
       <recent name="$PROJECT_DIR$/Documation/roadMap" />
-      <recent name="$PROJECT_DIR$/Documation" />
-      <recent name="$PROJECT_DIR$/Documation/jsonModel" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/uploads/wareHouse" />
@@ -667,7 +752,69 @@
       <workItem from="1557826464434" duration="6642000" />
       <workItem from="1557909972917" duration="14487000" />
       <workItem from="1557991256799" duration="19483000" />
-      <workItem from="1558087610273" duration="14149000" />
+      <workItem from="1558087610273" duration="14547000" />
+      <workItem from="1558167340023" duration="1843000" />
+      <workItem from="1558173464346" duration="6235000" />
+      <workItem from="1558261362902" duration="12289000" />
+      <workItem from="1558343058695" duration="528000" />
+      <workItem from="1558347667243" duration="17765000" />
+      <workItem from="1558448976651" duration="7132000" />
+      <workItem from="1558521626727" duration="13576000" />
+      <workItem from="1558547219450" duration="5149000" />
+      <workItem from="1558590986945" duration="4695000" />
+      <workItem from="1558598899832" duration="13055000" />
+      <workItem from="1558636113867" duration="544000" />
+      <workItem from="1558858705076" duration="1261000" />
+      <workItem from="1559107077985" duration="22306000" />
+      <workItem from="1559195893371" duration="16000" />
+      <workItem from="1559198475955" duration="3716000" />
+      <workItem from="1559475981416" duration="1440000" />
+      <workItem from="1559652653266" duration="532000" />
+      <workItem from="1559656730078" duration="1158000" />
+      <workItem from="1559984062091" duration="349000" />
+      <workItem from="1560002929612" duration="532000" />
+      <workItem from="1560003641986" duration="27000" />
+      <workItem from="1560324498639" duration="16333000" />
+      <workItem from="1560408713632" duration="1811000" />
+      <workItem from="1560602283137" duration="1288000" />
+      <workItem from="1561030678532" duration="1262000" />
+      <workItem from="1561532742222" duration="9253000" />
+      <workItem from="1561610571855" duration="17435000" />
+      <workItem from="1561869358318" duration="12273000" />
+      <workItem from="1561956073603" duration="9087000" />
+      <workItem from="1562047759261" duration="5918000" />
+      <workItem from="1562220068887" duration="3717000" />
+      <workItem from="1562229424584" duration="341000" />
+      <workItem from="1562232587880" duration="8000" />
+      <workItem from="1562233276029" duration="1732000" />
+      <workItem from="1562251384218" duration="42000" />
+      <workItem from="1562392845811" duration="1235000" />
+      <workItem from="1562396314075" duration="9297000" />
+      <workItem from="1562483071608" duration="17622000" />
+      <workItem from="1562562093728" duration="6775000" />
+      <workItem from="1562586559704" duration="1526000" />
+      <workItem from="1562651333507" duration="8325000" />
+      <workItem from="1562737493004" duration="6979000" />
+      <workItem from="1562755119164" duration="4342000" />
+      <workItem from="1562824691153" duration="8864000" />
+      <workItem from="1562998590100" duration="1422000" />
+      <workItem from="1563000867183" duration="18000" />
+      <workItem from="1563000933366" duration="9405000" />
+      <workItem from="1563093839338" duration="3160000" />
+      <workItem from="1563177697562" duration="6946000" />
+      <workItem from="1563347519344" duration="9897000" />
+      <workItem from="1563431838047" duration="9692000" />
+      <workItem from="1563601336440" duration="7811000" />
+      <workItem from="1563690837376" duration="16437000" />
+      <workItem from="1563861978007" duration="3713000" />
+      <workItem from="1563958458528" duration="9936000" />
+      <workItem from="1564243595838" duration="46000" />
+      <workItem from="1564244700943" duration="2000" />
+      <workItem from="1564384516559" duration="8772000" />
+      <workItem from="1564472469002" duration="3170000" />
+      <workItem from="1564807898528" duration="872000" />
+      <workItem from="1564810626918" duration="2754000" />
+      <workItem from="1564911829691" duration="1730000" />
     </task>
     <task id="LOCAL-00001" summary="bug =&gt;{ sellerID in addRole} fixed">
       <created>1551636428530</created>
@@ -816,11 +963,95 @@
       <option name="project" value="LOCAL" />
       <updated>1557846561490</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="2 bug fixed {&#10; - get orderProduct method switched to get and endpoint recognization bug fixed&#10; - cancel orderProduct with CustomerReason bug fixed&#10; - cancel orderProduct with SellerReason bug fixed&#10; - postman endpoint Name bugs fixed&#10; - mintosell bug in sellerProducts fixed&#10; - login token builder for seller bug fixed&#10; - seller add product bug (getting price and priceDateTime) fixed&#10; - exception in bad token passing handled in app&#10; - add/put/get addresses token bug fixed in customer&#10; - cancel order bug fixed for customer&#10; - seller operator step 1 verification bug fixed&#10; - customer add order status bug fixed&#10; &#10;}&#10;&#10;&#10;1 feature added {&#10;- changing OrderProduct Final status for Operator&#10;- canceling OrderProduct api added for seller and sellerOperator&#10;- add city in service added to seller apis &#10;- Final Status Changing for sellerOperator&#10;- adding Timer For Customer to Doing Payment&#10;- get Timer for customer in seller verification&#10;- get Timer for seller in Customer payment&#10;- get Timer for customer in Customer payment&#10;- adding inPlaceFee and OnlineFee in each OrderProduct for sellerOperator&#10;&#10;}&#10;&#10;&#10;+ a lot of other apis">
+      <created>1558103787844</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1558103787844</updated>
+    </task>
+    <task id="LOCAL-00023" summary="last version of phase 1 with a lot of feature">
+      <created>1558530890815</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1558530890815</updated>
+    </task>
+    <task id="LOCAL-00024" summary="last models for transportation">
+      <created>1558531666457</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1558531666457</updated>
+    </task>
+    <task id="LOCAL-00025" summary="bugs fixed">
+      <created>1558552857773</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1558552857773</updated>
+    </task>
+    <task id="LOCAL-00026" summary="bug fix">
+      <created>1558552935281</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1558552935281</updated>
+    </task>
+    <task id="LOCAL-00027" summary="last version with a lot of feature">
+      <created>1560347126148</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1560347126148</updated>
+    </task>
+    <task id="LOCAL-00028" summary="models changed">
+      <created>1560602313970</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1560602313970</updated>
+    </task>
+    <task id="LOCAL-00029" summary="optimize imports files + backup log and folder in 23:59 and upload to dropbox + make username none case-sensetive + telegram chanel and robot">
+      <created>1561617055162</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1561617055162</updated>
+    </task>
+    <task id="LOCAL-00030" summary="adding MaxTosell to products and apis + adding ProvidedSupply + addinng TransportationFare + adding monjamed yakhzade Time Limit to add suply + deleting additional console.log">
+      <created>1561624383187</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1561624383188</updated>
+    </task>
+    <task id="LOCAL-00031" summary="remove cluster package +&#10;adding pm2 to project +&#10;pachalchi Auth +&#10;adding ExactSupply and apis +&#10;adding TransportationType +&#10;rebase CityInServices +&#10;adding dynamic sliders + &#10;add apis for pachalchi -&gt; sms + get seller and customer + disable/enable user + returnProduct + deletedProduct + &#10;monjamed varedati limit +&#10;edit pachalchi model +&#10;edit transportation model +">
+      <created>1561984333870</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1561984333871</updated>
+    </task>
+    <task id="LOCAL-00032" summary="add produtcs and slider upload folder +&#10;adding pachalchiController File">
+      <created>1561984387309</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1561984387309</updated>
+    </task>
+    <task id="LOCAL-00033" summary="handle post order responnse messages">
+      <created>1562058116475</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1562058116476</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="484255000" />
+    <option name="totallyTimeSpent" value="840049000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -832,30 +1063,31 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4979424" visible="true" weight="0.26002866" />
-      <window_info id="Structure" order="1" sideWeight="0.5020576" side_tool="true" weight="0.28438395" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Structure" order="0" sideWeight="0.50442475" side_tool="true" weight="0.23853868" />
+      <window_info id="Image Layers" order="1" />
+      <window_info id="Designer" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info active="true" content_ui="combo" x="333" y="82" width="333" height="477" id="Project" order="6" sideWeight="0.49557522" visible="true" weight="0.26432666" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32920793" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.35767326" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.35732323" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39975247" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32920793" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32874015" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49713877" visible="true" weight="0.43688118" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5028612" side_tool="true" weight="0.33415842" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.495702" visible="true" weight="0.39772728" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.504298" side_tool="true" weight="0.3799505" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32920793" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
-      <window_info anchor="bottom" id="Database Console" order="13" weight="0.32920793" />
+      <window_info anchor="bottom" id="Database Console" order="13" weight="0.4839109" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.32920793" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -863,7 +1095,7 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Database" order="7" visible="true" weight="0.19770774" />
+      <window_info anchor="right" id="Database" order="7" visible="true" weight="0.23567335" />
       <window_info anchor="right" id="Maven Projects" order="8" />
       <window_info anchor="right" auto_hide="true" id="Mongo Explorer" internal_type="SLIDING" order="9" type="SLIDING" weight="0.22818312" />
       <window_info anchor="right" id="Weex Documents" order="10" weight="0.3295129" />
@@ -879,15 +1111,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="order fixed + moreproductGroup bug fixed + sending sms in registerationn + get seller phone numbers for customer + Singlelist api for customer for getting spicial seller info + return all seller info in sellerList + orderProduct relation between takhfifProudoct + change demo data ( monjamed + taze)" />
-    <MESSAGE value="bug =&gt;{ sellerID in addRole} fixed" />
-    <MESSAGE value="bug fixed" />
-    <MESSAGE value="change filldatabase id confilict" />
-    <MESSAGE value="get all product for operator" />
-    <MESSAGE value="reWrite OfferTour AuthController part 1" />
-    <MESSAGE value="delete additional imports + optimize inndex.js + filterrequest function + rebase check token and forgetpassword request + rename myfunction and myvars class +" />
-    <MESSAGE value="rebase forgetpassword verify + adding link and message for force update" />
-    <MESSAGE value="Make image limit size and format and dir modular" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="set variables for run app by .env + some style changes + cluster app + clean package.json + check data base connection" />
     <MESSAGE value="cluster bug fixed + new un-Synced Models + DataBase information set modular + corn job to make zip file from uploads" />
     <MESSAGE value="add productmanager login + new models sync in auth" />
@@ -901,119 +1125,145 @@
     <MESSAGE value="get all ap innformation api + add edit customer address api + adding MinToSell Properties to seller product +  implementinng chat sockets without test + ProductManagerController + so many other things" />
     <MESSAGE value="some bug fixed + serviceInCities added + get all seller product chnaged in customer and seller" />
     <MESSAGE value="adding cityInservice check in do order for customer + some image problem" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding cityInservice check in do order for customer + some image problem" />
+    <MESSAGE value="2 bug fixed {&#10; - get orderProduct method switched to get and endpoint recognization bug fixed&#10; - cancel orderProduct with CustomerReason bug fixed&#10; - cancel orderProduct with SellerReason bug fixed&#10; - postman endpoint Name bugs fixed&#10; - mintosell bug in sellerProducts fixed&#10; - login token builder for seller bug fixed&#10; - seller add product bug (getting price and priceDateTime) fixed&#10; - exception in bad token passing handled in app&#10; - add/put/get addresses token bug fixed in customer&#10; - cancel order bug fixed for customer&#10; - seller operator step 1 verification bug fixed&#10; - customer add order status bug fixed&#10; &#10;}&#10;&#10;&#10;1 feature added {&#10;- changing OrderProduct Final status for Operator&#10;- canceling OrderProduct api added for seller and sellerOperator&#10;- add city in service added to seller apis &#10;- Final Status Changing for sellerOperator&#10;- adding Timer For Customer to Doing Payment&#10;- get Timer for customer in seller verification&#10;- get Timer for seller in Customer payment&#10;- get Timer for customer in Customer payment&#10;- adding inPlaceFee and OnlineFee in each OrderProduct for sellerOperator&#10;&#10;}&#10;&#10;&#10;+ a lot of other apis" />
+    <MESSAGE value="last version of phase 1 with a lot of feature" />
+    <MESSAGE value="last models for transportation" />
+    <MESSAGE value="bugs fixed" />
+    <MESSAGE value="bug fix" />
+    <MESSAGE value="last version with a lot of feature" />
+    <MESSAGE value="models changed" />
+    <MESSAGE value="optimize imports files + backup log and folder in 23:59 and upload to dropbox + make username none case-sensetive + telegram chanel and robot" />
+    <MESSAGE value="adding MaxTosell to products and apis + adding ProvidedSupply + addinng TransportationFare + adding monjamed yakhzade Time Limit to add suply + deleting additional console.log" />
+    <MESSAGE value="remove cluster package +&#10;adding pm2 to project +&#10;pachalchi Auth +&#10;adding ExactSupply and apis +&#10;adding TransportationType +&#10;rebase CityInServices +&#10;adding dynamic sliders + &#10;add apis for pachalchi -&gt; sms + get seller and customer + disable/enable user + returnProduct + deletedProduct + &#10;monjamed varedati limit +&#10;edit pachalchi model +&#10;edit transportation model +" />
+    <MESSAGE value="add produtcs and slider upload folder +&#10;adding pachalchiController File" />
+    <MESSAGE value="handle post order responnse messages" />
+    <option name="LAST_COMMIT_MESSAGE" value="handle post order responnse messages" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/chatonorderproduct">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/ChatOnOrderProduct.js">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-end-line="20" />
+        <state relative-caret-position="-146">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/Support.js">
+    <entry file="file://$PROJECT_DIR$/Documation/roadMap/base.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/sequelize/types/lib/query-interface.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/Transportation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/roles">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/notification">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/sellerphonenumber">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+        <state relative-caret-position="173">
+          <caret line="162" column="54" selection-start-line="162" selection-start-column="54" selection-end-line="162" selection-end-column="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/models/Seller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="50" column="7" lean-forward="true" selection-start-line="50" selection-start-column="7" selection-end-line="53" selection-end-column="10" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="-512">
+          <caret line="11" column="27" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/alarmsonsellerproducts">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/cda78850-1049-4809-8ee0-2f8cc66b83a2/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/seller" />
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/cities" />
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/sellertype" />
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/order" />
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/customer" />
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/pachalchiadmins&amp;amp;supports" />
+    <entry file="file://$PROJECT_DIR$/src/models/ChatOnOrderProduct.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Log/access.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="-10475">
+          <caret line="57" column="57" lean-forward="true" selection-start-line="57" selection-start-column="57" selection-end-line="57" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/selleroperator" />
+    <entry file="file://$PROJECT_DIR$/index.html" />
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="195" column="56" selection-start-line="195" selection-start-column="50" selection-end-line="195" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/kavenegar/kavenegar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1942">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/AlarmsOnSellerProducts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="20" column="29" lean-forward="true" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/Customer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-869">
+          <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/ProductCategories.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="28" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/PriceAndSupply.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/Products.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="10" lean-forward="true" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/SellerProducts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/OrderPardakht.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="29" lean-forward="true" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testfotDummies.html" />
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/productcategories">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sequelize.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/SellerProductionManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="28" column="35" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/tedious/node_modules/readable-stream/lib/_stream_writable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="393" column="4" selection-start-line="393" selection-start-column="4" selection-end-line="393" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/SellerOperator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="36" column="19" lean-forward="true" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/ProductManagerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="51" column="38" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
-          <folding>
-            <element signature="e#502#819#0" />
-            <element signature="e#854#1233#0" />
-            <element signature="e#1275#1941#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1024,129 +1274,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/Order.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="54" column="10" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/customer">
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/alarmsonsellerproducts">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util/configuration.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="824">
-          <caret line="176" lean-forward="true" selection-start-line="176" selection-end-line="176" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/seller">
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/chatonorderproduct">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/AppController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="74" column="68" lean-forward="true" selection-start-line="74" selection-start-column="68" selection-end-line="74" selection-end-column="68" />
-          <folding>
-            <element signature="e#733#867#0" />
-            <element signature="e#876#1028#0" />
-            <element signature="e#1037#1219#0" />
-            <element signature="e#1228#1557#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/selleroperator">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/sellerproductionmanager">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/products">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/order">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/orderpardakht">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="228" column="47" lean-forward="true" selection-start-line="228" selection-start-column="47" selection-end-line="228" selection-end-column="47" />
-          <folding>
-            <element signature="e#733#4261#0" />
-            <element signature="e#4300#4655#0" />
-            <element signature="e#4697#5089#0" />
-            <element signature="e#5130#5612#0" />
-            <element signature="e#5653#5975#0" />
-            <element signature="e#6017#6369#0" />
-            <element signature="e#6418#7413#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/sellerproducts">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/OrderProduct.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="138" column="18" selection-start-line="138" selection-start-column="8" selection-end-line="138" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/sellerOperatorController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="50" column="68" selection-start-line="50" selection-start-column="68" selection-end-line="50" selection-end-column="68" />
-          <folding>
-            <element signature="e#683#1380#0" />
-            <element signature="e#1428#1940#0" />
-            <element signature="e#1991#2331#0" />
-            <element signature="e#2376#3592#0" />
-            <element signature="e#3631#3955#0" />
-            <element signature="e#3994#5043#0" />
-            <element signature="e#5087#8341#0" />
-            <element signature="e#8394#9680#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1157,121 +1295,198 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/PachalChiAdmins&amp;Supports.js">
+    <entry file="file://$PROJECT_DIR$/src/models/Transportation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="382">
+          <caret line="95" column="19" selection-start-line="95" selection-start-column="8" selection-end-line="95" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Util/configuration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2117">
+          <caret line="180" column="7" selection-start-line="180" selection-start-column="4" selection-end-line="180" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="604">
+          <caret line="188" column="40" selection-start-line="188" selection-start-column="40" selection-end-line="188" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/transportationController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="433">
+          <caret line="38" column="59" selection-start-line="38" selection-end-line="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/Order.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-101">
+          <caret line="19" column="21" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/OrderNazarSanji.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="26" column="15" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sequelize.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="90" column="4" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/CustomerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/OrderProduct.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2125">
+          <caret line="41" column="10" lean-forward="true" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/sellerOperatorController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="823">
+          <caret line="375" column="55" lean-forward="true" selection-start-line="375" selection-start-column="55" selection-end-line="375" selection-end-column="55" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#11998#15467#0" />
+            <element signature="e#16278#16893#0" />
+            <element signature="e#16919#20388#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/Customer.js">
+    <entry file="file://$PROJECT_DIR$/src/Controller/PachalchiController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-269">
-          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="-593">
+          <caret line="94" column="11" lean-forward="true" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/WareHouseController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="737">
-          <caret line="170" column="32" selection-start-line="170" selection-start-column="32" selection-end-line="204" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/SellerWareHouse.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="30" column="10" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/sellerwarehouse">
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/products">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/transportationController.js">
+    <entry file="das://cda78850-1049-4809-8ee0-2f8cc66b83a2/database/pachalchi/schema/dbo/table/sellerproducts">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/AppController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="107" column="3" lean-forward="true" selection-start-line="107" selection-start-column="3" selection-end-line="107" selection-end-column="3" />
+        <state relative-caret-position="270">
+          <caret line="390" column="31" lean-forward="true" selection-start-line="390" selection-start-column="31" selection-end-line="390" selection-end-column="31" />
           <folding>
-            <element signature="e#495#1438#0" />
-            <element signature="e#1474#3162#0" />
+            <element signature="e#615#21441#0" />
+            <element signature="e#641#1331#0" />
+            <element signature="e#1340#1474#0" />
+            <element signature="e#1483#1635#0" />
+            <element signature="e#1644#1826#0" />
+            <element signature="e#1851#2397#0" />
+            <element signature="e#2406#10757#0" />
+            <element signature="e#10766#10894#0" />
+            <element signature="e#10903#11032#0" />
+            <element signature="e#11041#12689#0" />
+            <element signature="e#11029#11999#0" />
+            <element signature="e#12698#13699#0" />
+            <element signature="e#13708#16659#0" />
+            <element signature="e#18128#21282#0" />
+            <element signature="e#18672#21250#0" />
+            <element signature="e#21430#21491#0" />
+            <element signature="e#19573#19759#0" />
+            <element signature="e#19799#21049#0" />
+            <element signature="e#21088#22181#0" />
+            <element signature="e#21126#22176#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/SellerController.js">
+    <entry file="file://$PROJECT_DIR$/src/Controller/AuthController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
-          <caret line="277" column="20" selection-start-line="277" selection-start-column="20" selection-end-line="483" selection-end-column="21" />
+        <state relative-caret-position="5911">
+          <caret line="257" column="43" selection-start-line="257" selection-start-column="43" selection-end-line="257" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/TransportationManagerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="113" selection-start-line="113" selection-end-line="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="928" selection-start-line="928" selection-end-line="932" />
           <folding>
-            <element signature="e#892#1680#0" />
-            <element signature="e#1722#2388#0" />
-            <element signature="e#2429#2773#0" />
-            <element signature="e#2810#4071#0" />
-            <element signature="e#4120#5125#0" />
-            <element signature="e#5173#5567#0" />
-            <element signature="e#5619#6929#0" />
-            <element signature="e#7599#11708#0" />
-            <element signature="e#11737#15794#0" />
-            <element signature="e#15823#19431#0" />
-            <element signature="e#19801#23943#0" />
-            <element signature="e#23989#24714#0" />
-            <element signature="e#27322#29234#0" />
-            <element signature="e#29279#31187#0" />
+            <element signature="e#1719#41875#0" />
+            <element signature="e#1777#2110#0" />
+            <element signature="e#2153#5092#0" />
+            <element signature="e#5461#7935#0" />
+            <element signature="e#41920#45596#0" />
+            <element signature="e#45634#46695#0" />
+            <element signature="e#46739#48496#0" />
+            <element signature="e#48537#49319#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/ProductManagerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-896">
+          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Util/Filter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="1632" column="70" lean-forward="true" selection-start-line="1632" selection-start-column="70" selection-end-line="1632" selection-end-column="70" />
+        <state relative-caret-position="258">
+          <caret line="2849" column="77" lean-forward="true" selection-start-line="2849" selection-start-column="77" selection-end-line="2849" selection-end-column="77" />
           <folding>
             <element signature="n#!!block;n#base64_encode#0" />
             <element signature="n#!!block;n#fillDataBase#0" />
-            <element signature="n#!!block;n#insertCities#0;n#!!block;n#fillDataBase#0" />
-            <element signature="n#!!block;n#insertTypes#0;n#!!block;n#fillDataBase#0" />
-            <element signature="n#!!block;n#insertUnits#0;n#!!block;n#fillDataBase#0" />
-            <element signature="n#!!block;n#insertCarModels#0;n#!!block;n#fillDataBase#0" />
-            <element signature="n#!!block;n#isThisArrayEmpty#0" />
             <element signature="n#!!block;n#checkPhone#0" />
             <element signature="n#!!block;n#checkPassword#0" />
+            <element signature="n#!!block;n#sendOnTelegramChannel#0" />
             <element signature="n#!!block;n#checkUserName#0" />
             <element signature="n#!!block;n#checkToken#0" />
             <element signature="n#!!block;n#checkLimitTime#0" />
             <element signature="n#!!block;n#CheckForeignKey#0" />
             <element signature="n#!!block;n#checkUser#0" />
             <element signature="n#!!block;n#ImageHandler#0" />
-            <element signature="e#15935#66490#0" />
-            <element signature="e#16046#17464#0" />
-            <element signature="e#17489#34591#0" />
-            <element signature="e#34616#35074#0" />
-            <element signature="e#35099#58155#0" />
-            <element signature="e#66620#80197#0" />
-            <element signature="e#66718#71735#0" />
-            <element signature="e#80222#83316#0" />
-            <element signature="e#83341#85704#0" />
-            <element signature="e#85729#95841#0" />
-            <element signature="e#96858#100967#0" />
-            <element signature="e#100996#105053#0" />
-            <element signature="e#105082#108690#0" />
-            <element signature="e#95909#140512#0" />
-            <element signature="e#140529#153782#0" />
-            <element signature="e#153799#179993#0" />
-            <element signature="n#!!block;n#filterRequest#0" />
+            <element signature="e#16456#94174#0" />
+            <element signature="e#94191#148983#0" />
+            <element signature="e#149231#197507#0" />
+            <element signature="e#250361#279125#0" />
+            <element signature="e#254430#255916#0" />
+            <element signature="e#256007#262990#0" />
+            <element signature="e#263015#273362#0" />
+            <element signature="e#279142#379521#0" />
+            <element signature="e#379538#396921#0" />
+            <element signature="n#!!block;n#addRoleInfoCheck#0" />
+            <element signature="n#!!block;n#sendSMS#0" />
+            <element signature="n#!!block;n#sendNotification#0" />
+            <element signature="n#!!block;n#SendAlarm#0" />
           </folding>
         </state>
       </provider>

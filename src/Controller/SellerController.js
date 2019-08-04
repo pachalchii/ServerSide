@@ -1,9 +1,10 @@
 const express = require('express');
-var router = express.Router();
+let router = express.Router();
 /*********************************************/
 const {sendSMS,FilteringRequest} = require('../Util/Filter');
 const {AlramMessages, upload} = require('../Util/configuration');
-const {SellerProductsInServiceCitie,Order, PriceAndSupply,Seller, sellerProducts, sequelize} = require('../../sequelize');
+const {SellerProductsInServiceCitie,products,customer,AlarmsOnSellerProducts,Order, PriceAndSupply,Seller, sellerProducts, sequelize} = require('../../sequelize');
+const asyncForEach = require('async-await-foreach');
 
 
 router.post('/product', upload.single("Image"), (req, res) => {
@@ -58,6 +59,18 @@ router.put('/Pricing' , (req, res) => {
             if (err){
                 return res.status(err.HttpCode).json(err.response);
             } else {
+                /*AlarmsOnSellerProducts.findAll({where:{SellerProductID: data.data.SellerProductID ,SeenStatus:false}}).then(AOSP=>{
+                    asyncForEach(AOSP , async item =>{
+                        await customer.findOne({where:{ID:item.CustomerID}}).then(async customer=>{
+                            await sellerProducts.findOne({where:{ID:item.SellerProductID}}).then(async SP=>{
+                                await products.findOne({where:{ID:SP.ProductID}}).then(async P=>{
+                                    sendSMS(customer,"AddRole",P.Name)
+                                });
+                            });
+
+                        });
+                    })
+                });*/
                 switch (data.whatToDo) {
                     case "create":
                         PriceAndSupply.create(data.data).then(()=>{return res.json()});
@@ -169,10 +182,11 @@ router.post('/CancleOrderProduct',(req,res)=>{
             if (err){
                 return res.status(err.HttpCode).json(err.response);
             } else {
-                data.update({DeleteStatus: true , SellerReason:  req.body.SellerReason}).then(async ()=>{
-                    await  Order.findOne({where:{ID:data.OrderID}}).then(async order=>{
-                        await  PriceAndSupply.findAll({where:{DateTime:new Date().toISOString().slice(0, 10).toString() ,SellerProductID : data.ProductID }}).then(async price=>{
-                            await  order.update({SumTotal : order.SumTotal - data.SumTotal , OnlineFee :order.OnlineFee - data.OnlineFee ,  InplaceFee :order.InplaceFee - data.InplaceFee || null}).then(()=>{
+                data[0].update({DeleteStatus: true , SellerReason:  req.body.SellerReason}).then(async ()=>{
+                    await  Order.findOne({where:{ID:data[0].OrderID}}).then(async order=>{
+                        await  PriceAndSupply.findAll({where:{DateTime:new Date().toISOString().slice(0, 10).toString() ,SellerProductID : data[0].ProductID }}).then(async price=>{
+                            await  order.update({SumTotal : order.SumTotal - data[0].SumTotal , OnlineFee :order.OnlineFee - data[0].OnlineFee ,  InplaceFee :order.InplaceFee - data[0].InplaceFee || null}).then(()=>{
+                                globalVariable.io.to(data[1].SocketID).emit('Change', JSON.stringify({Status:true}));
                                 return res.json();
                             });
 
@@ -236,18 +250,18 @@ router.post('/Role', upload.single("Image"),(req, res) => {
 
     try {
 
-        FilteringRequest(req,res,(err,data)=>{
+         FilteringRequest(req,res,(err,data)=>{
 
             if (err){
                 return res.status(err.HttpCode).json(err.response);
-            } else {
+           } else {
 
                 sequelize.transaction().then(function (t) {
                     data[0].create(data[1], {
                         transaction: t
                     }).then(savedUser=> {
                         t.commit();
-                        sendSMS(savedUser,AlramMessages("AddRole",""));
+                        sendSMS(savedUser,"AddRole",savedUser.Name);
                         return res.json();
 
                     }).catch(function (error) {
@@ -321,7 +335,7 @@ router.post('/Enabled', (req, res) => {
 
 });
 
-router.put('/PartTime', (req, res) => {
+router.put('/PartTime',(req, res) => {
 
     try {
 

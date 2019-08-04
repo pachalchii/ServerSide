@@ -41,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         FinalDiscount: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: true
         },
         ProductID: {

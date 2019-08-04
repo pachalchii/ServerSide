@@ -42,6 +42,7 @@ const PASSWORD_REGEX = "(?=.{8,})";
 const USERNAME_REGEX = "^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
 
 const upload = multer({
+    limits: { fieldSize: 2 * 1024 * 1024 },
     dest: "./../uploads/tempUploads"
 });
 
@@ -52,10 +53,10 @@ const DataBaseStatus = require('minimist')(process.argv.slice(2)).DataBaseStatus
 const statusCodes = {
 
     900: {
-        message: "حساب کاربری شما غیر فعال شده است ."
+        message: "حساب کاربری شما غیر فعال است ."
     },
     700: {
-        message: "نشست حساب کاربری شما منقضی شده است ."
+        message: "لطفا دوباره وارد شوید ."
     }
     ,
     500: {
@@ -82,13 +83,13 @@ const statusCodes = {
         message: "اين مسئول انبار قبلا در سيستم ثبت شده است"
     },
     707: {
-        message: "اين مسئول حمل و نقل قبلا در سيستم ثبت شده است"
+        message: "اين راننده قبلا در سيستم ثبت شده است"
     },
     708: {
         message: "اين اپراتور فروش قبلا در سيستم ثبت شده است"
     },
     709: {
-        message: "اين محصول براي اين راننده نميباشد"
+        message: "اين سفارش براي اين راننده نميباشد"
     },
     710: {
         message: "درخواست مورد نظر يافت نشد"
@@ -112,7 +113,7 @@ const statusCodes = {
         message: "پارامتر role که ارسال کردید اشتباه است"
     },
     717: {
-        message: "حساب کاربری با این اطلاعات قبلا ثبت نام کرده است"
+        message: "حساب کاربری با این اطلاعات قبلا ثبت شده است"
     },
     718: {
         message: "ایدی وارد شده یافت نشد"
@@ -121,7 +122,7 @@ const statusCodes = {
         message: "سایز عکس ارسالی مناسب نمیباشد"
     },
     720: {
-        message: "عکس ارسالی در فرمت مناسب نمیباشد"
+        message: "عکس ارسالی در فرمت مناسبی نمیباشد"
     },
     721: {
         message: "شما بیش از یکبار تلاش به تغییر پسورد کرده اید"
@@ -136,7 +137,7 @@ const statusCodes = {
         message: "این شهر از قبل اضافه شده بود"
     },
     725: {
-        message: "شما در این مرحله دیگر قادر به لفو سفارش نیستید"
+        message: "شما در این مرحله دیگر قادر به لغو سفارش نیستید"
     },
     726: {
         message: "حساب کاربری شما آنلاین نمیباشد"
@@ -167,21 +168,36 @@ const statusCodes = {
     },
     735: {
         message: "کف و سقف فروش رعایت نشده است"
+    },
+    736: {
+        message: "این محصول قبلا در لیست خبر بده بوده است"
+    },
+    737:{
+        message: "امکان تغییر بعد از پرداخت کاربر امکان پذیر نمیباشد"
+    },
+    738:{
+        message: "قبلا این شماره ثبت نام شده است"
+    },
+    739:{
+        message:"karbar pardakht nakarde "
     }
 
 
 
 };
 
-function AlramMessages(event,Variables) {
+/**
+ * @return {string}
+ */
+function AlramMessages(event) {
     switch (event) {
-        case "ForgetPassword": return  Variables+"کد فراموشی رمز عبور شما : ";
-        case "SellerOperatorAlarm" : return "تنها ۱۰ دقیقه مانده از فرصت شما برای تایید سفارش :"+Variables;
-        case "PostOrder": return "سفارش شما با کد پیگیری زیر ثبت شد :"+Variables;
-        case "Register": return "ثبت نام شما با موفقیت انجام شد";
-        case "FinalStatus":return "محموله شما تحویل گردیده شد";
-        case "AddRole": return "شما در سامانه پاچالچی ثبت نام شدید";
-        case "transportation": return"بار شما اماده است";
+        case "ForgetPassword": return  "";
+        case "SellerOperatorAlarm" : return  "";
+        case "PostOrder": return  "";
+        case "Register": return  "";
+        case "FinalStatus":return  "";
+        case "AddRole": return  "";
+        case "transportation": return  "";
     }
 
 
@@ -206,7 +222,7 @@ const ValidImageFormat = [
     ".jpeg",
 ];
 
-const ImageLimitSize = 100000;
+const ImageLimitSize = 10000000;
 
 const BaseUrl = "/api/v1";
 
@@ -221,8 +237,8 @@ const DataBaseInformation = {
 };
 
 const TimeLimit = {
-    start: 9,
-    finish: 22
+    start: 9, //7:30
+    finish: 22 //9:30
 };
 
 const MonjamedVaredatiTimeLimit = [
@@ -231,17 +247,17 @@ const MonjamedVaredatiTimeLimit = [
     15
     ];
 
-const ServerPort = 2323;
+const ServerPort = 2424;
 
 const SocketServerPort = 8080;
 
-const TimeCounterForOperatorAnswering = 30 * 60 * 1000;
+const TimeCounterForOperatorAnswering = 20 * 60 * 1000;
 
-const TokenExpiredTimeLimit = 30 * 60 * 1000;
+const TokenExpiredTimeLimit = 120 * 60 * 60  * 1000;
 
-const TimeRemainingForOperatorAlert = 20 * 60 * 1000;
+const TimeRemainingForOperatorAlert = 10 * 60 * 1000;
 
-const TimeToDoingPayment = 60 * 60 * 1000;
+const TimeToDoingPayment = 30 * 60 * 1000;
 
 
 module.exports = {

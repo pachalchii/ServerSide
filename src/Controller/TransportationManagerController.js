@@ -1,5 +1,5 @@
 const express = require('express');
-var router = express.Router();
+let router = express.Router();
 /*********************************************/
 const {FilteringRequest} = require("../Util/Filter");
 /*********************************************/
@@ -24,6 +24,24 @@ router.get('/orderProduct' , ( req , res )=>{
         return res.status(500).json({"code":500});
     }
 
+});
+
+router.put('/ScatteredTransportation', (req, res) => {
+    try {
+        FilteringRequest(req, res, (err, data) => {
+            if (err) {
+                return res.status(err.HttpCode).json(err.response);
+            } else {
+                return res.json({data});
+            }
+        });
+
+
+    } catch (e) {
+        res.status(500).json({"code": 500});
+
+
+    }
 });
 
 router.get('/transportation' , ( req , res )=>{
@@ -54,6 +72,7 @@ router.post('/transportation' , ( req , res )=>{
             if (err){
                 return res.status(err.HttpCode).json(err.response);
             } else {
+                globalVariable.io.to(data.SocketID).emit('Change', JSON.stringify({Status:true}));
                 return res.json();
             }
 
@@ -92,7 +111,7 @@ router.post('/ScatteredTransportation', (req, res) => {
             if (err) {
                 return res.status(err.HttpCode).json(err.response);
             } else {
-                return res.json(data);
+                return res.json(data[0]);
             }
         });
 

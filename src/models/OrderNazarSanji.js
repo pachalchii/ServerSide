@@ -9,23 +9,23 @@ module.exports = function(sequelize, DataTypes) {
 			autoIncrement: true
 		},
 		PachalChi: {
-			type: DataTypes.BOOLEAN,
+			type: DataTypes.STRING,
 			allowNull: true
 		},
 		Seller: {
-			type: DataTypes.BOOLEAN,
+			type: DataTypes.STRING,
 			allowNull: true
 		},
 		SellerOperator: {
-			type: DataTypes.BOOLEAN,
+			type: DataTypes.STRING,
 			allowNull: true
 		},
 		Transportar: {
-			type: DataTypes.BOOLEAN,
+			type: DataTypes.STRING,
 			allowNull: true
 		},
 		Support: {
-			type: DataTypes.BOOLEAN,
+			type: DataTypes.STRING,
 			allowNull: true
 		}
 	}, {

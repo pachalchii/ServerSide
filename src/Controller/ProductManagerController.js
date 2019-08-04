@@ -1,13 +1,13 @@
 const express = require('express');
-var router = express.Router();
+let router = express.Router();
 /*********************************************/
-const {PriceAndSupply} = require('../../sequelize');
-const { FilteringRequest} = require("../Util/Filter");
+const {PriceAndSupply,AlarmsOnSellerProducts,products,sellerProducts,customer} = require('../../sequelize');
+const { FilteringRequest,sendSMS} = require("../Util/Filter");
+const asyncForEach = require('async-await-foreach');
+
 /*********************************************/
 
 router.post('/accept', (req, res) => {
-
-
     try {
         FilteringRequest(req,res,(err,data)=>{
             if (err){
@@ -16,8 +16,6 @@ router.post('/accept', (req, res) => {
                 data.update({Policy:true}).then(()=>{return res.json();});
             }
         });
-
-
     } catch (e) {
         res.status(500).json({"code": 500});
 
@@ -97,6 +95,18 @@ router.put('/Pricing' , (req, res) => {
             if (err){
                 return res.status(err.HttpCode).json(err.response);
             } else {
+               /* AlarmsOnSellerProducts.findAll({where:{SellerProductID: data.data.SellerProductID ,SeenStatus:false}}).then(AOSP=>{
+                    asyncForEach(AOSP , async item =>{
+                        await customer.findOne({where:{ID:item.CustomerID}}).then(async customer=>{
+                            await sellerProducts.findOne({where:{ID:item.SellerProductID}}).then(async SP=>{
+                                await products.findOne({where:{ID:SP.ProductID}}).then(async P=>{
+                                    sendSMS(customer,"AddRole",P.Name)
+                                });
+                            });
+
+                        });
+                    })
+                });*/
                 switch (data.whatToDo) {
                     case "create":
                         PriceAndSupply.create(data.data).then(()=>{return res.json()});
