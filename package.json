@@ -27,7 +27,7 @@
     "mysql-backup-db": "1.0.1",
     "mysql2": "^1.5.3",
     "node-cron": "2.0.3",
-    "npm": "^6.9.0",
+    "npm": "^6.14.6",
     "os": "0.1.1",
     "path": "^0.12.7",
     "randomstring": "^1.1.5",
