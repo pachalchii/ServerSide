@@ -34,7 +34,7 @@
     "request": "2.88.0",
     "rooms": "1.0.1",
     "shelljs": "0.8.3",
-    "socket.io": "2.2.0",
+    "socket.io": "2.5.0",
     "sqlite3": "^4.0.0",
     "tedious": "^5.0.3",
     "ws": "7.0.0",
